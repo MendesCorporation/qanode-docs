@@ -76,7 +76,7 @@ Bem-vindo à documentação oficial do **QANode Community Edition**, a plataform
 | Página | Descrição |
 |--------|-----------|
 | [Visão Geral](nos-customizados/visao-geral.md) | Como funciona o sistema de provedores |
-| [Criando um Provedor](nos-customizados/criando-provedor.md) | Passo a passo para criar um provedor HTTP |
+| [Criando um Provedor - Enterprise](nos-customizados/criando-provedor-enterprise.md) | Passo a passo para criar um provedor HTTP |
 | [Contrato da API](nos-customizados/contrato-api.md) | Endpoints obrigatórios e formato de dados |
 | [Exemplos](nos-customizados/exemplos.md) | Exemplos em Node.js, Python, Java, C# e Go |
 | [Desktop: Nós Locais](nos-customizados/nos-locais-desktop.md) | Criando nós locais na versão desktop |
@@ -98,8 +98,8 @@ Bem-vindo à documentação oficial do **QANode Community Edition**, a plataform
 
 | Página | Descrição |
 |--------|-----------|
-| [Dashboard](dashboard/dashboard.md) | Painéis, widgets e gráficos |
-| [Relatórios](relatorios/relatorios.md) | Geração de relatórios PDF e envio por e-mail |
+| [Dashboard - Enterprise](dashboard/dashboard-enterprise.md) | Painéis, widgets e gráficos |
+| [Relatórios - Enterprise](relatorios/relatorios-enterprise.md) | Geração de relatórios PDF e envio por e-mail |
 
 ---
 
@@ -108,6 +108,6 @@ Bem-vindo à documentação oficial do **QANode Community Edition**, a plataform
 | Página | Descrição |
 |--------|-----------|
 | [Expressões](expressoes/expressoes.md) | Sistema de expressões `{{ }}` e interpolação |
-| [Administração](administracao/administracao.md) | Usuários, papéis, permissões, SMTP e auditoria |
+| [Administração - Enterprise](administracao/administracao-enterprise.md) | Usuários, papéis, permissões, SMTP e auditoria |
 | [Versão Desktop](desktop/desktop.md) | Instalação e recursos exclusivos da versão desktop |
 | [Extensão Chrome](desktop/extensao-chrome.md) | Gravador de testes para o navegador |
