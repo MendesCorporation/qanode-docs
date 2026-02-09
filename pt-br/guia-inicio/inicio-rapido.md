@@ -13,8 +13,19 @@ Neste guia, você criará seu primeiro teste automatizado no QANode em poucos mi
    - **Status**: Ativo
 4. Clique em **Criar**
 
-<!-- ![Criando um projeto](../../assets/images/criar-projeto.png) -->
-*Imagem: Modal de criação de projeto com campos de nome e status*
+<video
+  autoplay
+  loop
+  muted
+  playsinline
+  width="100%"
+  height="100%"
+>
+  <source src="../../assets/images/criar-projeto.mp4" type="video/mp4">
+</video>
+
+<p><em>Modal de criação de projeto com campos de nome e status</em></p>
+
 
 ---
 
