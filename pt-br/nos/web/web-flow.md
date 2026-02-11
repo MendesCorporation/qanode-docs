@@ -172,7 +172,7 @@ Verifica uma condição na página. Se a condição falhar, o passo é marcado c
 
 Os resultados das asserções ficam disponíveis nos outputs:
 ```
-{{ steps['Web Flow'].outputs.asserts.nomeAsserção }}  →  true ou false
+{{ steps["web-flow"].outputs.asserts.nomeAsserção }}  →  true ou false
 ```
 
 ---
@@ -199,7 +199,7 @@ Extrai dados de um elemento da página.
 
 Os dados extraídos ficam disponíveis nos outputs:
 ```
-{{ steps['Web Flow'].outputs.extracts.nomeExtracao }}
+{{ steps["web-flow"].outputs.extracts.nomeExtracao }}
 ```
 
 ---

@@ -115,6 +115,7 @@ Após uma execução, os nós exibem indicadores de status:
 |--------|------|
 | `Ctrl+S` | Salvar fluxo |
 | `Delete` / `Backspace` | Deletar nó ou conexão selecionada |
+| `Ctrl+C` | Copiar nó |
 | `Ctrl+V` | Colar nó (JSON do Gravador Chrome) |
 | `Ctrl+Z` | Desfazer |
 | `Ctrl+Shift+Z` | Refazer |

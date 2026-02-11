@@ -14,7 +14,7 @@ A forma principal de adicionar nós é arrastando da **paleta de nós** (lado es
 2. Clique e arraste o nó para o canvas
 3. Solte na posição desejada
 
-<!-- ![Arrastando um nó da paleta](../../assets/images/arrastar-no.png) -->
+[Arrastando um nó da paleta](../../assets/images/flow-editor.mp4) 
 *Imagem: Nó sendo arrastado da paleta de nós para o canvas*
 
 ### Colar JSON (Gravador Chrome)
@@ -77,14 +77,14 @@ Ao clicar em um nó, o painel de propriedades abre à direita. Cada tipo de nó 
 A maioria dos campos aceita **expressões** com a sintaxe `{{ }}`:
 
 ```
-{{ steps['Nome do Nó'].outputs.propriedade }}
+{{ steps["Nome do Nó"].outputs.propriedade }}
 {{ variables.minhaVariavel }}
 ```
 
 Isso permite que nós usem dados produzidos por nós anteriores. Por exemplo:
 
 - **URL de navegação**: `{{ variables.BASE_URL }}/login`
-- **Texto para preencher**: `{{ steps['Nome do Nó'].outputs.result.email }}`
+- **Texto para preencher**: `{{ steps["Nome do Nó"].outputs.result.email }}`
 - **SQL**: `SELECT * FROM users WHERE email = '{{ steps.extract.outputs.extracts.email }}'`
 
 > Para mais detalhes, veja [Expressões](../expressoes/expressoes.md).
@@ -147,11 +147,11 @@ O nó **If** oferece dois modos de configuração:
 
 **Modo Simples:**
 ```javascript
-{{ steps['HTTP Request'].outputs.status }} === 200
+{{ steps["http-request"].outputs.status === 200 }} 
 ```
 
 **Modo Visual Builder:**
-- Campo: `steps['HTTP Request'].outputs.status`
+- Campo: `steps["http-request"].outputs.status`
 - Operador: `===`
 - Valor: `200`
 
@@ -191,7 +191,7 @@ Dê nomes descritivos aos seus nós alterando o **label**. Isso facilita a leitu
 ```
 é mais legível que:
 ```
-{{ steps['HTTP Request 2'].outputs.json.token }}
+{{ steps["HTTP Request 2"].outputs.json.token }}
 ```
 
 ### Use Grupos Lógicos

@@ -19,7 +19,7 @@ A versão desktop é a forma mais fácil de começar. Ela inclui todos os compon
 2. Execute o instalador e siga as instruções
 3. Ao finalizar, o QANode será aberto automaticamente
 
-<!-- ![Instalador do QANode no Windows](../../assets/images/instalador-windows.png) -->
+[Instalador do QANode no Windows](../../assets/images/instalacao-nsis.png) 
 *Imagem: Tela do instalador NSIS do QANode no Windows*
 
 Na primeira execução, o QANode irá:

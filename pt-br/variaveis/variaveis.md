@@ -9,7 +9,7 @@
 1. No menu lateral, clique em **Variáveis**
 2. A lista exibe todas as variáveis cadastradas
 
-<!-- ![Lista de variáveis](../../assets/images/lista-variaveis.png) -->
+[Lista de variáveis](../../assets/images/variavel.mp4) 
 *Imagem: Tela de variáveis mostrando lista com nome, tipo, valor e última atualização*
 
 ---

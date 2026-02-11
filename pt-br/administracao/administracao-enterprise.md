@@ -223,8 +223,6 @@ Projetos, Fluxos, Suítes, Execuções, Variáveis, Credenciais, Provedores, Usu
 2. Navegue pelo histórico usando paginação
 3. Use filtros para buscar ações específicas
 
-<!-- ![Log de auditoria](../../assets/images/auditoria.png) -->
-*Imagem: Tabela de auditoria com colunas de ação, entidade, usuário, IP e data*
 
 ---
 

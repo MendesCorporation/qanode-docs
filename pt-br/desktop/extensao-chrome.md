@@ -12,9 +12,6 @@ O **QANode Recorder** é uma extensão para Google Chrome que **grava suas inter
 4. Selecione a pasta `extension/` do QANode
 5. A extensão aparecerá na barra de ferramentas
 
-<!-- ![Extensão instalada](../../assets/images/extensao-instalada.png) -->
-*Imagem: Chrome com a extensão QANode Recorder na barra de ferramentas*
-
 ---
 
 ## Modos de Gravação
@@ -64,7 +61,7 @@ Captura elementos para **extração de dados**:
 6. Use **Ctrl+E** para adicionar extrações
 7. Clique no ícone novamente e clique em **STOP** para parar
 
-<!-- ![Popup da extensão](../../assets/images/extensao-popup.png) -->
+[Popup da extensão](../../assets/images/web-recorder.mp4) 
 *Imagem: Popup da extensão mostrando botões REC/STOP, lista de passos gravados e botão Copiar JSON*
 
 ### Usando no QANode

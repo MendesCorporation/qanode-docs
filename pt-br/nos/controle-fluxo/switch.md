@@ -24,7 +24,7 @@ No modo simples, você define uma expressão e valores para cada case:
 
 **Campo: Expressão**
 ```javascript
-{{ steps['HTTP Request'].outputs.status }}
+{{ steps["http-request"].outputs.status }}
 ```
 
 **Cases:**
@@ -90,7 +90,7 @@ O modo visual permite usar operadores diferentes para cada case:
 [HTTP Request]
     │
     ▼
-[Switch: {{ steps['HTTP Request'].outputs.status }}]
+[Switch: {{ steps["http-request"].outputs.status }}]
     │ case-0 (200) → [Log: "Sucesso"] → [Extrair dados]
     │ case-1 (401) → [Log: "Não autorizado"] → [Refazer login]
     │ case-2 (404) → [Log: "Não encontrado"]

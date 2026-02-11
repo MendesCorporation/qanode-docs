@@ -74,7 +74,7 @@ Suítes podem ser executadas automaticamente em horários definidos.
 3. Informe a **expressão cron**
 4. O sistema mostrará os próximos 5 horários de execução
 
-<!-- ![Agendamento de suíte](../../assets/images/agendamento-suite.png) -->
+[Agendamento de suíte](../../assets/images/suites.mp4) 
 *Imagem: Seção de agendamento com campo cron, toggle de ativação e preview dos próximos horários*
 
 ### Expressões Cron

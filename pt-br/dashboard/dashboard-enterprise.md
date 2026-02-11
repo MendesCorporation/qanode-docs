@@ -6,7 +6,7 @@ O **Dashboard** oferece uma visão consolidada do estado dos seus testes atravé
 
 ## Visão Geral
 
-<!-- ![Dashboard principal](../../assets/images/dashboard-principal.png) -->
+[Dashboard principal](../../assets/images/dashboard.mp4)
 *Imagem: Dashboard com múltiplos widgets: cards de métrica, gráfico de barras e tabela*
 
 ---

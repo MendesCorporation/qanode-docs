@@ -89,12 +89,12 @@ Cada nó possui:
 Quando um nó é executado, ele produz **outputs** — dados que podem ser usados por nós seguintes. Para acessar esses dados, use o sistema de **expressões** com a sintaxe `{{ }}`:
 
 ```
-{{ steps['Nome do Nó'].outputs.propriedade }}
+{{ steps["Nome do Nó"].outputs.propriedade }}
 ```
 
 **Exemplos:**
 ```
-{{ steps['HTTP Request'].outputs.json.token }}    → Token de uma resposta API
+{{ steps["http-request"].outputs.json.token }}    → Token de uma resposta API
 {{ steps.login.outputs.extracts.userName }}   → Texto extraído de uma página
 {{ steps.query.outputs.rows[0].email }}       → Primeiro email do resultado SQL
 ```

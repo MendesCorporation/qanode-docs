@@ -41,7 +41,7 @@ Mensagem: Usuário encontrado: {{ steps.query.outputs.rows[0].name }} ({{ steps.
 ### Log para depuração
 
 ```
-Mensagem: Status da API: {{ steps['HTTP Request'].outputs.status }}, Body: {{ JSON.stringify(steps['HTTP Request'].outputs.json) }}
+Mensagem: Status da API: {{ steps["http-request"].outputs.status }}, Body: {{ JSON.stringify(steps["http-request"].outputs.json) }}
 ```
 
 ---

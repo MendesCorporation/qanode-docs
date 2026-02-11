@@ -1,6 +1,6 @@
 # Introdução ao QANode
 
-O **QANode** é uma plataforma de automação de testes de código aberto que permite criar, executar e gerenciar testes automatizados através de um **editor visual de fluxos** baseado em nós. Com uma interface intuitiva de arrastar e conectar, você pode construir cenários de teste complexos sem escrever código — ou combinar a interface visual com JavaScript customizado para máxima flexibilidade.
+O **QANode** é uma plataforma de automação de testes que permite criar, executar e gerenciar testes automatizados através de um **editor visual de fluxos** baseado em nós. Com uma interface intuitiva de arrastar e conectar, você pode construir cenários de teste complexos sem escrever código — o QANode através da sua extensabilidade com custom nodes está preparado para executar qualquer tipo de teste.
 
 ---
 
@@ -32,7 +32,7 @@ Conecte-se e valide dados em:
 Execute comandos remotos via **SSH** com suporte a múltiplos passos, autenticação por senha ou chave privada, e captura de saída.
 
 ### Extensibilidade
-Crie **nós customizados** em qualquer linguagem de programação (Node.js, Python, Java, C#, Go, etc.) através do sistema de provedores HTTP.
+Crie **nós customizados** em qualquer linguagem de programação (Node.js, Python, Java, C#, Go, etc.) através do sistema de provedores HTTP. (Community Edition apenas em javascript)
 
 ---
 
@@ -103,7 +103,9 @@ Esta documentação cobre a **Community Edition**, que é gratuita. A tabela aba
 | Dashboard Customizável | ❌ | Completo |
 | Multi-usuário | ❌ | Completo |
 | MFA (Autenticação 2FA) | ❌ | ✅ |
-| Rastreamento de Criador | ❌ | ✅ |
+| Logs de auditoria | ❌ | ✅ |
+| Gerador de reports | ❌ | ✅ |
+| Programação de alarmes | ❌ | ✅ |
 | Suporte Dedicado | ❌ | ✅ |
 
 ---

@@ -42,15 +42,15 @@ O código tem acesso a:
 
 ```javascript
 // Output de um HTTP Request
-const userData = steps["HTTP Request"].outputs.json;
+const userData = steps["http-request"].outputs.json;
 const userName = userData.name;
 
 // Output de uma query PostgreSQL
-const rows = steps["Query Usuários"].outputs.rows;
+const rows = steps["postgres-query"].outputs.rows;
 const firstUser = rows[0];
 
 // Output de extração web
-const title = steps["Web Flow"].outputs.extracts.pageTitle;
+const title = steps["web-flow"].outputs.extracts.pageTitle;
 ```
 
 ### Acessando variáveis
@@ -91,9 +91,9 @@ return steps["Query"].outputs.rows.map(row => row.email);
 ### Acessando o resultado
 
 ```
-{{ steps['Custom JavaScript'].outputs.result }}
-{{ steps['Custom JavaScript'].outputs.result.fullName }}
-{{ steps['Custom JavaScript'].outputs.result[0] }}
+{{ steps["custom-js"].outputs.result }}
+{{ steps["custom-js"].outputs.result.fullName }}
+{{ steps["custom-js"].outputs.result[0] }}
 ```
 
 ---
@@ -103,7 +103,7 @@ return steps["Query"].outputs.rows.map(row => row.email);
 ### Transformar dados de API
 
 ```javascript
-const items = steps["HTTP Request"].outputs.json.items;
+const items = steps["http-request"].outputs.json.items;
 
 // Filtrar e transformar
 const activeItems = items

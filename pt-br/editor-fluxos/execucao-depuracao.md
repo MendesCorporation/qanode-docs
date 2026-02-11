@@ -14,7 +14,7 @@ Para executar todo o fluxo:
 2. Clique no botão **Executar** (▶️) na barra superior
 3. Aguarde a conclusão — os nós exibirão indicadores de status em tempo real
 
-<!-- ![Fluxo em execução](../../assets/images/fluxo-executando.png) -->
+[Fluxo em execução](../../assets/images/executando.mp4) 
 *Imagem: Canvas mostrando nós com indicadores de status durante a execução*
 
 ### Status de Execução
@@ -60,8 +60,8 @@ Os outputs de cada nó ficam acessíveis para nós seguintes via expressões. Po
 
 Você pode então acessar esses dados em nós seguintes:
 ```
-{{ steps['HTTP Request'].outputs.json.name }}  →  "João"
-{{ steps['HTTP Request'].outputs.status }}     →  200
+{{ steps["http-request"].outputs.json.name }}  →  "João"
+{{ steps["http-request"].outputs.status }}     →  200
 ```
 
 ### Screenshots (Evidências)
@@ -157,7 +157,7 @@ Se um nó falha com valor inesperado, adicione um nó **Log** antes dele para in
 
 ```
 Valor do token: {{ steps.login.outputs.json.token }}
-Status: {{ steps['HTTP Request'].outputs.status }}
+Status: {{ steps["http-request"].outputs.status }}
 ```
 
 ### 5. Use o Toggle "Continuar em Falha"

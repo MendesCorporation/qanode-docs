@@ -94,7 +94,7 @@ Para métodos que aceitam body (POST, PUT, PATCH), você pode enviar:
 ```json
 {
   "name": "{{ variables.USER_NAME }}",
-  "email": "{{ steps['Web Flow'].outputs.extracts.email }}",
+  "email": "{{ steps["web-flow"].outputs.extracts.email }}",
   "active": true
 }
 ```
@@ -124,19 +124,19 @@ Para métodos que aceitam body (POST, PUT, PATCH), você pode enviar:
 
 ```
 // Status da resposta
-{{ steps['HTTP Request'].outputs.status }}  →  200
+{{ steps["http-request"].outputs.status }}  →  200
 
 // Corpo JSON
-{{ steps['HTTP Request'].outputs.json }}  →  { "id": 1, "name": "João" }
+{{ steps["http-request"].outputs.json }}  →  { "id": 1, "name": "João" }
 
 // Propriedade específica do JSON
-{{ steps['HTTP Request'].outputs.json.name }}  →  "João"
+{{ steps["http-request"].outputs.json.name }}  →  "João"
 
 // Array no JSON
-{{ steps['HTTP Request'].outputs.json.items[0].title }}  →  "Primeiro Item"
+{{ steps["http-request"].outputs.json.items[0].title }}  →  "Primeiro Item"
 
 // Corpo como texto
-{{ steps['HTTP Request'].outputs.body }}  →  '{"id": 1, "name": "João"}'
+{{ steps["http-request"].outputs.body }}  →  '{"id": 1, "name": "João"}'
 ```
 
 ---

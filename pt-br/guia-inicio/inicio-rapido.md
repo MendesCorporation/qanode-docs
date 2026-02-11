@@ -26,7 +26,7 @@ Neste guia, você criará seu primeiro teste automatizado no QANode em poucos mi
 3. Dê o nome: `Login com sucesso`
 4. Você será levado ao **Editor de Fluxos**
 
-<!-- ![Editor de fluxos vazio](../../assets/images/editor-vazio.png) -->
+[Editor de fluxos vazio](../../assets/images/editor-fluxo.mp4)
 *Imagem: Editor de fluxos com o canvas vazio e a paleta de nós à esquerda*
 
 ---
@@ -87,7 +87,7 @@ No painel de propriedades, configure os seguintes passos:
    - **Localizador**: `getByText` → `You logged into a secure area!`
    - **Texto Esperado**: `You logged into a secure area!`
 
-<!-- ![Passos configurados](../../assets/images/passos-smart-locators.png) -->
+[Passos configurados](../../assets/images/configurando-passos.mp4)
 *Imagem: Painel de propriedades do Smart Locators com 5 passos configurados*
 
 ---
@@ -113,7 +113,7 @@ Após a execução, cada passo mostrará seu status:
 - ❌ **Vermelho**: Passo falhou
 - ⏭️ **Cinza**: Passo não executado (pulado)
 
-<!-- ![Resultado da execução](../../assets/images/resultado-execucao.png) -->
+[Resultado da execução](../../assets/images/execucao.mp4) 
 *Imagem: Editor mostrando os nós com indicadores de sucesso/falha e o painel de resultados*
 
 Clique em qualquer nó para ver detalhes:
@@ -160,7 +160,7 @@ Quer testar uma API? Veja um exemplo rápido usando a **JSONPlaceholder**, uma A
    - **Método**: `GET`
    - **URL**: `https://jsonplaceholder.typicode.com/users/1`
 3. Arraste um nó **If** e conecte à saída do HTTP Request
-4. Configure a condição: `{{ steps['HTTP Request'].outputs.status }} === 200`
-5. Na saída **true**, adicione um nó **Log** com a mensagem: `Usuário encontrado: {{ steps['HTTP Request'].outputs.json.name }}`
+4. Configure a condição: `{{ steps["http-request"].outputs.status === 200 }}`
+5. Na saída **true**, adicione um nó **Log** com a mensagem: `Usuário encontrado: {{ steps["http-request"].outputs.json.name }}`
 
 Esse fluxo faz uma requisição GET à JSONPlaceholder e verifica se o status é 200. Se positivo, exibe o nome do usuário retornado (`Leanne Graham`).

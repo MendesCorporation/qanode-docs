@@ -9,7 +9,7 @@
 1. No menu lateral, clique em **Credenciais**
 2. A lista exibe todas as credenciais cadastradas
 
-<!-- ![Lista de credenciais](../../assets/images/lista-credenciais.png) -->
+[Lista de credenciais](../../assets/images/lista-credencial.mp4) 
 *Imagem: Tela de credenciais com lista mostrando nome, tipo e data de criação*
 
 ---
@@ -133,7 +133,7 @@ Antes de usar uma credencial, teste a conexão:
 2. O QANode tentará se conectar usando os dados fornecidos
 3. O resultado será exibido: sucesso ✅ ou erro ❌ com mensagem detalhada
 
-<!-- ![Teste de conexão](../../assets/images/testar-conexao.png) -->
+[Teste de conexão](../../assets/images/teste-credencial.mp4)
 *Imagem: Credencial com botão de teste de conexão e mensagem de sucesso*
 
 ---

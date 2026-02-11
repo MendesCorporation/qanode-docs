@@ -16,7 +16,7 @@ O QANode é uma plataforma completa de automação e orquestração de testes qu
 ### Principais Características
 
 - **Editor Visual de Fluxos** — Crie testes arrastando e conectando nós
-- **Automação Web** — Testes de interface com Playwright (Chromium, Firefox, WebKit)
+- **Automação Web** — Testes de interface com Playwright (Chromium)
 - **Smart Locators** — Localizadores semânticos baseados em ARIA roles e acessibilidade
 - **Testes de API** — Requisições HTTP com suporte a autenticação
 - **Banco de Dados** — PostgreSQL, MySQL, MariaDB, Oracle, MongoDB
