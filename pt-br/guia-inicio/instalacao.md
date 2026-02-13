@@ -10,8 +10,8 @@ A versão desktop é a forma mais fácil de começar. Ela inclui todos os compon
 ### Requisitos
 
 - **Sistema Operacional**: Windows 10/11 (64-bit)
-- **Memória RAM**: 4 GB mínimo (8 GB recomendado)
-- **Espaço em Disco**: 1 GB para instalação
+- **Memória RAM**: 8 GB mínimo (16 GB recomendado)
+- **Espaço em Disco**: 2 GB para instalação
 
 ### Instalação no Windows
 

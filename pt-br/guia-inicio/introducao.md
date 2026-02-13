@@ -14,7 +14,7 @@ Teste interfaces de usuário usando o **Playwright**, o framework de automação
 - **Web Flow** — Automação baseada em seletores CSS, XPath, data-testid e texto
 - **Smart Locators** — Automação com localizadores semânticos (`getByRole`, `getByLabel`, `getByPlaceholder`, etc.)
 
-Ambos suportam múltiplos navegadores (Chromium, Firefox, WebKit), modo headless, captura de screenshots e reuso de sessão.
+Ambos suportam o chromium, modo headless, captura de screenshots e reuso de sessão.
 
 ### Testes de API
 Execute requisições HTTP com suporte completo a:
@@ -98,14 +98,15 @@ Esta documentação cobre a **Community Edition**, que é gratuita. A tabela aba
 | Agendamento | ✅ | ✅ |
 | Variáveis e Credenciais | ✅ | ✅ |
 | Relatórios PDF | ✅ | ✅ |
-| Gravador Chrome | ✅ | ✅ |
+| Gravador de passos Chrome | ✅ | ✅ |
 | Versão Web | ❌ | ✅ |
-| Dashboard Customizável | ❌ | Completo |
-| Multi-usuário | ❌ | Completo |
+| Dashboard Customizável | ❌ | ✅  |
+| Multi-usuário | ❌ | ✅  |
 | MFA (Autenticação 2FA) | ❌ | ✅ |
 | Logs de auditoria | ❌ | ✅ |
 | Gerador de reports | ❌ | ✅ |
 | Programação de alarmes | ❌ | ✅ |
+| Webhooks | ❌ | ✅ |
 | Suporte Dedicado | ❌ | ✅ |
 
 ---

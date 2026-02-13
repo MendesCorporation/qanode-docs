@@ -1,6 +1,6 @@
 # Suítes de Teste
 
-**Suítes** permitem agrupar múltiplos cenários (fluxos) para execução sequencial. São ideais para regressão, smoke tests e execuções agendadas.
+**Suítes** permitem agrupar múltiplos cenários (fluxos) para execução sequencial ou não sequencial. São ideais para regressão, smoke tests e execuções agendadas.
 
 ---
 
@@ -16,6 +16,7 @@
 | **Projeto** | Sim | Projeto ao qual a suíte pertence |
 | **Cenários** | Sim | Selecione os cenários e a ordem |
 | **Parar em Falha** | Não | Interromper ao primeiro cenário que falhar |
+| **Modo de Execução** | Não | Sequencial (padrão) ou Não sequencial |
 
 4. Clique em **Criar**
 
@@ -24,22 +25,53 @@
 
 ---
 
-## Ordem de Execução
+## Modo de Execução
 
-Os cenários dentro de uma suíte são executados **sequencialmente**, na ordem definida. Você pode reordenar arrastando os cenários na lista.
+A suíte oferece dois modos de execução:
+
+### Sequencial (padrão)
+
+Os cenários são executados **um por vez**, na ordem definida. Você pode reordenar arrastando os cenários na lista.
 
 ```
-Suíte: Regressão Login
-├── 1. Login com credenciais válidas
-├── 2. Login com senha incorreta
-├── 3. Login com email inválido
-├── 4. Recuperação de senha
-└── 5. Logout
+Suíte: Regressão Login (Sequencial)
+├── 1. Login com credenciais válidas    ⏳ aguardando
+├── 2. Login com senha incorreta        ⏳ aguardando
+├── 3. Login com email inválido         ⏳ aguardando
+├── 4. Recuperação de senha             ⏳ aguardando
+└── 5. Logout                           ⏳ aguardando
+→ Executa: 1, depois 2, depois 3...
 ```
+
+Use o modo sequencial quando:
+- Os cenários **dependem uns dos outros** (ex: login antes de operações)
+- Você precisa de **ordem garantida** de execução
+- Quer usar a opção **Parar em Falha** para interromper na primeira falha
+
+### Não sequencial
+
+Os cenários são executados **de forma independente**, sem ordem garantida. Todos os cenários são disparados e executados paralelamente.
+
+```
+Suíte: Regressão Login (Não sequencial)
+├── 1. Login com credenciais válidas    ▶ executando
+├── 2. Login com senha incorreta        ▶ executando
+├── 3. Login com email inválido         ▶ executando
+├── 4. Recuperação de senha             ▶ executando
+└── 5. Logout                           ▶ executando
+→ Todos executam ao mesmo tempo
+```
+
+Use o modo não sequencial quando:
+- Os cenários são **independentes** entre si
+- Você quer **reduzir o tempo total** de execução da suíte
+- A ordem de execução **não importa**
 
 ---
 
 ## Parar em Falha
+
+> **Nota:** A opção "Parar em Falha" tem efeito apenas no modo **Sequencial**. No modo Não sequencial, como todos os cenários são executados de forma independente, esta opção não se aplica.
 
 Quando **Parar em Falha** está ativado:
 - Se um cenário falhar, os cenários seguintes **não são executados**
@@ -134,8 +166,9 @@ Você pode configurar **alarmes** para ser notificado quando suítes falham. Vej
 
 ## Dicas
 
-- **Ordene estrategicamente** — coloque cenários de setup (login, preparação) primeiro
-- **Use "Parar em Falha"** quando cenários dependem uns dos outros
+- **Ordene estrategicamente** — no modo sequencial, coloque cenários de setup (login, preparação) primeiro
+- **Use "Parar em Falha"** quando cenários dependem uns dos outros (modo sequencial)
 - **Desative "Parar em Falha"** para suítes de regressão completa
+- **Use modo não sequencial** para suítes de regressão com cenários independentes — reduz o tempo total
 - **Agende em horários de baixa** — evite conflito com uso manual
 - **Monitore com alarmes** — configure notificações para falhas em suítes agendadas - versão Enterprise
