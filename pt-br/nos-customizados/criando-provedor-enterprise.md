@@ -292,7 +292,7 @@ export async function execute({ inputs }) {
 }
 ```
 
-Se `timeoutMs` não for definido, o padrão é **5 minutos** (300.000ms).
+Se `timeoutMs` não for definido, o padrão é **30 minutos** (300.000ms).
 
 ---
 
@@ -355,7 +355,7 @@ Siga a mesma estrutura: cada nó em sua pasta com o arquivo `.node.{ext}` e os a
 2. **Nomenclatura `.node.`** — apenas para arquivos de definição de nó, nunca para auxiliares
 3. **`package.json` por nó** — cada nó gerencia suas próprias dependências
 4. **Logs descritivos** — inclua logs que ajudem a diagnosticar problemas
-5. **`timeoutMs` no manifesto** — defina para nós que excedem 5 minutos
+5. **`timeoutMs` no manifesto** — defina para nós que excedem 30 minutos
 6. **Output Schema** — defina `outputSchema` para que o QANode mostre os campos no autocomplete
 7. **Docker** — considere containerizar o provedor para facilitar o deploy
 

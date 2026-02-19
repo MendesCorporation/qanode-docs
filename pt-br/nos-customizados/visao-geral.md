@@ -63,7 +63,7 @@ O **manifesto** é a resposta da rota `GET /manifest`, que descreve todos os nó
 
 ### Execução
 
-A **execução** é feita via `POST /execute`, onde o QANode envia os dados de entrada do nó e o provedor retorna o resultado. Cada nó tem um timeout padrão de **5 minutos**, configurável via `timeoutMs` no manifesto para operações mais longas.
+A **execução** é feita via `POST /execute`, onde o QANode envia os dados de entrada do nó e o provedor retorna o resultado. Cada nó tem um timeout padrão de **30 minutos**, configurável via `timeoutMs` no manifesto para operações mais longas.
 
 ---
 

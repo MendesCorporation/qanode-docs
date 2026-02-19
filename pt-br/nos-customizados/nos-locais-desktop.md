@@ -64,7 +64,7 @@ export const manifest = {
   type: 'meu-no-customizado',
   name: 'Meu Nó Customizado',
   category: 'Meus Nós',
-  timeoutMs: 600000, // 10 minutos (opcional, padrão: 5 minutos)
+  timeoutMs: 600000, // 10 minutos (opcional, padrão: 30 minutos)
   inputSchema: {
     campo1: { type: 'string', required: true, description: 'Descrição do campo' },
     campo2: { type: 'number', default: 10 }
@@ -226,8 +226,8 @@ export async function execute({ inputs }) {
 |---------|------------|---------------|
 | **Setup** | Criar arquivo na pasta | Criar e rodar servidor |
 | **Linguagem** | Apenas JavaScript | Qualquer linguagem |
-| **Hot-Reload** | Automático | Manual (reiniciar servidor) |
-| **Disponibilidade** | Apenas versão desktop | Qualquer versão |
+| **Hot-Reload** | Automático | Automático |
+| **Disponibilidade** | Apenas versão desktop | Apenas Enterprise |
 | **Deploy** | Local apenas | Pode ser remoto |
 | **Dependências** | npm (local) | Qualquer gerenciador |
 
