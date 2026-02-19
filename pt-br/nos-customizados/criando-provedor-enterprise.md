@@ -63,7 +63,7 @@ export const manifest = {
   type: 'validar-cpf',
   name: 'Validar CPF',
   category: 'Validação',
-  // timeoutMs: 300000, // opcional — padrão: 5 min
+  // timeoutMs: 300000, // opcional — padrão: 30 min
   inputSchema: {
     cpf: {
       type: 'string',

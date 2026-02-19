@@ -240,4 +240,4 @@ export async function execute({ inputs }) {
 - O campo `category` no manifesto controla em qual grupo o nó aparece na paleta
 - Use `console.log()` no execute para depuração — as saídas aparecem no console do Electron
 - Comece com o nó de exemplo (sample-hash) como template
-- Para operações longas, defina `timeoutMs` no manifesto (padrão: 5 min, ex: `timeoutMs: 1800000` para 30 min)
+- Para operações longas, defina `timeoutMs` no manifesto (padrão: 30 min, ex: `timeoutMs: 1800000` para 30 min)
