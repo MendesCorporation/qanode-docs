@@ -2,12 +2,13 @@
 
 Documentação oficial do **QANode** — Plataforma de orquestração de testes com editor visual de fluxos.
 
-## Idiomas Disponíveis
+## Idiomas Disponíveis / Available Languages / Idiomas Disponibles
 
 | Idioma | Status |
 |--------|--------|
 | [Português Brasileiro](pt-br/README.md) | ✅ Disponível |
-| [English](en/README.md) | 🔜 Em breve |
+| [English](en/README.md) | ✅ Available |
+| [Español](es/README.md) | ✅ Disponible |
 
 ## Sobre o QANode
 
@@ -55,7 +56,8 @@ docs/
 │   ├── expressoes/              # Sistema de expressões {{ }}
 │   ├── administracao/           # Usuários, papéis, configurações
 │   └── desktop/                 # Versão desktop (Electron)
-└── en/                          # English documentation (coming soon)
+├── en/                          # English documentation
+└── es/                          # Documentación en Español
 ```
 
 ## Licença
