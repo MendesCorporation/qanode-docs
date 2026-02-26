@@ -41,7 +41,7 @@ Crie um servidor HTTP que implementa o contrato de API. Pode ser escrito em:
 
 ### 2. Nós Locais na Versão Desktop - Community Edition
 
-Na versão desktop, você pode criar arquivos `.node.js` na pasta de nós customizados. O QANode detecta automaticamente e disponibiliza os nós sem necessidade de servidor HTTP separado.
+Na versão desktop, você pode criar arquivos `.node.js`, `.node.mjs` ou `.node.cjs` na pasta de nós customizados. O QANode detecta automaticamente e disponibiliza os nós sem necessidade de servidor HTTP separado.
 
 > Veja [Nós Locais Desktop](nos-locais-desktop.md) para detalhes.
 

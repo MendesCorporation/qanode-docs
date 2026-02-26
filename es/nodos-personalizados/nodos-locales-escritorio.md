@@ -1,218 +1,206 @@
-# Nodos Locales en la Versión Desktop
+# Nodos Locales en Version Desktop
 
-En la versión desktop de QANode, puedes crear nodos personalizados **localmente** como archivos JavaScript, sin necesitar un servidor HTTP separado. QANode detecta automáticamente los archivos y pone los nodos a disposición en la paleta.
-
----
-
-## Cómo Funciona
-
-La versión desktop incluye un **proveedor local integrado** que:
-
-1. Monitorea una carpeta en tu computadora
-2. Detecta archivos `.node.js`, `.node.mjs` o `.node.cjs`
-3. Carga automáticamente los nodos definidos en esos archivos
-4. Recarga cuando detecta cambios (**hot-reload**)
+En QANode Desktop puedes crear nodos personalizados de forma local, sin levantar un servidor HTTP separado. El runtime local detecta los archivos y publica los nodos en el proveedor local interno.
 
 ---
 
-## Carpeta de Nodos Personalizados
+## Como Funciona (ciclo completo)
 
-Los nodos locales se encuentran en la carpeta:
+1. El runtime local escanea `%USERPROFILE%\Documents\QANode\custom nodes\`
+2. Carga archivos `*.node.js`, `*.node.mjs`, `*.node.cjs`
+3. Valida exports obligatorios (`manifest`, `execute`, `manifest.type`, `manifest.name`)
+4. Publica nodos validos en `/manifest`
+5. El worker consulta `/manifest` y valida `required` en `inputSchema`
+6. El worker llama `/execute` con `nodeType`, `inputs`, `runId`, `nodeId`
+7. El resultado vuelve al flujo con `logs`, `outputs` y `artifacts`
 
-```
+---
+
+## Carpeta y Estructura Recomendada
+
+```text
 %USERPROFILE%\Documents\QANode\custom nodes\
 ```
 
-En Windows, generalmente:
-```
-C:\Users\TuUsuario\Documents\QANode\custom nodes\
-```
-
-La organización recomendada es **una carpeta por nodo**, cada una con el archivo `.node.js`, archivos auxiliares y `package.json` para las dependencias:
-
-```
+```text
 custom nodes/
-├── validar-cpf/
-│   ├── validar-cpf.node.js    # Definición del nodo
-│   ├── cpf-utils.js           # Auxiliar (NO usa .node.)
-│   └── package.json           # Dependencias del nodo
-├── formatar-data/
-│   ├── formatar-data.node.js
+├── mi-nodo/
+│   ├── mi-nodo.node.js
+│   ├── helpers.js
 │   └── package.json
-└── sample-hash-node/          # Nodo de ejemplo (creado automáticamente)
-    ├── sample-hash.node.js
+└── otro-nodo/
+    ├── otro-nodo.node.mjs
     └── package.json
 ```
 
-> **Importante:** Solo los archivos con `.node.` en el nombre son reconocidos como nodos. Otros archivos `.js` en la misma carpeta son ignorados y pueden usarse como módulos auxiliares.
+> Solo los archivos con `.node.` en el nombre se cargan como nodo.
 
 ---
 
-## Formato del Archivo
+## Reglas de Modulo por Extension
 
-Cada archivo `.node.js` debe exportar dos elementos:
+- `.node.js`: usa CommonJS (`module.exports`) por defecto
+- `.node.mjs`: usa ESM (`export const`, `export async function`)
+- `.node.cjs`: usa CommonJS
 
-1. **`manifest`** — Definición del nodo (tipo, nombre, inputs, outputs)
-2. **`execute`** — Función de ejecución
+Error comun:
 
-### Estructura Básica
+- `Unexpected token 'export'` en `.node.js`: el archivo esta en ESM sin configuracion de modulo correcta.
 
-```javascript
-// meu-no/meu-no.node.js
+---
 
-export const manifest = {
-  type: 'meu-no-customizado',
-  name: 'Meu Nó Customizado',
-  category: 'Meus Nós',
-  timeoutMs: 600000, // 10 minutos (opcional, predeterminado: 30 minutos)
-  inputSchema: {
-    campo1: { type: 'string', required: true, description: 'Descrição do campo' },
-    campo2: { type: 'number', default: 10 }
+## Contrato del Archivo del Nodo
+
+Cada archivo debe exportar:
+
+1. `manifest`
+2. `execute`
+
+Si falta algun obligatorio, el archivo se ignora.
+
+### Manifest: campos obligatorios y opcionales
+
+| Campo | Tipo | Obligatorio | Uso en QANode |
+|---|---|---|---|
+| `type` | `string` | Si | Identificador unico del nodo |
+| `name` | `string` | Si | Nombre visible en la paleta |
+| `category` | `string` | No | Grupo en la paleta |
+| `timeoutMs` | `number` | No | Timeout del nodo en ms; invalido/ausente usa valor por defecto |
+| `inputSchema` | `object` | No | Campos de entrada en panel de propiedades |
+| `outputSchema` | `object` | No | Campos de salida para autocompletado |
+| `...extra` | `any` | No | Metadatos extra sin comportamiento por defecto |
+
+### inputSchema: formato de campo
+
+| Propiedad | Tipo | Obligatorio | Nota |
+|---|---|---|---|
+| `type` | `string` | Recomendado | `string`, `number`, `boolean`, `object`, `array`, `any` |
+| `required` | `boolean` | No | Si es true, el worker bloquea ejecucion sin valor |
+| `default` | `any` | No | Valor por defecto |
+| `description` | `string` | No | Ayuda en UI |
+| `enum` | `array` | No | Valores permitidos |
+| `items` | `object` | No | Schema de item para arrays |
+
+### outputSchema: formato
+
+| Propiedad | Tipo | Obligatorio |
+|---|---|---|
+| `type` | `string` | Recomendado |
+
+---
+
+## Execute: parametros de entrada
+
+La funcion `execute` recibe:
+
+| Parametro | Tipo | Obligatorio | Origen |
+|---|---|---|---|
+| `nodeType` | `string` | No | Tipo solicitado |
+| `inputs` | `object` | Si (practico) | Datos del nodo en el flujo |
+| `runId` | `string` | No | ID de ejecucion |
+| `nodeId` | `string` | No | ID del nodo en el flujo |
+
+Payload de ejemplo:
+
+```json
+{
+  "nodeType": "mi-nodo",
+  "inputs": {
+    "campo1": "valor",
+    "campo2": 10
   },
-  outputSchema: {
-    resultado: { type: 'string' },
-    processedAt: { type: 'string' }
-  }
-};
-
-export async function execute({ inputs, runId, nodeId }) {
-  const resultado = `Processado: ${inputs.campo1} (x${inputs.campo2})`;
-
-  return {
-    status: 'success',
-    logs: [
-      `Recebido: campo1="${inputs.campo1}", campo2=${inputs.campo2}`,
-      `Resultado: ${resultado}`
-    ],
-    outputs: {
-      resultado,
-      processedAt: new Date().toISOString()
-    },
-    artifacts: []
-  };
+  "runId": "run_123",
+  "nodeId": "node_abc"
 }
 ```
 
 ---
 
-## Ejemplo Completo: Hash Generator
+## Execute: retorno (obligatorio vs recomendado)
 
-Este es el nodo de ejemplo que QANode crea automáticamente en la primera ejecución:
+### Retorno completo recomendado
+
+| Campo | Tipo | Obligatorio | Nota |
+|---|---|---|---|
+| `status` | `string` | Obligatorio | `success` o `failed` |
+| `logs` | `string[]` | Recomendado | Logs de diagnostico |
+| `outputs` | `object` | Recomendado | Datos de salida del nodo |
+| `artifacts` | `array` | Recomendado | Archivos (screenshot/pdf/file/etc.) |
+| `error` | `object` | Cuando failed | Ej: `{ "message": "..." }` |
+
+### Comportamiento real del runtime local
+
+- Si retorna objeto con `status`, se usa tal cual.
+- Si retorna objeto sin `status`, el runtime puede envolver como `status: "success"` y usarlo como `outputs`.
+- Si `execute` lanza error, runtime retorna `status: "failed"` con `error.message`.
+
+---
+
+## Ejemplo Correcto `.node.js` (CommonJS)
 
 ```javascript
-// sample-hash-node/sample-hash.node.js
-
-import crypto from 'crypto';
-
-export const manifest = {
-  type: 'sample-hash',
-  name: 'Sample Hash Generator',
-  category: 'Custom Nodes',
-  inputSchema: {
-    text: {
-      type: 'string',
-      required: true,
-      description: 'Text to hash'
+// mi-nodo/mi-nodo.node.js
+module.exports = {
+  manifest: {
+    type: "mi-nodo",
+    name: "Mi Nodo",
+    category: "Custom",
+    timeoutMs: 600000,
+    inputSchema: {
+      texto: { type: "string", required: true, description: "Texto de entrada" },
+      repetir: { type: "number", default: 1 }
     },
-    algorithm: {
-      type: 'string',
-      enum: ['md5', 'sha256', 'sha512'],
-      default: 'sha256',
-      description: 'Hash algorithm'
+    outputSchema: {
+      resultado: { type: "string" },
+      processedAt: { type: "string" }
     }
   },
-  outputSchema: {
-    hash: { type: 'string' },
-    algorithm: { type: 'string' },
-    timestamp: { type: 'string' }
+  async execute({ inputs = {}, runId, nodeId }) {
+    const texto = String(inputs.texto || "");
+    const repetir = Number(inputs.repetir || 1);
+    const resultado = texto.repeat(Math.max(1, repetir));
+
+    return {
+      status: "success",
+      logs: [
+        `runId=${runId || "n/a"} nodeId=${nodeId || "n/a"}`,
+        `texto=${texto}`,
+        `repetir=${repetir}`
+      ],
+      outputs: {
+        resultado,
+        processedAt: new Date().toISOString()
+      },
+      artifacts: []
+    };
   }
 };
-
-export async function execute({ inputs }) {
-  const { text, algorithm = 'sha256' } = inputs;
-  const hash = crypto.createHash(algorithm).update(text).digest('hex');
-
-  return {
-    status: 'success',
-    logs: [
-      `Input: "${text.substring(0, 50)}"`,
-      `Algorithm: ${algorithm}`,
-      `Hash: ${hash}`
-    ],
-    outputs: {
-      hash,
-      algorithm,
-      timestamp: new Date().toISOString()
-    },
-    artifacts: []
-  };
-}
 ```
 
 ---
 
-## Hot-Reload
-
-QANode monitorea la carpeta de nodos personalizados y **recarga automáticamente** cuando detecta cambios:
-
-- **Intervalo de verificación**: 1.5 segundos
-- **Detección**: Basada en fecha de modificación y tamaño del archivo
-- **Recarga**: Automática, sin necesidad de reiniciar QANode
-
-### Flujo de Desarrollo
-
-1. Crea o edita un archivo `.node.js` en la carpeta de nodos
-2. Guarda el archivo
-3. En ~1.5 segundos, QANode detecta el cambio
-4. El nodo actualizado aparece en la paleta del editor
-
-> **Consejo:** Abre la consola de QANode (DevTools) para ver los logs de recarga:
-> ```
-> [CustomProvider] Reloaded: meu-no.node.js (2 nodes)
-> ```
-
----
-
-## Usando Dependencias NPM
-
-Los nodos locales pueden usar módulos nativos de Node.js (`crypto`, `path`, `fs`, etc.) directamente. Para dependencias npm externas, cada nodo tiene su propio `package.json`:
-
-```
-custom nodes/
-└── formatar-data/
-    ├── formatar-data.node.js   # Definición del nodo
-    ├── date-helpers.js         # Auxiliar (sin .node.)
-    └── package.json            # Dependencias del nodo
-```
-
-```bash
-cd "%USERPROFILE%\Documents\QANode\custom nodes\formatar-data"
-npm init -y
-npm install dayjs
-```
+## Ejemplo Correcto `.node.mjs` (ESM)
 
 ```javascript
-// formatar-data/formatar-data.node.js
-import dayjs from 'dayjs';
-
+// mi-nodo-mjs/mi-nodo-mjs.node.mjs
 export const manifest = {
-  type: 'formatar-data',
-  name: 'Formatar Data',
+  type: "mi-nodo-mjs",
+  name: "Mi Nodo MJS",
+  category: "Custom",
   inputSchema: {
-    data: { type: 'string', required: true },
-    formato: { type: 'string', default: 'DD/MM/YYYY' }
+    texto: { type: "string", required: true }
   },
   outputSchema: {
-    formatted: { type: 'string' }
+    resultado: { type: "string" }
   }
 };
 
-export async function execute({ inputs }) {
-  const formatted = dayjs(inputs.data).format(inputs.formato);
+export async function execute({ inputs = {} }) {
+  const resultado = String(inputs.texto || "").toUpperCase();
   return {
-    status: 'success',
-    logs: [`${inputs.data} → ${formatted}`],
-    outputs: { formatted },
+    status: "success",
+    logs: [`resultado=${resultado}`],
+    outputs: { resultado },
     artifacts: []
   };
 }
@@ -220,24 +208,92 @@ export async function execute({ inputs }) {
 
 ---
 
-## Diferencias: Nodos Locales vs Proveedor HTTP
+## Artifacts (formato)
 
-| Aspecto | Nodos Locales | Proveedor HTTP |
-|---------|---------------|----------------|
-| **Configuración** | Crear archivo en la carpeta | Crear y ejecutar un servidor |
-| **Lenguaje** | Solo JavaScript | Cualquier lenguaje |
-| **Hot-Reload** | Automático | Automático |
-| **Disponibilidad** | Solo versión desktop | Solo Enterprise |
-| **Despliegue** | Solo local | Puede ser remoto |
-| **Dependencias** | npm (local) | Cualquier gestor |
+Cada item en `artifacts` puede ser:
+
+```json
+{
+  "type": "screenshot",
+  "name": "evidencia.png",
+  "base64": "iVBORw0KGgoAAA..."
+}
+```
+
+Campos comunes:
+
+- `type`: `screenshot`, `pdf`, `video`, `file`
+- `name`: nombre del archivo
+- `base64`: contenido en base64
+- `path`: opcional cuando ya existe ruta externa
 
 ---
 
-## Consejos
+## Como Verificar Errores de Importacion
 
-- Usa la convención `*.node.js` — QANode solo detecta archivos con esta extensión. Los archivos auxiliares **no** deben usar `.node.` en el nombre
-- **Una carpeta por nodo** — cada nodo con su `.node.js`, auxiliares y `package.json`
-- El campo `category` en el manifiesto controla en qué grupo aparece el nodo en la paleta
-- Usa `console.log()` en execute para depuración — las salidas aparecen en la consola de Electron
-- Comienza con el nodo de ejemplo (sample-hash) como plantilla
-- Para operaciones largas, define `timeoutMs` en el manifiesto (predeterminado: 30 min, ej: `timeoutMs: 1800000` para 30 min)
+### 1) Prueba por provider local
+
+1. Abre **Configuraciones > Providers**
+2. Prueba `Desktop Local JS Provider`
+3. Si el nodo no aparece, no cargo
+
+### 2) Log detallado del desktop
+
+Archivo:
+
+```text
+%APPDATA%\@qanode\desktop\desktop-main.log
+```
+
+Busca:
+
+- `Failed loading "...archivo...": ...`
+- `Cannot find package '...'`
+- `Unexpected token 'export'`
+
+### 3) Verificacion por PowerShell
+
+```powershell
+$providers = Invoke-RestMethod -Uri "http://127.0.0.1:30000/api/providers"
+$p = $providers | Where-Object { $_.name -eq "Desktop Local JS Provider" }
+Invoke-RestMethod -Uri ($p.baseUrl + "/manifest")
+Invoke-RestMethod -Method Post -Uri ($p.baseUrl + "/reload")
+Invoke-RestMethod -Uri ($p.baseUrl + "/health")
+```
+
+### 4) Prueba de ejecucion directa
+
+```powershell
+Invoke-RestMethod -Method Post `
+  -Uri ($p.baseUrl + "/execute") `
+  -ContentType "application/json" `
+  -Body '{"nodeType":"mi-nodo","inputs":{"texto":"ok"}}'
+```
+
+---
+
+## Errores Mas Comunes
+
+- `Cannot find package 'x' imported from ...`
+  - Falta instalar dependencia en la carpeta del nodo
+
+- `Unexpected token 'export'` en `.node.js`
+  - Mezcla incorrecta CJS/ESM para la extension
+
+- Nodo ausente en `/manifest`
+  - Falta `manifest`
+  - Falta `execute` o no es funcion
+  - Falta/invalido `manifest.type`
+  - Falta/invalido `manifest.name`
+
+---
+
+## Checklist Final de Calidad
+
+- Extension correcta (`.node.js`, `.node.mjs`, `.node.cjs`)
+- `manifest.type` unico
+- `manifest.name` claro
+- `inputSchema` y `outputSchema` definidos
+- `execute` con manejo de errores
+- Retorno con `status`, `logs`, `outputs`, `artifacts`
+- Dependencias instaladas en carpeta del nodo

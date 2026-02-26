@@ -1,174 +1,206 @@
-# Versión de Escritorio
+# Version de Escritorio
 
-La versión de escritorio de QANode es una aplicación **Community Edition** que no tiene restricciones en su núcleo principal de flujos.
-
----
-
-## Ventajas de la Versión de Escritorio
-
-| Característica | Descripción |
-|----------------|-------------|
-| **Instalación Simple** | Un único instalador, sin dependencias externas |
-| **Base de Datos Integrada** | PostgreSQL integrado, sin necesidad de configuración |
-| **Nodos Locales** | Cree nodos personalizados como archivos locales (hot-reload) |
-| **Todo Integrado** | Frontend, API, Worker y base de datos en una sola app |
-| **Portátil** | Funciona sin conexión, sin servidor |
+QANode Desktop es una aplicacion **Community Edition** sin restricciones en las funciones principales de flujo.
 
 ---
 
-## Instalación
+## Ventajas del Escritorio
 
-Consulte la guía de [Instalación](../guia-inicio/instalacion.md) para obtener instrucciones detalladas.
+| Caracteristica | Descripcion |
+|---|---|
+| **Instalacion simple** | Un instalador unico, sin dependencias externas |
+| **Base de datos embebida** | PostgreSQL integrado, sin configuracion manual |
+| **Nodos locales** | Crear nodos personalizados como archivos locales (hot-reload) |
+| **Todo en uno** | Frontend, API, Worker y base de datos en una sola app |
+| **Portable** | Funciona offline, sin servidor |
 
-### Requisitos Mínimos
+---
+
+## Instalacion
+
+Consulta [Instalacion](../guia-inicio/instalacion.md) para instrucciones completas.
+
+### Requisitos Minimos
 
 - **Windows** 10/11 (64-bit)
-- **RAM**: 4 GB mínimo (8 GB recomendado)
-- **Disco**: 500 MB para instalación + espacio para datos
+- **RAM**: 4 GB minimo (8 GB recomendado)
+- **Disco**: 500 MB para instalacion + espacio para datos
 
 ---
 
-## Primera Ejecución
+## Primera Ejecucion
 
-En la primera ejecución, QANode:
+En el primer inicio, QANode:
 
-1. Muestra una **pantalla de bienvenida** con progreso
-2. Inicializa el **PostgreSQL integrado**
-3. Ejecuta las **migraciones** (crea tablas)
-4. Inicia el **servidor de la API**
-5. Abre la **interfaz principal**
+1. Muestra progreso en splash screen
+2. Inicializa PostgreSQL embebido
+3. Ejecuta migraciones (crea tablas)
+4. Inicia servidor API
+5. Abre la interfaz principal
 
-<!-- ![Pantalla de bienvenida](../../assets/images/splash-screen.png) -->
-*Imagen: Pantalla de bienvenida mostrando el progreso de inicialización con barra de estado*
-
-> La primera inicialización puede tomar algunos segundos adicionales mientras se prepara la base de datos.
+> La primera inicializacion puede tardar algunos segundos extra mientras termina la preparacion de la base de datos.
 
 ---
 
 ## Estructura de Datos
 
-QANode almacena datos en la carpeta del usuario:
+QANode guarda datos en carpetas de usuario:
 
-```
+```text
 %APPDATA%\QANode\
-├── pg-data/              # Datos del PostgreSQL integrado
-├── storage/              # Artefactos (capturas de pantalla, PDFs)
-└── logs/                 # Registros de la aplicación
+├── pg-data/              # Datos de PostgreSQL embebido
+├── storage/              # Artefactos (screenshots, PDFs)
+└── logs/                 # Logs de la app
 ```
 
-```
+```text
 %USERPROFILE%\Documents\QANode\
 └── custom nodes/         # Nodos personalizados locales
     └── sample-hash-node/ # Nodo de ejemplo
 ```
 
-> **Importante:** No modifique manualmente los archivos en `pg-data/`.
+> Importante: no modifiques manualmente archivos dentro de `pg-data/`.
 
 ---
 
 ## Nodos Personalizados Locales
 
-La versión de escritorio incluye soporte para **nodos locales** — archivos JavaScript que son detectados y cargados automáticamente.
+Desktop soporta nodos locales: archivos JavaScript detectados y cargados automaticamente.
 
 ### Carpeta de Nodos
 
-```
+```text
 %USERPROFILE%\Documents\QANode\custom nodes\
 ```
 
-### Creando un Nodo Local
+### Crear un Nodo Local
 
-1. Cree un archivo con extensión `.node.js` en la carpeta anterior
-2. Exporte `manifest` y `execute`
-3. QANode lo detecta automáticamente en ~1.5 segundos
+1. Crea un archivo con extension `.node.js`, `.node.mjs` o `.node.cjs`
+2. Exporta `manifest` y `execute`
+3. QANode detecta cambios automaticamente en ~1.5 segundos
+
+### Ejemplo: `.node.js` (CommonJS)
 
 ```javascript
-// meu-no.node.js
+// mi-nodo.node.js
+module.exports = {
+  manifest: {
+    type: 'mi-nodo',
+    name: 'Mi Nodo',
+    category: 'Mis Nodos',
+    inputSchema: {
+      texto: { type: 'string', required: true },
+    },
+    outputSchema: {
+      resultado: { type: 'string' },
+    },
+  },
+  async execute({ inputs }) {
+    return {
+      status: 'success',
+      outputs: { resultado: String(inputs.texto || '').toUpperCase() },
+      logs: [`Procesado: ${inputs.texto}`],
+      artifacts: [],
+    };
+  },
+};
+```
+
+### Ejemplo: `.node.mjs` (ESM)
+
+```javascript
+// mi-nodo.node.mjs
 export const manifest = {
-  type: 'meu-no',
-  name: 'Meu Nó',
-  category: 'Meus Nós',
+  type: 'mi-nodo-mjs',
+  name: 'Mi Nodo MJS',
+  category: 'Mis Nodos',
   inputSchema: {
-    texto: { type: 'string', required: true }
+    texto: { type: 'string', required: true },
   },
   outputSchema: {
-    resultado: { type: 'string' }
-  }
+    resultado: { type: 'string' },
+  },
 };
 
 export async function execute({ inputs }) {
   return {
     status: 'success',
-    outputs: { resultado: inputs.texto.toUpperCase() },
-    logs: [`Processado: ${inputs.texto}`],
-    artifacts: []
+    outputs: { resultado: String(inputs.texto || '').toUpperCase() },
+    logs: [`Procesado: ${inputs.texto}`],
+    artifacts: [],
   };
 }
 ```
 
-> Para más detalles, consulte [Nodos Locales de Escritorio](../nodos-personalizados/nodos-locales-escritorio.md).
+> Detalles completos: [Nodos Locales Desktop](../nodos-personalizados/nodos-locales-escritorio.md).
 
 ---
 
-## Hot-Reload
+## Hot Reload
 
-El proveedor local monitorea la carpeta de nodos personalizados y recarga automáticamente cuando detecta cambios:
+El provider local monitorea la carpeta de nodos y recarga automaticamente:
 
 - **Intervalo**: 1.5 segundos
-- **Detección**: Fecha de modificación + tamaño del archivo
-- **Recarga**: Automática, sin reiniciar la app
-
-Ideal para el desarrollo rápido de nodos personalizados.
+- **Deteccion**: fecha de modificacion + tamano de archivo
+- **Recarga**: automatica, sin reiniciar la app
 
 ---
 
 ## Tema Nativo
 
-QANode de escritorio admite temas claro y oscuro que se integran con la barra de título nativa de Windows:
+Desktop soporta integracion con tema claro/oscuro:
 
-- **Tema Claro** — Interfaz clara con barra de título blanca
-- **Tema Oscuro** — Interfaz oscura con barra de título oscura
-
-El cambio de tema puede realizarse desde la interfaz y se sincroniza con la barra de título del sistema operativo.
+- **Claro**: interfaz clara con barra de titulo clara
+- **Oscuro**: interfaz oscura con barra de titulo oscura
 
 ---
 
-## Diferencias con la Versión Web
+## Escritorio vs Web
 
 | Aspecto | Escritorio | Web (Enterprise) |
-|---------|------------|------------------|
-| **Base de Datos** | PostgreSQL integrado | PostgreSQL externo |
-| **Instalación** | Instalador único | Manual (Node.js + PostgreSQL) |
-| **Nodos Locales** | Admitidos (hot-reload) | Solo proveedores HTTP |
-| **Multiusuario** | Uso individual | Equipo compartido |
-| **Red** | Funciona sin conexión | Requiere red |
-| **Actualizaciones** | Instalador manual | Git pull + rebuild |
+|---|---|---|
+| Base de datos | PostgreSQL embebido | PostgreSQL externo |
+| Instalacion | Instalador unico | Manual (Node.js + PostgreSQL) |
+| Nodos locales | Soportado | Solo providers HTTP |
+| Multiusuario | Uso individual | Uso en equipo |
+| Red | Funciona offline | Requiere red |
+| Actualizaciones | Instalador | Git pull + rebuild |
 
 ---
 
-## Solución de Problemas
+## Solucion de Problemas
 
 ### La app no inicia
 
-- Verifique que no haya otra instancia en ejecución
-- Intente ejecutar como administrador
-- Verifique que el puerto 5432 no esté en uso (un PostgreSQL externo puede generar conflictos)
+- Verifica que no haya otra instancia ejecutandose
+- Prueba ejecutar como administrador
+- Revisa conflictos de puertos
 
-### La base de datos no inicializa
+### La base de datos no inicia
 
-- La carpeta `%APPDATA%\QANode\pg-data` puede estar dañada
-- Intente renombrar/eliminar la carpeta y reiniciar (los datos se perderán)
+- `%APPDATA%\QANode\pg-data` puede estar corrupta
+- Renombra/elimina la carpeta y reinicia (habra perdida de datos)
 
 ### Los nodos locales no aparecen
 
-- Verifique que el archivo tenga extensión `.node.js`, `.node.mjs` o `.node.cjs`
-- Verifique que exporte `manifest` y `execute`
-- Abra las DevTools (Ctrl+Shift+I) para ver los registros de error
+- Verifica extension: `.node.js`, `.node.mjs`, `.node.cjs`
+- Verifica exports: `manifest` y `execute`
+- Para `.node.js`, usa CommonJS (`module.exports`) o configura `type: "module"` en `package.json`
+- Abre `%APPDATA%\@qanode\desktop\desktop-main.log` y busca `Failed loading`
+
+### Verificacion rapida de errores de importacion
+
+1. Abre **Configuraciones > Providers** y prueba `Desktop Local JS Provider`
+2. Revisa `%APPDATA%\@qanode\desktop\desktop-main.log`
+3. Busca mensajes como:
+- `Failed loading ".../tu-nodo.node.mjs": Cannot find package 'x'`
+- `Unexpected token 'export'` (normalmente `.node.js` con sintaxis ESM sin `type: "module"`)
 
 ---
 
 ## Consejos
 
-- Use la versión de escritorio para **desarrollo y pruebas individuales**
-- Aproveche los **nodos locales** para prototipado rápido
-- El **hot-reload** elimina la necesidad de reiniciar durante el desarrollo
+- Usa `.node.js` con CommonJS para compatibilidad simple
+- Usa `.node.mjs` cuando necesites ESM explicito
+- Mantén una carpeta por nodo con su `package.json`
+- Aprovecha hot-reload para iterar rapido

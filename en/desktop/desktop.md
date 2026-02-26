@@ -1,174 +1,206 @@
 # Desktop Version
 
-The QANode desktop version is a **Community Edition** application with no restrictions on its core flow functionality.
+QANode Desktop is a **Community Edition** application with no restrictions on core flow features.
 
 ---
 
-## Advantages of the Desktop Version
+## Desktop Advantages
 
 | Feature | Description |
-|---------|-------------|
-| **Simple Installation** | A single installer, no external dependencies |
-| **Embedded Database** | Integrated PostgreSQL, no configuration needed |
-| **Local Nodes** | Create custom nodes as local files (hot-reload) |
-| **All-in-One** | Frontend, API, Worker, and database in a single app |
+|---|---|
+| **Simple Installation** | Single installer, no external dependencies |
+| **Embedded Database** | Integrated PostgreSQL, no manual setup |
+| **Local Nodes** | Build custom nodes as local files (hot-reload) |
+| **All-in-One** | Frontend, API, Worker, and database in one app |
 | **Portable** | Works offline, no server required |
 
 ---
 
 ## Installation
 
-Refer to the [Installation](../getting-started/installation.md) guide for detailed instructions.
+See [Installation](../getting-started/installation.md) for full steps.
 
 ### Minimum Requirements
 
 - **Windows** 10/11 (64-bit)
 - **RAM**: 4 GB minimum (8 GB recommended)
-- **Disk**: 500 MB for installation + space for data
+- **Disk**: 500 MB for installation + data space
 
 ---
 
 ## First Run
 
-On the first run, QANode:
+On first startup, QANode:
 
-1. Displays a **splash screen** with progress
-2. Initializes the **embedded PostgreSQL**
-3. Runs **migrations** (creates tables)
-4. Starts the **API server**
-5. Opens the **main interface**
+1. Shows splash progress
+2. Initializes embedded PostgreSQL
+3. Runs migrations (creates tables)
+4. Starts API server
+5. Opens main UI
 
-<!-- ![Splash screen](../../assets/images/splash-screen.png) -->
-*Image: Splash screen showing initialization progress with status bar*
-
-> The first initialization may take a few extra seconds while the database is prepared.
+> First initialization may take a few extra seconds while database setup completes.
 
 ---
 
 ## Data Structure
 
-QANode stores data in the user folder:
+QANode stores data under user folders:
 
-```
+```text
 %APPDATA%\QANode\
 ├── pg-data/              # Embedded PostgreSQL data
 ├── storage/              # Artifacts (screenshots, PDFs)
-└── logs/                 # Application logs
+└── logs/                 # App logs
 ```
 
-```
+```text
 %USERPROFILE%\Documents\QANode\
 └── custom nodes/         # Local custom nodes
     └── sample-hash-node/ # Sample node
 ```
 
-> **Important:** Do not manually modify files in `pg-data/`.
+> Important: do not manually modify files under `pg-data/`.
 
 ---
 
 ## Local Custom Nodes
 
-The desktop version includes support for **local nodes** — JavaScript files that are automatically detected and loaded.
+Desktop supports local nodes: JavaScript files automatically detected and loaded.
 
 ### Nodes Folder
 
-```
+```text
 %USERPROFILE%\Documents\QANode\custom nodes\
 ```
 
 ### Creating a Local Node
 
-1. Create a file with the `.node.js` extension in the folder above
+1. Create a file with extension `.node.js`, `.node.mjs`, or `.node.cjs`
 2. Export `manifest` and `execute`
-3. QANode automatically detects it in ~1.5 seconds
+3. QANode auto-detects changes in ~1.5 seconds
+
+### Example: `.node.js` (CommonJS)
 
 ```javascript
-// meu-no.node.js
+// my-node.node.js
+module.exports = {
+  manifest: {
+    type: 'my-node',
+    name: 'My Node',
+    category: 'My Nodes',
+    inputSchema: {
+      text: { type: 'string', required: true },
+    },
+    outputSchema: {
+      result: { type: 'string' },
+    },
+  },
+  async execute({ inputs }) {
+    return {
+      status: 'success',
+      outputs: { result: String(inputs.text || '').toUpperCase() },
+      logs: [`Processed: ${inputs.text}`],
+      artifacts: [],
+    };
+  },
+};
+```
+
+### Example: `.node.mjs` (ESM)
+
+```javascript
+// my-node.node.mjs
 export const manifest = {
-  type: 'meu-no',
-  name: 'Meu Nó',
-  category: 'Meus Nós',
+  type: 'my-node-mjs',
+  name: 'My Node MJS',
+  category: 'My Nodes',
   inputSchema: {
-    texto: { type: 'string', required: true }
+    text: { type: 'string', required: true },
   },
   outputSchema: {
-    resultado: { type: 'string' }
-  }
+    result: { type: 'string' },
+  },
 };
 
 export async function execute({ inputs }) {
   return {
     status: 'success',
-    outputs: { resultado: inputs.texto.toUpperCase() },
-    logs: [`Processado: ${inputs.texto}`],
-    artifacts: []
+    outputs: { result: String(inputs.text || '').toUpperCase() },
+    logs: [`Processed: ${inputs.text}`],
+    artifacts: [],
   };
 }
 ```
 
-> For full details, see [Desktop Local Nodes](../custom-nodes/desktop-local-nodes.md).
+> Full details: [Local Desktop Nodes](../custom-nodes/local-desktop-nodes.md).
 
 ---
 
-## Hot-Reload
+## Hot Reload
 
-The local provider monitors the custom nodes folder and automatically reloads when it detects changes:
+Local provider monitors the custom nodes folder and reloads automatically:
 
 - **Interval**: 1.5 seconds
-- **Detection**: Modification date + file size
-- **Reload**: Automatic, without restarting the app
-
-Ideal for rapid development of custom nodes.
+- **Detection**: file modified time + size
+- **Reload**: automatic, no app restart
 
 ---
 
 ## Native Theme
 
-QANode desktop supports light and dark themes that integrate with the native Windows title bar:
+Desktop supports native light/dark theme integration:
 
-- **Light Theme** — Light interface with white title bar
-- **Dark Theme** — Dark interface with dark title bar
-
-The theme can be changed through the interface and synchronizes with the operating system's title bar.
+- **Light**: light UI with light title bar
+- **Dark**: dark UI with dark title bar
 
 ---
 
-## Differences from the Web Version
+## Desktop vs Web
 
 | Aspect | Desktop | Web (Enterprise) |
-|--------|---------|------------------|
-| **Database** | Embedded PostgreSQL | External PostgreSQL |
-| **Installation** | Single installer | Manual (Node.js + PostgreSQL) |
-| **Local Nodes** | Supported (hot-reload) | HTTP providers only |
-| **Multi-user** | Individual use | Shared team |
-| **Network** | Works offline | Requires network |
-| **Updates** | Manual installer | Git pull + rebuild |
+|---|---|---|
+| Database | Embedded PostgreSQL | External PostgreSQL |
+| Installation | Single installer | Manual (Node.js + PostgreSQL) |
+| Local Nodes | Supported | HTTP providers only |
+| Multi-user | Single-user | Team usage |
+| Network | Offline capable | Network required |
+| Updates | Installer update | Git pull + rebuild |
 
 ---
 
 ## Troubleshooting
 
-### The app does not start
+### App does not start
 
-- Check that another instance is not already running
+- Verify another instance is not running
 - Try running as administrator
-- Check that port 5432 is not in use (external PostgreSQL may conflict)
+- Check port conflicts
 
 ### Database does not initialize
 
-- The `%APPDATA%\QANode\pg-data` folder may be corrupted
-- Try renaming/removing the folder and restarting (data will be lost)
+- `%APPDATA%\QANode\pg-data` may be corrupted
+- Rename/remove folder and restart (data loss expected)
 
 ### Local nodes do not appear
 
-- Check that the file has the `.node.js`, `.node.mjs`, or `.node.cjs` extension
-- Check that it exports `manifest` and `execute`
-- Open DevTools (Ctrl+Shift+I) to view error logs
+- Check extension: `.node.js`, `.node.mjs`, `.node.cjs`
+- Check exports: `manifest` and `execute`
+- For `.node.js`, use CommonJS (`module.exports`) or configure `type: "module"` in `package.json`
+- Open `%APPDATA%\@qanode\desktop\desktop-main.log` and search `Failed loading`
+
+### Quick import error verification
+
+1. Open **Settings > Providers** and test `Desktop Local JS Provider`
+2. Check `%APPDATA%\@qanode\desktop\desktop-main.log`
+3. Look for messages like:
+- `Failed loading ".../your-node.node.mjs": Cannot find package 'x'`
+- `Unexpected token 'export'` (usually `.node.js` with ESM syntax and no `type: "module"`)
 
 ---
 
 ## Tips
 
-- Use the desktop version for **individual development and testing**
-- Take advantage of **local nodes** for rapid prototyping
-- **Hot-reload** eliminates the need to restart during development
+- Use `.node.js` with CommonJS for simple compatibility
+- Use `.node.mjs` when you need explicit ESM
+- Keep one folder per node with its own `package.json`
+- Use hot-reload for fast iteration

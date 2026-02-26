@@ -39,9 +39,9 @@ Crea un servidor HTTP que implemente el contrato de API. Puede estar escrito en:
 
 > Consulta [Creando un Proveedor](creando-proveedor-enterprise.md) para la guía paso a paso.
 
-### 2. Nodos Locales en la Versión Desktop - Community Edition
+### 2. Nodos Locales en Version Desktop - Community Edition
 
-En la versión desktop, puedes crear archivos `.node.js` en la carpeta de nodos personalizados. QANode los detecta automáticamente y pone los nodos a disposición sin necesidad de un servidor HTTP separado.
+En desktop puedes crear archivos `.node.js`, `.node.mjs` o `.node.cjs` en la carpeta de nodos personalizados. QANode los detecta automaticamente y expone los nodos sin necesidad de un servidor HTTP separado.
 
 > Consulta [Nodos Locales Desktop](nodos-locales-escritorio.md) para más detalles.
 

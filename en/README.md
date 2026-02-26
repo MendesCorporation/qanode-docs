@@ -80,6 +80,7 @@ Welcome to the official documentation of **QANode Community Edition**, the test 
 | [API Contract](custom-nodes/api-contract.md) | Required endpoints and data format |
 | [Examples](custom-nodes/enterprise-examples.md) | Examples in Node.js, Python, Java, C#, and Go |
 | [Desktop: Local Nodes](custom-nodes/local-desktop-nodes.md) | Creating local nodes in the desktop version |
+| [QANode.MD (AI)](../QANode.MD) | AI guide to build nodes and troubleshoot issues |
 
 ---
 

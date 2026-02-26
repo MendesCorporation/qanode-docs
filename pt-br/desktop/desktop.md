@@ -1,6 +1,6 @@
 # Versão Desktop
 
-A versão desktop do QANode é um aplicativo **Community Edition** que não tem restrição no seu core principal de fluxos.
+A versão desktop do QANode é um aplicativo **Community Edition** sem restrição no core principal de fluxos.
 
 ---
 
@@ -12,7 +12,7 @@ A versão desktop do QANode é um aplicativo **Community Edition** que não tem 
 | **Banco Embutido** | PostgreSQL integrado, sem necessidade de configuração |
 | **Nós Locais** | Crie nós customizados como arquivos locais (hot-reload) |
 | **Tudo Integrado** | Frontend, API, Worker e banco em um único app |
-| **Portável** | Funciona offline, sem servidor |
+| **Portátil** | Funciona offline, sem servidor |
 
 ---
 
@@ -32,14 +32,11 @@ Consulte o guia de [Instalação](../guia-inicio/instalacao.md) para instruçõe
 
 Na primeira execução, o QANode:
 
-1. Exibe uma **tela de splash** com progresso
-2. Inicializa o **PostgreSQL embutido**
-3. Executa as **migrations** (cria tabelas)
-4. Inicia o **servidor da API**
-5. Abre a **interface principal**
-
-<!-- ![Splash screen](../../assets/images/splash-screen.png) -->
-*Imagem: Tela de splash mostrando progresso da inicialização com barra de status*
+1. Exibe uma tela de splash com progresso
+2. Inicializa o PostgreSQL embutido
+3. Executa as migrations (cria tabelas)
+4. Inicia o servidor da API
+5. Abre a interface principal
 
 > A primeira inicialização pode levar alguns segundos adicionais enquanto o banco é preparado.
 
@@ -49,59 +46,88 @@ Na primeira execução, o QANode:
 
 O QANode armazena dados na pasta do usuário:
 
-```
+```text
 %APPDATA%\QANode\
 ├── pg-data/              # Dados do PostgreSQL embutido
 ├── storage/              # Artefatos (screenshots, PDFs)
 └── logs/                 # Logs da aplicação
 ```
 
-```
+```text
 %USERPROFILE%\Documents\QANode\
 └── custom nodes/         # Nós customizados locais
     └── sample-hash-node/ # Nó de exemplo
 ```
 
-> **Importante:** Não modifique manualmente os arquivos em `pg-data/`.
+> Importante: não modifique manualmente os arquivos em `pg-data/`.
 
 ---
 
 ## Nós Customizados Locais
 
-A versão desktop inclui suporte a **nós locais** — arquivos JavaScript que são detectados e carregados automaticamente.
+A versão desktop inclui suporte a nós locais: arquivos JavaScript detectados e carregados automaticamente.
 
 ### Pasta dos Nós
 
-```
+```text
 %USERPROFILE%\Documents\QANode\custom nodes\
 ```
 
 ### Criando um Nó Local
 
-1. Crie um arquivo com extensão `.node.js` na pasta acima
+1. Crie um arquivo com extensão `.node.js`, `.node.mjs` ou `.node.cjs`
 2. Exporte `manifest` e `execute`
 3. O QANode detecta automaticamente em ~1.5 segundos
 
+### Exemplo: `.node.js` (CommonJS)
+
 ```javascript
 // meu-no.node.js
+module.exports = {
+  manifest: {
+    type: 'meu-no',
+    name: 'Meu Nó',
+    category: 'Meus Nós',
+    inputSchema: {
+      texto: { type: 'string', required: true },
+    },
+    outputSchema: {
+      resultado: { type: 'string' },
+    },
+  },
+  async execute({ inputs }) {
+    return {
+      status: 'success',
+      outputs: { resultado: String(inputs.texto || '').toUpperCase() },
+      logs: [`Processado: ${inputs.texto}`],
+      artifacts: [],
+    };
+  },
+};
+```
+
+### Exemplo: `.node.mjs` (ESM)
+
+```javascript
+// meu-no.node.mjs
 export const manifest = {
-  type: 'meu-no',
-  name: 'Meu Nó',
+  type: 'meu-no-mjs',
+  name: 'Meu Nó MJS',
   category: 'Meus Nós',
   inputSchema: {
-    texto: { type: 'string', required: true }
+    texto: { type: 'string', required: true },
   },
   outputSchema: {
-    resultado: { type: 'string' }
-  }
+    resultado: { type: 'string' },
+  },
 };
 
 export async function execute({ inputs }) {
   return {
     status: 'success',
-    outputs: { resultado: inputs.texto.toUpperCase() },
+    outputs: { resultado: String(inputs.texto || '').toUpperCase() },
     logs: [`Processado: ${inputs.texto}`],
-    artifacts: []
+    artifacts: [],
   };
 }
 ```
@@ -115,8 +141,8 @@ export async function execute({ inputs }) {
 O provedor local monitora a pasta de nós customizados e recarrega automaticamente quando detecta alterações:
 
 - **Intervalo**: 1.5 segundos
-- **Detecção**: Data de modificação + tamanho do arquivo
-- **Recarga**: Automática, sem reiniciar o app
+- **Detecção**: data de modificação + tamanho do arquivo
+- **Recarga**: automática, sem reiniciar o app
 
 Ideal para desenvolvimento rápido de nós customizados.
 
@@ -126,10 +152,8 @@ Ideal para desenvolvimento rápido de nós customizados.
 
 O QANode desktop suporta temas claro e escuro que se integram com a barra de título nativa do Windows:
 
-- **Tema Claro** — Interface clara com barra de título branca
-- **Tema Escuro** — Interface escura com barra de título escura
-
-A troca de tema pode ser feita pela interface e sincroniza com a barra de título do sistema operacional.
+- **Tema Claro**: interface clara com barra de título branca
+- **Tema Escuro**: interface escura com barra de título escura
 
 ---
 
@@ -152,23 +176,33 @@ A troca de tema pode ser feita pela interface e sincroniza com a barra de títul
 
 - Verifique se outra instância não está rodando
 - Tente executar como administrador
-- Verifique se a porta 5432 não está em uso (PostgreSQL externo pode conflitar)
+- Verifique conflito de portas
 
 ### Banco de dados não inicializa
 
 - A pasta `%APPDATA%\QANode\pg-data` pode estar corrompida
-- Tente renomear/remover a pasta e reiniciar (os dados serão perdidos)
+- Renomeie/remova a pasta e reinicie (os dados serão perdidos)
 
 ### Nós locais não aparecem
 
-- Verifique se o arquivo tem extensão `.node.js`, `.node.mjs` ou `.node.cjs`
-- Verifique se exporta `manifest` e `execute`
-- Abra o DevTools (Ctrl+Shift+I) para ver logs de erro
+- Verifique extensão: `.node.js`, `.node.mjs` ou `.node.cjs`
+- Verifique exportação de `manifest` e `execute`
+- Para `.node.js`, use CommonJS (`module.exports`) ou configure `type: "module"` no `package.json`
+- Abra `%APPDATA%\@qanode\desktop\desktop-main.log` e procure por `Failed loading`
+
+### Como verificar erro de importação rapidamente
+
+1. Abra **Configurações > Providers** e teste o provider `Desktop Local JS Provider`
+2. Veja o log em `%APPDATA%\@qanode\desktop\desktop-main.log`
+3. Procure mensagens como:
+- `Failed loading ".../seu-node.node.mjs": Cannot find package 'x'`
+- `Unexpected token 'export'` (geralmente `.node.js` em ESM sem `type: "module"`)
 
 ---
 
 ## Dicas
 
-- Use a versão desktop para **desenvolvimento e testes individuais**
-- Aproveite os **nós locais** para prototipagem rápida
-- O **hot-reload** elimina a necessidade de reiniciar durante o desenvolvimento
+- Use `.node.js` com CommonJS para evitar conflito de módulo
+- Use `.node.mjs` quando quiser ESM explícito
+- Mantenha uma pasta por nó com `package.json` próprio
+- Use o hot-reload para iterar rápido

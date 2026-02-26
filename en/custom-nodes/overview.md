@@ -41,7 +41,7 @@ Create an HTTP server that implements the API contract. It can be written in:
 
 ### 2. Local Nodes in Desktop Version - Community Edition
 
-In the desktop version, you can create `.node.js` files in the custom nodes folder. QANode automatically detects and makes the nodes available without needing a separate HTTP server.
+In desktop, you can create `.node.js`, `.node.mjs`, or `.node.cjs` files in the custom nodes folder. QANode automatically detects and exposes these nodes without a separate HTTP server.
 
 > See [Local Desktop Nodes](local-desktop-nodes.md) for details.
 
