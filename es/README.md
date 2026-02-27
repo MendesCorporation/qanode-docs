@@ -80,7 +80,7 @@ Bienvenido a la documentación oficial de **QANode Community Edition**, la plata
 | [Contrato de la API](nodos-personalizados/contrato-api.md) | Endpoints requeridos y formato de datos |
 | [Ejemplos](nodos-personalizados/ejemplos-enterprise.md) | Ejemplos en Node.js, Python, Java, C# y Go |
 | [Escritorio: Nodos Locales](nodos-personalizados/nodos-locales-escritorio.md) | Creando nodos locales en la versión escritorio |
-| [QANode.MD (IA)](QANode.MD) | Guia de IA para crear nodos y diagnosticar problemas |
+| [QANode.MD (IA)](nodos-personalizados/QANode.MD) | Guia de IA para crear nodos y diagnosticar problemas |
 
 ---
 

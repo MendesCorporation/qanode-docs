@@ -80,7 +80,7 @@ Bem-vindo à documentação oficial do **QANode Community Edition**, a plataform
 | [Contrato da API](nos-customizados/contrato-api.md) | Endpoints obrigatórios e formato de dados |
 | [Exemplos](nos-customizados/exemplos.md) | Exemplos em Node.js, Python, Java, C# e Go |
 | [Desktop: Nós Locais](nos-customizados/nos-locais-desktop.md) | Criando nós locais na versão desktop |
-| [QANode.MD (IA)](QANode.MD) | Guia para IA criar nós e diagnosticar problemas |
+| [QANode.MD (IA)](nos-customizados/QANode.MD) | Guia para IA criar nós e diagnosticar problemas |
 
 ---
 

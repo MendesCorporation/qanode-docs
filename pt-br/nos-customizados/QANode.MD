@@ -41,7 +41,7 @@ If .node.js uses ESM export without proper module config, import can fail with:
 Manifest fields:
 - Required:
   - type: string
-  - name: string
+  - name: string ex: (my-node)
 - Optional:
   - category: string
   - timeoutMs: number (milliseconds)
