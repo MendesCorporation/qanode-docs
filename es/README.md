@@ -41,6 +41,12 @@ Bienvenido a la documentación oficial de **QANode Community Edition**, la plata
 | [Web Flow](nodos/web/web-flow.md) | Automatización web con múltiples pasos y selectores CSS/XPath |
 | [Smart Locators](nodos/web/smart-locators.md) | Automatización web con localizadores semánticos de Playwright |
 
+### Mobile
+| Nodo | Descripción |
+|------|-------------|
+| [Mobile Flow](nodos/mobile/mobile-flow.md) | Automatización de apps Android e iOS con Appium |
+| [Inspector Mobile](nodos/mobile/inspector-mobile.md) | Grabación visual interactiva de pasos mobile |
+
 ### API
 | Nodo | Descripción |
 |------|-------------|

@@ -27,6 +27,46 @@ El nodo **Web Flow** permite automatizar interacciones con páginas web usando *
 | **Headless** | `boolean` | `true` | Ejecutar sin interfaz gráfica visible |
 | **Estrategia de Storage** | `inMemory` / `persisted` | `inMemory` | Persistir cookies/localStorage entre ejecuciones |
 | **Clave de Storage** | `string` | — | Identificador del storage persistido |
+| **Navegador** | `chromium` / `firefox` / `webkit` | `chromium` | Navegador a usar en la ejecución |
+| **Dispositivo** | `desktop` / `mobile` | `desktop` | Modo de emulación |
+| **Viewport** | preset o `custom` | `1920x1080` | Tamaño de ventana (modo Desktop) |
+| **Ancho / Alto** | `number` | — | Dimensiones personalizadas (cuando `custom`) |
+| **Modelo de Dispositivo** | string | `iPhone 14` | Dispositivo a emular (modo Mobile) |
+
+### Navegador
+
+| Valor | Navegador |
+|-------|-----------|
+| `chromium` | Chrome / Chromium (predeterminado) |
+| `firefox` | Firefox |
+| `webkit` | Safari / WebKit |
+
+> Firefox y WebKit se descargan automáticamente en el primer uso si no están instalados.
+
+### Dispositivo — Desktop
+
+Presets de viewport disponibles:
+
+| Preset | Resolución |
+|--------|------------|
+| Full HD (predeterminado) | 1920 × 1080 |
+| 2K | 2560 × 1440 |
+| 4K | 3840 × 2160 |
+| Laptop | 1440 × 900 |
+| HD | 1366 × 768 |
+| WXGA | 1280 × 720 |
+| XGA | 1024 × 768 |
+| Personalizado | ancho y alto libres |
+
+### Dispositivo — Mobile
+
+Usa perfiles reales de Playwright (viewport, user agent, escala de píxeles, touch). Modelos disponibles:
+
+**iOS:** iPhone SE, iPhone 12, iPhone 13, iPhone 14, iPhone 14 Pro, iPhone 15, iPhone 15 Pro, iPad Mini, iPad (gen 9), iPad Pro 11
+
+**Android:** Pixel 5, Pixel 7, Galaxy S8, Galaxy S9+, Galaxy Tab S4
+
+> En modo Mobile con Firefox, las opciones `isMobile` y `hasTouch` se eliminan automáticamente (no son compatibles con Firefox en Playwright). El viewport y el user agent del dispositivo se aplican igualmente.
 
 ### Modo de Sesión
 

@@ -27,6 +27,46 @@ The **Web Flow** node allows you to automate interactions with web pages using *
 | **Headless** | `boolean` | `true` | Run without a visible graphical interface |
 | **Storage Strategy** | `inMemory` / `persisted` | `inMemory` | Persist cookies/localStorage between executions |
 | **Storage Key** | `string` | — | Identifier for the persisted storage |
+| **Browser** | `chromium` / `firefox` / `webkit` | `chromium` | Browser to use for the execution |
+| **Device** | `desktop` / `mobile` | `desktop` | Emulation mode |
+| **Viewport** | preset or `custom` | `1920x1080` | Window size (Desktop mode) |
+| **Width / Height** | `number` | — | Custom dimensions (when `custom`) |
+| **Device Model** | string | `iPhone 14` | Device to emulate (Mobile mode) |
+
+### Browser
+
+| Value | Browser |
+|-------|---------|
+| `chromium` | Chrome / Chromium (default) |
+| `firefox` | Firefox |
+| `webkit` | Safari / WebKit |
+
+> Firefox and WebKit are downloaded automatically on first use if not already installed.
+
+### Device — Desktop
+
+Available viewport presets:
+
+| Preset | Resolution |
+|--------|------------|
+| Full HD (default) | 1920 × 1080 |
+| 2K | 2560 × 1440 |
+| 4K | 3840 × 2160 |
+| Laptop | 1440 × 900 |
+| HD | 1366 × 768 |
+| WXGA | 1280 × 720 |
+| XGA | 1024 × 768 |
+| Custom | free width and height |
+
+### Device — Mobile
+
+Uses real Playwright device profiles (viewport, user agent, pixel scale ratio, touch). Available models:
+
+**iOS:** iPhone SE, iPhone 12, iPhone 13, iPhone 14, iPhone 14 Pro, iPhone 15, iPhone 15 Pro, iPad Mini, iPad (gen 9), iPad Pro 11
+
+**Android:** Pixel 5, Pixel 7, Galaxy S8, Galaxy S9+, Galaxy Tab S4
+
+> When using Firefox with Mobile mode, the `isMobile` and `hasTouch` options are automatically stripped (not supported by Firefox in Playwright). Viewport and user agent from the device profile are still applied.
 
 ### Session Mode
 

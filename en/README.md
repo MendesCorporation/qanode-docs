@@ -41,6 +41,12 @@ Welcome to the official documentation of **QANode Community Edition**, the test 
 | [Web Flow](nodes/web/web-flow.md) | Web automation with multiple steps and CSS/XPath selectors |
 | [Smart Locators](nodes/web/smart-locators.md) | Web automation with Playwright semantic locators |
 
+### Mobile
+| Node | Description |
+|------|-------------|
+| [Mobile Flow](nodes/mobile/mobile-flow.md) | Android and iOS app automation with Appium |
+| [Mobile Inspector](nodes/mobile/mobile-inspector.md) | Interactive visual recording of mobile steps |
+
 ### API
 | Node | Description |
 |------|-------------|

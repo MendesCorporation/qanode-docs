@@ -29,6 +29,13 @@ Idêntica ao nó Web Flow:
 | **Headless** | `boolean` | `true` | Executar sem interface gráfica visível |
 | **Estratégia de Storage** | `inMemory` / `persisted` | `inMemory` | Persistir cookies/localStorage |
 | **Chave de Storage** | `string` | — | Identificador do storage persistido |
+| **Browser** | `chromium` / `firefox` / `webkit` | `chromium` | Navegador a usar na execução |
+| **Dispositivo** | `desktop` / `mobile` | `desktop` | Modo de emulação |
+| **Viewport** | preset ou `custom` | `1920x1080` | Tamanho da janela (modo Desktop) |
+| **Largura / Altura** | `number` | — | Dimensões customizadas (quando `custom`) |
+| **Modelo de Dispositivo** | string | `iPhone 14` | Dispositivo a emular (modo Mobile) |
+
+> As opções de Browser & Device são as mesmas do nó Web Flow — consulte a [documentação do Web Flow](web-flow.md#browser) para detalhes sobre presets de viewport e dispositivos mobile disponíveis.
 
 ---
 
