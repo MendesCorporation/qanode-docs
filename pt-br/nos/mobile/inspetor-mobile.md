@@ -89,6 +89,8 @@ No modo **Inspecionar**, clicar em um elemento **não envia o toque ao dispositi
 3. O inspetor detecta o elemento, extrai seus seletores e grava um passo `tap`
 4. A tela é atualizada automaticamente
 
+**Atalho de duplo toque:** segure `Shift` e clique no elemento para executar e gravar `double-tap`.
+
 ### Passo de Digitação (type)
 
 Após tocar em um campo de texto:

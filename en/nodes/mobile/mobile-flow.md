@@ -28,6 +28,16 @@ The Mobile Flow node requires an accessible **Appium** server:
 | **Own server** | Install manually: `npm install -g appium` + driver: `appium driver install uiautomator2` (Android) or `appium driver install xcuitest` (iOS) |
 | **Cloud (BrowserStack, etc.)** | No local Appium needed — use the provider credentials |
 
+#### Recommended versions (QANode 0.2.2+)
+
+```bash
+npm install -g appium@3.2.0
+appium driver install --source=npm appium-uiautomator2-driver@7.0.0
+appium driver install --source=npm appium-xcuitest-driver@10.25.0
+```
+
+> For iOS, XCUITest requires macOS with Xcode configured.
+
 ### Appium Drivers
 
 | Platform | Driver | Installation |

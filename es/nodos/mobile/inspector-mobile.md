@@ -91,6 +91,8 @@ En el modo **Inspeccionar**, hacer clic en un elemento **no envía el toque al d
 3. El inspector detecta el elemento, extrae sus selectores y graba un paso `tap`
 4. La pantalla se actualiza automáticamente
 
+**Atajo de doble toque:** mantén `Shift` presionado y haz clic en el elemento para ejecutar y grabar `double-tap`.
+
 ### Paso de Escritura (type)
 
 Después de tocar un campo de texto:

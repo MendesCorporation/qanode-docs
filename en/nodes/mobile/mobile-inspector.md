@@ -91,6 +91,8 @@ In **Inspect** mode, clicking an element **does not send the tap to the device**
 3. The inspector detects the element, extracts its selectors, and records a `tap` step
 4. The screen updates automatically
 
+**Double-tap shortcut:** hold `Shift` while clicking the element to execute and record `double-tap`.
+
 ### Type Step
 
 After tapping a text field:
