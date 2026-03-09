@@ -125,6 +125,46 @@ mongodb+srv://usuario:senha@cluster.mongodb.net/banco
 
 ---
 
+### Email
+
+Credencial para conexão com caixas de e-mail via IMAP. Usada pelo nó [Email Inbox](../nos/utilitarios/email-inbox.md).
+
+| Campo | Descrição |
+|-------|-----------|
+| **Nome** | Nome da credencial |
+| **Provedor** | `Gmail`, `Outlook` ou `Custom IMAP` |
+| **Auth Mode** | `Password / App Password` ou `OAuth2` |
+| **Email** | Endereço de e-mail da conta |
+| **IMAP Host** | Servidor IMAP (preenchido automaticamente para Gmail e Outlook) |
+| **IMAP Port** | Porta IMAP (padrão: 993) |
+| **Secure** | Usar TLS/SSL (padrão: true) |
+
+**Modo Password:**
+
+| Campo | Descrição |
+|-------|-----------|
+| **Password / App Password** | Senha da conta ou App Password gerada pelo provedor |
+
+> Para Gmail com senha, é obrigatório usar uma **App Password** — não a senha normal da conta. [Gerar App Password](https://myaccount.google.com/apppasswords)
+
+**Modo OAuth2:**
+
+| Campo | Descrição |
+|-------|-----------|
+| **Client ID** | ID do cliente OAuth registrado no provedor |
+| **Client Secret** | Segredo do cliente OAuth |
+| **Tenant ID** | Apenas para Outlook — ID do tenant Azure (padrão: `common`) |
+| **Scopes** | Escopos OAuth (opcional; padrão preenchido automaticamente) |
+| **OAuth Callback URI** | URI que deve ser cadastrada no console do provedor (somente leitura) |
+
+Após preencher Client ID e Secret, clique em **Connect OAuth (Browser)** para autorizar. Uma janela abrirá para login no provedor e, ao concluir, o Access Token e Refresh Token serão preenchidos automaticamente.
+
+> **Gmail:** cadastre o **OAuth Callback URI** exibido no campo como "URI de redirecionamento autorizado" no [Google Cloud Console](https://console.cloud.google.com/) → Credenciais → OAuth 2.0.
+
+> **Outlook:** cadastre o URI como "Redirect URI" no [Azure Portal](https://portal.azure.com/) → Registros de aplicativo → Autenticação.
+
+---
+
 ## Testando Conexão
 
 Antes de usar uma credencial, teste a conexão:

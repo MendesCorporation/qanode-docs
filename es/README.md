@@ -74,6 +74,7 @@ Bienvenido a la documentación oficial de **QANode Community Edition**, la plata
 | [Wait](nodos/utilidades/wait.md) | Espera un tiempo determinado o una condición |
 | [Stop and Fail](nodos/utilidades/stop-and-fail.md) | Detiene el flujo con estado de fallo |
 | [Custom JavaScript](nodos/utilidades/custom-javascript.md) | Ejecuta código JavaScript personalizado |
+| [Email Inbox](nodos/utilidades/email-inbox.md) | Espera y extrae correos, OTPs y enlaces vía IMAP |
 
 ---
 

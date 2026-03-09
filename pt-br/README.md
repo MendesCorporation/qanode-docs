@@ -74,6 +74,7 @@ Bem-vindo à documentação oficial do **QANode Community Edition**, a plataform
 | [Wait](nos/utilitarios/wait.md) | Aguarda por tempo ou condição |
 | [Stop and Fail](nos/utilitarios/stop-and-fail.md) | Interrompe o fluxo com status de falha |
 | [Custom JavaScript](nos/utilitarios/custom-javascript.md) | Executa código JavaScript customizado |
+| [Email Inbox](nos/utilitarios/email-inbox.md) | Aguarda e extrai e-mails, OTPs e links via IMAP |
 
 ---
 

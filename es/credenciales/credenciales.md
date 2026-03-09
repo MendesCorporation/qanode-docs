@@ -125,6 +125,46 @@ mongodb+srv://usuario:senha@cluster.mongodb.net/banco
 
 ---
 
+### Correo Electrónico
+
+Credencial para conectarse a buzones de correo vía IMAP. Usada por el nodo [Email Inbox](../nodos/utilidades/email-inbox.md).
+
+| Campo | Descripción |
+|-------|-------------|
+| **Nombre** | Nombre de la credencial |
+| **Proveedor** | `Gmail`, `Outlook` o `Custom IMAP` |
+| **Auth Mode** | `Password / App Password` u `OAuth2` |
+| **Correo** | Dirección de correo de la cuenta |
+| **IMAP Host** | Servidor IMAP (completado automáticamente para Gmail y Outlook) |
+| **IMAP Port** | Puerto IMAP (predeterminado: 993) |
+| **Secure** | Usar TLS/SSL (predeterminado: true) |
+
+**Modo Contraseña:**
+
+| Campo | Descripción |
+|-------|-------------|
+| **Password / App Password** | Contraseña de la cuenta o App Password generada por el proveedor |
+
+> Para Gmail con contraseña, es obligatorio usar una **App Password** — no la contraseña normal de la cuenta. [Generar App Password](https://myaccount.google.com/apppasswords)
+
+**Modo OAuth2:**
+
+| Campo | Descripción |
+|-------|-------------|
+| **Client ID** | ID de cliente OAuth registrado en el proveedor |
+| **Client Secret** | Secreto de cliente OAuth |
+| **Tenant ID** | Solo para Outlook — ID del tenant de Azure (predeterminado: `common`) |
+| **Scopes** | Ámbitos OAuth (opcional; valores predeterminados completados automáticamente) |
+| **OAuth Callback URI** | URI que debe registrarse en la consola del proveedor (solo lectura) |
+
+Después de completar Client ID y Secret, haz clic en **Connect OAuth (Browser)** para autorizar. Se abrirá una ventana para iniciar sesión en el proveedor y, al completarse, el Access Token y Refresh Token se completan automáticamente.
+
+> **Gmail:** registra la **OAuth Callback URI** mostrada en el campo como "URI de redireccionamiento autorizado" en la [Google Cloud Console](https://console.cloud.google.com/) → Credenciales → OAuth 2.0.
+
+> **Outlook:** registra la URI como "URI de redireccionamiento" en el [Portal de Azure](https://portal.azure.com/) → Registros de aplicaciones → Autenticación.
+
+---
+
 ## Probar la Conexión
 
 Antes de usar una credencial, pruebe la conexión:

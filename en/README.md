@@ -74,6 +74,7 @@ Welcome to the official documentation of **QANode Community Edition**, the test 
 | [Wait](nodes/utilities/wait.md) | Wait for a time duration or condition |
 | [Stop and Fail](nodes/utilities/stop-and-fail.md) | Stop the flow with a failure status |
 | [Custom JavaScript](nodes/utilities/custom-javascript.md) | Execute custom JavaScript code |
+| [Email Inbox](nodes/utilities/email-inbox.md) | Wait for and extract emails, OTPs, and links via IMAP |
 
 ---
 
