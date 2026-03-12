@@ -386,6 +386,62 @@ Identical to Web Flow — each step can have individual screenshot capture confi
 
 ---
 
+## Accessibility Testing
+
+Smart Locators supports automatic accessibility scanning with built-in **axe-core**. When enabled, the node audits the page after each step that captures a screenshot, identifying WCAG/ARIA violations and visually marking the affected elements.
+
+> Smart Locators already uses semantic locators based on ARIA roles — combining it with accessibility scanning is especially useful for verifying that the elements you interact with pass accessibility criteria.
+
+### Configuration
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| **Accessibility Scan** | `boolean` | `false` | Enables axe-core scanning |
+| **Fail When Severity >=** | `none` / `minor` / `moderate` / `serious` / `critical` | `serious` | Minimum severity level that fails the node |
+
+### How It Works
+
+After each step that takes a screenshot, axe-core is injected into the page and scans the document for violations. Violations are drawn over the screenshot as colored boxes around the affected elements, plus a summary panel in the corner:
+
+| Severity | Color | Description |
+|----------|-------|-------------|
+| **Critical** | 🔴 Red | Blocks access for users with disabilities |
+| **Serious** | 🟠 Orange | Causes significant difficulty |
+| **Moderate** | 🟡 Yellow | Causes some difficulty |
+| **Minor** | 🔵 Blue | Recommended improvement |
+
+At the end of execution, the following are generated automatically:
+
+- **Per-step screenshots** — overlay with colored boxes + panel `Critical N / Serious N / Moderate N / Minor N` + top 2 rules
+- **Severity chart** — `{id}-accessibility-severity-chart.png` — distribution by level
+- **Rules chart** — `{id}-accessibility-rule-chart.png` — top 8 most violated rules
+- **JSON report** — `{id}-accessibility-report.json` — full data for all violations
+
+### Pass/Fail Criteria
+
+The node fails if there is any violation with severity **equal to or above** the configured threshold. Use `none` to never fail (collect metrics without blocking the flow).
+
+### Example: Verify login form accessibility
+
+```
+Node configuration:
+  Accessibility Scan: true
+  Fail When Severity >= : serious
+
+Steps:
+1. navigate → https://mysite.com/login            (no screenshot = no scan)
+2. fill → getByLabel("Email") → "..."              → screenshot after → scan executed
+3. fill → getByLabel("Password") → "..."           → screenshot after → scan executed
+4. click → getByRole("button", { name: "Sign In" }) → screenshot after → scan executed
+5. wait → networkIdle
+6. assert → "loginOk" → textContains → getByText("Welcome") → screenshot → scan executed
+```
+
+If any step has a `serious` or `critical` violation, the node fails with:
+> *"Accessibility findings at or above "serious" were detected."*
+
+---
+
 ## Outputs
 
 | Output | Type | Description |
@@ -393,6 +449,14 @@ Identical to Web Flow — each step can have individual screenshot capture confi
 | `sessionId` | `string` | Browser session ID |
 | `extracts` | `object` | Extracted data (key → value) |
 | `asserts` | `object` | Assertion results (key → boolean) |
+| `accessibilityPassed` | `boolean` | Whether it passed the severity criteria (when enabled) |
+| `accessibilityViolationCount` | `number` | Total violation instances found |
+| `accessibility` | `object` | Full accessibility report |
+| `accessibility.threshold` | `string` | Configured threshold |
+| `accessibility.scanCount` | `number` | Number of checkpoints scanned |
+| `accessibility.counts` | `object` | `{ minor, moderate, serious, critical }` — aggregated totals |
+| `accessibility.steps` | `array` | Per-checkpoint details (url, counts, topRules) |
+| `accessibility.rules` | `array` | Top 10 violated rules across the entire flow |
 
 ---
 

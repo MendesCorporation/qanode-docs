@@ -386,6 +386,62 @@ Idêntico ao Web Flow — cada passo pode ter configuração individual de captu
 
 ---
 
+## Teste de Acessibilidade
+
+O Smart Locators suporta escaneamento automático de acessibilidade com **axe-core** integrado. Quando ativado, o nó audita a página após cada passo que captura screenshot, identificando violações WCAG/ARIA e marcando visualmente os elementos problemáticos.
+
+> O Smart Locators já usa localizadores semânticos baseados em roles ARIA — combiná-lo com o escaneamento de acessibilidade é especialmente útil para verificar se os elementos que você interage passam nos critérios de acessibilidade.
+
+### Configuração
+
+| Campo | Tipo | Padrão | Descrição |
+|-------|------|--------|-----------|
+| **Accessibility Scan** | `boolean` | `false` | Ativa o escaneamento axe-core |
+| **Fail When Severity >=** | `none` / `minor` / `moderate` / `serious` / `critical` | `serious` | Nível mínimo que reprova o nó |
+
+### Como Funciona
+
+A cada passo que tira screenshot, o axe-core é injetado na página e analisa o documento em busca de violações. As violações são desenhadas sobre o screenshot com caixas coloridas no elemento afetado e um painel de contagem no canto:
+
+| Severidade | Cor | Descrição |
+|------------|-----|-----------|
+| **Critical** | 🔴 Vermelho | Bloqueia acesso a usuários com deficiência |
+| **Serious** | 🟠 Laranja | Causa dificuldade significativa |
+| **Moderate** | 🟡 Amarelo | Causa alguma dificuldade |
+| **Minor** | 🔵 Azul | Melhoria recomendada |
+
+Ao final da execução são gerados automaticamente:
+
+- **Screenshots por passo** — overlay com caixas coloridas + painel `Critical N / Serious N / Moderate N / Minor N` + top 2 regras
+- **Gráfico de severidade** — `{id}-accessibility-severity-chart.png` — distribuição por nível
+- **Gráfico de regras** — `{id}-accessibility-rule-chart.png` — top 8 regras mais violadas
+- **Relatório JSON** — `{id}-accessibility-report.json` — dados completos de todas as violações
+
+### Critério de Aprovação
+
+O nó falha se houver qualquer violação com severidade **igual ou superior** ao threshold configurado. Use `none` para nunca reprovar (coletar métricas sem bloquear o fluxo).
+
+### Exemplo: Verificar acessibilidade do formulário de login
+
+```
+Configuração do nó:
+  Accessibility Scan: true
+  Fail When Severity >= : serious
+
+Passos:
+1. navigate → https://meusite.com/login         (sem screenshot = sem scan)
+2. fill → getByLabel("E-mail") → "..."           → screenshot after → scan executado
+3. fill → getByLabel("Senha") → "..."            → screenshot after → scan executado
+4. click → getByRole("button", { name: "Entrar" }) → screenshot after → scan executado
+5. wait → networkIdle
+6. assert → "loginOk" → textContains → getByText("Bem-vindo") → screenshot → scan executado
+```
+
+Se qualquer passo tiver violação `serious` ou `critical`, o nó é reprovado com:
+> *"Accessibility findings at or above "serious" were detected."*
+
+---
+
 ## Outputs
 
 | Output | Tipo | Descrição |
@@ -393,6 +449,14 @@ Idêntico ao Web Flow — cada passo pode ter configuração individual de captu
 | `sessionId` | `string` | ID da sessão do navegador |
 | `extracts` | `object` | Dados extraídos (chave → valor) |
 | `asserts` | `object` | Resultados das asserções (chave → boolean) |
+| `accessibilityPassed` | `boolean` | Se passou no critério de severidade (quando habilitado) |
+| `accessibilityViolationCount` | `number` | Total de instâncias de violação encontradas |
+| `accessibility` | `object` | Relatório completo de acessibilidade |
+| `accessibility.threshold` | `string` | Threshold configurado |
+| `accessibility.scanCount` | `number` | Número de checkpoints escaneados |
+| `accessibility.counts` | `object` | `{ minor, moderate, serious, critical }` — totais agregados |
+| `accessibility.steps` | `array` | Detalhes por checkpoint (url, counts, topRules) |
+| `accessibility.rules` | `array` | Top 10 regras violadas em todo o fluxo |
 
 ---
 
@@ -420,6 +484,124 @@ Passo 7: extract → "userName" → getByRole("heading") → text
 | Elementos sem texto nem role | **Web Flow** (CSS/XPath) |
 | Teste de acessibilidade | **Smart Locators** |
 | Legacy / sites sem semântica | **Web Flow** |
+
+---
+
+## Integração com Custom JavaScript
+
+O nó **Custom JavaScript** tem acesso direto à sessão do Smart Locators, permitindo estender qualquer fluxo com lógica personalizada, asserções avançadas e manipulação da página usando a API completa do Playwright.
+
+### Variáveis disponíveis no Custom JS
+
+| Variável | Tipo | Descrição |
+|----------|------|-----------|
+| `page` | `Page` | Atalho direto para a página ativa da sessão atual |
+| `context` | `BrowserContext` | Contexto do navegador (cookies, localStorage, múltiplas abas) |
+| `browser` | `Browser` | Instância do navegador |
+| `web` | `object` | Namespace com métodos para gerenciar sessões web |
+
+> Essas variáveis são populadas automaticamente a partir da sessão ativa. Use um nó Smart Locators antes do Custom JS com `sessionMode: reuse` para compartilhar a sessão.
+
+---
+
+### Uso direto de `page`
+
+Acesse a `page` diretamente para usar qualquer API do Playwright:
+
+```javascript
+// Verificar texto com getByRole (mesmo modelo semântico do Smart Locators)
+const heading = await page.getByRole('heading', { name: 'Bem-vindo' });
+const texto = await heading.textContent();
+
+// Verificar visibilidade
+const botao = page.getByRole('button', { name: 'Enviar' });
+const visivel = await botao.isVisible();
+
+// Extrair valor de campo localizado por label
+const campo = page.getByLabel('E-mail');
+const valor = await campo.inputValue();
+
+// Tirar screenshot personalizado
+await page.screenshot({ path: '/tmp/resultado.png', fullPage: true });
+```
+
+---
+
+### Asserções com `web.run()`
+
+Para usar o `expect` do Playwright (asserções nativas com retry automático):
+
+```javascript
+await web.run(async ({ page, expect }) => {
+  // Asserções semânticas — mesmo padrão do Smart Locators
+  await expect(page.getByRole('button', { name: 'Enviar' })).toBeVisible();
+  await expect(page.getByLabel('E-mail')).toBeEnabled();
+  await expect(page.getByText('Sucesso')).toBeVisible();
+
+  // Verificar URL após navegação
+  await expect(page).toHaveURL('/dashboard');
+
+  // Verificar título da página
+  await expect(page).toHaveTitle(/Painel/);
+});
+```
+
+O `expect` do Playwright faz retry automático por até 5 segundos, ideal para páginas com animações ou carregamento assíncrono.
+
+---
+
+### Namespace `web`
+
+| Método | Descrição |
+|--------|-----------|
+| `web.run(async ({ page, expect }) => {})` | Executa bloco com `page` e `expect` da sessão ativa |
+| `web.session(id?)` | Retorna `{ page, context, browser }` de uma sessão específica |
+| `web.current()` | Retorna `{ page, context, browser }` da sessão mais recente |
+| `web.hasSession(id?)` | Verifica se existe sessão ativa (ou com ID específico) |
+
+---
+
+### Múltiplas sessões
+
+Quando o fluxo possui vários nós Smart Locators rodando com sessões diferentes:
+
+```javascript
+// Sessão do primeiro nó Smart Locators
+const { page: page1 } = web.session('sessao-login');
+
+// Sessão do segundo nó Smart Locators
+const { page: page2 } = web.session('sessao-admin');
+
+// Ações em paralelo em sessões diferentes
+const [textoUsuario, textoAdmin] = await Promise.all([
+  page1.getByRole('heading').textContent(),
+  page2.getByRole('heading').textContent(),
+]);
+```
+
+---
+
+### Exemplo prático: validar resultado de busca semântica
+
+```javascript
+// Após nó Smart Locators que realizou uma busca
+await web.run(async ({ page, expect }) => {
+  // Verificar que lista de resultados está presente
+  await expect(page.getByRole('list', { name: 'Resultados' })).toBeVisible();
+
+  // Contar itens
+  const itens = page.getByRole('listitem');
+  const quantidade = await itens.count();
+
+  if (quantidade === 0) {
+    throw new Error('Nenhum resultado encontrado');
+  }
+
+  // Verificar que o primeiro resultado contém o termo buscado
+  const termo = variables.TERMO_BUSCA;
+  await expect(itens.first()).toContainText(termo);
+});
+```
 
 ---
 

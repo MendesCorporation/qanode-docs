@@ -363,6 +363,59 @@ Cada paso puede tener configuración de evidencia individual:
 
 ---
 
+## Prueba de Accesibilidad
+
+Web Flow soporta escaneo automático de accesibilidad con **axe-core** integrado. Cuando está habilitado, el nodo audita la página después de cada paso que captura un screenshot, identificando violaciones WCAG/ARIA y marcando visualmente los elementos afectados.
+
+### Configuración
+
+| Campo | Tipo | Predeterminado | Descripción |
+|-------|------|----------------|-------------|
+| **Accessibility Scan** | `boolean` | `false` | Activa el escaneo axe-core |
+| **Fail When Severity >=** | `none` / `minor` / `moderate` / `serious` / `critical` | `serious` | Nivel mínimo de severidad que reprueba el nodo |
+
+### Cómo Funciona
+
+Después de cada paso que toma un screenshot, axe-core es inyectado en la página y analiza el documento en busca de violaciones. Las violaciones se dibujan sobre el screenshot con cajas de colores alrededor de los elementos afectados y un panel de conteo en la esquina:
+
+| Severidad | Color | Descripción |
+|-----------|-------|-------------|
+| **Critical** | 🔴 Rojo | Bloquea el acceso a usuarios con discapacidad |
+| **Serious** | 🟠 Naranja | Causa dificultad significativa |
+| **Moderate** | 🟡 Amarillo | Causa alguna dificultad |
+| **Minor** | 🔵 Azul | Mejora recomendada |
+
+Al final de la ejecución se generan automáticamente:
+
+- **Screenshots por paso** — overlay con cajas de colores + panel `Critical N / Serious N / Moderate N / Minor N` + top 2 reglas
+- **Gráfico de severidad** — `{id}-accessibility-severity-chart.png` — distribución por nivel
+- **Gráfico de reglas** — `{id}-accessibility-rule-chart.png` — top 8 reglas más violadas
+- **Reporte JSON** — `{id}-accessibility-report.json` — datos completos de todas las violaciones
+
+### Criterio de Aprobación
+
+El nodo falla si hay cualquier violación con severidad **igual o superior** al umbral configurado. Usa `none` para nunca reprobar (recolectar métricas sin bloquear el flujo).
+
+### Ejemplo: Auditoría de inicio de sesión
+
+```
+Configuración del nodo:
+  Accessibility Scan: true
+  Fail When Severity >= : serious
+
+Pasos:
+1. navigate → https://misitio.com/login    (sin screenshot = sin escaneo)
+2. type → #email → "{{ variables.EMAIL }}" → screenshot after → escaneo ejecutado
+3. click → button[type="submit"]            → screenshot after → escaneo ejecutado
+4. wait → networkIdle
+5. assert → loginOk → hasURL → /dashboard  → screenshot after → escaneo ejecutado
+```
+
+Si cualquier paso tiene una violación `serious` o `critical`, el nodo falla con:
+> *"Accessibility findings at or above "serious" were detected."*
+
+---
+
 ## Outputs
 
 | Output | Tipo | Descripción |
@@ -370,6 +423,14 @@ Cada paso puede tener configuración de evidencia individual:
 | `sessionId` | `string` | ID de la sesión del navegador |
 | `extracts` | `object` | Datos extraídos (clave → valor) |
 | `asserts` | `object` | Resultados de las aserciones (clave → boolean) |
+| `accessibilityPassed` | `boolean` | Si pasó el criterio de severidad (cuando está habilitado) |
+| `accessibilityViolationCount` | `number` | Total de instancias de violación encontradas |
+| `accessibility` | `object` | Reporte completo de accesibilidad |
+| `accessibility.threshold` | `string` | Umbral configurado |
+| `accessibility.scanCount` | `number` | Número de checkpoints escaneados |
+| `accessibility.counts` | `object` | `{ minor, moderate, serious, critical }` — totales agregados |
+| `accessibility.steps` | `array` | Detalles por checkpoint (url, counts, topRules) |
+| `accessibility.rules` | `array` | Top 10 reglas violadas en todo el flujo |
 
 ---
 

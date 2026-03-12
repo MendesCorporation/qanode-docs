@@ -32,6 +32,7 @@ O nó **Web Flow** permite automatizar interações com páginas web usando **se
 | **Viewport** | preset ou `custom` | `1920x1080` | Tamanho da janela (modo Desktop) |
 | **Largura / Altura** | `number` | — | Dimensões customizadas (quando `custom`) |
 | **Modelo de Dispositivo** | string | `iPhone 14` | Dispositivo a emular (modo Mobile) |
+| **Varredura de acessibilidade** | `boolean` | `false` | Executar diagnóstico de acessibilidade |
 
 ### Browser
 
@@ -363,6 +364,59 @@ Cada passo pode ter configuração de evidência individual:
 
 ---
 
+## Teste de Acessibilidade
+
+O Web Flow suporta escaneamento automático de acessibilidade com **axe-core** integrado. Quando ativado, o nó audita a página após cada passo que captura screenshot, identificando violações WCAG/ARIA e marcando visualmente os elementos problemáticos.
+
+### Configuração
+
+| Campo | Tipo | Padrão | Descrição |
+|-------|------|--------|-----------|
+| **Accessibility Scan** | `boolean` | `false` | Ativa o escaneamento axe-core |
+| **Fail When Severity >=** | `none` / `minor` / `moderate` / `serious` / `critical` | `serious` | Nível mínimo que reprova o nó |
+
+### Como Funciona
+
+A cada passo que tira screenshot, o axe-core é injetado na página e analisa o documento em busca de violações. As violações são desenhadas sobre o screenshot com caixas coloridas no elemento afetado e um painel de contagem no canto:
+
+| Severidade | Cor | Descrição |
+|------------|-----|-----------|
+| **Critical** | 🔴 Vermelho | Bloqueia acesso a usuários com deficiência |
+| **Serious** | 🟠 Laranja | Causa dificuldade significativa |
+| **Moderate** | 🟡 Amarelo | Causa alguma dificuldade |
+| **Minor** | 🔵 Azul | Melhoria recomendada |
+
+Ao final da execução são gerados automaticamente:
+
+- **Screenshots por passo** — overlay com caixas coloridas + painel `Critical N / Serious N / Moderate N / Minor N` + top 2 regras
+- **Gráfico de severidade** — `{id}-accessibility-severity-chart.png` — distribuição por nível
+- **Gráfico de regras** — `{id}-accessibility-rule-chart.png` — top 8 regras mais violadas
+- **Relatório JSON** — `{id}-accessibility-report.json` — dados completos de todas as violações
+
+### Critério de Aprovação
+
+O nó falha se houver qualquer violação com severidade **igual ou superior** ao threshold configurado. Use `none` para nunca reprovar (coletar métricas sem bloquear o fluxo).
+
+### Exemplo: Auditoria de login
+
+```
+Configuração do nó:
+  Accessibility Scan: true
+  Fail When Severity >= : serious
+
+Passos:
+1. navigate → https://meusite.com/login    (sem screenshot = sem scan)
+2. type → #email → "{{ variables.EMAIL }}" → screenshot after → scan executado
+3. click → button[type="submit"]            → screenshot after → scan executado
+4. wait → networkIdle
+5. assert → loginOk → hasURL → /dashboard  → screenshot after → scan executado
+```
+
+Se qualquer passo tiver violação `serious` ou `critical`, o nó é reprovado com:
+> *"Accessibility findings at or above "serious" were detected."*
+
+---
+
 ## Outputs
 
 | Output | Tipo | Descrição |
@@ -370,6 +424,14 @@ Cada passo pode ter configuração de evidência individual:
 | `sessionId` | `string` | ID da sessão do navegador |
 | `extracts` | `object` | Dados extraídos (chave → valor) |
 | `asserts` | `object` | Resultados das asserções (chave → boolean) |
+| `accessibilityPassed` | `boolean` | Se passou no critério de severidade (quando habilitado) |
+| `accessibilityViolationCount` | `number` | Total de instâncias de violação encontradas |
+| `accessibility` | `object` | Relatório completo de acessibilidade |
+| `accessibility.threshold` | `string` | Threshold configurado |
+| `accessibility.scanCount` | `number` | Número de checkpoints escaneados |
+| `accessibility.counts` | `object` | `{ minor, moderate, serious, critical }` — totais agregados |
+| `accessibility.steps` | `array` | Detalhes por checkpoint (url, counts, topRules) |
+| `accessibility.rules` | `array` | Top 10 regras violadas em todo o fluxo |
 
 ---
 
@@ -394,6 +456,116 @@ Passos configurados no nó:
   "extracts": { "userName": "João Silva" },
   "asserts": { "loginOk": true }
 }
+```
+
+---
+
+## Integração com Custom JavaScript
+
+Após um nó Web Flow ser executado, a sessão do Playwright fica ativa e pode ser acessada diretamente em um nó **Custom JavaScript** posterior no mesmo fluxo.
+
+### Variáveis disponíveis no Custom JS
+
+| Variável | Tipo | Descrição |
+|----------|------|-----------|
+| `page` | `Page` | Página atual do Playwright (sessão ativa) |
+| `context` | `BrowserContext` | Contexto do navegador |
+| `browser` | `Browser` | Instância do navegador |
+| `web` | `namespace` | Namespace completo com suporte a múltiplas sessões |
+
+> `page`, `context` e `browser` são **atalhos diretos** para a sessão ativa atual. Se não houver sessão ativa, lançam erro ao ser acessados.
+
+### Uso direto via `page`
+
+Acesse a API do Playwright diretamente:
+
+```javascript
+// Ler título e URL da página atual
+const title = await page.title();
+const url = page.url();
+
+// Extrair texto de elemento
+const text = await page.locator('.resultado').textContent();
+
+// Executar JavaScript na página
+const valor = await page.evaluate(() => document.querySelector('#campo').value);
+
+// Contar elementos
+const itens = await page.locator('li.item').count();
+
+return { title, url, text, valor, itens };
+```
+
+### Uso via `web.run` (com assertions Playwright)
+
+O método `web.run` injeta o objeto `expect` do Playwright, permitindo assertions nativas:
+
+```javascript
+return await web.run(async ({ page, expect, assert }) => {
+  // Assertions Playwright
+  await expect(page.getByRole('heading')).toContainText('Dashboard');
+  await expect(page.locator('.status')).toBeVisible();
+
+  // Ação customizada
+  await page.keyboard.press('Escape');
+
+  // Retornar dados
+  const count = await page.locator('tr.item').count();
+  return { count };
+});
+```
+
+### Namespace `web` completo
+
+| Método | Descrição |
+|--------|-----------|
+| `web.current()` | Facade da sessão ativa (inclui `page`, `context`, `browser`, `screenshot()`, etc.) |
+| `web.session(id)` | Facade de sessão específica pelo `sessionId` |
+| `web.page()` | Retorna o objeto `Page` da sessão ativa |
+| `web.context()` | Retorna o `BrowserContext` da sessão ativa |
+| `web.browser()` | Retorna o `Browser` da sessão ativa |
+| `web.hasSession()` | Retorna `true` se há sessão ativa |
+| `web.ids()` | Lista de IDs de sessões ativas |
+| `web.sessions()` | Lista de facades de todas as sessões |
+| `web.screenshot(nome?, options?)` | Captura screenshot e salva como evidência |
+| `web.run(fn, sessionId?)` | Executa função com `{ page, context, browser, expect, assert, ... }` |
+
+### Múltiplas sessões
+
+Quando há mais de um nó Web Flow/Smart Locators aberto no fluxo, cada um tem um `sessionId` distinto. Use `web.session(id)` para acessar uma sessão específica:
+
+```javascript
+const sessao1 = web.session(steps["Web Flow 1"].outputs.sessionId);
+const sessao2 = web.session(steps["Web Flow 2"].outputs.sessionId);
+
+const url1 = sessao1.url();
+const url2 = sessao2.url();
+
+return { url1, url2 };
+```
+
+### Exemplo: Validação avançada após login
+
+```
+[Web Flow]
+  navigate → https://app.com/login
+  type → #email → usuario@email.com
+  click → #submit
+  wait → networkIdle
+    │
+    ▼
+[Custom JavaScript]
+  return await web.run(async ({ page, expect }) => {
+    // Assert que redirecionou para o dashboard
+    await expect(page).toHaveURL(/\/dashboard/);
+
+    // Extrair dados dinâmicos não alcançáveis pelo Web Flow
+    const items = await page.evaluate(() =>
+      [...document.querySelectorAll('.item')].map(el => el.dataset.id)
+    );
+
+    return { items };
+  });
 ```
 
 ---
