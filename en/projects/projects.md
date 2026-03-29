@@ -74,6 +74,13 @@ Lists all scenarios (flows) in the project:
 - **Edit** — Opens the flow editor
 - **Delete** — Removes the scenario
 
+In QANode Enterprise, those scenarios can also be executed by pipeline using `@qanode/cli` with:
+
+- **ID**
+- **scenario name + project name**
+
+> For details, see [CI/CD CLI and API](../ci-cd/cli-api.md).
+
 ### Suites
 
 Lists the project suites with scheduling information and last result.
@@ -90,6 +97,21 @@ History of all project executions:
 | **Status** | Result (success, failure, running) |
 | **Duration** | Execution time |
 | **Date** | Date and time of execution |
+
+### Defects — Enterprise
+
+Lists the defects linked to the project. For each scenario in the list you can see if it is **blocked by an active defect**, with a direct link to the defect responsible for the block.
+
+**Available actions in the scenario list:**
+
+| Action | Description |
+|--------|-------------|
+| **Block by Defect** | Associates an existing defect as a blocker for the scenario |
+| **Unblock** | Removes the blocking association |
+
+A scenario blocked by a defect appears with a visual indicator in the list and is counted in the **Blocked Scenarios** metric in reports.
+
+> To open a new defect, use the failed execution of the scenario or go directly to the **Bugs** tab in the sidebar.
 
 ### Documentation
 

@@ -57,6 +57,30 @@ Quando um projeto específico é selecionado, métricas adicionais são exibidas
 | **Cenários Reprovados** | Cenários que falharam |
 | **Progresso** | % do tempo decorrido vs % cenários executados |
 
+### Métricas de Defeitos
+
+O relatório inclui automaticamente uma linha de métricas de defeitos.
+
+**Visão geral (todos os projetos):**
+
+| Métrica | Descrição |
+|---------|-----------|
+| **Total de Cenários** | Total de cenários na instância |
+| **Total de Suítes** | Total de suítes na instância |
+| **Total de Defeitos** | Total de defeitos abertos no período |
+| **Defeitos Abertos** | Defeitos ainda não encerrados |
+| **Defeitos Fechados** | Defeitos encerrados no período |
+
+**Por projeto:**
+
+| Métrica | Descrição |
+|---------|-----------|
+| **Total de Defeitos** | Defeitos vinculados ao projeto |
+| **Taxa de Defeitos** | Percentual de defeitos em relação aos cenários |
+| **Defeitos Abertos** | Defeitos ainda não encerrados |
+| **Defeitos Fechados** | Defeitos encerrados |
+| **Cenários Bloqueados** | Cenários bloqueados por um defeito ativo |
+
 ---
 
 ## Exportação
@@ -79,6 +103,8 @@ Quando um projeto específico é selecionado, métricas adicionais são exibidas
 O relatório PDF será enviado como **anexo** do e-mail.
 
 > **Requisito:** O SMTP deve estar configurado em Configurações para envio de e-mails. Veja [Administração](../administracao/administracao.md).
+
+> **Idioma do relatório:** O PDF e o e-mail são gerados no idioma configurado na interface do usuário que faz o download ou o envio.
 
 ---
 

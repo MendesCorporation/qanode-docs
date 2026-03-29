@@ -166,6 +166,20 @@ To diagnose multiple failures at once, enable **Continue on Failure** on verific
 
 ---
 
+## Opening a Bug from a Failed Execution — Enterprise
+
+When an execution ends with **failure**, the **Open Bug** button becomes available in the execution detail. Clicking it opens a modal to fill in the bug information — title, description, severity, priority, and other fields defined by the workflow.
+
+The created bug is automatically linked to the execution, the scenario, and the step that caused the failure.
+
+> **Permission required:** `bug.create`
+
+### Related bugs
+
+The execution detail also displays the **Related Bugs** section with the list of all bugs linked to that execution — bug key, title, status, and severity — with a direct link to each bug.
+
+---
+
 ## Execution Report
 
 After each run, QANode automatically generates a **PDF report** with:

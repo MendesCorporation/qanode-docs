@@ -212,11 +212,26 @@ Al crear o editar un rol, el campo **Vista de Tablas** define qué tablas de la 
 | `role.edit` | Editar roles |
 | `role.delete` | Eliminar roles |
 
+#### Defectos — Enterprise
+| Permiso | Descripción |
+|---------|-------------|
+| `bug.view` | Visualizar defectos — permite ver la lista, comentar y gestionar adjuntos |
+| `bug.create` | Abrir nuevos defectos |
+| `bug.edit` | Editar campos personalizados del defecto |
+| `bug.assign` | Asignar defectos a personas o colas y hacer claim |
+| `bug.transition` | Tramitar defectos en las transiciones normales del flujo de trabajo |
+| `bug.transition_any` | Bypass administrativo — tramitar a cualquier estado sin restricción de posesión |
+| `bug.run_sandbox` | Crear y descartar sandboxes de investigación |
+| `bug.delete_attachment_any` | Eliminar adjuntos enviados por cualquier persona |
+| `bug.configure_workflow` | Configurar el flujo de trabajo, estados, transiciones y campos personalizados |
+
 #### Configuración
 | Permiso | Descripción |
 |---------|-------------|
 | `settings.view` | Ver configuración — acceso básico a la página de configuración |
 | `settings.smtp` | Configurar SMTP — permite cambiar la configuración de correo electrónico |
+| `settings.integration_token` | Gestionar sus propios tokens de integración |
+| `settings.integration_token_all` | Ver todos los tokens, revocar tokens de otras personas y definir la política global de expiración |
 | `settings.mfa` | Configurar MFA — permite gestionar la autenticación de dos factores |
 | `settings.audit` | Ver auditoría — acceso al registro de auditoría |
 | `settings.report_template` | Gestionar plantillas de informe — permite crear y editar plantillas PDF |
@@ -240,6 +255,27 @@ Para el envío de correos electrónicos (invitaciones, informes, alarmas):
 | **Remitente** | Dirección de envío (from) |
 
 3. Haga clic en **Guardar** — el sistema prueba la conexión automáticamente
+
+---
+
+## Tokens de Integración
+
+Los **Tokens de Integración** permiten autenticar pipelines y automatizaciones sin depender de una sesión de navegador.
+
+Para acceder:
+
+1. Vaya a **Configuración** → **Access Tokens**
+2. Genere un token
+3. Guarde el valor como secret del pipeline
+4. Úselo con `QANODE_URL` y `QANODE_TOKEN`
+
+Los usuarios con `settings.integration_token_all` también pueden:
+
+- ver los tokens de toda la instancia
+- revocar tokens de otras personas
+- definir la política global de expiración
+
+> Para la guía completa, consulte [Integración CI/CD — Visión General](../ci-cd/vision-general.md).
 
 ---
 

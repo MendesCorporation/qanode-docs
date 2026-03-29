@@ -57,6 +57,30 @@ Cuando se selecciona un proyecto específico, se muestran métricas adicionales:
 | **Escenarios Fallidos** | Escenarios que fallaron |
 | **Progreso** | % del tiempo transcurrido vs % escenarios ejecutados |
 
+### Métricas de Defectos
+
+El informe incluye automáticamente una fila de métricas de defectos.
+
+**Global (cuando no se selecciona proyecto):**
+
+| Métrica | Descripción |
+|---------|-------------|
+| **Total de Escenarios** | Total de escenarios en la instancia |
+| **Total de Suites** | Total de suites en la instancia |
+| **Total de Defectos** | Total de defectos abiertos en el período |
+| **Defectos Abiertos** | Defectos aún no cerrados |
+| **Defectos Cerrados** | Defectos cerrados en el período |
+
+**Por proyecto:**
+
+| Métrica | Descripción |
+|---------|-------------|
+| **Total de Defectos** | Defectos vinculados al proyecto |
+| **Tasa de Defectos** | Porcentaje de defectos en relación a los escenarios |
+| **Defectos Abiertos** | Defectos aún no cerrados |
+| **Defectos Cerrados** | Defectos cerrados |
+| **Escenarios Bloqueados** | Escenarios bloqueados por un defecto activo |
+
 ---
 
 ## Exportación
@@ -77,6 +101,8 @@ Cuando se selecciona un proyecto específico, se muestran métricas adicionales:
 4. Haga clic en **Enviar**
 
 El informe PDF se enviará como **archivo adjunto** del correo electrónico.
+
+> **Idioma del informe:** El PDF y el correo electrónico se generan en el idioma configurado en la interfaz del usuario que realiza la descarga o el envío.
 
 > **Requisito:** El SMTP debe estar configurado en Configuración para el envío de correos. Consulte [Administración](../administracion/administracion-enterprise.md).
 

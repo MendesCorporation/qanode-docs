@@ -51,6 +51,7 @@ docs/
 │   ├── suites/                  # Suítes de teste e agendamento
 │   ├── variaveis/               # Variáveis globais
 │   ├── credenciais/             # Gerenciamento de credenciais
+│   ├── ci-cd/                   # Integração CI/CD Enterprise
 │   ├── dashboard/               # Painéis e widgets
 │   ├── relatorios/              # Relatórios e exportação
 │   ├── expressoes/              # Sistema de expressões {{ }}

@@ -46,6 +46,29 @@ Credencial: "API Exemplo"
 URL: /api/users  (o URL base é adicionado automaticamente)
 ```
 
+### Override por Pipeline — Enterprise
+
+Na integração de CI/CD do QANode Enterprise, campos específicos de uma credencial podem ser sobrescritos apenas para a execução atual.
+
+Exemplo:
+
+```bash
+npx @qanode/cli run scenario \
+  --scenario-id SCENARIO_ID \
+  --credential api-main.token=$API_TOKEN \
+  --wait
+```
+
+Esse padrão é útil para:
+
+- tokens efêmeros de pipeline
+- segredos temporários de homologação
+- endpoints de ambiente transitório
+
+O valor salvo na credencial continua intacto após o término da execução.
+
+> Para detalhes, veja [Overrides por Execução](../ci-cd/overrides.md).
+
 ---
 
 ### PostgreSQL

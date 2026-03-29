@@ -166,6 +166,20 @@ Para diagnosticar múltiplas falhas de uma vez, ative **Continuar em Falha** nos
 
 ---
 
+## Abrindo um Defeito a partir de uma Execução — Enterprise
+
+Quando uma execução termina com **falha**, o botão **Abrir Defeito** fica disponível no detalhe da execução. Ao clicar, um modal abre para preencher as informações do defeito — título, descrição, severidade, prioridade e demais campos definidos pelo workflow.
+
+O defeito criado fica automaticamente vinculado à execução, ao cenário e ao step que originou a falha.
+
+> **Permissão necessária:** `bug.create`
+
+### Defeitos relacionados
+
+O detalhe da execução também exibe a seção **Defeitos Relacionados** com a lista de todos os defeitos vinculados àquela execução — bug key, título, status e severidade — com link direto para cada defeito.
+
+---
+
 ## Relatório de Execução
 
 Após cada execução, o QANode gera automaticamente um **relatório PDF** com:

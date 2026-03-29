@@ -102,6 +102,30 @@ Bienvenido a la documentación oficial de **QANode Community Edition**, la plata
 
 ---
 
+## CI/CD — Enterprise
+
+| Página | Descripción |
+|--------|-------------|
+| [Visión General](ci-cd/vision-general.md) | Qué ofrece la integración, permisos y conceptos principales |
+| [Tokens de Integración](ci-cd/tokens-integracion.md) | Generación, revocación, expiración y gobernanza de tokens |
+| [CLI y API del CI/CD](ci-cd/cli-api.md) | Cómo usar `@qanode/cli`, las rutas `/api/ci` y los patrones operativos |
+| [Ejemplos de Pipeline](ci-cd/ejemplos-pipelines.md) | Ejemplos listos para GitHub Actions y Azure DevOps |
+| [Overrides por Ejecución](ci-cd/overrides.md) | Cómo sobrescribir variables y credenciales sin persistir cambios |
+
+---
+
+## Seguimiento de Defectos — Enterprise
+
+| Página | Descripción |
+|--------|-------------|
+| [Descripción General](defectos/descripcion-general.md) | Funcionalidades del módulo, permisos y conceptos fundamentales |
+| [Workflow Builder](defectos/workflow-builder.md) | Configurar estados, transiciones, campos y campos personalizados |
+| [Ciclo de Vida del Defecto](defectos/ciclo-de-vida.md) | Abrir, asignar, hacer claim y tramitar defectos |
+| [Sandbox de Investigación](defectos/sandbox.md) | Investigar fallos sin afectar ejecuciones oficiales |
+| [Comentarios, Adjuntos e Historial](defectos/comentarios-adjuntos.md) | Colaborar y seguir el historial del defecto |
+
+---
+
 ## Monitoreo e Informes
 
 | Página | Descripción |

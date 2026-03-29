@@ -90,7 +90,7 @@ Ao criar ou editar um papel, o campo **Visão de Tabelas** define quais tabelas 
 
 | Perfil | Tabelas acessíveis |
 |--------|-------------------|
-| **admin** | Todas as tabelas: Projects, Flows, Suites, Runs, Run Steps, Variables, Credentials, Users, Roles, Audit Log |
+| **admin** | Todas as tabelas: Projects, Flows, Suites, Runs, Run Steps, Variables, Credentials, Users, Roles, Bugs, Audit Log |
 | **architect** | Projects, Flows, Suites, Runs, Run Steps, Variables |
 | **tester** | Projects, Flows, Suites, Runs, Run Steps |
 | **none** | Nenhuma tabela — query builder desabilitado |
@@ -212,11 +212,26 @@ Ao criar ou editar um papel, o campo **Visão de Tabelas** define quais tabelas 
 | `role.edit` | Editar papéis |
 | `role.delete` | Excluir papéis |
 
+#### Defeitos — Enterprise
+| Permissão | Descrição |
+|-----------|-----------|
+| `bug.view` | Visualizar defeitos — permite ver a lista, comentar e gerenciar anexos |
+| `bug.create` | Abrir novos defeitos |
+| `bug.edit` | Editar campos customizados do defeito |
+| `bug.assign` | Atribuir defeitos a pessoas ou filas e fazer claim |
+| `bug.transition` | Tramitar defeitos nas transições normais do workflow |
+| `bug.transition_any` | Bypass administrativo — tramitar para qualquer status sem restrição de posse |
+| `bug.run_sandbox` | Criar e descartar sandbox de investigação |
+| `bug.delete_attachment_any` | Excluir anexos enviados por qualquer pessoa |
+| `bug.configure_workflow` | Configurar o workflow, status, transições e campos customizados |
+
 #### Configurações
 | Permissão | Descrição |
 |-----------|-----------|
 | `settings.view` | Visualizar configurações — acesso básico à página de configurações |
 | `settings.smtp` | Configurar SMTP — permite alterar as configurações de e-mail |
+| `settings.integration_token` | Gerenciar os próprios tokens de integração |
+| `settings.integration_token_all` | Ver todos os tokens, revogar tokens de outras pessoas e definir a política global de expiração |
 | `settings.mfa` | Configurar MFA — permite gerenciar autenticação em dois fatores |
 | `settings.audit` | Visualizar auditoria — acesso ao log de auditoria |
 | `settings.report_template` | Gerenciar templates de relatório — permite criar e editar templates de PDF |
@@ -240,6 +255,27 @@ Para envio de e-mails (convites, relatórios, alarmes):
 | **Remetente** | Endereço de envio (from) |
 
 3. Clique em **Salvar** — o sistema testa a conexão automaticamente
+
+---
+
+## Tokens de Integração
+
+Os **Tokens de Integração** permitem autenticar pipelines e automações sem depender de sessão de navegador.
+
+Para acessar:
+
+1. Vá em **Configurações** → **Access Tokens**
+2. Gere um token
+3. Salve o valor como secret do pipeline
+4. Use com `QANODE_URL` e `QANODE_TOKEN`
+
+Usuários com `settings.integration_token_all` também podem:
+
+- ver tokens de toda a instância
+- revogar tokens de outras pessoas
+- definir a política global de expiração
+
+> Para o guia completo, veja [Integração CI/CD — Visão Geral](../ci-cd/visao-geral.md).
 
 ---
 

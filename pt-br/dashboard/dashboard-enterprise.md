@@ -32,6 +32,8 @@ O QANode suporta múltiplos dashboards com diferentes visibilidades:
 |------|-----------|-----------|
 | **Card de Métrica** | Valor numérico único com formatação condicional | Total de execuções, taxa de sucesso |
 | **Gráfico de Barras** | Barras verticais com uma ou mais séries | Execuções por dia, falhas por projeto |
+| **Barras Empilhadas** | Barras verticais com múltiplas séries empilhadas | Comparação acumulada entre categorias |
+| **Barras Horizontais** | Barras horizontais com uma ou mais séries | Rankings, comparações categóricas |
 | **Gráfico de Linha** | Linhas de tendência | Evolução da taxa de sucesso |
 | **Gráfico de Área** | Área preenchida | Acumulado de execuções |
 | **Gráfico de Pizza** | Distribuição proporcional | Proporção sucesso/falha |
@@ -84,6 +86,8 @@ WHERE started_at >= NOW() - INTERVAL '30 days'
 GROUP BY dia, status
 ORDER BY dia
 ```
+
+> O SQL também suporta CTEs (Common Table Expressions) com a cláusula `WITH`. Consultas que modificam dados (INSERT, UPDATE, DELETE, DROP, etc.) continuam bloqueadas.
 
 > O modo SQL requer a permissão `dashboard.sql`.
 

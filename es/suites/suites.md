@@ -91,6 +91,21 @@ Cuando está desactivado:
 2. Todos los escenarios se ejecutarán en orden
 3. El resultado aparece en la lista de ejecuciones
 
+### Ejecución por CI/CD — Enterprise
+
+Además de la ejecución manual, una suite también puede dispararse por pipeline usando `@qanode/cli` o las rutas `/api/ci`.
+
+Ejemplo:
+
+```bash
+npx @qanode/cli run suite \
+  --project-name "Backoffice" \
+  --suite-name "Regresión Login" \
+  --wait
+```
+
+> Para integraciones completas con GitHub Actions y Azure DevOps, vea [Ejemplos de Pipeline](../ci-cd/ejemplos-pipelines.md).
+
 ### Ejecución Programada
 
 Las suites pueden ejecutarse automáticamente en horarios definidos.

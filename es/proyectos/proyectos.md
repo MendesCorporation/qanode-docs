@@ -74,6 +74,13 @@ Lista todos los escenarios (flujos) del proyecto:
 - **Editar** — Abre el editor de flujos
 - **Eliminar** — Elimina el escenario
 
+En QANode Enterprise, esos escenarios también pueden ejecutarse por pipeline usando `@qanode/cli` con:
+
+- **ID**
+- **nombre del escenario + nombre del proyecto**
+
+> Para más detalles, vea [CLI y API del CI/CD](../ci-cd/cli-api.md).
+
 ### Suites
 
 Lista las suites del proyecto con información de programación y último resultado.
@@ -90,6 +97,21 @@ Historial de todas las ejecuciones del proyecto:
 | **Estado** | Resultado (éxito, fallo, ejecutando) |
 | **Duración** | Tiempo de ejecución |
 | **Fecha** | Fecha y hora de la ejecución |
+
+### Defectos — Enterprise
+
+Lista los defectos vinculados al proyecto. Para cada escenario de la lista es posible ver si está **bloqueado por un defecto activo**, con enlace directo al defecto responsable del bloqueo.
+
+**Acciones disponibles en la lista de escenarios:**
+
+| Acción | Descripción |
+|--------|-------------|
+| **Bloquear por Defecto** | Asocia un defecto existente como bloqueador del escenario |
+| **Desbloquear** | Elimina la asociación de bloqueo |
+
+Un escenario bloqueado por defecto aparece con indicación visual en la lista y se contabiliza en la métrica **Escenarios Bloqueados** de los informes.
+
+> Para abrir un nuevo defecto, use la ejecución fallida del escenario o acceda directamente a la pestaña **Defectos** en el menú lateral.
 
 ### Documentación
 

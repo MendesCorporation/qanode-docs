@@ -102,6 +102,30 @@ Welcome to the official documentation of **QANode Community Edition**, the test 
 
 ---
 
+## CI/CD — Enterprise
+
+| Page | Description |
+|------|-------------|
+| [Overview](ci-cd/overview.md) | What the integration provides, permissions, and key concepts |
+| [Integration Tokens](ci-cd/integration-tokens.md) | Token creation, revocation, expiration, and governance |
+| [CI/CD CLI and API](ci-cd/cli-api.md) | How to use `@qanode/cli`, `/api/ci` routes, and operational patterns |
+| [Pipeline Examples](ci-cd/pipeline-examples.md) | Ready-to-use examples for GitHub Actions and Azure DevOps |
+| [Per-execution Overrides](ci-cd/overrides.md) | How to override variables and credentials without persisting changes |
+
+---
+
+## Bug Tracking — Enterprise
+
+| Page | Description |
+|------|-------------|
+| [Overview](bugs/overview.md) | Module features, permissions, and core concepts |
+| [Workflow Builder](bugs/workflow-builder.md) | Configure statuses, transitions, fields, and custom fields |
+| [Bug Lifecycle](bugs/lifecycle.md) | Open, assign, claim, and transition bugs |
+| [Investigation Sandbox](bugs/sandbox.md) | Investigate failures without affecting official runs |
+| [Comments, Attachments & History](bugs/comments-attachments.md) | Collaborate and track bug history |
+
+---
+
 ## Monitoring & Reports
 
 | Page | Description |

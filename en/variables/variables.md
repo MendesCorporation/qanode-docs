@@ -105,6 +105,27 @@ The **Set Variable** node can override variables during execution:
 
 The override is temporary — it only affects the current execution. The original value in the database is not changed.
 
+### Pipeline Override — Enterprise
+
+In QANode Enterprise CI/CD integration, a variable can also be overridden directly by the CLI or API for a specific execution.
+
+Example:
+
+```bash
+npx @qanode/cli run suite \
+  --suite-id SUITE_ID \
+  --var BASE_URL=https://preview.app \
+  --wait
+```
+
+This override:
+
+- applies only to the current execution
+- does not change the persisted variable value
+- is useful for temporary build, staging, and preview environments
+
+> For details, see [Per-execution Overrides](../ci-cd/overrides.md).
+
 ---
 
 ## Best Practices

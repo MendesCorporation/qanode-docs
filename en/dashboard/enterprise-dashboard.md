@@ -32,6 +32,8 @@ QANode supports multiple dashboards with different visibility settings:
 |------|-------------|-------------|
 | **Metric Card** | Single numeric value with conditional formatting | Total executions, success rate |
 | **Bar Chart** | Vertical bars with one or more series | Executions per day, failures per project |
+| **Stacked Bars** | Vertical bars with multiple stacked series | Cumulative comparison between categories |
+| **Horizontal Bars** | Horizontal bars with one or more series | Rankings, categorical comparisons |
 | **Line Chart** | Trend lines | Success rate evolution |
 | **Area Chart** | Filled area | Cumulative executions |
 | **Pie Chart** | Proportional distribution | Success/failure ratio |
@@ -87,13 +89,15 @@ ORDER BY dia
 
 > SQL mode requires the `dashboard.sql` permission.
 
+> SQL also supports CTEs (Common Table Expressions) with the `WITH` clause. Queries that modify data (INSERT, UPDATE, DELETE, DROP, etc.) remain blocked.
+
 #### Step 2: Visualization
 
 Choose the chart type and map the fields:
 
 | Setting | Description |
 |---------|-------------|
-| **Chart Type** | Card, Bar, Line, Area, Pie, Table |
+| **Chart Type** | Card, Bar, Stacked Bar, Horizontal Bar, Line, Area, Pie, Table |
 | **X Axis** | Field for the horizontal axis |
 | **Y Axis** | Field for the vertical axis (numeric value) |
 | **Series** | Field for multiple series (when using pivot) |

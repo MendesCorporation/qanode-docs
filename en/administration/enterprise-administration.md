@@ -212,11 +212,26 @@ When creating or editing a role, the **Table View** field defines which database
 | `role.edit` | Edit roles |
 | `role.delete` | Delete roles |
 
+#### Bugs — Enterprise
+| Permission | Description |
+|------------|-------------|
+| `bug.view` | View bugs — allows seeing the list, commenting, and managing attachments |
+| `bug.create` | Open new bugs |
+| `bug.edit` | Edit custom fields of the bug |
+| `bug.assign` | Assign bugs to people or queues and claim |
+| `bug.transition` | Transition bugs through the workflow's normal transitions |
+| `bug.transition_any` | Administrative bypass — transition to any status without ownership restriction |
+| `bug.run_sandbox` | Create and discard investigation sandboxes |
+| `bug.delete_attachment_any` | Delete attachments uploaded by anyone |
+| `bug.configure_workflow` | Configure the workflow, statuses, transitions, and custom fields |
+
 #### Settings
 | Permission | Description |
 |------------|-------------|
 | `settings.view` | View settings — basic access to the settings page |
 | `settings.smtp` | Configure SMTP — allows changing email settings |
+| `settings.integration_token` | Manage your own integration tokens |
+| `settings.integration_token_all` | View all tokens, revoke tokens created by other people, and define the global expiration policy |
 | `settings.mfa` | Configure MFA — allows managing two-factor authentication |
 | `settings.audit` | View audit — access to the audit log |
 | `settings.report_template` | Manage report templates — allows creating and editing PDF templates |
@@ -240,6 +255,27 @@ For sending emails (invitations, reports, alarms):
 | **Sender** | Sending address (from) |
 
 3. Click **Save** — the system tests the connection automatically
+
+---
+
+## Integration Tokens
+
+**Integration Tokens** allow pipelines and automations to authenticate without relying on a browser session.
+
+To access them:
+
+1. Go to **Settings** → **Access Tokens**
+2. Generate a token
+3. Store the value as a pipeline secret
+4. Use it with `QANODE_URL` and `QANODE_TOKEN`
+
+Users with `settings.integration_token_all` can also:
+
+- view tokens from the whole instance
+- revoke tokens created by other people
+- define the global expiration policy
+
+> For the complete guide, see [CI/CD Integration — Overview](../ci-cd/overview.md).
 
 ---
 

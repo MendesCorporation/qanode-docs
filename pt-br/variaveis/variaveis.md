@@ -105,6 +105,27 @@ O nó **Set Variable** pode sobrescrever variáveis durante a execução:
 
 A sobrescrita é temporária — afeta apenas a execução atual. O valor original no banco de dados não é alterado.
 
+### Override por Pipeline — Enterprise
+
+Na integração de CI/CD do QANode Enterprise, uma variável também pode ser sobrescrita diretamente pela CLI ou pela API para uma execução específica.
+
+Exemplo:
+
+```bash
+npx @qanode/cli run suite \
+  --suite-id SUITE_ID \
+  --var BASE_URL=https://preview.app \
+  --wait
+```
+
+Esse override:
+
+- vale apenas para a execução atual
+- não altera o valor persistido da variável
+- é útil para ambientes temporários de build, homologação e preview
+
+> Para detalhes, veja [Overrides por Execução](../ci-cd/overrides.md).
+
 ---
 
 ## Boas Práticas

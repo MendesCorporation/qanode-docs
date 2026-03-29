@@ -32,6 +32,8 @@ QANode admite múltiples dashboards con diferentes configuraciones de visibilida
 |------|-------------|------------|
 | **Tarjeta de Métrica** | Valor numérico único con formato condicional | Total de ejecuciones, tasa de éxito |
 | **Gráfico de Barras** | Barras verticales con una o más series | Ejecuciones por día, fallos por proyecto |
+| **Barras Apiladas** | Barras verticales con múltiples series apiladas | Comparación acumulada entre categorías |
+| **Barras Horizontales** | Barras horizontales con una o más series | Rankings, comparaciones categóricas |
 | **Gráfico de Línea** | Líneas de tendencia | Evolución de la tasa de éxito |
 | **Gráfico de Área** | Área rellena | Acumulado de ejecuciones |
 | **Gráfico de Torta** | Distribución proporcional | Proporción éxito/fallo |
@@ -87,13 +89,15 @@ ORDER BY dia
 
 > El modo SQL requiere el permiso `dashboard.sql`.
 
+> El SQL también soporta CTEs (Common Table Expressions) con la cláusula `WITH`. Las consultas que modifican datos (INSERT, UPDATE, DELETE, DROP, etc.) siguen bloqueadas.
+
 #### Paso 2: Visualización
 
 Elija el tipo de gráfico y mapee los campos:
 
 | Configuración | Descripción |
 |---------------|-------------|
-| **Tipo de Gráfico** | Tarjeta, Barras, Línea, Área, Torta, Tabla |
+| **Tipo de Gráfico** | Tarjeta, Barras, Barras Apiladas, Barras Horizontales, Línea, Área, Torta, Tabla |
 | **Eje X** | Campo para el eje horizontal |
 | **Eje Y** | Campo para el eje vertical (valor numérico) |
 | **Serie** | Campo para múltiples series (cuando se usa pivot) |

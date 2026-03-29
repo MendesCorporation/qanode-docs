@@ -57,6 +57,30 @@ When a specific project is selected, additional metrics are displayed:
 | **Failed Scenarios** | Scenarios that failed |
 | **Progress** | % of time elapsed vs % scenarios executed |
 
+### Bug Metrics
+
+The report automatically includes a row of bug metrics.
+
+**Global (when no project is selected):**
+
+| Metric | Description |
+|--------|-------------|
+| **Total Scenarios** | Total scenarios in the instance |
+| **Total Suites** | Total suites in the instance |
+| **Total Bugs** | Total bugs opened in the period |
+| **Open Bugs** | Bugs not yet closed |
+| **Closed Bugs** | Bugs closed in the period |
+
+**Per project:**
+
+| Metric | Description |
+|--------|-------------|
+| **Total Bugs** | Bugs linked to the project |
+| **Bug Rate** | Percentage of bugs relative to scenarios |
+| **Open Bugs** | Bugs not yet closed |
+| **Closed Bugs** | Closed bugs |
+| **Blocked Scenarios** | Scenarios blocked by an active defect |
+
 ---
 
 ## Export
@@ -77,6 +101,8 @@ When a specific project is selected, additional metrics are displayed:
 4. Click **Send**
 
 The PDF report will be sent as an **email attachment**.
+
+> **Report language:** The PDF and email are generated in the language configured in the interface of the user who downloads or sends the report.
 
 > **Requirement:** SMTP must be configured in Settings for email delivery. See [Administration](../administration/enterprise-administration.md).
 

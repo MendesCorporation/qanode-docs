@@ -91,6 +91,21 @@ When disabled:
 2. All scenarios will be executed in order
 3. The result appears in the execution list
 
+### CI/CD Execution — Enterprise
+
+In addition to manual execution, a suite can also be triggered by pipeline using `@qanode/cli` or the `/api/ci` routes.
+
+Example:
+
+```bash
+npx @qanode/cli run suite \
+  --project-name "Backoffice" \
+  --suite-name "Login Regression" \
+  --wait
+```
+
+> For complete integrations with GitHub Actions and Azure DevOps, see [Pipeline Examples](../ci-cd/pipeline-examples.md).
+
 ### Scheduled Execution
 
 Suites can be executed automatically at defined times.
