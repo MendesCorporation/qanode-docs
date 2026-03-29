@@ -59,7 +59,7 @@ This is a token created specifically for automation. It replaces human login in 
 
 ### Scenario
 
-In the CI/CD documentation, always use the term **scenario**. It is the same functional object shown in the QANode interface as a test scenario.
+It is an individual QANode automation made of the flow steps that validate a specific application behavior. In CI/CD, you can run a single scenario when you want to validate a critical path without executing the full suite.
 
 ### Suite
 

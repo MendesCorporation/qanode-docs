@@ -1,6 +1,6 @@
 # QANode — Documentação
 
-Bem-vindo à documentação oficial do **QANode Community Edition**, a plataforma de automação de testes com editor visual de fluxos.
+Bem-vindo à documentação oficial do **QANode**, a plataforma de automação de testes com editor visual de fluxos.
 
 ---
 

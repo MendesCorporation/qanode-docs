@@ -59,7 +59,7 @@ Em ambiente local de desenvolvimento, `http://localhost:3000` também pode funci
 
 ### Cenário
 
-Na documentação de CI/CD, use sempre o termo **cenário**. É o mesmo objeto funcional que aparece na interface do QANode como cenário de teste.
+É uma automação individual do QANode, composta pelo fluxo de passos que valida um comportamento específico da aplicação. No CI/CD, você pode executar um cenário isolado quando quiser validar um caminho crítico sem rodar a suíte completa.
 
 ### Suíte
 

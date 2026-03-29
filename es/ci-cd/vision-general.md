@@ -59,7 +59,7 @@ Es un token creado específicamente para automatización. Reemplaza el login hum
 
 ### Escenario
 
-En la documentación de CI/CD, use siempre el término **escenario**. Es el mismo objeto funcional que aparece en la interfaz de QANode como escenario de prueba.
+Es una automatización individual de QANode, compuesta por el flujo de pasos que valida un comportamiento específico de la aplicación. En CI/CD, puedes ejecutar un escenario aislado cuando quieras validar un camino crítico sin correr la suite completa.
 
 ### Suite
 
