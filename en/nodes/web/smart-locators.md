@@ -34,8 +34,48 @@ Identical to the Web Flow node:
 | **Viewport** | preset or `custom` | `1920x1080` | Window size (Desktop mode) |
 | **Width / Height** | `number` | — | Custom dimensions (when `custom`) |
 | **Device Model** | string | `iPhone 14` | Device to emulate (Mobile mode) |
+| **Accessibility Scan** | `boolean` | `false` | Run built-in accessibility diagnostics |
+| **Performance Audit** | `boolean` | `false` | Collect page-load and network metrics during execution |
+| **Max Page Load (ms)** | `number` | `4000` | Threshold used to fail the node when page load exceeds the limit |
+| **Max API Response (ms)** | `number` | `1500` | Threshold used to flag slow API responses captured in the session |
+| **Fail on Request Errors** | `boolean` | `true` | Fails the node when monitored APIs return HTTP/network errors |
 
 > The Browser & Device options are identical to the Web Flow node — see the [Web Flow documentation](web-flow.md#browser) for details on viewport presets and available mobile devices.
+
+### Performance Audit
+
+When **Performance Audit** is enabled, Smart Locators monitors the active Playwright session and generates visual performance evidence per screen.
+
+The feature collects:
+
+- **Page Load**
+- **FCP** (*First Contentful Paint*)
+- **LCP** (*Largest Contentful Paint*)
+- total request count
+- API request count
+- request/API errors
+- slow APIs per screen
+
+In addition to the global summary, QANode generates **per-screen checkpoints** with:
+
+- screen name
+- URL
+- step that originated the navigation
+- chart of slowest APIs
+- separate **API error** chart when errors exist on that screen
+
+### Performance Outputs
+
+When the audit is enabled, the node exposes:
+
+- `performancePassed`
+- `performanceRequestCount`
+- `performanceApiRequestCount`
+- `performanceErrorCount`
+- `performanceSlowRequestCount`
+- `performance`
+
+The `performance` object contains a structured summary of the execution, including per-screen checkpoints.
 
 ---
 

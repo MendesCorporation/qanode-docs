@@ -66,6 +66,11 @@ Bienvenido a la documentación oficial de **QANode Community Edition**, la plata
 |------|-------------|
 | [SSH Command](nodos/infraestructura/ssh-command.md) | Ejecución de comandos SSH remotos |
 
+### Performance
+| Nodo | Descripción |
+|------|-------------|
+| [Load Test](nodos/performance/load-test.md) | Pruebas de carga y rendimiento con múltiples usuarios virtuales |
+
 ### Utilidades
 | Nodo | Descripción |
 |------|-------------|

@@ -66,6 +66,11 @@ Welcome to the official documentation of **QANode Community Edition**, the test 
 |------|-------------|
 | [SSH Command](nodes/infrastructure/ssh-command.md) | Remote SSH command execution |
 
+### Performance
+| Node | Description |
+|------|-------------|
+| [Load Test](nodes/performance/load-test.md) | Load and performance testing with multiple virtual users |
+
 ### Utilities
 | Node | Description |
 |------|-------------|

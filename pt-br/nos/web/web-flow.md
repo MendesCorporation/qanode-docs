@@ -33,6 +33,10 @@ O nó **Web Flow** permite automatizar interações com páginas web usando **se
 | **Largura / Altura** | `number` | — | Dimensões customizadas (quando `custom`) |
 | **Modelo de Dispositivo** | string | `iPhone 14` | Dispositivo a emular (modo Mobile) |
 | **Varredura de acessibilidade** | `boolean` | `false` | Executar diagnóstico de acessibilidade |
+| **Auditoria de performance** | `boolean` | `false` | Coletar métricas de carregamento e rede durante a execução |
+| **Tempo máximo de carregamento (ms)** | `number` | `4000` | Threshold para falhar quando o carregamento da página excede o limite |
+| **Tempo máximo de resposta da API (ms)** | `number` | `1500` | Threshold para APIs lentas capturadas na sessão |
+| **Falhar em erros de requisição** | `boolean` | `true` | Marca o nó como falho quando houver erro HTTP/rede nas APIs monitoradas |
 
 ### Browser
 
@@ -78,6 +82,41 @@ Usa perfis reais do Playwright (viewport, user agent, escala de pixels, touch). 
 
 - **Em Memória (`inMemory`)**: Cookies e localStorage são descartados ao final da execução
 - **Persistido (`persisted`)**: Cookies e localStorage são salvos com uma chave e podem ser reutilizados em execuções futuras. Ideal para manter sessões de login entre execuções.
+
+### Auditoria de Performance
+
+Quando **Auditoria de performance** está habilitada, o Web Flow passa a monitorar a sessão Playwright e gerar evidências visuais de performance por tela.
+
+O recurso coleta:
+
+- **Page Load** da tela
+- **FCP** (*First Contentful Paint*)
+- **LCP** (*Largest Contentful Paint*)
+- quantidade total de requests
+- quantidade de requests de API
+- erros de request/API
+- APIs lentas por tela
+
+Além do resumo global, o QANode gera **checkpoints por tela navegada**, com:
+
+- nome da tela
+- URL
+- passo que originou a navegação
+- gráfico das APIs mais lentas
+- gráfico separado para **erros de API** quando existirem
+
+### Outputs de Performance
+
+Quando a auditoria está ligada, o nó expõe:
+
+- `performancePassed`
+- `performanceRequestCount`
+- `performanceApiRequestCount`
+- `performanceErrorCount`
+- `performanceSlowRequestCount`
+- `performance`
+
+O objeto `performance` contém um resumo estruturado da execução, incluindo os checkpoints por tela.
 
 ---
 

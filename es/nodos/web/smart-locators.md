@@ -34,8 +34,48 @@ Idéntica al nodo Web Flow:
 | **Viewport** | preset o `custom` | `1920x1080` | Tamaño de ventana (modo Desktop) |
 | **Ancho / Alto** | `number` | — | Dimensiones personalizadas (cuando `custom`) |
 | **Modelo de Dispositivo** | string | `iPhone 14` | Dispositivo a emular (modo Mobile) |
+| **Escaneo de accesibilidad** | `boolean` | `false` | Ejecuta diagnóstico integrado de accesibilidad |
+| **Auditoría de rendimiento** | `boolean` | `false` | Recoge métricas de carga y red durante la ejecución |
+| **Tiempo máximo de carga (ms)** | `number` | `4000` | Threshold para fallar cuando la carga de la página supera el límite |
+| **Tiempo máximo de respuesta de API (ms)** | `number` | `1500` | Threshold para APIs lentas capturadas en la sesión |
+| **Fallar en errores de solicitud** | `boolean` | `true` | Falla el nodo cuando las APIs monitoreadas devuelven errores HTTP/de red |
 
 > Las opciones de Navegador & Dispositivo son idénticas al nodo Web Flow — consulta la [documentación de Web Flow](web-flow.md#navegador) para detalles sobre presets de viewport y dispositivos mobile disponibles.
+
+### Auditoría de Rendimiento
+
+Cuando **Auditoría de rendimiento** está habilitada, Smart Locators monitorea la sesión activa de Playwright y genera evidencias visuales de rendimiento por pantalla.
+
+La función recoge:
+
+- **Page Load**
+- **FCP** (*First Contentful Paint*)
+- **LCP** (*Largest Contentful Paint*)
+- cantidad total de solicitudes
+- cantidad de solicitudes de API
+- errores de solicitud/API
+- APIs lentas por pantalla
+
+Además del resumen global, QANode genera **checkpoints por pantalla** con:
+
+- nombre de la pantalla
+- URL
+- paso que originó la navegación
+- gráfico de las APIs más lentas
+- gráfico separado de **errores de API** cuando existan en esa pantalla
+
+### Outputs de Rendimiento
+
+Cuando la auditoría está activa, el nodo expone:
+
+- `performancePassed`
+- `performanceRequestCount`
+- `performanceApiRequestCount`
+- `performanceErrorCount`
+- `performanceSlowRequestCount`
+- `performance`
+
+El objeto `performance` contiene un resumen estructurado de la ejecución, incluidos los checkpoints por pantalla.
 
 ---
 

@@ -66,6 +66,11 @@ Bem-vindo à documentação oficial do **QANode**, a plataforma de automação d
 |----|-----------|
 | [SSH Command](nos/infraestrutura/ssh-command.md) | Execução de comandos SSH remotos |
 
+### Performance
+| Nó | Descrição |
+|----|-----------|
+| [Load Test](nos/performance/load-test.md) | Testes de carga e performance com múltiplos usuários virtuais |
+
 ### Utilitários
 | Nó | Descrição |
 |----|-----------|
