@@ -313,6 +313,8 @@ Webhooks permitem enviar notificações HTTP POST automaticamente para serviços
 
 ### Eventos Disponíveis
 
+#### Execução de testes
+
 | Evento | Descrição |
 |--------|-----------|
 | `run.completed` | Execução de cenário finalizada (sucesso ou falha) |
@@ -322,32 +324,52 @@ Webhooks permitem enviar notificações HTTP POST automaticamente para serviços
 | `suite.success` | Execução de suíte finalizada com sucesso |
 | `suite.failed` | Execução de suíte finalizada com falha |
 
+#### Defeitos
+
+| Evento | Descrição |
+|--------|-----------|
+| `defect.opened` | Um novo defeito foi criado |
+| `defect.status_changed` | Um defeito transitou para um status não-final do workflow |
+| `defect.closed` | Um defeito transitou para um status final do workflow (corrigido, rejeitado, encerrado, etc.) |
+
 ### Escopo (Filtros)
 
 Você pode filtrar os webhooks para disparar apenas em contextos específicos:
 
-- **Projeto** — Apenas execuções de um projeto específico
-- **Suíte** — Apenas execuções de uma suíte específica
-- **Cenário** — Apenas execuções de um cenário específico
+- **Projeto** — Apenas eventos de um projeto específico
+- **Suíte** — Apenas execuções de uma suíte específica (somente eventos de execução de testes)
+- **Cenário** — Apenas eventos de um cenário/fluxo específico
 
 > Ao selecionar um projeto, as suítes e cenários são filtrados para mostrar apenas os daquele projeto. Ao selecionar uma suíte, o filtro de cenário é ocultado.
 
+> **Observação:** O escopo de suíte não se aplica a eventos de defeito. Um webhook com escopo em uma suíte específica só dispara para eventos de execução de testes (`run.*`, `suite.*`), nunca para eventos de defeito.
+
 ### Payload do Webhook
 
-O corpo do POST enviado contém:
+Cada entrega é um `POST` HTTP com o seguinte corpo JSON:
+
+```json
+{
+  "event": "<nome-do-evento>",
+  "timestamp": "2026-04-15T10:30:00.000Z",
+  "data": { ... }
+}
+```
+
+#### Payload de execução de testes
 
 ```json
 {
   "event": "run.completed",
-  "timestamp": "2026-02-13T10:30:00.000Z",
+  "timestamp": "2026-04-15T10:30:00.000Z",
   "data": {
     "runId": "uuid",
     "flowId": "uuid",
-    "flowName": "Nome do Cenário",
+    "flowName": "Login Flow",
     "suiteId": "uuid",
-    "suiteName": "Nome da Suíte",
+    "suiteName": "Smoke Suite",
     "projectId": "uuid",
-    "projectName": "Nome do Projeto",
+    "projectName": "App Mobile",
     "status": "success",
     "durationMs": 1234,
     "executor": "Nome do Usuário",
@@ -355,6 +377,49 @@ O corpo do POST enviado contém:
   }
 }
 ```
+
+#### Payload de defeitos (`defect.opened`, `defect.status_changed`, `defect.closed`)
+
+```json
+{
+  "event": "defect.status_changed",
+  "timestamp": "2026-04-15T15:10:00.000Z",
+  "data": {
+    "defectId": "uuid",
+    "defectNumber": 42,
+    "title": "Botão de login não responde no Safari",
+    "description": "Ao clicar em Login no Safari 17...",
+    "status": "in_progress",
+    "previousStatus": "open",
+    "severity": "high",
+    "priority": "urgent",
+    "resolution": null,
+    "isFinal": false,
+    "closedAt": null,
+    "createdAt": "2026-04-15T14:32:00.000Z",
+    "updatedAt": "2026-04-15T15:10:00.000Z",
+    "project": { "id": "uuid", "name": "App Mobile" },
+    "flow": { "id": "uuid", "name": "Login Flow" },
+    "run": { "id": "uuid", "status": "failed" },
+    "reporterUser": { "id": "uuid", "name": "Maria", "email": "maria@empresa.com" },
+    "assigneeUser": { "id": "uuid", "name": "João Silva", "email": "joao@empresa.com" },
+    "assigneeRole": null,
+    "customFields": { "ambiente": "producao", "navegador": "Safari 17" },
+    "actionComment": {
+      "content": "Iniciando investigação no ambiente de staging",
+      "user": { "id": "uuid", "name": "João Silva", "email": "joao@empresa.com" }
+    }
+  }
+}
+```
+
+| Campo | Descrição |
+|-------|-----------|
+| `previousStatus` | Status antes desta transição; `null` em `defect.opened` |
+| `isFinal` | `true` quando o status atual é final/encerrado |
+| `closedAt` | Timestamp ISO de quando o defeito foi encerrado; `null` se ainda aberto |
+| `customFields` | Mapa chave-valor dos campos personalizados definidos no workflow de defeitos |
+| `actionComment` | Nota inserida durante esta ação, com o usuário que a realizou; `null` se nenhuma nota foi informada |
 
 ### Assinatura HMAC
 

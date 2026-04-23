@@ -313,6 +313,8 @@ Los webhooks permiten enviar automáticamente notificaciones HTTP POST a servici
 
 ### Eventos Disponibles
 
+#### Ejecución de pruebas
+
 | Evento | Descripción |
 |--------|-------------|
 | `run.completed` | Ejecución de escenario finalizada (éxito o fallo) |
@@ -322,39 +324,102 @@ Los webhooks permiten enviar automáticamente notificaciones HTTP POST a servici
 | `suite.success` | Ejecución de suite finalizada con éxito |
 | `suite.failed` | Ejecución de suite finalizada con fallo |
 
+#### Defectos
+
+| Evento | Descripción |
+|--------|-------------|
+| `defect.opened` | Se creó un nuevo defecto |
+| `defect.status_changed` | Un defecto transitó a un estado no final del flujo de trabajo |
+| `defect.closed` | Un defecto transitó a un estado final del flujo de trabajo (corregido, rechazado, cerrado, etc.) |
+
 ### Alcance (Filtros)
 
 Puede filtrar los webhooks para que se disparen solo en contextos específicos:
 
-- **Proyecto** — Solo ejecuciones de un proyecto específico
-- **Suite** — Solo ejecuciones de una suite específica
-- **Escenario** — Solo ejecuciones de un escenario específico
+- **Proyecto** — Solo eventos de un proyecto específico
+- **Suite** — Solo ejecuciones de una suite específica (solo eventos de ejecución de pruebas)
+- **Escenario** — Solo eventos de un escenario/flujo específico
 
 > Al seleccionar un proyecto, las suites y escenarios se filtran para mostrar solo los de ese proyecto. Al seleccionar una suite, el filtro de escenario se oculta.
 
+> **Nota:** El alcance de suite no aplica a eventos de defecto. Un webhook con alcance en una suite específica solo se dispara para eventos de ejecución de pruebas (`run.*`, `suite.*`), nunca para eventos de defecto.
+
 ### Payload del Webhook
 
-El cuerpo del POST enviado contiene:
+Cada entrega es un `POST` HTTP con el siguiente cuerpo JSON:
+
+```json
+{
+  "event": "<nombre-del-evento>",
+  "timestamp": "2026-04-15T10:30:00.000Z",
+  "data": { ... }
+}
+```
+
+#### Payload de ejecución de pruebas
 
 ```json
 {
   "event": "run.completed",
-  "timestamp": "2026-02-13T10:30:00.000Z",
+  "timestamp": "2026-04-15T10:30:00.000Z",
   "data": {
     "runId": "uuid",
     "flowId": "uuid",
-    "flowName": "Nome do Cenário",
+    "flowName": "Login Flow",
     "suiteId": "uuid",
-    "suiteName": "Nome da Suíte",
+    "suiteName": "Smoke Suite",
     "projectId": "uuid",
-    "projectName": "Nome do Projeto",
+    "projectName": "App Mobile",
     "status": "success",
     "durationMs": 1234,
-    "executor": "Nome do Usuário",
+    "executor": "Nombre del Usuario",
     "errorSummary": null
   }
 }
 ```
+
+#### Payload de defectos (`defect.opened`, `defect.status_changed`, `defect.closed`)
+
+```json
+{
+  "event": "defect.status_changed",
+  "timestamp": "2026-04-15T15:10:00.000Z",
+  "data": {
+    "defectId": "uuid",
+    "defectNumber": 42,
+    "title": "El botón de login no responde en Safari",
+    "description": "Al hacer clic en Login en Safari 17...",
+    "status": "in_progress",
+    "previousStatus": "open",
+    "severity": "high",
+    "priority": "urgent",
+    "resolution": null,
+    "isFinal": false,
+    "closedAt": null,
+    "createdAt": "2026-04-15T14:32:00.000Z",
+    "updatedAt": "2026-04-15T15:10:00.000Z",
+    "project": { "id": "uuid", "name": "App Mobile" },
+    "flow": { "id": "uuid", "name": "Login Flow" },
+    "run": { "id": "uuid", "status": "failed" },
+    "reporterUser": { "id": "uuid", "name": "María", "email": "maria@empresa.com" },
+    "assigneeUser": { "id": "uuid", "name": "Juan Silva", "email": "juan@empresa.com" },
+    "assigneeRole": null,
+    "customFields": { "ambiente": "produccion", "navegador": "Safari 17" },
+    "actionComment": {
+      "content": "Iniciando investigación en el ambiente de staging",
+      "user": { "id": "uuid", "name": "Juan Silva", "email": "juan@empresa.com" }
+    }
+  }
+}
+```
+
+| Campo | Descripción |
+|-------|-------------|
+| `previousStatus` | Estado anterior a esta transición; `null` en `defect.opened` |
+| `isFinal` | `true` cuando el estado actual es final/cerrado |
+| `closedAt` | Timestamp ISO de cuando se cerró el defecto; `null` si aún está abierto |
+| `customFields` | Mapa clave-valor de los campos personalizados definidos en el flujo de trabajo de defectos |
+| `actionComment` | Nota ingresada durante esta acción, con el usuario que la realizó; `null` si no se ingresó nota |
 
 ### Firma HMAC
 

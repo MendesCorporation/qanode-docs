@@ -39,6 +39,7 @@ Idêntica ao nó Web Flow:
 | **Tempo máximo de carregamento (ms)** | `number` | `4000` | Threshold para falhar quando o carregamento da página excede o limite |
 | **Tempo máximo de resposta da API (ms)** | `number` | `1500` | Threshold para APIs lentas capturadas na sessão |
 | **Falhar em erros de requisição** | `boolean` | `true` | Marca o nó como falho quando houver erro HTTP/rede nas APIs monitoradas |
+| **Self Healing** | `boolean` | `false` | Tenta recuperar localizadores quando o elemento muda e o locator original não resolve mais o alvo |
 
 > As opções de Browser & Device são as mesmas do nó Web Flow — consulte a [documentação do Web Flow](web-flow.md#browser) para detalhes sobre presets de viewport e dispositivos mobile disponíveis.
 
@@ -76,6 +77,33 @@ Quando a auditoria está ligada, o nó expõe:
 - `performance`
 
 O objeto `performance` contém um resumo estruturado da execução, incluindo os checkpoints por tela.
+
+### Self Healing
+
+Quando **Self Healing** está habilitado, o Smart Locators tenta recuperar automaticamente ações baseadas em localizadores semânticos quando o locator original deixa de encontrar o elemento esperado.
+
+Além do próprio locator semântico, o mecanismo considera:
+
+- texto e nome acessível do elemento
+- `role`
+- `label`, `placeholder`, `title` e outros atributos relevantes
+- contexto estrutural da página, como container, formulário, heading e posição relativa
+
+Isso ajuda em cenários como:
+
+- mudança de texto com o mesmo significado
+- troca entre maiúsculas/minúsculas
+- texto com ou sem acento
+- variações curtas, como `Entrar` → `Login` ou `Avançar` → `Continuar`
+
+O recurso é conservador: ele só aplica a recuperação quando encontra um candidato claramente mais forte que os demais, evitando “chutes” em telas ambíguas.
+
+Quando um passo é recuperado, a execução mostra:
+
+- o passo afetado
+- a confiança da recuperação
+- o locator utilizado
+- a opção **Aplicar ao Fluxo** para atualizar o fluxo com o locator recuperado
 
 ---
 

@@ -39,6 +39,7 @@ Identical to the Web Flow node:
 | **Max Page Load (ms)** | `number` | `4000` | Threshold used to fail the node when page load exceeds the limit |
 | **Max API Response (ms)** | `number` | `1500` | Threshold used to flag slow API responses captured in the session |
 | **Fail on Request Errors** | `boolean` | `true` | Fails the node when monitored APIs return HTTP/network errors |
+| **Self Healing** | `boolean` | `false` | Tries to recover locators when the element changes and the original locator no longer resolves the target |
 
 > The Browser & Device options are identical to the Web Flow node — see the [Web Flow documentation](web-flow.md#browser) for details on viewport presets and available mobile devices.
 
@@ -76,6 +77,33 @@ When the audit is enabled, the node exposes:
 - `performance`
 
 The `performance` object contains a structured summary of the execution, including per-screen checkpoints.
+
+### Self Healing
+
+When **Self Healing** is enabled, Smart Locators can automatically recover semantic locator actions when the original locator no longer finds the expected element.
+
+In addition to the semantic locator itself, the engine considers:
+
+- element text and accessible name
+- `role`
+- `label`, `placeholder`, `title`, and other relevant attributes
+- structural page context such as container, form, heading, and relative position
+
+This helps in scenarios such as:
+
+- text changes with the same meaning
+- uppercase/lowercase changes
+- text with or without accents
+- short variations such as `Login` → `Sign In` or `Next` → `Continue`
+
+The feature is conservative: it only applies recovery when it finds a candidate clearly stronger than the others, avoiding guesses on ambiguous screens.
+
+When a step is recovered, the execution shows:
+
+- the affected step
+- the recovery confidence
+- the locator used
+- an **Apply to Flow** option to update the flow with the recovered locator
 
 ---
 

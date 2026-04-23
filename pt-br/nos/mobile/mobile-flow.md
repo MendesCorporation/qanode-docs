@@ -54,11 +54,44 @@ appium driver install --source=npm appium-xcuitest-driver@10.25.0
 | **Credencial** | `select` | — | Credencial Mobile com configurações de conexão |
 | **Modo de Sessão** | `new` / `reuse` | `new` | Nova sessão ou reutilizar sessão existente |
 | **Session ID** | `string` | — | ID para identificar/reutilizar a sessão |
+| **Self Healing** | `boolean` | `false` | Tenta recuperar elementos quando os seletores mobile deixam de localizar o alvo original |
 
 ### Modo de Sessão
 
 - **Nova Sessão (`new`)**: Abre uma nova sessão Appium a cada execução. Ideal para testes isolados.
 - **Reutilizar Sessão (`reuse`)**: Reaproveita uma sessão já criada por outro nó Mobile Flow no mesmo fluxo. Útil para dividir automações longas em múltiplos nós mantendo o mesmo dispositivo conectado.
+
+### Self Healing
+
+Quando **Self Healing** está habilitado, o Mobile Flow tenta recuperar automaticamente elementos em ações como toque e digitação quando os seletores gravados deixam de funcionar.
+
+No mobile, a recuperação considera sinais como:
+
+- `accessibility_id`
+- texto visível
+- `label`, `name`, `value` e `hint`
+- `resource-id`
+- tipo/classe nativa do elemento
+- contexto próximo na hierarquia capturada pelo Appium
+
+Isso ajuda em mudanças comuns como:
+
+- ajustes pequenos de rótulo
+- diferenças de maiúsculas/minúsculas
+- texto com ou sem acento
+- mudança de seletor mantendo o mesmo elemento na tela
+
+O self healing em mobile também respeita a plataforma ativa:
+
+- prioriza estratégias compatíveis com iOS quando a execução está em iOS
+- prioriza estratégias compatíveis com Android quando a execução está em Android
+
+Quando uma recuperação é aplicada, ela aparece nos detalhes da execução com:
+
+- passo afetado
+- confiança da recuperação
+- seletor mobile utilizado
+- ação **Aplicar ao Fluxo** para promover o seletor recuperado ao fluxo original
 
 ---
 

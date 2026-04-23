@@ -37,6 +37,7 @@ El nodo **Web Flow** permite automatizar interacciones con páginas web usando *
 | **Tiempo máximo de carga (ms)** | `number` | `4000` | Threshold para fallar cuando la carga de la página supera el límite |
 | **Tiempo máximo de respuesta de API (ms)** | `number` | `1500` | Threshold para APIs lentas capturadas en la sesión |
 | **Fallar en errores de solicitud** | `boolean` | `true` | Falla el nodo cuando las APIs monitoreadas devuelven errores HTTP/de red |
+| **Self Healing** | `boolean` | `false` | Intenta recuperar pasos cuando el elemento original cambia y los selectores ya no encuentran el objetivo |
 
 ### Navegador
 
@@ -117,6 +118,34 @@ Cuando la auditoría está activa, el nodo expone:
 - `performance`
 
 El objeto `performance` contiene un resumen estructurado de la ejecución, incluidos los checkpoints por pantalla.
+
+### Self Healing
+
+Cuando **Self Healing** está habilitado, Web Flow puede recuperar automáticamente un paso cuando el objetivo esperado y sus `selectorStrategies` dejan de funcionar.
+
+El mecanismo considera señales como:
+
+- texto visible y nombre accesible
+- `label`, `placeholder`, `title`, `alt`
+- `data-testid`, `id` y `name`
+- `role` del elemento
+- contexto estructural de la página, como contenedor, formulario, heading y región visual
+
+Esto ayuda en cambios comunes de interfaz, por ejemplo:
+
+- diferencias entre mayúsculas y minúsculas
+- texto con o sin acentos
+- pequeños cambios de etiqueta
+- cambios simples de sinónimos, como `Siguiente` → `Continuar`
+
+Self healing es conservador y solo se aplica cuando existe un candidato fuerte y claramente mejor que las alternativas, reduciendo falsos positivos en pantallas con varios botones parecidos.
+
+Cuando ocurre una recuperación, los detalles de la ejecución muestran:
+
+- el paso afectado
+- la confianza de la recuperación
+- el selector utilizado
+- una acción **Aplicar al Flujo** para promover el selector recuperado al flujo original
 
 ---
 

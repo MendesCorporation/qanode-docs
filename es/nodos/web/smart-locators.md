@@ -39,6 +39,7 @@ Idéntica al nodo Web Flow:
 | **Tiempo máximo de carga (ms)** | `number` | `4000` | Threshold para fallar cuando la carga de la página supera el límite |
 | **Tiempo máximo de respuesta de API (ms)** | `number` | `1500` | Threshold para APIs lentas capturadas en la sesión |
 | **Fallar en errores de solicitud** | `boolean` | `true` | Falla el nodo cuando las APIs monitoreadas devuelven errores HTTP/de red |
+| **Self Healing** | `boolean` | `false` | Intenta recuperar localizadores cuando el elemento cambia y el locator original ya no resuelve el objetivo |
 
 > Las opciones de Navegador & Dispositivo son idénticas al nodo Web Flow — consulta la [documentación de Web Flow](web-flow.md#navegador) para detalles sobre presets de viewport y dispositivos mobile disponibles.
 
@@ -76,6 +77,33 @@ Cuando la auditoría está activa, el nodo expone:
 - `performance`
 
 El objeto `performance` contiene un resumen estructurado de la ejecución, incluidos los checkpoints por pantalla.
+
+### Self Healing
+
+Cuando **Self Healing** está habilitado, Smart Locators puede recuperar automáticamente acciones basadas en localizadores semánticos cuando el locator original deja de encontrar el elemento esperado.
+
+Además del propio locator semántico, el motor considera:
+
+- texto y nombre accesible del elemento
+- `role`
+- `label`, `placeholder`, `title` y otros atributos relevantes
+- contexto estructural de la página, como contenedor, formulario, heading y posición relativa
+
+Esto ayuda en escenarios como:
+
+- cambios de texto con el mismo significado
+- cambios entre mayúsculas y minúsculas
+- texto con o sin acentos
+- variaciones cortas, como `Ingresar` → `Login` o `Siguiente` → `Continuar`
+
+La función es conservadora: solo aplica la recuperación cuando encuentra un candidato claramente más fuerte que los demás, evitando “adivinar” en pantallas ambiguas.
+
+Cuando un paso es recuperado, la ejecución muestra:
+
+- el paso afectado
+- la confianza de la recuperación
+- el locator utilizado
+- una opción **Aplicar al Flujo** para actualizar el flujo con el locator recuperado
 
 ---
 

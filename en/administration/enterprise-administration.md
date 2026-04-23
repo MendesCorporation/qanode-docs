@@ -313,6 +313,8 @@ Webhooks allow automatically sending HTTP POST notifications to external service
 
 ### Available Events
 
+#### Test execution
+
 | Event | Description |
 |-------|-------------|
 | `run.completed` | Scenario execution completed (success or failure) |
@@ -322,39 +324,102 @@ Webhooks allow automatically sending HTTP POST notifications to external service
 | `suite.success` | Suite execution completed successfully |
 | `suite.failed` | Suite execution completed with failure |
 
+#### Defects
+
+| Event | Description |
+|-------|-------------|
+| `defect.opened` | A new defect was created |
+| `defect.status_changed` | A defect transitioned to a non-final workflow status |
+| `defect.closed` | A defect transitioned to a final workflow status (fixed, rejected, closed, etc.) |
+
 ### Scope (Filters)
 
 You can filter webhooks to trigger only in specific contexts:
 
-- **Project** — Only executions from a specific project
-- **Suite** — Only executions from a specific suite
-- **Scenario** — Only executions from a specific scenario
+- **Project** — Only events from a specific project
+- **Suite** — Only executions from a specific suite (test execution events only)
+- **Scenario** — Only events from a specific scenario/flow
 
 > When selecting a project, suites and scenarios are filtered to show only those belonging to that project. When selecting a suite, the scenario filter is hidden.
 
+> **Note:** Suite scope does not apply to defect events. A webhook scoped to a suite will only fire for test execution events (`run.*`, `suite.*`), never for defect events.
+
 ### Webhook Payload
 
-The POST body sent contains:
+Every delivery is an HTTP `POST` with the following JSON body:
+
+```json
+{
+  "event": "<event-name>",
+  "timestamp": "2026-04-15T10:30:00.000Z",
+  "data": { ... }
+}
+```
+
+#### Test execution payload
 
 ```json
 {
   "event": "run.completed",
-  "timestamp": "2026-02-13T10:30:00.000Z",
+  "timestamp": "2026-04-15T10:30:00.000Z",
   "data": {
     "runId": "uuid",
     "flowId": "uuid",
-    "flowName": "Nome do Cenário",
+    "flowName": "Login Flow",
     "suiteId": "uuid",
-    "suiteName": "Nome da Suíte",
+    "suiteName": "Smoke Suite",
     "projectId": "uuid",
-    "projectName": "Nome do Projeto",
+    "projectName": "App Mobile",
     "status": "success",
     "durationMs": 1234,
-    "executor": "Nome do Usuário",
+    "executor": "Username",
     "errorSummary": null
   }
 }
 ```
+
+#### Defect payload (`defect.opened`, `defect.status_changed`, `defect.closed`)
+
+```json
+{
+  "event": "defect.status_changed",
+  "timestamp": "2026-04-15T15:10:00.000Z",
+  "data": {
+    "defectId": "uuid",
+    "defectNumber": 42,
+    "title": "Login button does not respond on Safari",
+    "description": "When clicking Login on Safari 17...",
+    "status": "in_progress",
+    "previousStatus": "open",
+    "severity": "high",
+    "priority": "urgent",
+    "resolution": null,
+    "isFinal": false,
+    "closedAt": null,
+    "createdAt": "2026-04-15T14:32:00.000Z",
+    "updatedAt": "2026-04-15T15:10:00.000Z",
+    "project": { "id": "uuid", "name": "App Mobile" },
+    "flow": { "id": "uuid", "name": "Login Flow" },
+    "run": { "id": "uuid", "status": "failed" },
+    "reporterUser": { "id": "uuid", "name": "Maria", "email": "maria@company.com" },
+    "assigneeUser": { "id": "uuid", "name": "João Silva", "email": "joao@company.com" },
+    "assigneeRole": null,
+    "customFields": { "environment": "production", "browser": "Safari 17" },
+    "actionComment": {
+      "content": "Starting investigation on staging",
+      "user": { "id": "uuid", "name": "João Silva", "email": "joao@company.com" }
+    }
+  }
+}
+```
+
+| Field | Description |
+|-------|-------------|
+| `previousStatus` | Status before this transition; `null` on `defect.opened` |
+| `isFinal` | `true` when the current status is a final/closed status |
+| `closedAt` | ISO timestamp when the defect was closed; `null` if still open |
+| `customFields` | Key-value map of custom fields defined in the defect workflow |
+| `actionComment` | Note entered during this action, with the user who performed it; `null` if no note was provided |
 
 ### HMAC Signature
 

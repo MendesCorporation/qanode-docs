@@ -37,6 +37,7 @@ The **Web Flow** node allows you to automate interactions with web pages using *
 | **Max Page Load (ms)** | `number` | `4000` | Threshold used to fail the node when page load exceeds the limit |
 | **Max API Response (ms)** | `number` | `1500` | Threshold used to flag slow API responses captured in the session |
 | **Fail on Request Errors** | `boolean` | `true` | Fails the node when monitored APIs return HTTP/network errors |
+| **Self Healing** | `boolean` | `false` | Tries to recover steps when the original element changes and selectors can no longer find the target |
 
 ### Browser
 
@@ -117,6 +118,34 @@ When the audit is enabled, the node exposes:
 - `performance`
 
 The `performance` object contains a structured summary of the execution, including per-screen checkpoints.
+
+### Self Healing
+
+When **Self Healing** is enabled, Web Flow can automatically recover a step when the expected target and its `selectorStrategies` stop working.
+
+The mechanism considers signals such as:
+
+- visible text and accessible name
+- `label`, `placeholder`, `title`, `alt`
+- `data-testid`, `id`, and `name`
+- element `role`
+- structural page context such as container, form, heading, and visual region
+
+This helps with common UI changes such as:
+
+- uppercase/lowercase differences
+- text with or without accents
+- small label changes
+- simple synonym changes such as `Next` → `Continue`
+
+Self healing is conservative and only applies when there is a strong candidate clearly better than the alternatives, reducing false positives on screens with multiple similar buttons.
+
+When a recovery happens, the run details show:
+
+- the affected step
+- the recovery confidence
+- the selector used
+- an **Apply to Flow** action to promote the recovered selector back to the original flow
 
 ---
 
