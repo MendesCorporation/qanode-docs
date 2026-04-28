@@ -47,6 +47,7 @@ Grava automaticamente suas interações:
 | **Digitar** em campo | `type` com texto e seletores |
 | **Selecionar** opção | `select` com valor selecionado |
 | **Rolar** a página | `scroll` com posição |
+| **Arrastar e soltar** elemento | `drag` com origem, destino e/ou coordenadas |
 | **Navegar** para URL | `navigate` com URL |
 | **Recarregar** página | `refresh` |
 
@@ -129,6 +130,34 @@ No modo Smart Locators, a extensão converte os elementos capturados em **locali
 | 5 | `getByRole` | Botão, link, heading (fallback) |
 
 Os localizadores semânticos são mais resilientes a mudanças de layout e refletem como os usuários realmente encontram elementos na página.
+
+---
+
+## Arrastar e Soltar
+
+A extensão também grava operações de **arrastar e soltar** para os modos **Web Flow** e **Smart Locators**.
+
+Durante a gravação, o QANode Recorder tenta capturar:
+
+- O elemento de origem antes do movimento começar
+- O destino do drop, quando houver um elemento identificável
+- As coordenadas de origem e destino como fallback
+- Metadados internos do gesto para reproduzir o movimento com mais precisão
+
+No modo **Web Flow**, a gravação prioriza seletores CSS/XPath e atributos estáveis como `id`, `data-testid` e `data-qa`.
+
+No modo **Smart Locators**, a extensão prioriza localizadores semânticos. Quando a página não fornece semântica suficiente, por exemplo imagens sem `alt`, áreas de drop sem texto ou botões apenas com ícone, a gravação pode usar um fallback técnico estável como `css: #id`. Isso evita localizadores frágeis como `getByRole("button")` sem nome ou dependência exclusiva de `nth`.
+
+### Quando revisar o passo gravado
+
+Revise manualmente o passo de drag/drop quando:
+
+- O alvo for um canvas ou uma área livre sem elemento de destino claro
+- Houver vários elementos com o mesmo texto
+- O elemento for apenas um ícone sem `aria-label`
+- A página mover/reordenar os elementos durante o gesto
+
+Para aplicações enterprise, prefira adicionar `data-testid`, `data-qa`, `aria-label` ou nomes acessíveis em botões e áreas de drop. Isso torna a gravação mais estável e melhora o Smart Locators.
 
 ---
 
@@ -301,7 +330,6 @@ O JSON copiado é compatível com o nó correspondente ao modo selecionado.
 
 - **Apenas Chrome** — não funciona em outros navegadores
 - **Sem waits automáticos** — adicione manualmente no QANode
-- **Sem drag & drop** — não grava operações de arrastar
 - **Sites com CSP restrito** — podem bloquear a injeção de content script
 - **iFrames cross-origin** — podem não ser acessíveis
 

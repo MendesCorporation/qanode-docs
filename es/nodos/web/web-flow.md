@@ -160,6 +160,7 @@ El nodo Web Flow ejecuta una secuencia de **pasos** configurables. Cada paso rep
 | [navigate](#navigate) | Azul | Navegar a una URL |
 | [click](#click) | Amarillo | Hacer clic en un elemento |
 | [type](#type) | Verde | Escribir texto en un campo |
+| [drag](#drag) | Rosa | Arrastrar y soltar |
 | [wait](#wait) | Morado | Esperar una condición o tiempo |
 | [assert](#assert) | Rojo | Verificar una condición en la página |
 | [extract](#extract) | Cian | Extraer datos de un elemento |
@@ -168,6 +169,7 @@ El nodo Web Flow ejecuta una secuencia de **pasos** configurables. Cada paso rep
 | [refresh](#refresh) | Naranja | Recargar la página |
 | [select](#select) | Morado | Seleccionar una opción de un dropdown |
 | [press-key](#press-key) | Verde | Presionar una tecla |
+| [clock](#clock) | Verde azulado | Controlar el reloj del navegador |
 | [frame](#frame) | Gris | Alternar entre frames/iframes |
 
 ---
@@ -235,6 +237,37 @@ Escribe texto en un campo de entrada.
 | **Limpiar Primero** | `boolean` | Limpia el campo antes de escribir |
 
 > **Nota:** La acción `type` usa `fill()` de Playwright, que reemplaza el valor del campo de forma instantánea. Para simular la escritura carácter por carácter, usa el nodo [Smart Locators](smart-locators.md) con la acción `type` (pressSequentially).
+
+---
+
+### drag
+
+Arrastra un elemento de origen y lo suelta sobre otro elemento o en coordenadas específicas de la página.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| **Selectores de Origen** | `array` | Estrategias CSS/XPath del elemento que será arrastrado |
+| **Selectores de Destino** | `array` | Estrategias CSS/XPath del elemento donde será soltado |
+| **Destino X / Y** | `number` | Coordenadas absolutas que se muestran cuando no hay selector de destino |
+| **Esperar Después (ms)** | `number` | Tiempo de espera después de soltar |
+
+Web Flow intenta ejecutar el drag con el método nativo de Playwright (`dragTo`) cuando origen y destino son identificables. Si el destino es un área libre, como un canvas o editor visual, usa movimiento real del mouse hasta `Destino X / Y`.
+
+Cuando el paso viene de la extensión, el JSON puede incluir metadatos internos del gesto. Ayudan al ejecutor a reproducir el movimiento con precisión, pero no aparecen como campos principales en el panel.
+
+**Ejemplos de uso:**
+
+- Mover cards en un Kanban
+- Arrastrar ítems a una lista
+- Soltar un nodo en un área libre del canvas
+- Probar ordenación o upload cuando la UI depende de drag/drop
+
+**Buenas prácticas:**
+
+- Prefiere `data-testid`, `data-qa` o `id` estables para origen y destino
+- Usa coordenadas solo cuando el destino no tenga un elemento identificable
+- Captura screenshots `before` y `after` para facilitar la revisión visual
+- Si la página tiene elementos repetidos, prefiere selectores más específicos para evitar ambigüedad
 
 ---
 
@@ -394,6 +427,31 @@ Presiona una tecla del teclado.
 | **Tecla** | `string` | Nombre de la tecla (ej: `Enter`, `Tab`, `Escape`) |
 | **Selectores** | `array` | Selectores del elemento enfocado (opcional) |
 | **Espera Después (ms)** | `number` | Tiempo de espera tras presionar |
+
+---
+
+### clock
+
+Controla el reloj del navegador usando la API `page.clock` de Playwright. Es útil para probar reglas dependientes de fecha/hora, expiración de sesión, promociones temporales, bloqueos por horario, vencimientos, temporizadores y pantallas que cambian con el paso del tiempo.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| **Operación** | `setFixedTime` / `fastForward` / `pauseAt` / `resume` | Operación del reloj a ejecutar |
+| **Fecha / Hora** | `string` | Fecha/hora usada por `setFixedTime` y `pauseAt` |
+| **Duración** | `string` / `number` | Tiempo virtual avanzado por `fastForward` (`1000`, `05:00`, `02:34:10`) |
+| **Recargar página después de aplicar** | `boolean` | Recarga la página después de aplicar el clock cuando está activado |
+| **Esperar recarga hasta** | `load` / `domcontentloaded` / `networkidle` | Evento de carga usado cuando la recarga está activada |
+
+**Operaciones:**
+
+| Operación | Comportamiento |
+|-----------|----------------|
+| `setFixedTime` | Fija el reloj del navegador en una fecha/hora específica |
+| `fastForward` | Avanza el tiempo virtual sin esperar tiempo real |
+| `pauseAt` | Mueve a una fecha/hora específica y mantiene el reloj pausado |
+| `resume` | Reanuda el reloj controlado desde el tiempo emulado actual |
+
+Los nuevos pasos de clock comienzan con **Recargar página después de aplicar** desactivado por defecto. Esto conserva el estado actual de la pantalla y funciona mejor para páginas con temporizadores activos. Activa la recarga cuando la aplicación solo recalcula fecha/hora durante la carga de la página.
 
 ---
 

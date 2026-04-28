@@ -185,11 +185,12 @@ Equivale ao Playwright: `page.getByRole('button', { name: 'Entrar' })`
 | [wait](#wait) | 🟣 | Aguardar condição |
 | [scroll](#scroll) | 🟡 | Rolar página |
 | [refresh](#refresh) | 🟠 | Recarregar página |
+| [clock](#clock) | 🟢 Água | Controlar o relógio do navegador |
 | [frame](#frame) | Cinza | Alternar frame |
 | [rightClick](#rightclick) | 🟡 | Clique com botão direito |
 | [upload](#upload) | 🔵 | Upload de arquivos |
 | [dialog](#dialog) | 🟣 | Tratar dialogs (alert/confirm) |
-| [dragDrop](#dragdrop) | 🔵 | Arrastar e soltar |
+| [drag](#drag) | Rosa | Arrastar e soltar |
 | [evaluate](#evaluate) | ⚪ | Executar JavaScript na página |
 | [screenshot](#screenshot) | 🔵 | Capturar screenshot |
 
@@ -340,6 +341,37 @@ Pressiona uma tecla do teclado no contexto de um elemento.
 
 ---
 
+### drag
+
+Arrasta um elemento localizado semanticamente e solta sobre outro localizador ou em coordenadas gravadas.
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| **Localizador de Origem** | `locator` | Elemento que será arrastado |
+| **Localizador de Destino** | `locator` | Elemento onde será solto, quando houver |
+| **Destino X / Y** | `number` | Coordenadas absolutas exibidas quando o destino não possui localizador confiável |
+| **Esperar Após (ms)** | `number` | Tempo de espera após soltar |
+
+O Smart Locators tenta usar os localizadores semânticos do Playwright, como `getByRole`, `getByText`, `getByLabel` e `getByTestId`. Quando a página possui elementos repetidos e o passo vem da extensão, o JSON pode carregar metadados internos de posição para ajudar o executor a escolher o elemento mais próximo do gesto original. Esses metadados não aparecem como campos principais no painel.
+
+Para componentes de drag/drop, o QANode também tenta promover o localizador semântico para o container interativo real. Isso é útil quando o texto clicado fica dentro de outro elemento arrastável, por exemplo:
+
+- Um `<p>` dentro de um card arrastável
+- Uma imagem dentro de um container `draggable`
+- Uma área de drop marcada por classe ou atributos de drop
+
+Se o destino semântico for genérico demais ou falhar, mas houver `Destino X / Y`, o Smart Locators pode usar as coordenadas gravadas como fallback. Isso permite automatizar canvas, Kanban e áreas de soltar que não têm texto, role ou label próprios.
+
+**Boas práticas:**
+
+- Prefira componentes com nomes acessíveis (`aria-label`, texto visível, labels)
+- Use `data-testid` ou `data-qa` para cards, colunas e áreas de drop críticas
+- Evite botões apenas com ícone sem `aria-label`
+- Revise gravações que dependam de `nth`, principalmente quando há textos repetidos
+- Use screenshots `before` e `after` para comprovar visualmente o movimento
+
+---
+
 ### assert
 
 Verifica condições na página. Oferece múltiplos modos de verificação:
@@ -439,6 +471,22 @@ Rola a página.
 ### refresh
 
 Recarrega a página. Mesma configuração do Web Flow.
+
+---
+
+### clock
+
+Controla o relógio do navegador usando `page.clock` do Playwright. A ação é a mesma disponível no Web Flow e pode ser usada para validar comportamentos por data/hora sem depender do horário real da máquina.
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| **Operação** | `string` | `Fixar data/hora`, `Avançar tempo`, `Pausar em` ou `Retomar relógio` |
+| **Data / Hora** | `string` | Data/hora alvo para `Fixar data/hora` e `Pausar em` |
+| **Duração** | `string` / `number` | Tempo a avançar em `Avançar tempo`, como `20:00`, `02:34:10` ou milissegundos |
+| **Recarregar página após aplicar** | `boolean` | Recarrega a página após aplicar o clock quando ativado |
+| **Aguardar recarregamento até** | `string` | Evento usado para aguardar o reload |
+
+Novos passos de clock nascem com o reload desligado. Use reload ligado apenas quando a aplicação depende do carregamento da página para recalcular datas ou horários.
 
 ---
 
@@ -591,6 +639,10 @@ const valor = await campo.inputValue();
 
 // Tirar screenshot personalizado
 await page.screenshot({ path: '/tmp/resultado.png', fullPage: true });
+
+// Controlar data/hora dentro da mesma sessão Playwright
+await page.clock.install({ time: new Date('2026-04-24T10:00:00') });
+await page.clock.fastForward('20:00');
 ```
 
 ---

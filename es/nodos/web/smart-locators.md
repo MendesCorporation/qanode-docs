@@ -185,11 +185,12 @@ Equivale en Playwright a: `page.getByRole('button', { name: 'Ingresar' })`
 | [wait](#wait) | Morado | Esperar condición |
 | [scroll](#scroll) | Amarillo | Desplazar página |
 | [refresh](#refresh) | Naranja | Recargar página |
+| [clock](#clock) | Verde azulado | Controlar el reloj del navegador |
 | [frame](#frame) | Gris | Alternar frame |
 | [rightClick](#rightclick) | Amarillo | Clic con botón derecho |
 | [upload](#upload) | Azul | Subir archivos |
 | [dialog](#dialog) | Morado | Manejar dialogs (alert/confirm) |
-| [dragDrop](#dragdrop) | Azul | Arrastrar y soltar |
+| [drag](#drag) | Rosa | Arrastrar y soltar |
 | [evaluate](#evaluate) | Blanco | Ejecutar JavaScript en la página |
 | [screenshot](#screenshot) | Azul | Capturar screenshot |
 
@@ -340,6 +341,37 @@ Presiona una tecla del teclado en el contexto de un elemento.
 
 ---
 
+### drag
+
+Arrastra un elemento localizado semánticamente y lo suelta sobre otro localizador o en coordenadas grabadas.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| **Localizador de Origen** | `locator` | Elemento que será arrastrado |
+| **Localizador de Destino** | `locator` | Elemento donde será soltado, cuando exista |
+| **Destino X / Y** | `number` | Coordenadas absolutas que se muestran cuando el destino no tiene un localizador confiable |
+| **Esperar Después (ms)** | `number` | Tiempo de espera después de soltar |
+
+Smart Locators intenta usar localizadores semánticos de Playwright, como `getByRole`, `getByText`, `getByLabel` y `getByTestId`. Cuando la página tiene elementos repetidos y el paso viene de la extensión, el JSON puede incluir metadatos internos de posición para ayudar al ejecutor a elegir el elemento más cercano al gesto original. Estos metadatos no aparecen como campos principales en el panel.
+
+Para componentes de drag/drop, QANode también intenta promover el localizador semántico al contenedor interactivo real. Esto es útil cuando el texto clicado queda dentro de otro elemento arrastrable, por ejemplo:
+
+- Un `<p>` dentro de un card arrastrable
+- Una imagen dentro de un contenedor `draggable`
+- Un área de drop marcada por clase o atributos de drop
+
+Si el destino semántico es demasiado genérico o falla, pero existe `Destino X / Y`, Smart Locators puede usar las coordenadas grabadas como fallback. Esto permite automatizar canvas, Kanban y áreas de soltar que no tienen texto, role o label propios.
+
+**Buenas prácticas:**
+
+- Prefiere componentes con nombres accesibles (`aria-label`, texto visible, labels)
+- Usa `data-testid` o `data-qa` para cards, columnas y áreas de drop críticas
+- Evita botones solo con ícono sin `aria-label`
+- Revisa grabaciones que dependan de `nth`, especialmente cuando hay textos repetidos
+- Usa screenshots `before` y `after` para comprobar visualmente el movimiento
+
+---
+
 ### assert
 
 Verifica condiciones en la página. Ofrece múltiples modos de verificación:
@@ -439,6 +471,22 @@ Desplaza la página.
 ### refresh
 
 Recarga la página. Misma configuración que Web Flow.
+
+---
+
+### clock
+
+Controla el reloj del navegador usando `page.clock` de Playwright. Es la misma acción disponible en Web Flow y puede usarse para validar comportamientos por fecha/hora sin depender del reloj real de la máquina.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| **Operación** | `setFixedTime` / `fastForward` / `pauseAt` / `resume` | Operación del reloj a ejecutar |
+| **Fecha / Hora** | `string` | Fecha/hora usada por `setFixedTime` y `pauseAt` |
+| **Duración** | `string` / `number` | Tiempo virtual avanzado por `fastForward` (`1000`, `05:00`, `02:34:10`) |
+| **Recargar página después de aplicar** | `boolean` | Recarga la página después de aplicar el clock cuando está activado |
+| **Esperar recarga hasta** | `load` / `domcontentloaded` / `networkidle` | Evento de carga usado cuando la recarga está activada |
+
+Los nuevos pasos de clock comienzan con la recarga desactivada. Usa la recarga solo cuando la aplicación depende de la carga de la página para recalcular fechas u horarios.
 
 ---
 

@@ -160,6 +160,7 @@ The Web Flow node executes a sequence of configurable **steps**. Each step repre
 | [navigate](#navigate) | Blue | Navigate to a URL |
 | [click](#click) | Yellow | Click on an element |
 | [type](#type) | Green | Type text into a field |
+| [drag](#drag) | Rose | Drag and drop |
 | [wait](#wait) | Purple | Wait for a condition or time |
 | [assert](#assert) | Red | Verify a condition on the page |
 | [extract](#extract) | Cyan | Extract data from an element |
@@ -168,6 +169,7 @@ The Web Flow node executes a sequence of configurable **steps**. Each step repre
 | [refresh](#refresh) | Orange | Reload the page |
 | [select](#select) | Purple | Select an option from a dropdown |
 | [press-key](#press-key) | Green | Press a key |
+| [clock](#clock) | Teal | Control the browser clock |
 | [frame](#frame) | Gray | Switch between frames/iframes |
 
 ---
@@ -235,6 +237,37 @@ Types text into an input field.
 | **Clear First** | `boolean` | Clears the field before typing |
 
 > **Note:** The `type` action uses Playwright's `fill()`, which replaces the field value instantly. To simulate character-by-character typing, use the [Smart Locators](smart-locators.md) node with the `type` action (pressSequentially).
+
+---
+
+### drag
+
+Drags a source element and drops it on another element or at page coordinates.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| **Source Selectors** | `array` | CSS/XPath strategies for the element that will be dragged |
+| **Target Selectors** | `array` | CSS/XPath strategies for the element where it will be dropped |
+| **Drop X / Y** | `number` | Absolute coordinates shown when there is no target selector |
+| **Wait After (ms)** | `number` | Wait time after dropping |
+
+Web Flow tries to execute the drag with Playwright's native `dragTo` when both source and target are identifiable. If the target is a free area, such as a canvas or visual editor, it uses real mouse movement to `Drop X / Y`.
+
+When the step comes from the extension, the JSON may include internal gesture metadata. These help the executor reproduce the movement accurately, but they are not shown as primary fields in the panel.
+
+**Common uses:**
+
+- Move cards in a Kanban
+- Drag items into a list
+- Drop a node onto a free canvas area
+- Test ordering or upload flows that depend on drag/drop
+
+**Best practices:**
+
+- Prefer stable `data-testid`, `data-qa`, or `id` attributes for source and target
+- Use coordinates only when the target has no identifiable element
+- Capture `before` and `after` screenshots to review the movement visually
+- If the page has repeated elements, prefer more specific selectors to avoid ambiguity
 
 ---
 
@@ -394,6 +427,31 @@ Presses a keyboard key.
 | **Key** | `string` | Key name (e.g.: `Enter`, `Tab`, `Escape`) |
 | **Selectors** | `array` | Focused element selectors (optional) |
 | **Wait After (ms)** | `number` | Wait time after pressing |
+
+---
+
+### clock
+
+Controls the browser clock using Playwright's `page.clock` API. It is useful for testing date/time-dependent rules, session expiration, temporary promotions, time-based locks, due dates, timers, and screens that change as time passes.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| **Operation** | `setFixedTime` / `fastForward` / `pauseAt` / `resume` | Clock operation to execute |
+| **Date / Time** | `string` | Date/time used by `setFixedTime` and `pauseAt` |
+| **Duration** | `string` / `number` | Virtual time advanced by `fastForward` (`1000`, `05:00`, `02:34:10`) |
+| **Reload Page After Apply** | `boolean` | Reloads the page after applying the clock when enabled |
+| **Reload Wait Until** | `load` / `domcontentloaded` / `networkidle` | Load event used when reload is enabled |
+
+**Operations:**
+
+| Operation | Behavior |
+|-----------|----------|
+| `setFixedTime` | Fixes the browser clock at a specific date/time |
+| `fastForward` | Advances virtual time without waiting in real time |
+| `pauseAt` | Moves to a specific date/time and keeps the clock paused |
+| `resume` | Resumes the controlled clock from the current emulated time |
+
+New clock steps start with **Reload Page After Apply** disabled by default. This preserves the current page state and works better for pages with live timers. Enable reload when the application only recalculates date/time during page load.
 
 ---
 

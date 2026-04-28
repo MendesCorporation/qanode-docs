@@ -185,11 +185,12 @@ Equivalent in Playwright: `page.getByRole('button', { name: 'Sign In' })`
 | [wait](#wait) | Purple | Wait for condition |
 | [scroll](#scroll) | Yellow | Scroll page |
 | [refresh](#refresh) | Orange | Reload page |
+| [clock](#clock) | Teal | Control the browser clock |
 | [frame](#frame) | Gray | Switch frame |
 | [rightClick](#rightclick) | Yellow | Right-click |
 | [upload](#upload) | Blue | Upload files |
 | [dialog](#dialog) | Purple | Handle dialogs (alert/confirm) |
-| [dragDrop](#dragdrop) | Blue | Drag and drop |
+| [drag](#drag) | Rose | Drag and drop |
 | [evaluate](#evaluate) | White | Execute JavaScript on the page |
 | [screenshot](#screenshot) | Blue | Capture screenshot |
 
@@ -340,6 +341,37 @@ Presses a keyboard key in the context of an element.
 
 ---
 
+### drag
+
+Drags a semantically located element and drops it on another locator or at recorded coordinates.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| **Source Locator** | `locator` | Element that will be dragged |
+| **Target Locator** | `locator` | Element where it will be dropped, when available |
+| **Drop X / Y** | `number` | Absolute coordinates shown when the target has no reliable locator |
+| **Wait After (ms)** | `number` | Wait time after dropping |
+
+Smart Locators tries to use Playwright semantic locators such as `getByRole`, `getByText`, `getByLabel`, and `getByTestId`. When a page has repeated elements and the step comes from the extension, the JSON may include internal position metadata to help the executor choose the element closest to the original gesture. These metadata fields are not shown as primary fields in the panel.
+
+For drag/drop components, QANode also tries to promote the semantic locator to the real interactive container. This is useful when the clicked text is inside another draggable element, for example:
+
+- A `<p>` inside a draggable card
+- An image inside a `draggable` container
+- A drop area marked by class or drop attributes
+
+If the semantic target is too generic or fails, but `Drop X / Y` is available, Smart Locators can use the recorded coordinates as fallback. This allows automation of canvas, Kanban, and drop areas that do not have their own text, role, or label.
+
+**Best practices:**
+
+- Prefer components with accessible names (`aria-label`, visible text, labels)
+- Use `data-testid` or `data-qa` for critical cards, columns, and drop areas
+- Avoid icon-only buttons without `aria-label`
+- Review recordings that depend on `nth`, especially when there are repeated texts
+- Use `before` and `after` screenshots to visually prove the movement
+
+---
+
 ### assert
 
 Verifies conditions on the page. Offers multiple verification modes:
@@ -439,6 +471,22 @@ Scrolls the page.
 ### refresh
 
 Reloads the page. Same configuration as Web Flow.
+
+---
+
+### clock
+
+Controls the browser clock using Playwright's `page.clock`. This is the same action available in Web Flow and can be used to validate date/time behavior without depending on the machine's real clock.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| **Operation** | `setFixedTime` / `fastForward` / `pauseAt` / `resume` | Clock operation to execute |
+| **Date / Time** | `string` | Date/time used by `setFixedTime` and `pauseAt` |
+| **Duration** | `string` / `number` | Virtual time advanced by `fastForward` (`1000`, `05:00`, `02:34:10`) |
+| **Reload Page After Apply** | `boolean` | Reloads the page after applying the clock when enabled |
+| **Reload Wait Until** | `load` / `domcontentloaded` / `networkidle` | Load event used when reload is enabled |
+
+New clock steps start with reload disabled. Enable reload only when the application depends on page load to recalculate dates or times.
 
 ---
 

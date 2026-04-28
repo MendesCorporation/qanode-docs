@@ -47,6 +47,7 @@ Automatically records your interactions:
 | **Type** in field | `type` with text and selectors |
 | **Select** option | `select` with selected value |
 | **Scroll** the page | `scroll` with position |
+| **Drag and drop** element | `drag` with source, target, and/or coordinates |
 | **Navigate** to URL | `navigate` with URL |
 | **Reload** page | `refresh` |
 
@@ -129,6 +130,34 @@ In Smart Locators mode, the extension converts the captured elements into **sema
 | 5 | `getByRole` | Button, link, heading (fallback) |
 
 Semantic locators are more resilient to layout changes and reflect how users actually find elements on the page.
+
+---
+
+## Drag and Drop
+
+The extension also records **drag and drop** operations for both **Web Flow** and **Smart Locators** modes.
+
+During recording, QANode Recorder tries to capture:
+
+- The source element before the movement starts
+- The drop target, when there is an identifiable element
+- Source and target coordinates as fallback
+- Internal gesture metadata to reproduce the movement more accurately
+
+In **Web Flow** mode, the recording prioritizes CSS/XPath selectors and stable attributes such as `id`, `data-testid`, and `data-qa`.
+
+In **Smart Locators** mode, the extension prioritizes semantic locators. When the page does not provide enough semantics, for example images without `alt`, drop areas without text, or icon-only buttons, the recording may use a stable technical fallback such as `css: #id`. This avoids fragile locators like unnamed `getByRole("button")` or relying only on `nth`.
+
+### When to review the recorded step
+
+Review the drag/drop step manually when:
+
+- The target is a canvas or free area without a clear target element
+- There are multiple elements with the same text
+- The element is only an icon without `aria-label`
+- The page moves or reorders elements during the gesture
+
+For enterprise applications, prefer adding `data-testid`, `data-qa`, `aria-label`, or accessible names to buttons and drop areas. This makes recordings more stable and improves Smart Locators.
 
 ---
 
@@ -301,7 +330,6 @@ The copied JSON is compatible with the node corresponding to the selected mode.
 
 - **Chrome only** — does not work in other browsers
 - **No automatic waits** — add them manually in QANode
-- **No drag & drop** — does not record drag operations
 - **Sites with strict CSP** — may block content script injection
 - **Cross-origin iFrames** — may not be accessible
 

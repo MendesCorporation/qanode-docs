@@ -156,6 +156,11 @@ El objeto `page` es una instancia de Playwright. Métodos comunes:
 | `page.waitForSelector(...)` | Espera a que aparezca un selector |
 | `page.evaluate(...)` | Ejecuta JavaScript dentro de la página |
 | `page.screenshot(...)` | Captura screenshot vía Playwright |
+| `page.clock.install(...)` | Prepara el reloj controlado del navegador |
+| `page.clock.setFixedTime(...)` | Fija el reloj en una fecha/hora específica |
+| `page.clock.fastForward(...)` | Avanza el tiempo virtual sin esperar tiempo real |
+| `page.clock.pauseAt(...)` | Pausa el reloj en una fecha/hora específica |
+| `page.clock.resume()` | Reanuda el reloj controlado del navegador |
 
 ### Screenshots Web
 

@@ -160,6 +160,7 @@ O nó Web Flow executa uma sequência de **passos** configuráveis. Cada passo r
 | [navigate](#navigate) | 🔵 | Navegar para uma URL |
 | [click](#click) | 🟡 | Clicar em um elemento |
 | [type](#type) | 🟢 | Digitar texto em um campo |
+| [drag](#drag) | Rosa | Arrastar e soltar |
 | [wait](#wait) | 🟣 | Aguardar condição ou tempo |
 | [assert](#assert) | 🔴 | Verificar condição na página |
 | [extract](#extract) | 🔵 Ciano | Extrair dados de um elemento |
@@ -168,6 +169,7 @@ O nó Web Flow executa uma sequência de **passos** configuráveis. Cada passo r
 | [refresh](#refresh) | 🟠 | Recarregar a página |
 | [select](#select) | 🟣 | Selecionar opção de um dropdown |
 | [press-key](#press-key) | 🟢 | Pressionar uma tecla |
+| [clock](#clock) | 🟢 Água | Controlar o relógio do navegador |
 | [frame](#frame) | Cinza | Alternar entre frames/iframes |
 
 ---
@@ -235,6 +237,37 @@ Digita texto em um campo de entrada.
 | **Limpar Primeiro** | `boolean` | Limpa o campo antes de digitar |
 
 > **Nota:** A ação `type` usa `fill()` do Playwright, que substitui o valor do campo instantaneamente. Para simular digitação caractere por caractere, use o nó [Smart Locators](smart-locators.md) com a ação `type` (pressSequentially).
+
+---
+
+### drag
+
+Arrasta um elemento de origem e solta sobre outro elemento ou em coordenadas específicas da página.
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| **Seletores de Origem** | `array` | Estratégias CSS/XPath do elemento que será arrastado |
+| **Seletores de Destino** | `array` | Estratégias CSS/XPath do elemento onde será solto |
+| **Destino X / Y** | `number` | Coordenadas absolutas exibidas quando não há seletor de destino |
+| **Esperar Após (ms)** | `number` | Tempo de espera após soltar |
+
+O Web Flow tenta executar o drag usando o método nativo do Playwright (`dragTo`) quando há origem e destino identificáveis. Se o destino for uma área livre, como canvas ou editor visual, ele usa movimento real de mouse até `Destino X / Y`.
+
+Quando o passo vem da extensão, o JSON pode conter metadados internos do gesto. Eles ajudam o executor a reproduzir o movimento com precisão, mas não aparecem como campos principais no painel.
+
+**Exemplos de uso:**
+
+- Mover cards em um Kanban
+- Arrastar itens para uma lista
+- Soltar um nó em uma área livre do canvas
+- Testar upload/ordenação quando a UI depende de drag/drop
+
+**Boas práticas:**
+
+- Prefira `data-testid`, `data-qa` ou `id` estáveis para origem e destino
+- Use coordenadas apenas quando o destino não tiver elemento identificável
+- Capture screenshot `before` e `after` para facilitar a revisão visual
+- Se a página possuir elementos repetidos, prefira seletores mais específicos para evitar ambiguidade
 
 ---
 
@@ -394,6 +427,41 @@ Pressiona uma tecla no teclado.
 | **Tecla** | `string` | Nome da tecla (ex: `Enter`, `Tab`, `Escape`) |
 | **Seletores** | `array` | Seletores do elemento focado (opcional) |
 | **Espera Após (ms)** | `number` | Tempo de espera após pressionar |
+
+---
+
+### clock
+
+Controla o relógio do navegador usando a API `page.clock` do Playwright. É útil para testar regras dependentes de data/hora, expiração de sessão, promoções temporárias, bloqueios por horário, vencimentos, timers e telas que mudam conforme o tempo.
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| **Operação** | `string` | `Fixar data/hora`, `Avançar tempo`, `Pausar em` ou `Retomar relógio` |
+| **Data / Hora** | `string` | Data/hora alvo para `Fixar data/hora` e `Pausar em` |
+| **Duração** | `string` / `number` | Tempo a avançar em `Avançar tempo`, como `20:00`, `02:34:10` ou milissegundos |
+| **Recarregar página após aplicar** | `boolean` | Recarrega a página depois de aplicar o clock quando ativado |
+| **Aguardar recarregamento até** | `string` | Evento de carregamento usado quando o reload estiver ligado |
+
+**Operações:**
+
+| Operação | Descrição |
+|----------|-----------|
+| `setFixedTime` | Move o relógio do navegador para uma data/hora específica |
+| `fastForward` | Avança o tempo virtual sem esperar o tempo real passar |
+| `pauseAt` | Move o relógio até a data/hora informada e mantém o tempo controlado |
+| `resume` | Retoma a contagem do relógio a partir do estado atual |
+
+Por padrão, novos passos de clock nascem com **Recarregar página após aplicar** desligado. Isso preserva o estado atual da tela e funciona melhor para páginas com timers vivos. Ative o reload quando a aplicação recalcula data/hora apenas durante o carregamento da página.
+
+**Exemplos:**
+
+```
+Operação: Fixar data/hora
+Data / Hora: 2026-04-24T10:00:00
+
+Operação: Avançar tempo
+Duração: 20:00
+```
 
 ---
 
@@ -560,6 +628,10 @@ const valor = await page.evaluate(() => document.querySelector('#campo').value);
 
 // Contar elementos
 const itens = await page.locator('li.item').count();
+
+// Controlar o relógio do navegador quando necessário
+await page.clock.install({ time: new Date('2026-04-24T10:00:00') });
+await page.clock.fastForward('20:00');
 
 return { title, url, text, valor, itens };
 ```
