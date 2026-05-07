@@ -143,6 +143,11 @@ El nodo Mobile Flow ejecuta una secuencia de **pasos** configurables. Cada paso 
 | [wait](#wait) | Esperar una condición o tiempo |
 | [assert](#assert) | Verificar una condición en la app |
 | [extract](#extract) | Extraer texto o atributo de un elemento |
+| [double-tap](#double-tap) | Doble toque en un elemento |
+| [long-press](#long-press) | Pulsación larga en un elemento |
+| [pinch-zoom](#pinch-zoom) | Gesto de pellizco o zoom sobre un elemento |
+| [multi-touch](#multi-touch) | Gesto multitáctil con dos dedos simultáneos |
+| [permission](#permission) | Aceptar/descartar alertas del sistema o gestionar permisos Android |
 | [reset](#reset) | Reiniciar la aplicación |
 | [back](#back) | Presionar el botón Atrás (Android) |
 | [home](#home) | Presionar el botón Home (Android) |
@@ -236,8 +241,19 @@ Desplaza el contenido en una dirección.
 
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
+| **Modo** | `string` | `direction` (predeterminado), `untilElement`, `untilText` |
 | **Dirección** | `string` | `up`, `down`, `left`, `right` |
 | **Selectores** | `array` | Selector del contenedor a desplazar (opcional) |
+| **Texto** | `string` | Texto a buscar (modo `untilText`) |
+| **Máx. Desplazamientos** | `number` | Número máximo de intentos de desplazamiento (modos `untilElement`/`untilText`) |
+
+**Modos:**
+
+| Modo | Descripción |
+|------|-------------|
+| `direction` | Desplaza en la dirección especificada (comportamiento predeterminado) |
+| `untilElement` | Sigue desplazando hasta que el elemento que coincide con los selectores aparezca en pantalla |
+| `untilText` | Sigue desplazando hasta que aparezca un elemento con el texto especificado |
 
 ---
 
@@ -249,7 +265,9 @@ Espera una condición antes de continuar.
 |-------|------|-------------|
 | **Modo** | `string` | Tipo de espera |
 | **Timeout (ms)** | `number` | Tiempo máximo de espera |
-| **Selectores** | `array` | Selectores (modo `elementVisible`) |
+| **Selectores** | `array` | Selectores (modos que requieren elemento) |
+| **Texto Esperado** | `string` | Texto o valor esperado (modos de texto/atributo) |
+| **Nombre del Atributo** | `string` | Atributo a verificar (modo `attributeEquals`) |
 
 **Modos:**
 
@@ -257,6 +275,12 @@ Espera una condición antes de continuar.
 |------|-------------|
 | `timeout` | Espera un tiempo fijo en milisegundos |
 | `elementVisible` | Espera a que un elemento aparezca en pantalla |
+| `elementHidden` | Espera a que un elemento desaparezca de la pantalla |
+| `elementEnabled` | Espera a que un elemento esté habilitado/interactivo |
+| `textContains` | Espera a que el texto de un elemento contenga el valor esperado |
+| `textEquals` | Espera a que el texto de un elemento sea exactamente el valor esperado |
+| `attributeEquals` | Espera a que un atributo específico de un elemento sea igual al valor esperado |
+| `screenChanged` | Espera a que el contenido de la pantalla cambie tras una acción |
 
 ---
 
@@ -301,6 +325,79 @@ Los datos extraídos están disponibles en los outputs:
 ```
 {{ steps["mobile-flow"].outputs.extracts.nombreExtraccion }}
 ```
+
+---
+
+### double-tap
+
+Hace doble toque en un elemento usando estrategias de selector.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| **Selectores** | `array` | Estrategias de selector del elemento |
+| **Intentos** | `number` | Número de intentos (predeterminado: 3) |
+| **Delay entre intentos (ms)** | `number` | Espera entre intentos (predeterminado: 500ms) |
+
+---
+
+### long-press
+
+Realiza una pulsación larga en un elemento.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| **Selectores** | `array` | Estrategias de selector del elemento |
+| **X** | `number` | Coordenada X (usada cuando no hay selectores) |
+| **Y** | `number` | Coordenada Y (usada cuando no hay selectores) |
+| **Duración (ms)** | `number` | Duración de la pulsación (predeterminado: 800ms) |
+
+---
+
+### pinch-zoom
+
+Realiza un gesto de pellizco o zoom sobre un elemento.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| **Selectores** | `array` | Estrategias de selector del elemento |
+| **Gesto** | `string` | `pinchIn` (pellizco para alejar) o `zoomOut` (apertura para acercar) |
+| **Distancia (px)** | `number` | Distancia de movimiento de los dedos en píxeles |
+| **Escala** | `number` | Factor de escala del gesto |
+| **Duración (ms)** | `number` | Duración del gesto en milisegundos |
+
+---
+
+### multi-touch
+
+Realiza un gesto multitáctil con dos dedos simultáneos.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| **Puntos** | `array` | Array de puntos de toque con `x`, `y`, `duration` |
+| **X1 / Y1** | `number` | Coordenadas del primer dedo (cuando no se usa el array de puntos) |
+| **X2 / Y2** | `number` | Coordenadas del segundo dedo (cuando no se usa el array de puntos) |
+
+---
+
+### permission
+
+Acepta o descarta alertas del sistema, o concede/revoca permisos de la app Android.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| **Acción** | `string` | `acceptAlert`, `dismissAlert`, `grantPermission`, `revokePermission` |
+| **Nombre del Permiso** | `string` | Nombre del permiso Android (acciones `grantPermission`/`revokePermission`) |
+
+**Acciones:**
+
+| Acción | Descripción |
+|--------|-------------|
+| `acceptAlert` | Acepta la alerta del sistema actual (Aceptar / Permitir) |
+| `dismissAlert` | Descarta la alerta del sistema actual (Cancelar / Denegar) |
+| `grantPermission` | Concede un permiso Android a la app |
+| `revokePermission` | Revoca un permiso Android de la app |
+
+> Las acciones `grantPermission` y `revokePermission` son exclusivas de Android. El nombre del permiso sigue el formato Android, por ejemplo: `android.permission.CAMERA`.
 
 ---
 

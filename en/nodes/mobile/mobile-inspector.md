@@ -122,6 +122,34 @@ These indicators disappear automatically after a few seconds.
 
 ---
 
+## Advanced Actions
+
+In addition to recording taps and swipes, the Mobile Inspector provides buttons to add advanced actions directly to the flow without manually configuring the fields.
+
+### Actions available in the panel
+
+**With a selected element (Inspect mode):**
+
+| Action | Description |
+|--------|-------------|
+| **Long Press** | Adds a `long-press` step on the selected element (800ms) |
+| **Pinch In** | Adds a `pinch-zoom` step with a pinch gesture over the element |
+| **Zoom Out** | Adds a `pinch-zoom` step with a spread gesture over the element |
+| **Extract value** | Adds an `extract` step using stable selectors (not based on dynamic text) |
+
+**System actions (without a selected element):**
+
+| Action | Description |
+|--------|-------------|
+| **Accept Alert** | Adds a `permission` step that accepts the current system alert |
+| **Dismiss Alert** | Adds a `permission` step that dismisses the current system alert |
+| **Grant Permission** | Prompts for the Android permission name and adds a `permission` step to grant it |
+| **Revoke Permission** | Prompts for the Android permission name and adds a `permission` step to revoke it |
+
+> Grant/Revoke Permission actions are Android-only and open a prompt requesting the permission name, for example: `android.permission.CAMERA`.
+
+---
+
 ## Saving Steps
 
 When you click **"Save Steps"**:

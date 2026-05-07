@@ -164,6 +164,7 @@ O nó Web Flow executa uma sequência de **passos** configuráveis. Cada passo r
 | [wait](#wait) | 🟣 | Aguardar condição ou tempo |
 | [assert](#assert) | 🔴 | Verificar condição na página |
 | [extract](#extract) | 🔵 Ciano | Extrair dados de um elemento |
+| [extractList](#extractlist) | 🟢 Esmeralda | Extrair lista de elementos repetidos |
 | [hover](#hover) | 🔵 Ciano | Passar o mouse sobre um elemento |
 | [scroll](#scroll) | 🟡 | Rolar a página |
 | [refresh](#refresh) | 🟠 | Recarregar a página |
@@ -343,6 +344,44 @@ Os dados extraídos ficam disponíveis nos outputs:
 ```
 {{ steps["web-flow"].outputs.extracts.nomeExtracao }}
 ```
+
+---
+
+### extractList
+
+Itera sobre elementos repetidos na página — linhas de tabela, cards, itens de lista — e extrai um ou mais campos de cada item, produzindo um array de objetos no output.
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| **Nome da Saída** | `string` | Nome da chave no output (ex: `lista_produtos`) |
+| **Seletor dos Itens** | `array` | Estratégias de seletor que identificam cada elemento repetido |
+| **Campos** | `array` | Lista de campos a extrair de cada item (ver abaixo) |
+| **Limite** | `number` | Número máximo de itens a processar (padrão: 100) |
+
+Cada entrada em **Campos** define:
+
+| Propriedade | Tipo | Descrição |
+|-------------|------|-----------|
+| `name` | `string` | Nome do campo no objeto de saída |
+| `selectorStrategies` | `array` | Seletor relativo dentro do item (`:scope` = o próprio item) |
+| `attr` | `string` | Atributo a extrair: `text`, `inputValue`, `innerHTML`, `href`, `src`, etc. |
+
+Os dados extraídos ficam disponíveis nos outputs como um array de objetos:
+```
+{{ steps["web-flow"].outputs.extracts.lista_produtos }}
+// → [ { nome: "Produto A", preco: "R$ 99,00" }, { nome: "Produto B", preco: "R$ 149,00" } ]
+```
+
+**Exemplo — extrair nome e preço de cards de produto:**
+```
+Seletor dos Itens: [{ "type": "css", "value": ".product-card" }]
+Campos:
+  - name: "nome",  selectorStrategies: [{ "type": "css", "value": "h3" }],           attr: "text"
+  - name: "preco", selectorStrategies: [{ "type": "css", "value": ".price" }],        attr: "text"
+Limite: 50
+```
+
+> Para gravar um passo `extractList` automaticamente pela extensão Chrome, use **Ctrl+Shift+E** durante a gravação.
 
 ---
 

@@ -135,14 +135,19 @@ O nó Mobile Flow executa uma sequência de **passos** configuráveis. Cada pass
 | Ação | Descrição |
 |------|-----------|
 | [tap](#tap) | Tocar em um elemento |
+| [double-tap](#double-tap) | Toque duplo em um elemento |
+| [long-press](#long-press) | Pressionar e segurar um elemento |
 | [tap-coords](#tap-coords) | Tocar em coordenadas absolutas |
 | [type](#type) | Digitar texto em um campo |
 | [clear](#clear) | Limpar texto de um campo |
 | [swipe](#swipe) | Deslizar na tela |
-| [scroll](#scroll) | Rolar por direção |
+| [pinch-zoom](#pinch-zoom) | Gesto de pinça / zoom |
+| [multi-touch](#multi-touch) | Toque simultâneo em múltiplos pontos |
+| [scroll](#scroll) | Rolar por direção ou até elemento/texto |
 | [wait](#wait) | Aguardar condição ou tempo |
 | [assert](#assert) | Verificar condição no app |
 | [extract](#extract) | Extrair texto ou atributo de elemento |
+| [permission](#permission) | Aceitar/dispensar alertas e gerenciar permissões |
 | [reset](#reset) | Reiniciar o aplicativo |
 | [back](#back) | Pressionar botão Voltar (Android) |
 | [home](#home) | Pressionar botão Home (Android) |
@@ -179,6 +184,29 @@ Toca em um elemento usando estratégias de seletor.
 | **Delay entre tentativas (ms)** | `number` | Espera entre tentativas (padrão: 500ms) |
 
 Caso o seletor falhe em todas as tentativas e houver coordenadas de fallback (geradas pelo inspetor), o toque será realizado nas coordenadas diretas.
+
+---
+
+### double-tap
+
+Toque duplo em um elemento.
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| **Seletores** | `array` | Estratégias de seletor do elemento |
+| **Tentativas** | `number` | Número de tentativas (padrão: 3) |
+
+---
+
+### long-press
+
+Pressiona e segura um elemento por uma duração determinada. Útil para abrir menus de contexto, acionar seleção de texto e outros gestos longos.
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| **Seletores** | `array` | Estratégias de seletor do elemento (opcional se houver X/Y) |
+| **X / Y** | `number` | Coordenadas de fallback quando não há seletor |
+| **Duração (ms)** | `number` | Tempo de pressionamento (padrão: 800ms) |
 
 ---
 
@@ -230,14 +258,54 @@ Desliza na tela entre dois pontos.
 
 ---
 
-### scroll
+### pinch-zoom
 
-Rola o conteúdo em uma direção.
+Executa um gesto de pinça (aproximar dedos) ou zoom (afastar dedos) sobre um elemento ou ponto da tela.
 
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
+| **Gesto** | `string` | `pinchIn` (pinça, reduz) ou `zoomOut` (zoom, amplia) |
+| **Seletores** | `array` | Seletor do elemento central do gesto (opcional) |
+| **X / Y** | `number` | Coordenadas centrais de fallback |
+| **Distância** | `number` | Distância em pixels entre os dois dedos (padrão: 160) |
+| **Escala** | `number` | Fator de escala do gesto (padrão: 0.45) |
+| **Duração (ms)** | `number` | Velocidade do gesto (padrão: 500ms) |
+
+---
+
+### multi-touch
+
+Simula um toque simultâneo em dois ou mais pontos da tela.
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| **Pontos** | `array` | Lista de coordenadas `{ x, y }` a tocar simultaneamente |
+| **X1 / Y1** | `number` | Primeiro ponto (alternativa a `points`) |
+| **X2 / Y2** | `number` | Segundo ponto (alternativa a `points`) |
+| **Duração (ms)** | `number` | Duração do toque (padrão: 120ms) |
+
+---
+
+### scroll
+
+Rola o conteúdo em uma direção ou continua rolando até que um elemento ou texto apareça na tela.
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| **Modo** | `string` | `direction` (padrão), `untilElement` ou `untilText` |
 | **Direção** | `string` | `up`, `down`, `left`, `right` |
-| **Seletores** | `array` | Seletor do container a rolar (opcional) |
+| **Percentual** | `number` | Percentual da tela a rolar por ciclo (padrão: 70) |
+| **Seletores** | `array` | Seletor do container a rolar, ou do elemento-alvo nos modos `untilElement` |
+| **Texto** | `string` | Texto a aguardar na tela (modo `untilText`) |
+| **Máximo de Rolagens** | `number` | Limite de ciclos de rolagem nos modos `until*` (padrão: 8) |
+
+**Modos:**
+
+| Modo | Descrição |
+|------|-----------|
+| `direction` | Rola uma vez na direção configurada |
+| `untilElement` | Rola repetidamente até o elemento dos seletores estar visível |
+| `untilText` | Rola repetidamente até o texto aparecer no XML da tela |
 
 ---
 
@@ -249,7 +317,10 @@ Aguarda uma condição antes de prosseguir.
 |-------|------|-----------|
 | **Modo** | `string` | Tipo de espera |
 | **Timeout (ms)** | `number` | Tempo máximo de espera |
-| **Seletores** | `array` | Seletores (modo `elementVisible`) |
+| **Seletores** | `array` | Seletores do elemento alvo (quando aplicável) |
+| **Texto Esperado** | `string` | Valor de referência (modos `textContains`, `textEquals`) |
+| **Atributo** | `string` | Nome do atributo (modo `attributeEquals`) |
+| **Valor Esperado** | `string` | Valor do atributo (modo `attributeEquals`) |
 
 **Modos:**
 
@@ -257,6 +328,12 @@ Aguarda uma condição antes de prosseguir.
 |------|-----------|
 | `timeout` | Aguarda um tempo fixo em milissegundos |
 | `elementVisible` | Aguarda um elemento aparecer na tela |
+| `elementHidden` | Aguarda um elemento desaparecer ou ficar oculto |
+| `elementEnabled` | Aguarda um elemento ficar habilitado para interação |
+| `textContains` | Aguarda o texto do elemento conter o valor esperado |
+| `textEquals` | Aguarda o texto do elemento ser exatamente o valor esperado |
+| `attributeEquals` | Aguarda um atributo do elemento ter o valor esperado |
+| `screenChanged` | Aguarda a tela mudar visualmente (screenshot diferente do inicial) |
 
 ---
 
@@ -301,6 +378,28 @@ Os dados extraídos ficam disponíveis nos outputs:
 ```
 {{ steps["mobile-flow"].outputs.extracts.nomeExtracao }}
 ```
+
+---
+
+### permission
+
+Gerencia alertas de sistema e permissões do aplicativo.
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| **Operação** | `string` | Tipo de ação (ver tabela abaixo) |
+| **Permissão** | `string` | Nome da permissão Android (somente `grantPermission`/`revokePermission`) |
+
+**Operações:**
+
+| Operação | Descrição |
+|----------|-----------|
+| `acceptAlert` | Aceita o alerta de sistema atual (ex: "Permitir notificações?") |
+| `dismissAlert` | Dispensa o alerta de sistema atual |
+| `grantPermission` | Concede uma permissão Android ao app (ex: `android.permission.CAMERA`) |
+| `revokePermission` | Revoga uma permissão Android do app |
+
+> `grantPermission` e `revokePermission` são suportados apenas em sessões Android com o UiAutomator2.
 
 ---
 

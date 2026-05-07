@@ -182,6 +182,7 @@ Equivale ao Playwright: `page.getByRole('button', { name: 'Entrar' })`
 | [press](#press) | 🟢 | Pressionar tecla |
 | [assert](#assert) | 🔴 | Verificar condição |
 | [extract](#extract) | 🔵 Ciano | Extrair dados |
+| [extractList](#extractlist) | 🟢 Esmeralda | Extrair lista de elementos repetidos |
 | [wait](#wait) | 🟣 | Aguardar condição |
 | [scroll](#scroll) | 🟡 | Rolar página |
 | [refresh](#refresh) | 🟠 | Recarregar página |
@@ -440,6 +441,35 @@ Extrai dados de um elemento.
 | `href` | URL de links |
 | `src` | URL de imagens |
 | `value` | Valor genérico |
+
+---
+
+### extractList
+
+Itera sobre elementos repetidos na página — linhas de tabela, cards, itens de lista — e extrai um ou mais campos de cada item, produzindo um array de objetos no output.
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| **Nome da Saída** | `string` | Nome da chave no output (ex: `lista_pedidos`) |
+| **Seletor dos Itens** | `array` | Estratégias CSS/XPath que identificam cada elemento repetido |
+| **Campos** | `array` | Lista de campos a extrair de cada item (ver abaixo) |
+| **Limite** | `number` | Número máximo de itens a processar (padrão: 100) |
+
+Cada entrada em **Campos** define:
+
+| Propriedade | Tipo | Descrição |
+|-------------|------|-----------|
+| `name` | `string` | Nome do campo no objeto de saída |
+| `selectorStrategies` | `array` | Seletor relativo dentro do item (`:scope` = o próprio item) |
+| `attr` | `string` | Atributo a extrair: `text`, `inputValue`, `innerHTML`, `href`, `src`, etc. |
+
+Os dados extraídos ficam disponíveis nos outputs:
+```
+{{ steps["smart-locators"].outputs.extracts.lista_pedidos }}
+// → [ { numero: "#1042", status: "Enviado" }, { numero: "#1041", status: "Entregue" } ]
+```
+
+> Para gravar um passo `extractList` automaticamente pela extensão Chrome, use **Ctrl+Shift+E** durante a gravação.
 
 ---
 

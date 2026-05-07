@@ -143,6 +143,11 @@ The Mobile Flow node executes a sequence of configurable **steps**. Each step re
 | [wait](#wait) | Wait for a condition or time |
 | [assert](#assert) | Verify a condition in the app |
 | [extract](#extract) | Extract text or attribute from an element |
+| [double-tap](#double-tap) | Double-tap an element |
+| [long-press](#long-press) | Long press on an element |
+| [pinch-zoom](#pinch-zoom) | Pinch or zoom gesture on an element |
+| [multi-touch](#multi-touch) | Multi-touch gesture with two simultaneous fingers |
+| [permission](#permission) | Accept/dismiss system alerts or manage Android permissions |
 | [reset](#reset) | Reset the application |
 | [back](#back) | Press the Back button (Android) |
 | [home](#home) | Press the Home button (Android) |
@@ -236,8 +241,19 @@ Scrolls content in a direction.
 
 | Field | Type | Description |
 |-------|------|-------------|
+| **Mode** | `string` | `direction` (default), `untilElement`, `untilText` |
 | **Direction** | `string` | `up`, `down`, `left`, `right` |
 | **Selectors** | `array` | Container selector to scroll (optional) |
+| **Text** | `string` | Text to search for (mode `untilText`) |
+| **Max Scrolls** | `number` | Maximum number of scroll attempts (modes `untilElement`/`untilText`) |
+
+**Modes:**
+
+| Mode | Description |
+|------|-------------|
+| `direction` | Scrolls in the specified direction (default behavior) |
+| `untilElement` | Keeps scrolling until the element matching the selectors appears on screen |
+| `untilText` | Keeps scrolling until an element with the specified text appears on screen |
 
 ---
 
@@ -249,7 +265,9 @@ Waits for a condition before proceeding.
 |-------|------|-------------|
 | **Mode** | `string` | Wait type |
 | **Timeout (ms)** | `number` | Maximum wait time |
-| **Selectors** | `array` | Selectors (for `elementVisible` mode) |
+| **Selectors** | `array` | Selectors (modes that require an element) |
+| **Expected Text** | `string` | Expected text or value (text/attribute modes) |
+| **Attribute Name** | `string` | Attribute to check (mode `attributeEquals`) |
 
 **Modes:**
 
@@ -257,6 +275,12 @@ Waits for a condition before proceeding.
 |------|-------------|
 | `timeout` | Wait for a fixed time in milliseconds |
 | `elementVisible` | Wait for an element to appear on screen |
+| `elementHidden` | Wait for an element to disappear from screen |
+| `elementEnabled` | Wait for an element to become enabled/interactive |
+| `textContains` | Wait for an element's text to contain the expected value |
+| `textEquals` | Wait for an element's text to exactly match the expected value |
+| `attributeEquals` | Wait for a specific attribute of an element to equal the expected value |
+| `screenChanged` | Wait for the screen content to change after an action |
 
 ---
 
@@ -301,6 +325,79 @@ Extracted data is available in outputs:
 ```
 {{ steps["mobile-flow"].outputs.extracts.extractionName }}
 ```
+
+---
+
+### double-tap
+
+Double-taps an element using selector strategies.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| **Selectors** | `array` | Element selector strategies |
+| **Retry Attempts** | `number` | Number of attempts (default: 3) |
+| **Retry Delay (ms)** | `number` | Wait between attempts (default: 500ms) |
+
+---
+
+### long-press
+
+Performs a long press on an element.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| **Selectors** | `array` | Element selector strategies |
+| **X** | `number` | X coordinate (used when there are no selectors) |
+| **Y** | `number` | Y coordinate (used when there are no selectors) |
+| **Duration (ms)** | `number` | Press duration (default: 800ms) |
+
+---
+
+### pinch-zoom
+
+Performs a pinch or zoom gesture on an element.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| **Selectors** | `array` | Element selector strategies |
+| **Gesture** | `string` | `pinchIn` (pinch to zoom out) or `zoomOut` (spread to zoom in) |
+| **Distance (px)** | `number` | Distance of finger movement in pixels |
+| **Scale** | `number` | Scale factor for the gesture |
+| **Duration (ms)** | `number` | Gesture duration in milliseconds |
+
+---
+
+### multi-touch
+
+Performs a multi-touch gesture with two simultaneous fingers.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| **Points** | `array` | Array of touch points with `x`, `y`, `duration` |
+| **X1 / Y1** | `number` | First finger coordinates (when not using points array) |
+| **X2 / Y2** | `number` | Second finger coordinates (when not using points array) |
+
+---
+
+### permission
+
+Accepts or dismisses system alerts, or grants/revokes Android app permissions.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| **Action** | `string` | `acceptAlert`, `dismissAlert`, `grantPermission`, `revokePermission` |
+| **Permission Name** | `string` | Android permission name (actions `grantPermission`/`revokePermission`) |
+
+**Actions:**
+
+| Action | Description |
+|--------|-------------|
+| `acceptAlert` | Accepts the current system alert (OK / Allow) |
+| `dismissAlert` | Dismisses the current system alert (Cancel / Deny) |
+| `grantPermission` | Grants an Android permission to the app |
+| `revokePermission` | Revokes an Android permission from the app |
+
+> `grantPermission` and `revokePermission` are Android-only. The permission name follows Android format, for example: `android.permission.CAMERA`.
 
 ---
 

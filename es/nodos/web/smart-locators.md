@@ -182,6 +182,7 @@ Equivale en Playwright a: `page.getByRole('button', { name: 'Ingresar' })`
 | [press](#press) | Verde | Presionar tecla |
 | [assert](#assert) | Rojo | Verificar condición |
 | [extract](#extract) | Cian | Extraer datos |
+| [extractList](#extractlist) | Esmeralda | Extraer lista de elementos repetidos |
 | [wait](#wait) | Morado | Esperar condición |
 | [scroll](#scroll) | Amarillo | Desplazar página |
 | [refresh](#refresh) | Naranja | Recargar página |
@@ -440,6 +441,41 @@ Extrae datos de un elemento.
 | `href` | URL de enlaces |
 | `src` | URL de imágenes |
 | `value` | Valor genérico |
+
+---
+
+### extractList
+
+Itera sobre una lista de elementos repetidos (filas de tabla, cards, ítems de lista) y extrae campos nombrados de cada uno, produciendo un array de objetos como output.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| **Nombre** | `string` | Nombre de la extracción (clave en el array de output) |
+| **Localizador de Contenedor** | `locator` | Configuración del localizador para encontrar el contenedor de la lista |
+| **Selector de Ítem** | `string` | Selector CSS relativo al contenedor que selecciona cada ítem repetido |
+| **Campos** | `array` | Lista de campos a extraer de cada ítem |
+
+**Configuración de Campos:**
+
+| Sub-campo | Tipo | Descripción |
+|-----------|------|-------------|
+| **Nombre del Campo** | `string` | Clave en el objeto de output |
+| **Selector** | `string` | Selector CSS relativo al ítem |
+| **Atributo** | `string` | Qué extraer: `text` (predeterminado), `innerHTML`, `href`, `src`, `value` |
+
+**Ejemplo de output:**
+```json
+{
+  "extracts": {
+    "productos": [
+      { "nombre": "Ítem A", "precio": "$10.00" },
+      { "nombre": "Ítem B", "precio": "$25.00" }
+    ]
+  }
+}
+```
+
+> **Grabación con la extensión:** Usa **Ctrl+Shift+E** en el Chrome Recorder para grabar una extracción de lista en dos pasos: primero haz clic en el ítem repetido, luego haz clic en los campos a extraer dentro de él.
 
 ---
 

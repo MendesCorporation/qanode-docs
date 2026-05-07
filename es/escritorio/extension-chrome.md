@@ -67,6 +67,19 @@ Captura elementos para **extracción de datos**:
 2. Haga clic en el elemento a extraer
 3. Se crea un paso `extract` que captura el texto/valor
 
+### CTRL+SHIFT+E — Modo Extract List
+
+Captura **listas de elementos repetidos** (filas de tabla, cards, ítems de lista) en dos pasos:
+
+1. Presione **Ctrl+Shift+E** para activar el modo de extracción de lista
+2. El indicador cambia a **LIST:ITEM** — haga clic en el elemento repetido que representa un ítem de la lista (ej.: una fila de tabla, un card)
+3. Overlays cian destacan todos los ítems detectados con el mismo patrón
+4. El indicador cambia a **LIST:0** — haga clic en los campos que desea extraer dentro de cada ítem (ej.: columna nombre, columna precio)
+5. Cada campo clicado se destaca en naranja y se agrega al paso. El contador en el indicador aumenta con cada campo
+6. Haga clic en el **indicador REC** para finalizar — se graba un paso `extractList` con todos los campos seleccionados
+
+> Presionar **Ctrl+A** o **Ctrl+E** durante la captura de lista cancela el modo y vuelve al modo normal.
+
 ---
 
 ## Cómo Usar
@@ -79,8 +92,9 @@ Captura elementos para **extracción de datos**:
 4. El indicador se pone rojo indicando grabación activa
 5. Navegue e interactúe con el sitio normalmente
 6. Use **Ctrl+A** para agregar verificaciones
-7. Use **Ctrl+E** para agregar extracciones
-8. Haga clic en el ícono nuevamente y haga clic en **Stop** para detener
+7. Use **Ctrl+E** para agregar extracciones de valor único
+8. Use **Ctrl+Shift+E** para agregar extracciones de lista (elementos repetidos)
+9. Haga clic en el ícono nuevamente y haga clic en **Stop** para detener
 
 [Popup de la extensión](../../assets/images/web-recorder.mp4)
 *Imagen: Popup de la extensión mostrando botones REC/STOP, lista de pasos grabados y botón Copiar JSON*
@@ -340,7 +354,8 @@ El JSON copiado es compatible con el nodo correspondiente al modo seleccionado.
 - **Elija el modo correcto** — use Smart Locators para sitios accesibles, Web Flow para sitios con selectores CSS estables
 - **Grabe acciones simples** y refine en QANode
 - **Use Ctrl+A** (assert) durante la grabación en puntos de verificación
-- **Use Ctrl+E** (extract) para capturar datos que se usarán en nodos posteriores
+- **Use Ctrl+E** (extract) para capturar un valor único de un elemento
+- **Use Ctrl+Shift+E** (extract list) para capturar datos de elementos repetidos como tablas y listas de cards
 - **Agregue waits** en QANode para elementos que demoran en cargar
 - **Revise los selectores** — en el modo Web Flow, prefiera `data-testid`; en el modo Smart Locators, prefiera `getByRole` o `getByLabel`
 - **Grabe en segmentos** — para flujos largos, grabe por partes y combínelos en QANode

@@ -164,6 +164,7 @@ The Web Flow node executes a sequence of configurable **steps**. Each step repre
 | [wait](#wait) | Purple | Wait for a condition or time |
 | [assert](#assert) | Red | Verify a condition on the page |
 | [extract](#extract) | Cyan | Extract data from an element |
+| [extractList](#extractlist) | Emerald | Extract list of repeated elements |
 | [hover](#hover) | Cyan | Hover the mouse over an element |
 | [scroll](#scroll) | Yellow | Scroll the page |
 | [refresh](#refresh) | Orange | Reload the page |
@@ -343,6 +344,41 @@ Extracted data is available in the outputs:
 ```
 {{ steps["web-flow"].outputs.extracts.extractionName }}
 ```
+
+---
+
+### extractList
+
+Iterates over a list of repeated elements (table rows, cards, list items) and extracts named fields from each, producing an array of objects as output.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| **Name** | `string` | Extraction name (key in the output array) |
+| **Container Selector** | `array` | CSS/XPath selector strategies to find the list container |
+| **Item Selector** | `string` | CSS selector relative to the container that selects each repeated item |
+| **Fields** | `array` | List of fields to extract from each item |
+
+**Fields configuration:**
+
+| Sub-field | Type | Description |
+|-----------|------|-------------|
+| **Field Name** | `string` | Key in the output object |
+| **Selector** | `string` | CSS selector relative to the item |
+| **Attribute** | `string` | What to extract: `text` (default), `innerHTML`, `href`, `src`, `value` |
+
+**Output example:**
+```json
+{
+  "extracts": {
+    "products": [
+      { "name": "Item A", "price": "$10.00" },
+      { "name": "Item B", "price": "$25.00" }
+    ]
+  }
+}
+```
+
+> **Recording with the extension:** Use **Ctrl+Shift+E** in the Chrome Recorder to record a list extraction in two steps: first click the repeating item, then click the fields to extract within it.
 
 ---
 

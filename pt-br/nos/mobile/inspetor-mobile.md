@@ -120,6 +120,34 @@ Esses indicadores desaparecem automaticamente após alguns segundos.
 
 ---
 
+## Ações Avançadas
+
+Além de gravar toques e swipes, o Inspetor Mobile oferece botões para adicionar ações avançadas diretamente ao fluxo sem precisar configurar manualmente os campos.
+
+### Ações disponíveis no painel
+
+**Com elemento selecionado (modo Inspecionar):**
+
+| Ação | Descrição |
+|------|-----------|
+| **Long Press** | Adiciona um passo `long-press` no elemento selecionado (800ms) |
+| **Pinch In** | Adiciona um passo `pinch-zoom` com gesto de pinça sobre o elemento |
+| **Zoom Out** | Adiciona um passo `pinch-zoom` com gesto de afastamento sobre o elemento |
+| **Extrair valor** | Adiciona um passo `extract` usando seletores estáveis (não baseados em texto dinâmico) |
+
+**Ações de sistema (sem elemento selecionado):**
+
+| Ação | Descrição |
+|------|-----------|
+| **Accept Alert** | Adiciona um passo `permission` que aceita o alerta de sistema atual |
+| **Dismiss Alert** | Adiciona um passo `permission` que dispensa o alerta de sistema atual |
+| **Grant Permission** | Solicita o nome da permissão Android e adiciona um passo `permission` para concedê-la |
+| **Revoke Permission** | Solicita o nome da permissão Android e adiciona um passo `permission` para revogá-la |
+
+> As ações Grant/Revoke Permission são exclusivas para sessões Android e abrem um prompt solicitando o nome da permissão, por exemplo: `android.permission.CAMERA`.
+
+---
+
 ## Salvando os Passos
 
 Ao clicar em **"Salvar Passos"**:

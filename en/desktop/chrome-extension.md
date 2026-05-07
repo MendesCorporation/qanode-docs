@@ -67,6 +67,19 @@ Captures elements for **data extraction**:
 2. Click on the element to extract
 3. An `extract` step is created capturing the text/value
 
+### CTRL+SHIFT+E — Extract List Mode
+
+Captures **lists of repeated elements** (table rows, cards, list items) in two steps:
+
+1. Press **Ctrl+Shift+E** to activate extract list mode
+2. The indicator changes to **LIST:ITEM** — click the repeated element that represents a list item (e.g.: a table row, a card)
+3. Teal overlays highlight all detected items with the same pattern
+4. The indicator changes to **LIST:0** — click the fields you want to extract within each item (e.g.: name column, price column)
+5. Each clicked field is highlighted in orange and added to the step. The counter in the indicator increases with each field
+6. Click the **REC indicator** to finish — an `extractList` step is recorded with all selected fields
+
+> Pressing **Ctrl+A** or **Ctrl+E** during list capture cancels the mode and returns to normal mode.
+
 ---
 
 ## How to Use
@@ -79,8 +92,9 @@ Captures elements for **data extraction**:
 4. The indicator turns red indicating active recording
 5. Browse and interact with the site normally
 6. Use **Ctrl+A** to add verifications
-7. Use **Ctrl+E** to add extractions
-8. Click the icon again and click **Stop** to finish
+7. Use **Ctrl+E** to add single-value extractions
+8. Use **Ctrl+Shift+E** to add list extractions (repeated elements)
+9. Click the icon again and click **Stop** to finish
 
 [Extension popup](../../assets/images/web-recorder.mp4)
 *Image: Extension popup showing REC/STOP buttons, list of recorded steps, and Copy JSON button*
@@ -340,7 +354,8 @@ The copied JSON is compatible with the node corresponding to the selected mode.
 - **Choose the right mode** — use Smart Locators for accessible sites, Web Flow for sites with stable CSS selectors
 - **Record simple actions** and refine in QANode
 - **Use Ctrl+A** (assert) during recording at verification checkpoints
-- **Use Ctrl+E** (extract) to capture data that will be used in subsequent nodes
+- **Use Ctrl+E** (extract) to capture a single value from an element
+- **Use Ctrl+Shift+E** (extract list) to capture data from repeated elements such as tables and card lists
 - **Add waits** in QANode for elements that take time to load
 - **Review the selectors** — in Web Flow mode, prefer `data-testid`; in Smart Locators mode, prefer `getByRole` or `getByLabel`
 - **Record in segments** — for long flows, record in parts and combine in QANode

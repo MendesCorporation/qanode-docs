@@ -164,6 +164,7 @@ El nodo Web Flow ejecuta una secuencia de **pasos** configurables. Cada paso rep
 | [wait](#wait) | Morado | Esperar una condición o tiempo |
 | [assert](#assert) | Rojo | Verificar una condición en la página |
 | [extract](#extract) | Cian | Extraer datos de un elemento |
+| [extractList](#extractlist) | Esmeralda | Extraer lista de elementos repetidos |
 | [hover](#hover) | Cian | Pasar el mouse sobre un elemento |
 | [scroll](#scroll) | Amarillo | Desplazar la página |
 | [refresh](#refresh) | Naranja | Recargar la página |
@@ -343,6 +344,41 @@ Los datos extraídos están disponibles en los outputs:
 ```
 {{ steps["web-flow"].outputs.extracts.nombreExtraccion }}
 ```
+
+---
+
+### extractList
+
+Itera sobre una lista de elementos repetidos (filas de tabla, cards, ítems de lista) y extrae campos nombrados de cada uno, produciendo un array de objetos como output.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| **Nombre** | `string` | Nombre de la extracción (clave en el array de output) |
+| **Selector de Contenedor** | `array` | Estrategias de selector CSS/XPath para encontrar el contenedor de la lista |
+| **Selector de Ítem** | `string` | Selector CSS relativo al contenedor que selecciona cada ítem repetido |
+| **Campos** | `array` | Lista de campos a extraer de cada ítem |
+
+**Configuración de Campos:**
+
+| Sub-campo | Tipo | Descripción |
+|-----------|------|-------------|
+| **Nombre del Campo** | `string` | Clave en el objeto de output |
+| **Selector** | `string` | Selector CSS relativo al ítem |
+| **Atributo** | `string` | Qué extraer: `text` (predeterminado), `innerHTML`, `href`, `src`, `value` |
+
+**Ejemplo de output:**
+```json
+{
+  "extracts": {
+    "productos": [
+      { "nombre": "Ítem A", "precio": "$10.00" },
+      { "nombre": "Ítem B", "precio": "$25.00" }
+    ]
+  }
+}
+```
+
+> **Grabación con la extensión:** Usa **Ctrl+Shift+E** en el Chrome Recorder para grabar una extracción de lista en dos pasos: primero haz clic en el ítem repetido, luego haz clic en los campos a extraer dentro de él.
 
 ---
 
