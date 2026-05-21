@@ -25,6 +25,14 @@ Bienvenido a la documentación oficial de **QANode Community Edition**, la plata
 
 ---
 
+## Componentes
+
+| Página | Descripción |
+|--------|-------------|
+| [Componentes Reutilizables](componentes/vision-general.md) | Creación, publicación y uso de subflujos con entradas y salidas |
+
+---
+
 ## Referencia de Nodos
 
 ### Control de Flujo
@@ -38,6 +46,7 @@ Bienvenido a la documentación oficial de **QANode Community Edition**, la plata
 ### Web
 | Nodo | Descripción |
 |------|-------------|
+| [Smart Web Flow](nodos/web/smart-web-flow.md) | Automatización web recomendada, con grabación inteligente, contexto, validaciones y recuperación asistida |
 | [Web Flow](nodos/web/web-flow.md) | Automatización web con múltiples pasos y selectores CSS/XPath |
 | [Smart Locators](nodos/web/smart-locators.md) | Automatización web con localizadores semánticos de Playwright |
 
@@ -58,6 +67,7 @@ Bienvenido a la documentación oficial de **QANode Community Edition**, la plata
 | [PostgreSQL](nodos/base-datos/postgresql.md) | Consultas y operaciones en PostgreSQL |
 | [MySQL](nodos/base-datos/mysql.md) | Consultas y operaciones en MySQL |
 | [MariaDB](nodos/base-datos/mariadb.md) | Consultas y operaciones en MariaDB |
+| [SQL Server](nodos/base-datos/sql-server.md) | Consultas y operaciones en Microsoft SQL Server |
 | [Oracle](nodos/base-datos/oracle.md) | Consultas y operaciones en Oracle |
 | [MongoDB](nodos/base-datos/mongodb.md) | Operaciones en MongoDB (find, insert, update, etc.) |
 

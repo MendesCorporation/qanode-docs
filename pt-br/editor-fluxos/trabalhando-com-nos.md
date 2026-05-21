@@ -23,7 +23,25 @@ Você também pode colar nós copiados do **Gravador Chrome** (extensão):
 
 1. No Gravador Chrome, clique em **Copiar JSON**
 2. No editor de fluxos, pressione **Ctrl+V**
-3. O nó Web Flow será adicionado com todos os passos gravados
+3. O nó correspondente ao modo do recorder será adicionado com todos os passos gravados
+
+O QANode Recorder pode gerar nós **Smart Web Flow**, **Web Flow** ou **Smart Locators**, conforme o modo selecionado na extensão.
+
+---
+
+### Adicionar Componentes Reutilizáveis
+
+Quando existem componentes publicados, o editor de cenários exibe a aba **Componentes** na paleta lateral.
+
+1. Abra a aba **Componentes**.
+2. Busque pelo nome ou categoria.
+3. Arraste o componente para o canvas.
+4. Conecte-o como um nó comum.
+5. Preencha os campos de entrada no painel de propriedades.
+
+Componentes são úteis para reutilizar blocos como login, preparação de massa, consultas auxiliares ou validações compartilhadas.
+
+> Para criar, testar e publicar componentes, consulte [Componentes Reutilizáveis](../componentes/visao-geral.md).
 
 ---
 
@@ -95,7 +113,7 @@ Isso permite que nós usem dados produzidos por nós anteriores. Por exemplo:
 
 Alguns nós suportam **múltiplos passos** internos, tornando-os mais poderosos:
 
-### Web Flow e Smart Locators
+### Smart Web Flow, Web Flow e Smart Locators
 
 Esses nós permitem adicionar vários passos de automação web dentro de um único nó:
 
@@ -111,6 +129,18 @@ Você pode:
 - **Expandir/Recolher** passos para ver detalhes
 - **Remover** passos clicando no ícone de lixeira
 - **Configurar evidências** (screenshots) individualmente por passo
+- **Copiar apenas um passo** pelo menu de contexto
+- **Colar o passo acima ou abaixo** de outro passo compatível
+
+> **Dica:** O copiar/colar de passos respeita o tipo do nó. Um passo copiado de Smart Web Flow só deve ser colado em outro Smart Web Flow, evitando misturar formatos incompatíveis.
+
+### Smart Web Flow
+
+O **Smart Web Flow** é o nó recomendado para novas automações web. Ele armazena mais contexto por passo, incluindo localizadores, seletores alternativos, identidade do alvo, texto de escopo, efeitos esperados e metadados da gravação.
+
+Use-o principalmente quando o fluxo foi criado pela extensão Chrome ou quando a aplicação possui componentes dinâmicos como menus, modais, iframes, grids, tabelas, cards e drag/drop.
+
+Para detalhes completos, consulte [Nó Smart Web Flow](../nos/web/smart-web-flow.md).
 
 ### SSH Command
 
@@ -161,7 +191,7 @@ O modo visual builder é mais amigável e não requer conhecimento de JavaScript
 
 ## Nós com Query Builder Visual
 
-Os nós de banco de dados (PostgreSQL, MySQL, etc.) oferecem um **query builder visual** além da opção de SQL direto:
+Os nós de banco de dados (PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, etc.) oferecem um **query builder visual** além da opção de SQL direto:
 
 ### Presets Disponíveis
 

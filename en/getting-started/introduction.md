@@ -9,12 +9,13 @@
 QANode was designed for QA teams, developers, and test engineers who need a modern, visual tool for test automation. The platform covers the main testing areas:
 
 ### Web Automation
-Test user interfaces using **Playwright**, the most modern automation framework on the market. QANode offers two specialized nodes:
+Test user interfaces using **Playwright**, the most modern automation framework on the market. QANode offers specialized nodes for different levels of control:
 
+- **Smart Web Flow** — Recommended web automation with smart recording, context, expected checks, and assisted recovery
 - **Web Flow** — Automation based on CSS selectors, XPath, data-testid, and text
 - **Smart Locators** — Automation with semantic locators (`getByRole`, `getByLabel`, `getByPlaceholder`, etc.)
 
-Both support Chromium, headless mode, screenshot capture, and session reuse.
+They support Chromium, headless mode, screenshot capture, session reuse, and Chrome extension recording.
 
 ### API Testing
 Execute HTTP requests with full support for:
@@ -25,8 +26,11 @@ Execute HTTP requests with full support for:
 
 ### Database
 Connect and validate data in:
-- **PostgreSQL**, **MySQL**, **MariaDB**, **Oracle** — with a visual query builder or direct SQL
+- **PostgreSQL**, **MySQL**, **MariaDB**, **SQL Server**, **Oracle** — with a visual query builder or direct SQL
 - **MongoDB** — with find, insert, update, delete, and aggregation pipeline operations
+
+### Reusable Components
+Create subflows with inputs and outputs to reuse common logic across scenarios, such as login, test-data setup, shared validations, or helper queries.
 
 ### Infrastructure
 Execute remote commands via **SSH** with support for multiple steps, password or private key authentication, and output capture.
@@ -42,6 +46,7 @@ Create **custom nodes** in any programming language (Node.js, Python, Java, C#, 
 |---------|-------------|
 | **Visual Editor** | Interactive canvas with drag-and-connect nodes |
 | **18+ Native Nodes** | Flow control, web, API, database, infrastructure, and utilities |
+| **Reusable Components** | Subflows with input/output contracts to reduce repetition |
 | **Custom Nodes** | Extensible with HTTP providers in any language |
 | **Projects and Suites** | Organize tests in projects and group them into suites |
 | **Scheduling** | Run tests automatically with cron expressions |

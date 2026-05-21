@@ -66,7 +66,7 @@ You can then access this data in subsequent nodes:
 
 ### Screenshots (Evidence)
 
-For web nodes (Web Flow and Smart Locators), captured screenshots appear as clickable thumbnails. Click to view at full size.
+For web nodes (Smart Web Flow, Web Flow, and Smart Locators), captured screenshots appear as clickable thumbnails. Click to view at full size.
 
 ---
 
@@ -138,7 +138,7 @@ ERROR: Click failed after 3 attempts: [getByRole("button", { name: "Login" })] â
 ### 1. Disable Headless Mode
 
 For web tests, disable **headless mode** on the node to see the browser in action:
-- On the Web Flow or Smart Locators node, uncheck **Headless**
+- On the Smart Web Flow, Web Flow, or Smart Locators node, uncheck **Headless**
 - Run the flow and observe the browser
 
 ### 2. Add Wait Steps

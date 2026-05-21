@@ -105,6 +105,23 @@ Same fields as MySQL.
 
 ---
 
+### SQL Server
+
+| Field | Description |
+|-------|-------------|
+| **Name** | Credential name |
+| **Host** | Server address |
+| **Port** | Port (default: 1433) |
+| **Database** | Database name |
+| **Username** | Connection username |
+| **Password** | Connection password |
+| **Encrypt** | Use encrypted connection |
+| **Trust Server Certificate** | Accept the server certificate without full validation |
+
+Use `Encrypt` when the server requires encrypted connections. In internal environments with self-signed or private certificates, `Trust Server Certificate` may be necessary.
+
+---
+
 ### Oracle
 
 | Field | Description |
@@ -205,7 +222,7 @@ Before using a credential, test the connection:
 
 ### In Database Nodes
 
-In the PostgreSQL, MySQL, MariaDB, Oracle, or MongoDB node:
+In the PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, or MongoDB node:
 
 1. In the **Credential** field, select the credential
 2. The connection fields are filled in automatically

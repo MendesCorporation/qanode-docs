@@ -163,6 +163,16 @@ When creating or editing a role, the **Table View** field defines which database
 | `credential.edit` | Edit credentials |
 | `credential.delete` | Delete credentials |
 
+#### Components
+| Permission | Description |
+|------------|-------------|
+| `component.view` | View reusable components |
+| `component.create` | Create and edit own components |
+| `component.edit` | Edit components created by other users |
+| `component.delete.own` | Delete own components |
+| `component.delete` | Delete any component |
+| `component.publish` | Publish components for use in scenarios |
+
 #### Providers
 | Permission | Description |
 |------------|-------------|

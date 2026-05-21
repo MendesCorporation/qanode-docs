@@ -66,7 +66,7 @@ Você pode então acessar esses dados em nós seguintes:
 
 ### Screenshots (Evidências)
 
-Para nós web (Web Flow e Smart Locators), screenshots capturados aparecem como miniaturas clicáveis. Clique para ver em tamanho completo.
+Para nós web (Smart Web Flow, Web Flow e Smart Locators), screenshots capturados aparecem como miniaturas clicáveis. Clique para ver em tamanho completo.
 
 ---
 
@@ -138,7 +138,7 @@ ERROR: Click failed after 3 attempts: [getByRole("button", { name: "Login" })] �
 ### 1. Desative o Modo Headless
 
 Para testes web, desative o **modo headless** no nó para ver o navegador em ação:
-- No nó Web Flow ou Smart Locators, desmarque **Headless**
+- No nó Smart Web Flow, Web Flow ou Smart Locators, desmarque **Headless**
 - Execute o fluxo e observe o navegador
 
 ### 2. Adicione Passos de Wait

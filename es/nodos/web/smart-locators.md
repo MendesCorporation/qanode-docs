@@ -2,7 +2,7 @@
 
 El nodo **Smart Locators** permite automatizar interacciones con páginas web usando **localizadores semánticos de Playwright** — basados en roles ARIA, labels, placeholders y otros atributos de accesibilidad. Este enfoque es más resiliente que los selectores CSS, ya que refleja cómo los usuarios realmente encuentran los elementos en la página.
 
-> **Consejo:** Si prefieres selectores CSS y XPath tradicionales, usa el nodo [Web Flow](web-flow.md).
+> **Consejo:** Para flujos web nuevos grabados por la extensión, prefiera [Smart Web Flow](smart-web-flow.md). Si prefiere selectores CSS y XPath tradicionales en flujos legados, use el nodo [Web Flow](web-flow.md).
 
 ---
 
@@ -170,6 +170,7 @@ Equivale en Playwright a: `page.getByRole('button', { name: 'Ingresar' })`
 | Acción | Color | Descripción |
 |--------|-------|-------------|
 | [navigate](#navigate) | Azul | Navegar a URL |
+| [switchPage](#switchpage) | Morado | Cambiar a otra página o pestaña |
 | [click](#click) | Amarillo | Hacer clic en elemento |
 | [dblclick](#dblclick) | Amarillo | Doble clic |
 | [fill](#fill) | Verde | Rellenar campo (instantáneo) |
@@ -206,6 +207,31 @@ Navega a una URL.
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
 | **URL** | `string` | URL de destino (soporta `{{ }}`) |
+
+---
+
+### switchPage
+
+Cambia la página activa cuando un clic, enlace o acción abre una nueva pestaña/ventana y los próximos pasos deben continuar allí.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| **Modo** | `string` | Última pestaña abierta, siguiente, anterior o búsqueda por URL/título |
+| **URL contiene** | `string` | Fragmento opcional de la URL para localizar la pestaña |
+| **Título contiene** | `string` | Fragmento opcional del título de la página |
+| **Esperar Hasta** | `string` | Evento de carga esperado después del cambio |
+| **Timeout (ms)** | `number` | Tiempo máximo para localizar/cargar la pestaña |
+
+**Modos:**
+
+| Modo | Descripción |
+|------|-------------|
+| `last` | Usa la última pestaña abierta |
+| `next` | Usa la siguiente pestaña en relación con la actual |
+| `previous` | Usa la pestaña anterior |
+| `match` | Busca por fragmento de URL y/o título |
+
+Cuando la extensión identifica enlaces que abren nueva pestaña, puede insertar este paso automáticamente. En flujos manuales, agregue `switchPage` después del click que abre la pestaña.
 
 ---
 

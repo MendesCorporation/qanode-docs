@@ -28,9 +28,9 @@ A barra superior contém:
 A paleta exibe todos os nós disponíveis organizados por categoria:
 
 - **Controle de Fluxo** — If, Switch, Loop, Merge
-- **Web** — Web Flow, Smart Locators
+- **Web** — Smart Web Flow, Web Flow, Smart Locators
 - **API** — HTTP Request
-- **Banco de Dados** — PostgreSQL, MySQL, MariaDB, Oracle, MongoDB
+- **Banco de Dados** — PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, MongoDB
 - **Infraestrutura** — SSH Command
 - **Utilitários** — Set Variable, Log, Wait, Stop and Fail, Custom JavaScript
 - **Nós Customizados** — Nós de provedores registrados (se houver)
@@ -52,6 +52,8 @@ O canvas é a área de trabalho onde você posiciona e conecta os nós. Funciona
 | **Conectar nós** | Arraste de um handle de saída (●) para um handle de entrada (●) |
 | **Remover conexão** | Clique na conexão e pressione Delete |
 | **Colar fluxo** | Ctrl+V com JSON de fluxo copiado (ex: do Gravador Chrome) |
+| **Adicionar anotação** | Clique com botão direito no canvas ou pressione Shift+A |
+| **Copiar/colar nó ou anotação** | Selecione o item e use Ctrl+C / Ctrl+V |
 
 ### 4. Painel de Propriedades (Lado Direito)
 
@@ -116,9 +118,25 @@ Após uma execução, os nós exibem indicadores de status:
 | `Ctrl+S` | Salvar fluxo |
 | `Delete` / `Backspace` | Deletar nó ou conexão selecionada |
 | `Ctrl+C` | Copiar nó |
-| `Ctrl+V` | Colar nó (JSON do Gravador Chrome) |
+| `Ctrl+V` | Colar nó, anotação ou JSON do Gravador Chrome |
 | `Ctrl+Z` | Desfazer |
 | `Ctrl+Shift+Z` | Refazer |
+| `Shift+A` | Criar anotação no canvas |
+
+### Anotações no Canvas
+
+As **anotações** ajudam a documentar partes do fluxo diretamente no canvas. Use-as para explicar pré-condições, regras de negócio, agrupamentos lógicos, pendências ou observações importantes para o time.
+
+As anotações suportam:
+
+- texto livre;
+- formatação simples em estilo Markdown;
+- cores;
+- redimensionamento;
+- arrastar e posicionar no canvas;
+- copiar, colar, duplicar e excluir.
+
+Você pode criar uma anotação pelo menu de contexto do canvas ou pelo atalho `Shift+A`.
 
 ---
 

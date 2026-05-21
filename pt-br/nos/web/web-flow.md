@@ -2,7 +2,7 @@
 
 O nó **Web Flow** permite automatizar interações com páginas web usando **seletores CSS, XPath, data-testid e texto**. É ideal quando você precisa de seletores tradicionais e controle detalhado sobre a localização de elementos.
 
-> **Dica:** Se preferir localizadores semânticos baseados em acessibilidade (getByRole, getByLabel, etc.), use o nó [Smart Locators](smart-locators.md).
+> **Dica:** Para fluxos web novos gravados pela extensão, prefira o [Smart Web Flow](smart-web-flow.md). Se preferir localizadores semânticos baseados em acessibilidade (getByRole, getByLabel, etc.) em fluxos legados, use o nó [Smart Locators](smart-locators.md).
 
 ---
 
@@ -77,7 +77,7 @@ Usa perfis reais do Playwright (viewport, user agent, escala de pixels, touch). 
 ### Modo de Sessão
 
 - **Nova Sessão (`new`)**: Abre um novo navegador para cada execução. Ideal para testes isolados.
-- **Reutilizar Sessão (`reuse`)**: Usa uma sessão de navegador já aberta por outro nó Web Flow/Smart Locators. Útil para dividir testes longos em múltiplos nós mantendo o mesmo navegador e cookies.
+- **Reutilizar Sessão (`reuse`)**: Usa uma sessão de navegador já aberta por outro nó web compatível. Útil para dividir testes longos em múltiplos nós mantendo o mesmo navegador e cookies.
 
 ### Estratégia de Storage
 
@@ -158,6 +158,7 @@ O nó Web Flow executa uma sequência de **passos** configuráveis. Cada passo r
 | Ação | Cor | Descrição |
 |------|-----|-----------|
 | [navigate](#navigate) | 🔵 | Navegar para uma URL |
+| [switchPage](#switchpage) | 🟣 | Trocar para outra página ou aba |
 | [click](#click) | 🟡 | Clicar em um elemento |
 | [type](#type) | 🟢 | Digitar texto em um campo |
 | [drag](#drag) | Rosa | Arrastar e soltar |
@@ -211,6 +212,31 @@ Navega para uma URL específica.
 URL: https://meusite.com/login
 URL: {{ variables.BASE_URL }}/dashboard
 ```
+
+---
+
+### switchPage
+
+Troca a página ativa da sessão quando a automação precisa continuar em outra aba ou janela aberta pelo navegador.
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| **Modo** | `string` | Como escolher a aba: última aberta, próxima, anterior ou por correspondência |
+| **URL contém** | `string` | Trecho opcional da URL para localizar a aba |
+| **Título contém** | `string` | Trecho opcional do título da página |
+| **Aguardar Até** | `string` | Evento de carregamento esperado após trocar |
+| **Timeout (ms)** | `number` | Tempo máximo para encontrar/carregar a aba |
+
+**Modos:**
+
+| Modo | Descrição |
+|------|-----------|
+| `last` | Usa a última aba aberta no contexto do navegador |
+| `next` | Usa a próxima aba em relação à aba atual |
+| `previous` | Usa a aba anterior em relação à aba atual |
+| `match` | Procura uma aba por trecho de URL e/ou título |
+
+Quando a extensão detecta um clique que abre nova aba, ela pode gravar este passo automaticamente logo após o click. Isso evita que os próximos passos tentem executar na aba antiga.
 
 ---
 
@@ -711,7 +737,7 @@ return await web.run(async ({ page, expect, assert }) => {
 
 ### Múltiplas sessões
 
-Quando há mais de um nó Web Flow/Smart Locators aberto no fluxo, cada um tem um `sessionId` distinto. Use `web.session(id)` para acessar uma sessão específica:
+Quando há mais de um nó web aberto no fluxo, cada um tem um `sessionId` distinto. Use `web.session(id)` para acessar uma sessão específica:
 
 ```javascript
 const sessao1 = web.session(steps["Web Flow 1"].outputs.sessionId);
@@ -753,6 +779,6 @@ return { url1, url2 };
 
 - Use **data-testid** como estratégia principal de seletor — é mais estável
 - Configure **screenshots** nos passos críticos para facilitar a depuração
-- Use **reutilização de sessão** quando múltiplos nós Web Flow/Smart Locators precisam compartilhar o mesmo navegador
+- Use **reutilização de sessão** quando múltiplos nós web precisam compartilhar o mesmo navegador
 - Para formulários com autocomplete ou máscaras, considere usar o nó [Smart Locators](smart-locators.md) com a ação `type` (digitação caractere por caractere)
 - O modo **headless: false** é útil durante o desenvolvimento para visualizar o que o teste está fazendo

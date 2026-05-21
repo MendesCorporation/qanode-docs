@@ -2,7 +2,7 @@
 
 The **Smart Locators** node allows you to automate interactions with web pages using **Playwright's semantic locators** — based on ARIA roles, labels, placeholders, and other accessibility attributes. This approach is more resilient than CSS selectors, as it reflects how users actually find elements on the page.
 
-> **Tip:** If you prefer traditional CSS selectors and XPath, use the [Web Flow](web-flow.md) node.
+> **Tip:** For new web flows recorded by the extension, prefer [Smart Web Flow](smart-web-flow.md). If you prefer traditional CSS selectors and XPath in legacy flows, use the [Web Flow](web-flow.md) node.
 
 ---
 
@@ -170,6 +170,7 @@ Equivalent in Playwright: `page.getByRole('button', { name: 'Sign In' })`
 | Action | Color | Description |
 |--------|-------|-------------|
 | [navigate](#navigate) | Blue | Navigate to URL |
+| [switchPage](#switchpage) | Purple | Switch to another page or tab |
 | [click](#click) | Yellow | Click on element |
 | [dblclick](#dblclick) | Yellow | Double click |
 | [fill](#fill) | Green | Fill field (instant) |
@@ -206,6 +207,31 @@ Navigates to a URL.
 | Field | Type | Description |
 |-------|------|-------------|
 | **URL** | `string` | Destination URL (supports `{{ }}`) |
+
+---
+
+### switchPage
+
+Switches the active page when a click, link, or action opens a new tab/window and the next steps must continue there.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| **Mode** | `string` | Last opened tab, next, previous, or match by URL/title |
+| **URL contains** | `string` | Optional URL fragment used to find the tab |
+| **Title contains** | `string` | Optional page title fragment |
+| **Wait Until** | `string` | Loading event expected after switching |
+| **Timeout (ms)** | `number` | Maximum time to find/load the tab |
+
+**Modes:**
+
+| Mode | Description |
+|------|-------------|
+| `last` | Uses the last opened tab |
+| `next` | Uses the next tab relative to the current one |
+| `previous` | Uses the previous tab |
+| `match` | Finds a tab by URL and/or title fragment |
+
+When the extension identifies links that open a new tab, it can insert this step automatically. In manual flows, add `switchPage` after the click that opens the tab.
 
 ---
 

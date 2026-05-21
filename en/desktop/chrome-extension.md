@@ -1,33 +1,45 @@
 # Chrome Extension — QANode Recorder
 
-The **QANode Recorder** is a Google Chrome extension that **records your interactions** with web pages and automatically converts them into test steps compatible with QANode's **Web Flow** or **Smart Locators** nodes.
+The **QANode Recorder** is a Google Chrome extension that records interactions with web pages and converts them into test steps compatible with QANode's **Smart Web Flow**, **Web Flow**, or **Smart Locators** nodes.
 
 ---
 
 ## Installation
 
-1. Open Chrome and go to `chrome://extensions`
-2. Enable **Developer mode** (toggle in the upper right corner)
-3. Click **Load unpacked**
-4. Select the `extension/` folder from QANode
-5. The extension will appear in the toolbar
+Install it from the Chrome Web Store:
+
+[QANode Recorder on the Chrome Web Store](https://chromewebstore.google.com/detail/qanode-recorder/gmdklmpafacfkjmljgnoafcjjcdjiajo)
+
+After installing:
+
+1. Pin the QANode Recorder icon in Chrome.
+2. Open the website you want to record.
+3. Click the extension icon.
+4. Choose the recording mode.
+5. Click **Start**.
+
+For internal development environments, the extension can also be installed manually through `chrome://extensions` using **Load unpacked**, when instructed by the QANode team.
 
 ---
 
 ## Recorder Mode
 
-Before starting the recording, choose the **recorder mode** in the extension popup:
+Before recording, choose the **recorder mode** in the extension popup:
 
-| Mode | Selectors | When to Use |
-|------|-----------|-------------|
-| **Web Flow** (default) | CSS / XPath | Sites with `data-testid`, `id`, or stable CSS selectors |
-| **Smart Locators** | Semantic (getByRole, getByLabel, etc.) | Sites with good accessibility practices |
+| Mode | Strategy | When to Use |
+|------|----------|-------------|
+| **Smart Web Flow** (recommended) | Semantics + CSS/XPath + identity + context | New web flows, enterprise apps, menus, modals, grids, iframes, drag/drop, and dynamic pages |
+| **Web Flow** | CSS / XPath | Legacy flows or sites with very stable `data-testid`, `id`, and CSS selectors |
+| **Smart Locators** | Semantic (`getByRole`, `getByLabel`, etc.) | Legacy semantic flows and simpler accessible pages |
+| **XPath Inspector** | XPath candidates | Manual selector diagnostics; does not generate a flow node |
 
-Each mode generates a node of the same name on the canvas when pasting the JSON.
+Each recording mode creates the matching node on the canvas when the JSON is pasted.
 
-> **Note:** You cannot switch modes during recording. If there are recorded steps, switching modes will clear them.
+> You cannot switch recording mode while there are recorded steps. Switching mode clears the current recording.
 
-For more details about the differences between the two nodes, see:
+See also:
+
+- [Smart Web Flow](../nodes/web/smart-web-flow.md)
 - [Web Flow](../nodes/web/web-flow.md)
 - [Smart Locators](../nodes/web/smart-locators.md)
 
@@ -35,143 +47,150 @@ For more details about the differences between the two nodes, see:
 
 ## Recording Modes
 
-The extension operates in three interaction modes during recording:
-
 ### REC — Normal Recording
 
-Automatically records your interactions:
+Records interactions automatically:
 
 | Interaction | Generated Action |
-|-------------|-----------------|
-| **Click** on element | `click` with element selectors |
-| **Type** in field | `type` with text and selectors |
-| **Select** option | `select` with selected value |
-| **Scroll** the page | `scroll` with position |
+|-------------|------------------|
+| **Click** on element | `click` with target information |
+| **Type** in field | `fill`/`type` with text and target |
+| **Select** option | `selectOption`/`select` with selected value |
+| **Scroll** page | `scroll` with position |
 | **Drag and drop** element | `drag` with source, target, and/or coordinates |
 | **Navigate** to URL | `navigate` with URL |
 | **Reload** page | `refresh` |
 
-### CTRL+A — Assert Mode
+In **Smart Web Flow** mode, recorded actions may also carry target identity, scoped text, alternative strategies, iframe context, expected effects, evidence, and session bootstrap data.
 
-Captures elements to create **assertions** (verifications):
+When a click opens a new tab/window, the extension can insert a **Switch Page / Tab** (`switchPage`) step after the click so the next steps continue on the correct page.
 
-1. Press **Ctrl+A** to activate assert mode
-2. Click on the element to verify
-3. An `assert` step is created with the element's text/value
+### Ctrl+A — Assert Mode
 
-### CTRL+E — Extract Mode
+Captures elements to create assertions:
 
-Captures elements for **data extraction**:
+1. Press **Ctrl+A**.
+2. Click the element to verify.
+3. An `assert` step is created with the element text/value.
 
-1. Press **Ctrl+E** to activate extract mode
-2. Click on the element to extract
-3. An `extract` step is created capturing the text/value
+### Ctrl+E — Extract Mode
 
-### CTRL+SHIFT+E — Extract List Mode
+Captures a single value:
 
-Captures **lists of repeated elements** (table rows, cards, list items) in two steps:
+1. Press **Ctrl+E**.
+2. Click the element to extract.
+3. An `extract` step is created.
 
-1. Press **Ctrl+Shift+E** to activate extract list mode
-2. The indicator changes to **LIST:ITEM** — click the repeated element that represents a list item (e.g.: a table row, a card)
-3. Teal overlays highlight all detected items with the same pattern
-4. The indicator changes to **LIST:0** — click the fields you want to extract within each item (e.g.: name column, price column)
-5. Each clicked field is highlighted in orange and added to the step. The counter in the indicator increases with each field
-6. Click the **REC indicator** to finish — an `extractList` step is recorded with all selected fields
+### Ctrl+Shift+E — Extract List Mode
 
-> Pressing **Ctrl+A** or **Ctrl+E** during list capture cancels the mode and returns to normal mode.
+Captures repeated elements such as table rows, cards, or list items:
+
+1. Press **Ctrl+Shift+E**.
+2. Click the repeated item that represents one row/card.
+3. Similar items are highlighted.
+4. Click the fields you want to extract inside the item.
+5. Click the **REC indicator** to finish.
+
+Pressing **Ctrl+A** or **Ctrl+E** during list capture cancels the mode and returns to normal recording.
+
+### Ctrl+Alt+W — Wait Mode
+
+Creates an explicit wait for a page element:
+
+1. Press **Ctrl+Alt+W**.
+2. Click the element that must be visible before continuing.
+3. A `wait` step is created.
+
+Use this when the page has asynchronous loading, delayed components, animations, or elements that depend on API responses.
+
+### Ctrl+Alt+T — Extract Table Mode
+
+Available in **Smart Web Flow** mode. Captures a table or grid as structured tabular data:
+
+1. Press **Ctrl+Alt+T**.
+2. Click the table, grid, or tabular region.
+3. The recorder creates an `extractTable` step.
+4. In QANode, review the output name and row limit if needed.
+
+For cards, visual lists, or highly custom tables, **Extract List** may be better because you choose the fields manually.
+
+### XPath Inspector
+
+XPath Inspector helps investigate selectors directly on the page. It does not record a test flow.
+
+1. Select **XPath Inspector** in the popup.
+2. Click **Activate**.
+3. Hover the page to see visible elements highlighted.
+4. Click the element to inspect.
+5. Review generated XPath candidates and uniqueness.
+6. Copy the XPath if needed.
+
+The selected element flashes on the page, helping confirm that the XPath points to the correct target.
 
 ---
 
-## How to Use
+## Using in QANode
 
-### Recording a Test
-
-1. Click the extension icon in the toolbar
-2. Select the **recorder mode** (Web Flow or Smart Locators)
-3. Click **Start** to begin recording
-4. The indicator turns red indicating active recording
-5. Browse and interact with the site normally
-6. Use **Ctrl+A** to add verifications
-7. Use **Ctrl+E** to add single-value extractions
-8. Use **Ctrl+Shift+E** to add list extractions (repeated elements)
-9. Click the icon again and click **Stop** to finish
-
-[Extension popup](../../assets/images/web-recorder.mp4)
-*Image: Extension popup showing REC/STOP buttons, list of recorded steps, and Copy JSON button*
-
-### Using in QANode
-
-1. In the extension popup, click **Copy JSON**
-2. In QANode, open the flow editor
-3. Press **Ctrl+V** on the canvas
-4. A node will be created automatically according to the selected mode:
-   - **Web Flow** mode → Web Flow node with `selectorStrategies` (CSS/XPath)
-   - **Smart Locators** mode → Smart Locators node with `locator` (getByRole, getByLabel, etc.)
-5. Review and adjust steps as needed
+1. In the extension popup, click **Copy JSON**.
+2. In QANode, open the flow editor.
+3. Press **Ctrl+V** on the canvas.
+4. A node is created according to the selected mode:
+   - **Smart Web Flow** → `smartWebSteps`
+   - **Web Flow** → `webSteps` with CSS/XPath selector strategies
+   - **Smart Locators** → `smartSteps` with semantic locators
+5. Review and adjust the generated steps when needed.
 
 ---
 
-## Selector Strategies
+## Smart Web Flow Metadata
 
-### Web Flow Mode
+In Smart Web Flow mode, the extension records more than a selector. A step may include:
 
-In Web Flow mode, the extension automatically generates **multiple CSS/XPath selectors** for each element, ordered by priority:
+- primary semantic locator;
+- alternative CSS/XPath selectors;
+- element identity;
+- useful text, role, tag, and attributes;
+- row, card, or repeated-item context;
+- iframe information;
+- approximate visual position;
+- expected effects after the action;
+- evidence settings.
 
-| Priority | Strategy | Example |
-|----------|----------|---------|
-| 1 | `data-testid` | `[data-testid="login-btn"]` |
-| 2 | `id` | `#submit-button` |
-| 3 | `data-qa` | `[data-qa="email-input"]` |
-| 4 | `name` (inputs) | `input[name="email"]` |
-| 5 | `aria-label` | `[aria-label="Enviar"]` |
-| 6 | `placeholder` | `input[placeholder="E-mail"]` |
-| 7 | `href` (links) | `a[href="/login"]` |
-| 8 | Text (buttons/links) | `button:has-text("Entrar")` |
-| 9 | XPath (fallback) | `//button[@type="submit"]` |
+This lets QANode execute the step with more context and avoids relying only on a fragile selector.
 
-The most specific and stable selector is always prioritized. This ensures more resilient tests.
+When the extension detects that a target is inside a repeated row, card, or list item, it may record **Scoped Text**. QANode uses it to find the correct item first and only then resolve the button, link, field, or control inside it.
 
-### Smart Locators Mode
+Example:
 
-In Smart Locators mode, the extension converts the captured elements into **semantic Playwright locators**:
-
-| Priority | Method | Example |
-|----------|--------|---------|
-| 1 | `getByTestId` | Element with `data-testid="submit-btn"` |
-| 2 | `getByLabel` | Field with `aria-label="E-mail"` |
-| 3 | `getByPlaceholder` | Field with `placeholder="Digite seu nome"` |
-| 4 | `getByText` | Element with visible text |
-| 5 | `getByRole` | Button, link, heading (fallback) |
-
-Semantic locators are more resilient to layout changes and reflect how users actually find elements on the page.
+```
+Scoped Text: INC0010008
+Target: "Open" button
+```
 
 ---
 
 ## Drag and Drop
 
-The extension also records **drag and drop** operations for both **Web Flow** and **Smart Locators** modes.
+The extension records **drag and drop** operations in Smart Web Flow, Web Flow, and Smart Locators modes.
 
 During recording, QANode Recorder tries to capture:
 
-- The source element before the movement starts
-- The drop target, when there is an identifiable element
-- Source and target coordinates as fallback
-- Internal gesture metadata to reproduce the movement more accurately
+- the source element before the movement starts;
+- the drop target, when identifiable;
+- source and target coordinates as fallback;
+- gesture metadata to reproduce the movement more accurately.
 
-In **Web Flow** mode, the recording prioritizes CSS/XPath selectors and stable attributes such as `id`, `data-testid`, and `data-qa`.
+In **Smart Web Flow**, recording combines dragged item identity, target identity, visual/structural context, and supporting coordinates when needed. This helps with boards, kanban columns, reorderable lists, and drop areas that change during the gesture.
 
-In **Smart Locators** mode, the extension prioritizes semantic locators. When the page does not provide enough semantics, for example images without `alt`, drop areas without text, or icon-only buttons, the recording may use a stable technical fallback such as `css: #id`. This avoids fragile locators like unnamed `getByRole("button")` or relying only on `nth`.
+Review the drag/drop step when:
 
-### When to review the recorded step
+- the target is a canvas or free area without a clear element;
+- several elements have the same text;
+- the element is icon-only without `aria-label`;
+- the page moves or reorders elements during the gesture;
+- the destination is an empty column, virtualized list, or area that only appears while dragging.
 
-Review the drag/drop step manually when:
-
-- The target is a canvas or free area without a clear target element
-- There are multiple elements with the same text
-- The element is only an icon without `aria-label`
-- The page moves or reorders elements during the gesture
-
-For enterprise applications, prefer adding `data-testid`, `data-qa`, `aria-label`, or accessible names to buttons and drop areas. This makes recordings more stable and improves Smart Locators.
+For enterprise applications, prefer adding `data-testid`, `data-qa`, `aria-label`, or accessible names to buttons and drop areas.
 
 ---
 
@@ -179,183 +198,104 @@ For enterprise applications, prefer adding `data-testid`, `data-qa`, `aria-label
 
 ### Deduplication
 
-The extension prevents step duplication:
+The extension avoids duplicate steps:
 
-- **Click + Navigation**: If a click triggers a navigation, the extra `navigate` step is suppressed
-- **Type + Type**: Consecutive typing in the same field is consolidated into a single step
-- **Scroll**: Small scrolls (< 200px) are ignored
+- **Click + Navigation**: when a click triggers navigation, the extra `navigate` is suppressed.
+- **Consecutive typing**: repeated fills in the same field are consolidated.
+- **Scroll**: small scrolls are ignored.
 
 ### Forms
 
-- **Focus out**: Saves the input value when the field loses focus
-- **Enter**: Saves the input and records the click on the submit button
-- **Change**: Saves immediately for dropdowns and selects
+- **Focus out** saves the input value when a field loses focus.
+- **Enter** saves the input and records the submit button click.
+- **Change** saves dropdown/select values immediately.
 
 ### Persistence
 
-The recording survives **page reloads**:
-- Steps are saved in `chrome.storage.local`
-- On reload, recording continues from where it left off
-- A `refresh` step is automatically added
+Recording survives page reloads:
+
+- steps are saved in `chrome.storage.local`;
+- after reload, recording continues from where it stopped;
+- a `refresh` step is added automatically;
+- when a step is deleted in the popup, the internal page state is also synchronized so the deleted step does not return.
+
+### Browser Session
+
+When possible, the extension captures cookies and localStorage together with the JSON. When pasted into QANode, this session can be imported as persisted storage, avoiding manual login before the first run.
+
+Review imported sessions when authentication expires quickly, depends on MFA/IP/device, or when the scenario must start without cookies.
 
 ### Navigation Detection
 
-The extension uses the Performance API to distinguish between:
-- **Navigation** (new URL) → generates `navigate` step
-- **Refresh** (same URL) → generates `refresh` step
-- **Click → Navigation** (clicked link) → suppresses the redundant `navigate`
+The extension uses browser APIs to distinguish:
+
+- **Navigation** to a new URL → `navigate`;
+- **Reload** of the same URL → `refresh`;
+- **Click → navigation** → suppress redundant `navigate`;
+- **Click → new tab** → `switchPage` can be added.
+
+### Frames and iFrames
+
+When the action happens inside an accessible iframe, the extension tries to record the frame context before the action. It may use frame selector, name, and URL so execution can return to the same context.
+
+Cross-origin or very dynamic iframes may still require reviewing the `frame` step in QANode.
+
+---
+
+## Expected Effects
+
+In Smart Web Flow mode, some steps include expected effects such as `domStable`, `targetVisible`, `overlayOpened`, or `pageOpened`.
+
+The UI does not expose individual expected-effect editing. The user controls the step-level **Use expected effects** toggle. Keep it enabled when the action must prove that a page changed, menu opened, modal appeared, tab opened, or next target became visible. Disable it for volatile screens or when a manual `wait`/`assert` is more appropriate.
 
 ---
 
 ## Export Format
 
-The copied JSON is compatible with the node corresponding to the selected mode.
+The copied JSON is compatible with the selected node type:
 
-### Web Flow → Web Flow Node
+- **Smart Web Flow**: `type: "smart-web-flow"` and `smartWebSteps`;
+- **Web Flow**: `type: "web-flow"` and `webSteps`;
+- **Smart Locators**: `type: "smart-locators"` and `smartSteps`.
 
-```json
-{
-  "type": "web-flow",
-  "position": { "x": 100, "y": 100 },
-  "data": {
-    "label": "Recorded Flow",
-    "sessionMode": "new",
-    "headless": true,
-    "storageStrategy": "inMemory",
-    "webSteps": [
-      {
-        "id": "step-1",
-        "action": "navigate",
-        "label": "Navigate to page",
-        "config": {
-          "url": "https://exemplo.com/login"
-        },
-        "evidence": {
-          "takeScreenshot": true,
-          "screenshotMode": "after"
-        }
-      },
-      {
-        "id": "step-2",
-        "action": "type",
-        "label": "Type \"user@email.com\"",
-        "config": {
-          "selectorStrategies": [
-            { "type": "css", "value": "#email" },
-            { "type": "css", "value": "input[name='email']" }
-          ],
-          "text": "user@email.com",
-          "clearFirst": true
-        }
-      },
-      {
-        "id": "step-3",
-        "action": "click",
-        "label": "Click \"Entrar\"",
-        "config": {
-          "selectorStrategies": [
-            { "type": "css", "value": "[data-testid='login-btn']" },
-            { "type": "css", "value": "button[type='submit']" }
-          ]
-        }
-      }
-    ]
-  }
-}
-```
-
-### Smart Locators → Smart Locators Node
-
-```json
-{
-  "type": "smart-locators",
-  "position": { "x": 100, "y": 100 },
-  "data": {
-    "label": "Recorded Smart Locators",
-    "sessionMode": "new",
-    "headless": true,
-    "storageStrategy": "inMemory",
-    "smartSteps": [
-      {
-        "id": "step-1",
-        "action": "navigate",
-        "label": "Navigate to page",
-        "config": {
-          "url": "https://exemplo.com/login"
-        },
-        "evidence": {
-          "takeScreenshot": true,
-          "screenshotMode": "after"
-        }
-      },
-      {
-        "id": "step-2",
-        "action": "fill",
-        "label": "Fill \"user@email.com\"",
-        "config": {
-          "locator": {
-            "method": "getByLabel",
-            "value": "E-mail",
-            "exact": true
-          },
-          "text": "user@email.com",
-          "clearFirst": false
-        }
-      },
-      {
-        "id": "step-3",
-        "action": "click",
-        "label": "Click \"Entrar\"",
-        "config": {
-          "locator": {
-            "method": "getByRole",
-            "value": "button",
-            "name": "Entrar",
-            "exact": false
-          }
-        }
-      }
-    ]
-  }
-}
-```
-
-> **Key differences:** In Smart Locators mode, the `type` action is converted to `fill`, `select` to `selectOption`, and CSS selectors are replaced by semantic locators (`locator` instead of `selectorStrategies`).
+Smart Web Flow JSON may include extra identity, context, expected-effect, and evidence fields. These fields help execution. In the UI, users usually only enable or disable expected-effect usage for the step.
 
 ---
 
 ## Recommended Workflow
 
 ```
-1. Choose the recorder mode (Web Flow or Smart Locators)
+1. Choose the recorder mode, preferably Smart Web Flow for new flows
 2. Record the interaction with the extension
 3. Paste into QANode (Ctrl+V)
-4. Review the generated steps
-5. Add waits where necessary (the extension does not record waits)
-6. Add asserts for validations (or record with Ctrl+A)
-7. Adjust selectors/locators if necessary
-8. Configure screenshots for critical steps
-9. Save and execute
+4. Review generated steps
+5. Review expected effects and scoped text when present
+6. Add waits where needed
+7. Add assertions for validations
+8. Adjust selectors/locators if necessary
+9. Configure screenshots for critical steps
+10. Save and execute
 ```
 
 ---
 
 ## Limitations
 
-- **Chrome only** — does not work in other browsers
-- **No automatic waits** — add them manually in QANode
-- **Sites with strict CSP** — may block content script injection
-- **Cross-origin iFrames** — may not be accessible
+- **Chrome only** — does not work in other browsers.
+- **Not every wait is automatic** — review waits in slow pages, grids, and API-driven loading.
+- **Strict CSP sites** may block content script injection.
+- **Cross-origin iframes** may not be accessible.
 
 ---
 
 ## Tips
 
-- **Choose the right mode** — use Smart Locators for accessible sites, Web Flow for sites with stable CSS selectors
-- **Record simple actions** and refine in QANode
-- **Use Ctrl+A** (assert) during recording at verification checkpoints
-- **Use Ctrl+E** (extract) to capture a single value from an element
-- **Use Ctrl+Shift+E** (extract list) to capture data from repeated elements such as tables and card lists
-- **Add waits** in QANode for elements that take time to load
-- **Review the selectors** — in Web Flow mode, prefer `data-testid`; in Smart Locators mode, prefer `getByRole` or `getByLabel`
-- **Record in segments** — for long flows, record in parts and combine in QANode
+- Use **Smart Web Flow** for new flows, **Smart Locators** for semantic legacy flows, and **Web Flow** for traditional CSS/XPath selectors.
+- Record simple actions and refine in QANode.
+- Use **Ctrl+A** for verification points.
+- Use **Ctrl+E** for single-value extraction.
+- Use **Ctrl+Shift+E** for repeated elements such as tables and card lists.
+- Use **Ctrl+Alt+W** when an element must appear before the next step.
+- Use **Ctrl+Alt+T** for tables and grids in Smart Web Flow.
+- Review **Scoped Text** in rows, cards, and lists.
+- Prefer `data-testid`, `data-qa`, `aria-label`, and accessible names when you can influence the application.

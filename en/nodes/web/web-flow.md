@@ -2,7 +2,7 @@
 
 The **Web Flow** node allows you to automate interactions with web pages using **CSS selectors, XPath, data-testid, and text**. It is ideal when you need traditional selectors and detailed control over element location.
 
-> **Tip:** If you prefer semantic locators based on accessibility (getByRole, getByLabel, etc.), use the [Smart Locators](smart-locators.md) node.
+> **Tip:** For new web flows recorded by the extension, prefer [Smart Web Flow](smart-web-flow.md). If you prefer semantic locators based on accessibility (getByRole, getByLabel, etc.) in legacy flows, use the [Smart Locators](smart-locators.md) node.
 
 ---
 
@@ -77,7 +77,7 @@ Uses real Playwright device profiles (viewport, user agent, pixel scale ratio, t
 ### Session Mode
 
 - **New Session (`new`)**: Opens a new browser for each execution. Ideal for isolated tests.
-- **Reuse Session (`reuse`)**: Uses a browser session already opened by another Web Flow/Smart Locators node. Useful for splitting long tests into multiple nodes while keeping the same browser and cookies.
+- **Reuse Session (`reuse`)**: Uses a browser session already opened by another compatible web node. Useful for splitting long tests into multiple nodes while keeping the same browser and cookies.
 
 ### Storage Strategy
 
@@ -158,6 +158,7 @@ The Web Flow node executes a sequence of configurable **steps**. Each step repre
 | Action | Color | Description |
 |--------|-------|-------------|
 | [navigate](#navigate) | Blue | Navigate to a URL |
+| [switchPage](#switchpage) | Purple | Switch to another page or tab |
 | [click](#click) | Yellow | Click on an element |
 | [type](#type) | Green | Type text into a field |
 | [drag](#drag) | Rose | Drag and drop |
@@ -211,6 +212,31 @@ Navigates to a specific URL.
 URL: https://mysite.com/login
 URL: {{ variables.BASE_URL }}/dashboard
 ```
+
+---
+
+### switchPage
+
+Switches the active page when automation needs to continue in another tab or window opened by the browser.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| **Mode** | `string` | How to choose the tab: last opened, next, previous, or by match |
+| **URL contains** | `string` | Optional URL fragment used to find the tab |
+| **Title contains** | `string` | Optional page title fragment |
+| **Wait Until** | `string` | Loading event expected after switching |
+| **Timeout (ms)** | `number` | Maximum time to find/load the tab |
+
+**Modes:**
+
+| Mode | Description |
+|------|-------------|
+| `last` | Uses the last tab opened in the browser context |
+| `next` | Uses the next tab relative to the current one |
+| `previous` | Uses the previous tab relative to the current one |
+| `match` | Finds a tab by URL and/or title fragment |
+
+When the extension detects a click that opens a new tab, it can record this step automatically right after the click. This prevents the next steps from trying to run in the old tab.
 
 ---
 

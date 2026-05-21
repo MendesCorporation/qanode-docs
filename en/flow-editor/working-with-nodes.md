@@ -23,7 +23,25 @@ You can also paste nodes copied from the **Chrome Recorder** (extension):
 
 1. In the Chrome Recorder, click **Copy JSON**
 2. In the flow editor, press **Ctrl+V**
-3. The Web Flow node will be added with all recorded steps
+3. The node matching the selected recorder mode will be added with all recorded steps
+
+QANode Recorder can generate **Smart Web Flow**, **Web Flow**, or **Smart Locators** nodes, depending on the mode selected in the extension.
+
+---
+
+### Adding Reusable Components
+
+When published components exist, the scenario editor displays the **Components** tab in the side palette.
+
+1. Open the **Components** tab.
+2. Search by name or category.
+3. Drag the component to the canvas.
+4. Connect it like a regular node.
+5. Fill the input fields in the properties panel.
+
+Components are useful for reusing blocks such as login, test-data setup, helper queries, or shared validations.
+
+> To create, test, and publish components, see [Reusable Components](../components/overview.md).
 
 ---
 
@@ -95,7 +113,7 @@ This allows nodes to use data produced by previous nodes. For example:
 
 Some nodes support **multiple internal steps**, making them more powerful:
 
-### Web Flow and Smart Locators
+### Smart Web Flow, Web Flow, and Smart Locators
 
 These nodes allow you to add several web automation steps within a single node:
 
@@ -111,6 +129,18 @@ You can:
 - **Expand/Collapse** steps to see details
 - **Remove** steps by clicking the trash icon
 - **Configure evidence** (screenshots) individually per step
+- **Copy only one step** from the context menu
+- **Paste the step above or below** another compatible step
+
+> **Tip:** Step copy/paste respects the node type. A step copied from Smart Web Flow should only be pasted into another Smart Web Flow, preventing incompatible formats from being mixed.
+
+### Smart Web Flow
+
+**Smart Web Flow** is the recommended node for new web automations. It stores more context per step, including locators, alternative selectors, target identity, scoped text, expected effects, and recording metadata.
+
+Use it mainly when the flow was created by the Chrome extension or when the application has dynamic components such as menus, modals, iframes, grids, tables, cards, and drag/drop.
+
+For full details, see [Smart Web Flow Node](../nodes/web/smart-web-flow.md).
 
 ### SSH Command
 
@@ -161,7 +191,7 @@ The visual builder mode is more user-friendly and does not require knowledge of 
 
 ## Nodes with Visual Query Builder
 
-Database nodes (PostgreSQL, MySQL, etc.) offer a **visual query builder** in addition to the direct SQL option:
+Database nodes (PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, etc.) offer a **visual query builder** in addition to the direct SQL option:
 
 ### Available Presets
 

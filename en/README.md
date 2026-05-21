@@ -25,6 +25,14 @@ Welcome to the official documentation of **QANode Community Edition**, the test 
 
 ---
 
+## Components
+
+| Page | Description |
+|------|-------------|
+| [Reusable Components](components/overview.md) | Create, publish, and use subflows with inputs and outputs |
+
+---
+
 ## Node Reference
 
 ### Flow Control
@@ -38,6 +46,7 @@ Welcome to the official documentation of **QANode Community Edition**, the test 
 ### Web
 | Node | Description |
 |------|-------------|
+| [Smart Web Flow](nodes/web/smart-web-flow.md) | Recommended web automation with smart recording, context, expected checks, and assisted recovery |
 | [Web Flow](nodes/web/web-flow.md) | Web automation with multiple steps and CSS/XPath selectors |
 | [Smart Locators](nodes/web/smart-locators.md) | Web automation with Playwright semantic locators |
 
@@ -58,6 +67,7 @@ Welcome to the official documentation of **QANode Community Edition**, the test 
 | [PostgreSQL](nodes/database/postgresql.md) | Queries and operations on PostgreSQL |
 | [MySQL](nodes/database/mysql.md) | Queries and operations on MySQL |
 | [MariaDB](nodes/database/mariadb.md) | Queries and operations on MariaDB |
+| [SQL Server](nodes/database/sql-server.md) | Queries and operations on Microsoft SQL Server |
 | [Oracle](nodes/database/oracle.md) | Queries and operations on Oracle |
 | [MongoDB](nodes/database/mongodb.md) | Operations on MongoDB (find, insert, update, etc.) |
 

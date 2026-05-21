@@ -28,9 +28,9 @@ The top bar contains:
 The palette displays all available nodes organized by category:
 
 - **Flow Control** — If, Switch, Loop, Merge
-- **Web** — Web Flow, Smart Locators
+- **Web** — Smart Web Flow, Web Flow, Smart Locators
 - **API** — HTTP Request
-- **Database** — PostgreSQL, MySQL, MariaDB, Oracle, MongoDB
+- **Database** — PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, MongoDB
 - **Infrastructure** — SSH Command
 - **Utilities** — Set Variable, Log, Wait, Stop and Fail, Custom JavaScript
 - **Custom Nodes** — Nodes from registered providers (if any)
@@ -52,6 +52,8 @@ The canvas is the workspace where you position and connect nodes. Features:
 | **Connect nodes** | Drag from an output handle (●) to an input handle (●) |
 | **Remove connection** | Click on the connection and press Delete |
 | **Paste flow** | Ctrl+V with copied flow JSON (e.g., from the Chrome Recorder) |
+| **Add annotation** | Right-click the canvas or press Shift+A |
+| **Copy/paste node or annotation** | Select the item and use Ctrl+C / Ctrl+V |
 
 ### 4. Properties Panel (Right Side)
 
@@ -116,9 +118,25 @@ After a run, nodes display status indicators:
 | `Ctrl+S` | Save flow |
 | `Delete` / `Backspace` | Delete selected node or connection |
 | `Ctrl+C` | Copy node |
-| `Ctrl+V` | Paste node (JSON from Chrome Recorder) |
+| `Ctrl+V` | Paste node, annotation, or JSON from Chrome Recorder |
 | `Ctrl+Z` | Undo |
 | `Ctrl+Shift+Z` | Redo |
+| `Shift+A` | Create a canvas annotation |
+
+### Canvas Annotations
+
+**Annotations** help document parts of the flow directly on the canvas. Use them to explain preconditions, business rules, logical groups, pending work, or notes for the team.
+
+Annotations support:
+
+- free text;
+- simple Markdown-style formatting;
+- colors;
+- resizing;
+- dragging and positioning on the canvas;
+- copy, paste, duplicate, and delete.
+
+You can create an annotation from the canvas context menu or with `Shift+A`.
 
 ---
 

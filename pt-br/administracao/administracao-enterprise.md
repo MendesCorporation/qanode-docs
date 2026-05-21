@@ -163,6 +163,16 @@ Ao criar ou editar um papel, o campo **Visão de Tabelas** define quais tabelas 
 | `credential.edit` | Editar credenciais |
 | `credential.delete` | Excluir credenciais |
 
+#### Componentes
+| Permissão | Descrição |
+|-----------|-----------|
+| `component.view` | Visualizar componentes reutilizáveis |
+| `component.create` | Criar e editar componentes próprios |
+| `component.edit` | Editar componentes criados por outros usuários |
+| `component.delete.own` | Excluir componentes próprios |
+| `component.delete` | Excluir qualquer componente |
+| `component.publish` | Publicar componentes para uso em cenários |
+
 #### Provedores
 | Permissão | Descrição |
 |-----------|-----------|

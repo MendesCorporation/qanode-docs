@@ -2,7 +2,7 @@
 
 O nó **Smart Locators** permite automatizar interações com páginas web usando **localizadores semânticos do Playwright** — baseados em roles ARIA, labels, placeholders e outros atributos de acessibilidade. Esta abordagem é mais resiliente que seletores CSS, pois reflete como os usuários realmente encontram elementos na página.
 
-> **Dica:** Se preferir seletores CSS e XPath tradicionais, use o nó [Web Flow](web-flow.md).
+> **Dica:** Para fluxos web novos gravados pela extensão, prefira o [Smart Web Flow](smart-web-flow.md). Se preferir seletores CSS e XPath tradicionais em fluxos legados, use o nó [Web Flow](web-flow.md).
 
 ---
 
@@ -170,6 +170,7 @@ Equivale ao Playwright: `page.getByRole('button', { name: 'Entrar' })`
 | Ação | Cor | Descrição |
 |------|-----|-----------|
 | [navigate](#navigate) | 🔵 | Navegar para URL |
+| [switchPage](#switchpage) | 🟣 | Trocar para outra página ou aba |
 | [click](#click) | 🟡 | Clicar em elemento |
 | [dblclick](#dblclick) | 🟡 | Duplo clique |
 | [fill](#fill) | 🟢 | Preencher campo (instantâneo) |
@@ -206,6 +207,31 @@ Navega para uma URL.
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
 | **URL** | `string` | URL de destino (suporta `{{ }}`) |
+
+---
+
+### switchPage
+
+Troca a página ativa da sessão quando um clique, link ou ação abre uma nova aba/janela e os próximos passos precisam continuar nela.
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| **Modo** | `string` | Última aba aberta, próxima, anterior ou busca por URL/título |
+| **URL contém** | `string` | Trecho opcional da URL para localizar a aba |
+| **Título contém** | `string` | Trecho opcional do título da página |
+| **Aguardar Até** | `string` | Evento de carregamento esperado após a troca |
+| **Timeout (ms)** | `number` | Tempo máximo para localizar/carregar a aba |
+
+**Modos:**
+
+| Modo | Descrição |
+|------|-----------|
+| `last` | Usa a última aba aberta |
+| `next` | Usa a próxima aba em relação à aba atual |
+| `previous` | Usa a aba anterior |
+| `match` | Procura por trecho de URL e/ou título |
+
+Quando a extensão identifica links que abrem nova aba, ela pode inserir este passo automaticamente. Em fluxos manuais, adicione `switchPage` depois do click que abre a aba.
 
 ---
 

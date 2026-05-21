@@ -105,6 +105,23 @@ Mesmos campos do MySQL.
 
 ---
 
+### SQL Server
+
+| Campo | Descrição |
+|-------|-----------|
+| **Nome** | Nome da credencial |
+| **Host** | Endereço do servidor |
+| **Porta** | Porta (padrão: 1433) |
+| **Banco de Dados** | Nome do database |
+| **Usuário** | Usuário de conexão |
+| **Senha** | Senha de conexão |
+| **Encrypt** | Usar conexão criptografada |
+| **Trust Server Certificate** | Aceitar certificado do servidor sem validação completa |
+
+Use `Encrypt` quando o servidor exigir conexão criptografada. Em ambientes internos com certificado próprio ou autoassinado, `Trust Server Certificate` pode ser necessário.
+
+---
+
 ### Oracle
 
 | Campo | Descrição |
@@ -205,7 +222,7 @@ Antes de usar uma credencial, teste a conexão:
 
 ### Em Nós de Banco de Dados
 
-No nó PostgreSQL, MySQL, MariaDB, Oracle ou MongoDB:
+No nó PostgreSQL, MySQL, MariaDB, SQL Server, Oracle ou MongoDB:
 
 1. No campo **Credencial**, selecione a credencial
 2. Os campos de conexão são preenchidos automaticamente

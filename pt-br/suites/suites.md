@@ -175,7 +175,7 @@ Cada cenário individual também possui seu resultado detalhado (logs, screensho
 
 ## Alarmes
 
-Você pode configurar **alarmes** para ser notificado quando suítes falham. Veja a seção de [Administração](../administracao/administracao.md) para configurar alarmes.
+Você pode configurar **alarmes** para ser notificado quando suítes falham. Veja a seção de [Administração](../administracao/administracao-enterprise.md) para configurar alarmes.
 
 ---
 

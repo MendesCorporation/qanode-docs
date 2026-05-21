@@ -9,12 +9,13 @@
 QANode fue diseñado para equipos de QA, desarrolladores e ingenieros de pruebas que necesitan una herramienta moderna y visual para la automatización de pruebas. La plataforma cubre las principales áreas de prueba:
 
 ### Automatización Web
-Prueba interfaces de usuario usando **Playwright**, el framework de automatización más moderno del mercado. QANode ofrece dos nodos especializados:
+Prueba interfaces de usuario usando **Playwright**, el framework de automatización más moderno del mercado. QANode ofrece nodos especializados para diferentes niveles de control:
 
+- **Smart Web Flow** — Automatización web recomendada, con grabación inteligente, contexto, validaciones y recuperación asistida
 - **Web Flow** — Automatización basada en selectores CSS, XPath, data-testid y texto
 - **Smart Locators** — Automatización con localizadores semánticos (`getByRole`, `getByLabel`, `getByPlaceholder`, etc.)
 
-Ambos soportan Chromium, modo headless, captura de capturas de pantalla y reutilización de sesión.
+Soportan Chromium, modo headless, captura de pantalla, reutilización de sesión y grabación por la extensión Chrome.
 
 ### Pruebas de API
 Ejecuta solicitudes HTTP con soporte completo para:
@@ -25,8 +26,11 @@ Ejecuta solicitudes HTTP con soporte completo para:
 
 ### Base de Datos
 Conéctate y valida datos en:
-- **PostgreSQL**, **MySQL**, **MariaDB**, **Oracle** — con query builder visual o SQL directo
+- **PostgreSQL**, **MySQL**, **MariaDB**, **SQL Server**, **Oracle** — con query builder visual o SQL directo
 - **MongoDB** — con operaciones find, insert, update, delete y aggregation pipeline
+
+### Componentes Reutilizables
+Crea subflujos con entradas y salidas para reutilizar lógicas comunes en varios escenarios, como login, preparación de datos, validaciones compartidas o consultas auxiliares.
 
 ### Infraestructura
 Ejecuta comandos remotos vía **SSH** con soporte para múltiples pasos, autenticación por contraseña o clave privada, y captura de salida.
@@ -42,6 +46,7 @@ Crea **nodos personalizados** en cualquier lenguaje de programación (Node.js, P
 |---------|-------------|
 | **Editor Visual** | Canvas interactivo con arrastrar y conectar nodos |
 | **18+ Nodos Nativos** | Control de flujo, web, API, base de datos, infraestructura y utilidades |
+| **Componentes Reutilizables** | Subflujos con contrato de entrada y salida para reducir repetición |
 | **Nodos Personalizados** | Extensible con proveedores HTTP en cualquier lenguaje |
 | **Proyectos y Suites** | Organiza pruebas en proyectos y agrúpalas en suites |
 | **Programación** | Ejecuta pruebas automáticamente con expresiones cron |

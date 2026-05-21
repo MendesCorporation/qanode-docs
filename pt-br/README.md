@@ -25,6 +25,14 @@ Bem-vindo à documentação oficial do **QANode**, a plataforma de automação d
 
 ---
 
+## Componentes
+
+| Página | Descrição |
+|--------|-----------|
+| [Componentes Reutilizáveis](componentes/visao-geral.md) | Criação, publicação e uso de subfluxos com entradas e saídas |
+
+---
+
 ## Referência de Nós
 
 ### Controle de Fluxo
@@ -38,6 +46,7 @@ Bem-vindo à documentação oficial do **QANode**, a plataforma de automação d
 ### Web
 | Nó | Descrição |
 |----|-----------|
+| [Smart Web Flow](nos/web/smart-web-flow.md) | Automação web recomendada, com gravação inteligente, contexto, validações e recuperação assistida |
 | [Web Flow](nos/web/web-flow.md) | Automação web com múltiplos passos e seletores CSS/XPath |
 | [Smart Locators](nos/web/smart-locators.md) | Automação web com localizadores semânticos do Playwright |
 
@@ -58,6 +67,7 @@ Bem-vindo à documentação oficial do **QANode**, a plataforma de automação d
 | [PostgreSQL](nos/banco-dados/postgresql.md) | Consultas e operações no PostgreSQL |
 | [MySQL](nos/banco-dados/mysql.md) | Consultas e operações no MySQL |
 | [MariaDB](nos/banco-dados/mariadb.md) | Consultas e operações no MariaDB |
+| [SQL Server](nos/banco-dados/sql-server.md) | Consultas e operações no Microsoft SQL Server |
 | [Oracle](nos/banco-dados/oracle.md) | Consultas e operações no Oracle |
 | [MongoDB](nos/banco-dados/mongodb.md) | Operações no MongoDB (find, insert, update, etc.) |
 
@@ -90,7 +100,7 @@ Bem-vindo à documentação oficial do **QANode**, a plataforma de automação d
 | [Visão Geral](nos-customizados/visao-geral.md) | Como funciona o sistema de provedores |
 | [Criando um Provedor - Enterprise](nos-customizados/criando-provedor-enterprise.md) | Passo a passo para criar um provedor HTTP |
 | [Contrato da API](nos-customizados/contrato-api.md) | Endpoints obrigatórios e formato de dados |
-| [Exemplos](nos-customizados/exemplos.md) | Exemplos em Node.js, Python, Java, C# e Go |
+| [Exemplos](nos-customizados/exemplos-enterprise.md) | Exemplos em Node.js, Python, Java, C# e Go |
 | [Desktop: Nós Locais](nos-customizados/nos-locais-desktop.md) | Criando nós locais na versão desktop |
 | [QANode.MD (IA)](nos-customizados/QANode.MD) | Guia para IA criar nós e diagnosticar problemas |
 

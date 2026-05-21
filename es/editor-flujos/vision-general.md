@@ -28,9 +28,9 @@ La barra superior contiene:
 La paleta muestra todos los nodos disponibles organizados por categoría:
 
 - **Control de Flujo** — If, Switch, Loop, Merge
-- **Web** — Web Flow, Smart Locators
+- **Web** — Smart Web Flow, Web Flow, Smart Locators
 - **API** — HTTP Request
-- **Base de Datos** — PostgreSQL, MySQL, MariaDB, Oracle, MongoDB
+- **Base de Datos** — PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, MongoDB
 - **Infraestructura** — SSH Command
 - **Utilidades** — Set Variable, Log, Wait, Stop and Fail, Custom JavaScript
 - **Nodos Personalizados** — Nodos de proveedores registrados (si los hay)
@@ -52,6 +52,8 @@ El canvas es el área de trabajo donde posicionas y conectas los nodos. Funciona
 | **Conectar nodos** | Arrastra desde un handle de salida (●) hacia un handle de entrada (●) |
 | **Eliminar conexión** | Haz clic en la conexión y presiona Delete |
 | **Pegar flujo** | Ctrl+V con JSON de flujo copiado (p. ej., del Grabador de Chrome) |
+| **Agregar anotación** | Haz clic derecho en el canvas o presiona Shift+A |
+| **Copiar/pegar nodo o anotación** | Selecciona el elemento y usa Ctrl+C / Ctrl+V |
 
 ### 4. Panel de Propiedades (Lado Derecho)
 
@@ -116,9 +118,25 @@ Después de una ejecución, los nodos muestran indicadores de estado:
 | `Ctrl+S` | Guardar flujo |
 | `Delete` / `Backspace` | Eliminar nodo o conexión seleccionada |
 | `Ctrl+C` | Copiar nodo |
-| `Ctrl+V` | Pegar nodo (JSON del Grabador de Chrome) |
+| `Ctrl+V` | Pegar nodo, anotación o JSON del Grabador de Chrome |
 | `Ctrl+Z` | Deshacer |
 | `Ctrl+Shift+Z` | Rehacer |
+| `Shift+A` | Crear anotación en el canvas |
+
+### Anotaciones en el Canvas
+
+Las **anotaciones** ayudan a documentar partes del flujo directamente en el canvas. Úselas para explicar precondiciones, reglas de negocio, agrupaciones lógicas, pendientes u observaciones importantes para el equipo.
+
+Las anotaciones soportan:
+
+- texto libre;
+- formato simple estilo Markdown;
+- colores;
+- redimensionamiento;
+- arrastrar y posicionar en el canvas;
+- copiar, pegar, duplicar y eliminar.
+
+Puede crear una anotación desde el menú contextual del canvas o con `Shift+A`.
 
 ---
 

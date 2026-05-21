@@ -23,7 +23,25 @@ También puedes pegar nodos copiados del **Grabador de Chrome** (extensión):
 
 1. En el Grabador de Chrome, haz clic en **Copiar JSON**
 2. En el editor de flujos, presiona **Ctrl+V**
-3. El nodo Web Flow se agregará con todos los pasos grabados
+3. El nodo correspondiente al modo del recorder se agregará con todos los pasos grabados
+
+QANode Recorder puede generar nodos **Smart Web Flow**, **Web Flow** o **Smart Locators**, según el modo seleccionado en la extensión.
+
+---
+
+### Agregar Componentes Reutilizables
+
+Cuando existen componentes publicados, el editor de escenarios muestra la pestaña **Componentes** en la paleta lateral.
+
+1. Abra la pestaña **Componentes**.
+2. Busque por nombre o categoría.
+3. Arrastre el componente al canvas.
+4. Conéctelo como un nodo común.
+5. Complete los campos de entrada en el panel de propiedades.
+
+Los componentes son útiles para reutilizar bloques como login, preparación de datos, consultas auxiliares o validaciones compartidas.
+
+> Para crear, probar y publicar componentes, vea [Componentes Reutilizables](../componentes/vision-general.md).
 
 ---
 
@@ -95,7 +113,7 @@ Esto permite que los nodos usen datos producidos por nodos anteriores. Por ejemp
 
 Algunos nodos admiten **múltiples pasos internos**, haciéndolos más potentes:
 
-### Web Flow y Smart Locators
+### Smart Web Flow, Web Flow y Smart Locators
 
 Estos nodos permiten agregar varios pasos de automatización web dentro de un único nodo:
 
@@ -111,6 +129,18 @@ Puedes:
 - **Expandir/Contraer** pasos para ver detalles
 - **Eliminar** pasos haciendo clic en el ícono de papelera
 - **Configurar evidencias** (capturas de pantalla) individualmente por paso
+- **Copiar solo un paso** por el menú de contexto
+- **Pegar el paso arriba o abajo** de otro paso compatible
+
+> **Consejo:** Copiar/pegar pasos respeta el tipo del nodo. Un paso copiado de Smart Web Flow solo debe pegarse en otro Smart Web Flow, evitando mezclar formatos incompatibles.
+
+### Smart Web Flow
+
+**Smart Web Flow** es el nodo recomendado para nuevas automatizaciones web. Guarda más contexto por paso, incluyendo localizadores, selectores alternativos, identidad del objetivo, texto de alcance, efectos esperados y metadatos de grabación.
+
+Úselo principalmente cuando el flujo fue creado por la extensión Chrome o cuando la aplicación tiene componentes dinámicos como menús, modales, iframes, grids, tablas, cards y drag/drop.
+
+Para detalles completos, vea [Nodo Smart Web Flow](../nodos/web/smart-web-flow.md).
 
 ### SSH Command
 
@@ -161,7 +191,7 @@ El modo constructor visual es más amigable y no requiere conocimientos de JavaS
 
 ## Nodos con Constructor de Consultas Visual
 
-Los nodos de base de datos (PostgreSQL, MySQL, etc.) ofrecen un **constructor de consultas visual** además de la opción de SQL directo:
+Los nodos de base de datos (PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, etc.) ofrecen un **constructor de consultas visual** además de la opción de SQL directo:
 
 ### Presets Disponibles
 

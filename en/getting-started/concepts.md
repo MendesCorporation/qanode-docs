@@ -18,6 +18,10 @@ Projects
 │       ├── Logs
 │       ├── Screenshots
 │       └── PDF Report
+├── Components
+│   ├── Input Contract
+│   ├── Reusable Flow
+│   └── Output Contract
 └── Suites
     ├── Ordered Scenarios
     ├── Scheduling (Cron)
@@ -67,9 +71,9 @@ In this example, each box is a node and the arrows represent connections indicat
 | Category | Color | Nodes |
 |----------|-------|-------|
 | **Flow Control** | 🟡 Yellow | If, Switch, Loop, Merge |
-| **Web** | 🔵 Blue | Web Flow, Smart Locators |
+| **Web** | 🔵 Blue | Smart Web Flow, Web Flow, Smart Locators |
 | **API** | 🟣 Purple | HTTP Request |
-| **Database** | 🟢 Green | PostgreSQL, MySQL, MariaDB, Oracle, MongoDB |
+| **Database** | 🟢 Green | PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, MongoDB |
 | **Infrastructure** | 🔵 Light Blue | SSH Command |
 | **Utilities** | ⚪ Gray | Set Variable, Log, Wait, Stop and Fail, Custom JavaScript |
 | **Custom Nodes** | 🩷 Pink | Nodes from external providers |
@@ -100,6 +104,23 @@ When a node is executed, it produces **outputs** — data that can be used by su
 ```
 
 > For full details, see the [Expressions](../expressions/expressions.md) documentation.
+
+---
+
+## Reusable Components
+
+A **component** is a reusable flow with an input and output contract. It lets you encapsulate a sequence that appears in several scenarios, such as login, test-data setup, common validation, or a helper query.
+
+Components have:
+
+- **Input**: fields the scenario must provide;
+- **Internal flow**: nodes executed inside the component;
+- **Output**: value returned to the scenario;
+- **Status**: draft or published.
+
+After publishing, the component appears in the scenario editor palette and can be dragged to the canvas like a regular node.
+
+> For details, see [Reusable Components](../components/overview.md).
 
 ---
 
@@ -180,7 +201,7 @@ Access variables in your flows with: `{{ variables.variableName }}`
 **Credentials** store connection information securely and centrally. Supported types:
 
 - **HTTP/API** — Base URL, authentication, headers
-- **PostgreSQL**, **MySQL**, **MariaDB**, **Oracle** — Database connection data
+- **PostgreSQL**, **MySQL**, **MariaDB**, **SQL Server**, **Oracle** — Database connection data
 - **MongoDB** — URI or connection data
 - **SSH** — Host, user, password, or private key
 

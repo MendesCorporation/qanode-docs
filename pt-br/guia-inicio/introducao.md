@@ -9,12 +9,13 @@ O **QANode** é uma plataforma de automação de testes que permite criar, execu
 O QANode foi projetado para equipes de QA, desenvolvedores e engenheiros de teste que precisam de uma ferramenta moderna e visual para automação de testes. A plataforma cobre as principais áreas de teste:
 
 ### Automação Web
-Teste interfaces de usuário usando o **Playwright**, o framework de automação mais moderno do mercado. O QANode oferece dois nós especializados:
+Teste interfaces de usuário usando o **Playwright**, o framework de automação mais moderno do mercado. O QANode oferece nós especializados para diferentes níveis de controle:
 
+- **Smart Web Flow** — Automação web recomendada, com gravação inteligente, contexto, validações e recuperação assistida
 - **Web Flow** — Automação baseada em seletores CSS, XPath, data-testid e texto
 - **Smart Locators** — Automação com localizadores semânticos (`getByRole`, `getByLabel`, `getByPlaceholder`, etc.)
 
-Ambos suportam o chromium, modo headless, captura de screenshots e reuso de sessão.
+Eles suportam o Chromium, modo headless, captura de screenshots, reuso de sessão e gravação pela extensão Chrome.
 
 ### Testes de API
 Execute requisições HTTP com suporte completo a:
@@ -25,8 +26,11 @@ Execute requisições HTTP com suporte completo a:
 
 ### Banco de Dados
 Conecte-se e valide dados em:
-- **PostgreSQL**, **MySQL**, **MariaDB**, **Oracle** — com query builder visual ou SQL direto
+- **PostgreSQL**, **MySQL**, **MariaDB**, **SQL Server**, **Oracle** — com query builder visual ou SQL direto
 - **MongoDB** — com operações find, insert, update, delete e aggregation pipeline
+
+### Componentes Reutilizáveis
+Crie subfluxos com entradas e saídas para reaproveitar lógicas comuns em vários cenários, como login, preparação de massa, validações compartilhadas ou consultas auxiliares.
 
 ### Infraestrutura
 Execute comandos remotos via **SSH** com suporte a múltiplos passos, autenticação por senha ou chave privada, e captura de saída.
@@ -42,6 +46,7 @@ Crie **nós customizados** em qualquer linguagem de programação (Node.js, Pyth
 |---------|-----------|
 | **Editor Visual** | Canvas interativo com arrastar e conectar nós |
 | **18+ Nós Nativos** | Controle de fluxo, web, API, banco de dados, infra e utilitários |
+| **Componentes Reutilizáveis** | Subfluxos com contrato de entrada e saída para reduzir repetição |
 | **Nós Customizados** | Extensível com provedores HTTP em qualquer linguagem |
 | **Projetos e Suítes** | Organize testes em projetos e agrupe em suítes |
 | **Agendamento** | Execute testes automaticamente com expressões cron |

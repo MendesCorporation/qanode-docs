@@ -60,8 +60,10 @@ O nome usado em `steps` é o **identificador** do nó. Por padrão, todo nó usa
 | Postgres | `postgres-query` | `steps["postgres-query"]` |
 | MySQL | `mysql-query` | `steps["mysql-query"]` |
 | MariaDB | `mariadb-query` | `steps["mariadb-query"]` |
+| SQL Server | `sqlserver-query` | `steps["sqlserver-query"]` |
 | Oracle | `oracle-query` | `steps["oracle-query"]` |
 | MongoDB | `mongodb-query` | `steps["mongodb-query"]` |
+| Smart Web Flow | `smart-web-flow` | `steps["smart-web-flow"]` |
 | Web Flow | `web-flow` | `steps["web-flow"]` |
 | Smart Locators | `smart-locators` | `steps["smart-locators"]` |
 | SSH Command | `ssh-command` | `steps["ssh-command"]` |

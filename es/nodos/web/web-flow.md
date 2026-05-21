@@ -2,7 +2,7 @@
 
 El nodo **Web Flow** permite automatizar interacciones con páginas web usando **selectores CSS, XPath, data-testid y texto**. Es ideal cuando necesitas selectores tradicionales y control detallado sobre la localización de elementos.
 
-> **Consejo:** Si prefieres localizadores semánticos basados en accesibilidad (getByRole, getByLabel, etc.), usa el nodo [Smart Locators](smart-locators.md).
+> **Consejo:** Para flujos web nuevos grabados por la extensión, prefiera [Smart Web Flow](smart-web-flow.md). Si prefiere localizadores semánticos basados en accesibilidad (getByRole, getByLabel, etc.) en flujos legados, use el nodo [Smart Locators](smart-locators.md).
 
 ---
 
@@ -77,7 +77,7 @@ Usa perfiles reales de Playwright (viewport, user agent, escala de píxeles, tou
 ### Modo de Sesión
 
 - **Nueva Sesión (`new`)**: Abre un nuevo navegador para cada ejecución. Ideal para pruebas aisladas.
-- **Reutilizar Sesión (`reuse`)**: Usa una sesión de navegador ya abierta por otro nodo Web Flow/Smart Locators. Útil para dividir pruebas largas en múltiples nodos manteniendo el mismo navegador y cookies.
+- **Reutilizar Sesión (`reuse`)**: Usa una sesión de navegador ya abierta por otro nodo web compatible. Útil para dividir pruebas largas en múltiples nodos manteniendo el mismo navegador y cookies.
 
 ### Estrategia de Storage
 
@@ -158,6 +158,7 @@ El nodo Web Flow ejecuta una secuencia de **pasos** configurables. Cada paso rep
 | Acción | Color | Descripción |
 |--------|-------|-------------|
 | [navigate](#navigate) | Azul | Navegar a una URL |
+| [switchPage](#switchpage) | Morado | Cambiar a otra página o pestaña |
 | [click](#click) | Amarillo | Hacer clic en un elemento |
 | [type](#type) | Verde | Escribir texto en un campo |
 | [drag](#drag) | Rosa | Arrastrar y soltar |
@@ -211,6 +212,31 @@ Navega a una URL específica.
 URL: https://misitio.com/login
 URL: {{ variables.BASE_URL }}/dashboard
 ```
+
+---
+
+### switchPage
+
+Cambia la página activa cuando la automatización necesita continuar en otra pestaña o ventana abierta por el navegador.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| **Modo** | `string` | Cómo elegir la pestaña: última abierta, siguiente, anterior o por coincidencia |
+| **URL contiene** | `string` | Fragmento opcional de la URL para localizar la pestaña |
+| **Título contiene** | `string` | Fragmento opcional del título de la página |
+| **Esperar Hasta** | `string` | Evento de carga esperado después del cambio |
+| **Timeout (ms)** | `number` | Tiempo máximo para encontrar/cargar la pestaña |
+
+**Modos:**
+
+| Modo | Descripción |
+|------|-------------|
+| `last` | Usa la última pestaña abierta en el contexto del navegador |
+| `next` | Usa la siguiente pestaña en relación con la actual |
+| `previous` | Usa la pestaña anterior en relación con la actual |
+| `match` | Busca una pestaña por fragmento de URL y/o título |
+
+Cuando la extensión detecta un clic que abre nueva pestaña, puede grabar este paso automáticamente justo después del click. Esto evita que los próximos pasos intenten ejecutarse en la pestaña anterior.
 
 ---
 

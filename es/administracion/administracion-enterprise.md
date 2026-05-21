@@ -163,6 +163,16 @@ Al crear o editar un rol, el campo **Vista de Tablas** define qué tablas de la 
 | `credential.edit` | Editar credenciales |
 | `credential.delete` | Eliminar credenciales |
 
+#### Componentes
+| Permiso | Descripción |
+|---------|-------------|
+| `component.view` | Ver componentes reutilizables |
+| `component.create` | Crear y editar componentes propios |
+| `component.edit` | Editar componentes creados por otros usuarios |
+| `component.delete.own` | Eliminar componentes propios |
+| `component.delete` | Eliminar cualquier componente |
+| `component.publish` | Publicar componentes para uso en escenarios |
+
 #### Proveedores
 | Permiso | Descripción |
 |---------|-------------|

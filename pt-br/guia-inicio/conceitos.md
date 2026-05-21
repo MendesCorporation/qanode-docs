@@ -18,6 +18,10 @@ Projetos
 │       ├── Logs
 │       ├── Screenshots
 │       └── Relatório PDF
+├── Componentes
+│   ├── Contrato de Entrada
+│   ├── Fluxo Reutilizável
+│   └── Contrato de Saída
 └── Suítes
     ├── Cenários ordenados
     ├── Agendamento (Cron)
@@ -67,9 +71,9 @@ Neste exemplo, cada caixa é um nó e as setas representam conexões indicando o
 | Categoria | Cor | Nós |
 |-----------|-----|-----|
 | **Controle de Fluxo** | 🟡 Amarelo | If, Switch, Loop, Merge |
-| **Web** | 🔵 Azul | Web Flow, Smart Locators |
+| **Web** | 🔵 Azul | Smart Web Flow, Web Flow, Smart Locators |
 | **API** | 🟣 Roxo | HTTP Request |
-| **Banco de Dados** | 🟢 Verde | PostgreSQL, MySQL, MariaDB, Oracle, MongoDB |
+| **Banco de Dados** | 🟢 Verde | PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, MongoDB |
 | **Infraestrutura** | 🔵 Azul Claro | SSH Command |
 | **Utilitários** | ⚪ Cinza | Set Variable, Log, Wait, Stop and Fail, Custom JavaScript |
 | **Nós Customizados** | 🩷 Rosa | Nós de provedores externos |
@@ -100,6 +104,23 @@ Quando um nó é executado, ele produz **outputs** — dados que podem ser usado
 ```
 
 > Para detalhes completos, veja a documentação de [Expressões](../expressoes/expressoes.md).
+
+---
+
+## Componentes Reutilizáveis
+
+Um **componente** é um fluxo reutilizável com contrato de entrada e saída. Ele permite encapsular uma sequência que aparece em vários cenários, como login, preparação de massa, validação comum ou consulta auxiliar.
+
+Componentes possuem:
+
+- **Input**: campos que o cenário precisa informar;
+- **Fluxo interno**: nós executados dentro do componente;
+- **Output**: valor retornado ao cenário;
+- **Status**: rascunho ou publicado.
+
+Depois de publicado, o componente aparece na paleta do editor de cenários e pode ser arrastado para o canvas como um nó comum.
+
+> Para detalhes, veja [Componentes Reutilizáveis](../componentes/visao-geral.md).
 
 ---
 
@@ -180,7 +201,7 @@ Acesse variáveis nos seus fluxos com: `{{ variables.nomeVariavel }}`
 **Credenciais** armazenam informações de conexão de forma segura e centralizada. Tipos suportados:
 
 - **HTTP/API** — URL base, autenticação, headers
-- **PostgreSQL**, **MySQL**, **MariaDB**, **Oracle** — Dados de conexão ao banco
+- **PostgreSQL**, **MySQL**, **MariaDB**, **SQL Server**, **Oracle** — Dados de conexão ao banco
 - **MongoDB** — URI ou dados de conexão
 - **SSH** — Host, usuário, senha ou chave privada
 

@@ -102,7 +102,7 @@ O relatório inclui automaticamente uma linha de métricas de defeitos.
 
 O relatório PDF será enviado como **anexo** do e-mail.
 
-> **Requisito:** O SMTP deve estar configurado em Configurações para envio de e-mails. Veja [Administração](../administracao/administracao.md).
+> **Requisito:** O SMTP deve estar configurado em Configurações para envio de e-mails. Veja [Administração](../administracao/administracao-enterprise.md).
 
 > **Idioma do relatório:** O PDF e o e-mail são gerados no idioma configurado na interface do usuário que faz o download ou o envio.
 

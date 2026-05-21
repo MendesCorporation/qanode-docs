@@ -18,6 +18,10 @@ Proyectos
 │       ├── Logs
 │       ├── Screenshots
 │       └── Reporte PDF
+├── Componentes
+│   ├── Contrato de Entrada
+│   ├── Flujo Reutilizable
+│   └── Contrato de Salida
 └── Suites
     ├── Escenarios ordenados
     ├── Programación (Cron)
@@ -67,9 +71,9 @@ Los **nodos** son los bloques fundamentales de un escenario. Cada nodo ejecuta u
 | Categoría | Color | Nodos |
 |-----------|-------|-------|
 | **Control de Flujo** | 🟡 Amarillo | If, Switch, Loop, Merge |
-| **Web** | 🔵 Azul | Web Flow, Smart Locators |
+| **Web** | 🔵 Azul | Smart Web Flow, Web Flow, Smart Locators |
 | **API** | 🟣 Morado | HTTP Request |
-| **Base de Datos** | 🟢 Verde | PostgreSQL, MySQL, MariaDB, Oracle, MongoDB |
+| **Base de Datos** | 🟢 Verde | PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, MongoDB |
 | **Infraestructura** | 🔵 Azul Claro | SSH Command |
 | **Utilidades** | ⚪ Gris | Set Variable, Log, Wait, Stop and Fail, Custom JavaScript |
 | **Nodos Personalizados** | 🩷 Rosa | Nodos de proveedores externos |
@@ -100,6 +104,23 @@ Cuando un nodo se ejecuta, produce **outputs** — datos que pueden ser usados p
 ```
 
 > Para detalles completos, consulta la documentación de [Expresiones](../expresiones/expresiones.md).
+
+---
+
+## Componentes Reutilizables
+
+Un **componente** es un flujo reutilizable con contrato de entrada y salida. Permite encapsular una secuencia que aparece en varios escenarios, como login, preparación de datos, validación común o consulta auxiliar.
+
+Los componentes tienen:
+
+- **Input**: campos que el escenario debe informar;
+- **Flujo interno**: nodos ejecutados dentro del componente;
+- **Output**: valor retornado al escenario;
+- **Estado**: borrador o publicado.
+
+Después de publicado, el componente aparece en la paleta del editor de escenarios y puede arrastrarse al canvas como un nodo común.
+
+> Para detalles, vea [Componentes Reutilizables](../componentes/vision-general.md).
 
 ---
 
@@ -180,7 +201,7 @@ Accede a las variables en tus flujos con: `{{ variables.nombreVariable }}`
 Las **credenciales** almacenan información de conexión de forma segura y centralizada. Tipos soportados:
 
 - **HTTP/API** — URL base, autenticación, headers
-- **PostgreSQL**, **MySQL**, **MariaDB**, **Oracle** — Datos de conexión a la base de datos
+- **PostgreSQL**, **MySQL**, **MariaDB**, **SQL Server**, **Oracle** — Datos de conexión a la base de datos
 - **MongoDB** — URI o datos de conexión
 - **SSH** — Host, usuario, contraseña o clave privada
 

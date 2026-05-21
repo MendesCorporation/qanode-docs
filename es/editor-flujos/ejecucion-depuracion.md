@@ -66,7 +66,7 @@ Luego puedes acceder a estos datos en nodos siguientes:
 
 ### Screenshots (Evidencias)
 
-Para nodos web (Web Flow y Smart Locators), las capturas de pantalla aparecen como miniaturas clicables. Haz clic para verlas a tamaño completo.
+Para nodos web (Smart Web Flow, Web Flow y Smart Locators), las capturas de pantalla aparecen como miniaturas clicables. Haz clic para verlas a tamaño completo.
 
 ---
 
@@ -138,7 +138,7 @@ ERROR: Click failed after 3 attempts: [getByRole("button", { name: "Login" })] �
 ### 1. Desactiva el Modo Headless
 
 Para pruebas web, desactiva el **modo headless** en el nodo para ver el navegador en acción:
-- En el nodo Web Flow o Smart Locators, desmarca **Headless**
+- En el nodo Smart Web Flow, Web Flow o Smart Locators, desmarca **Headless**
 - Ejecuta el flujo y observa el navegador
 
 ### 2. Agrega Pasos de Wait
