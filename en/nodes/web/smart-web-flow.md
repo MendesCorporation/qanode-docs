@@ -328,14 +328,20 @@ Access example:
 ## Recommended Workflow
 
 1. Record with QANode Recorder in **Smart Web Flow** mode.
-2. Paste the JSON into the QANode canvas.
-3. Review the generated actions.
-4. Confirm scoped text in repeated rows/cards.
-5. Keep expected effects enabled on steps where the screen must change.
-6. Add explicit `wait` or `assert` for business-critical validations.
-7. Use variables for dynamic data.
-8. Execute once and inspect evidence.
-9. Apply only the suggestions that match the real user intent.
+2. Choose the capture mode:
+   - **Touch mode** to record by interacting normally with the page;
+   - **Inspect mode** to select elements, review suggested actions, and record steps with more control.
+3. Execute the flow manually on the site or use the Inspect mode panels to build the actions.
+4. Use recording shortcuts when needed: `Ctrl+A` for assert, `Ctrl+E` for extract, `Ctrl+Shift+E` for extract list, `Ctrl+Alt+W` for wait, and `Ctrl+Alt+T` for extract table.
+5. Stop the recording or finish it from the Inspect mode panel.
+6. Paste the JSON into the QANode canvas.
+7. Review the generated actions.
+8. Confirm scoped text in repeated rows/cards.
+9. Keep expected effects enabled on steps where the screen must change.
+10. Add explicit `wait` or `assert` for business-critical validations.
+11. Use variables for dynamic data.
+12. Execute once and inspect evidence.
+13. Apply only the suggestions that match the real user intent.
 
 ---
 

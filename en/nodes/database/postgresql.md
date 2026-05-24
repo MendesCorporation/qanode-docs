@@ -45,20 +45,40 @@ postgresql://user:password@host:5432/database?sslmode=require
 
 ### Custom SQL
 
-Write SQL freely with parameter support.
+Write SQL freely in the **SQL** field. To use dynamic data, place `{{ }}` expressions directly in the query.
 
 | Field | Type | Description |
 |-------|------|-------------|
 | **SQL** | `string` | SQL query (supports `{{ }}`) |
-| **Parameters** | `array` | Values for `$1`, `$2`, etc. placeholders |
 
-**Example:**
+**Example with variable:**
 ```sql
-SELECT * FROM users WHERE email = $1 AND active = $2
+SELECT *
+FROM users
+WHERE email = '{{ variables.EMAIL_TESTE }}'
+  AND active = true;
 ```
-Parameters: `["john@example.com", true]`
 
-> **Security:** Always use parameters (`$1`, `$2`) instead of concatenating values directly in SQL. This prevents SQL injection.
+If `variables.EMAIL_TESTE` is `john@example.com`, the executed SQL is equivalent to:
+
+```sql
+SELECT *
+FROM users
+WHERE email = 'john@example.com'
+  AND active = true;
+```
+
+**Example with another node output:**
+
+```sql
+SELECT *
+FROM users
+WHERE id = {{ steps.api.outputs.json.id }};
+```
+
+For text, dates, and string-like values, wrap the expression in quotes. For numbers and booleans, normally use the expression without quotes.
+
+> **Caution:** because the expression is applied directly to the SQL, use controlled values and review quotes in text fields. Avoid using free-form end-user content without validation.
 
 ---
 
@@ -229,7 +249,7 @@ Removes records.
 ## Tips
 
 - **Use saved credentials** to manage connections in a centralized way
-- **Use parameters** (`$1`, `$2`) in custom SQL to prevent SQL injection
+- In **Custom SQL**, write the query in the **SQL** field and use `{{ }}` for dynamic data
 - The **visual query builder** is ideal for simple operations and is less prone to syntax errors
 - **Use expressions** in values: `{{ steps.api.outputs.json.id }}` to use data from previous nodes
 - **Test the connection** before running the flow using the test button on the credentials screen

@@ -832,7 +832,7 @@ INSERT INTO logs (user_id, action, timestamp)
 VALUES ('{{ steps.login.outputs.json.userId }}', 'login', '{{ new Date().toISOString() }}')
 ```
 
-> **Caution:** Use parameters ($1, ?) instead of direct interpolation to prevent SQL injection where possible.
+> **Caution:** In QANode database nodes, custom queries are written directly in the SQL field with `{{ }}` expressions. Use controlled values, review quotes for text/date fields, and avoid inserting free-form end-user content without validation.
 
 ### HTTP Request Body
 
@@ -1183,8 +1183,8 @@ Step 2 (set-variable): Store product info
   Value: {{ { name: steps["web-flow"].outputs.extracts.productName, price: steps["web-flow"].outputs.extracts.productPrice } }}
 
 Step 3 (postgres-query): Save to database
-  SQL: INSERT INTO products (name, price) VALUES ($1, $2)
-  Params: {{ [variables.product.name, variables.product.price] }}
+  SQL: INSERT INTO products (name, price)
+       VALUES ('{{ variables.product.name }}', {{ variables.product.price }})
 ```
 
 ---

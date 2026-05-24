@@ -47,6 +47,33 @@ See also:
 
 ## Recording Modes
 
+The extension operates in interaction modes while recording:
+
+### Smart Web Capture: Touch Mode and Inspect Mode
+
+When recorder mode is **Smart Web Flow**, the extension lets you choose how steps are captured:
+
+| Mode | How It Works | When to Use |
+|------|--------------|-------------|
+| **Touch mode** | You use the site normally and the extension records clicks, fills, scrolls, navigation, drag/drop, and special shortcuts. | Best for recording fast flows that follow the user's manual path. |
+| **Inspect mode** | The extension opens draggable helper panels on top of the page. You click an element to inspect it, review suggested actions, and choose the step to record. | Best for building or correcting steps with more precision, especially on dynamic pages, lists, cards, menus, iframes, and similar elements. |
+
+In **Inspect mode**, the page shows two panels:
+
+- **Controls**: shows recorded steps, lets you pause, finish and copy the JSON, delete steps, copy an individual step, and reorder the list.
+- **Selected element / Actions**: shows the selected element, the actions available for that target, and captured data such as target identity, strategies, match count, confidence, and ancestors.
+
+When you click an element in Inspect mode, the extension does not automatically assume you want a click step. It first selects the target and shows actions such as **Click**, **Fill**, **Select**, **Hover**, **Press key**, **Wait visible**, **Assert**, **Extract**, **Extract list**, **Extract table**, or **Drag**, depending on the detected element type.
+
+This helps avoid accidental steps and makes it clearer which locators will be sent to QANode. If a strategy has many matches, prefer a more specific one or review the target before recording the action.
+
+For guided actions:
+
+- **Extract list**: select the repeated item and then the fields to extract inside that item.
+- **Drag**: select the source item and then the drop target.
+- **Press key**: select the target and enter the desired key.
+- **Fill**: select the field and enter the value to fill.
+
 ### REC — Normal Recording
 
 Records interactions automatically:

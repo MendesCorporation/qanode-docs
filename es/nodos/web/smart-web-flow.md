@@ -328,14 +328,20 @@ Ejemplo de acceso:
 ## Flujo de Trabajo Recomendado
 
 1. Grabe con QANode Recorder en modo **Smart Web Flow**.
-2. Pegue el JSON en el canvas de QANode.
-3. Revise las acciones generadas.
-4. Confirme el texto de alcance en filas/cards repetidos.
-5. Mantenga efectos esperados activos en pasos donde la pantalla debe cambiar.
-6. Agregue `wait` o `assert` explícitos para validaciones críticas de negocio.
-7. Use variables para datos dinámicos.
-8. Ejecute una vez e inspeccione evidencias.
-9. Aplique solo sugerencias que coincidan con la intención real del usuario.
+2. Elija el modo de captura:
+   - **Touch mode** para grabar interactuando normalmente con la página;
+   - **Inspect mode** para seleccionar elementos, revisar acciones sugeridas y grabar pasos con más control.
+3. Ejecute el flujo manualmente en el sitio o use los paneles de Inspect mode para montar las acciones.
+4. Use los atajos de grabación cuando sea necesario: `Ctrl+A` para assert, `Ctrl+E` para extract, `Ctrl+Shift+E` para extract list, `Ctrl+Alt+W` para wait y `Ctrl+Alt+T` para extract table.
+5. Detenga la grabación o finalice desde el panel de Inspect mode.
+6. Pegue el JSON en el canvas de QANode.
+7. Revise las acciones generadas.
+8. Confirme el texto de alcance en filas/cards repetidos.
+9. Mantenga efectos esperados activos en pasos donde la pantalla debe cambiar.
+10. Agregue `wait` o `assert` explícitos para validaciones críticas de negocio.
+11. Use variables para datos dinámicos.
+12. Ejecute una vez e inspeccione evidencias.
+13. Aplique solo sugerencias que coincidan con la intención real del usuario.
 
 ---
 

@@ -44,7 +44,7 @@ host:1521/service_name
 
 Suporta os mesmos presets dos outros nós de banco de dados:
 
-- **Custom SQL** — SQL livre com parâmetros
+- **Custom SQL** — SQL livre com expressões `{{ }}` diretamente na query
 - **SELECT** — Query builder visual
 - **EXISTS** — Verificar existência
 - **COUNT** — Contar registros
@@ -53,10 +53,21 @@ Suporta os mesmos presets dos outros nós de banco de dados:
 - **UPDATE** — Atualizar registros
 - **DELETE** — Remover registros
 
-**Nota:** No Oracle, os placeholders usam `:1`, `:2` (bind variables):
+**Exemplo de Custom SQL com variável:**
 
 ```sql
-SELECT * FROM users WHERE email = :1 AND active = :2
+SELECT *
+FROM users
+WHERE email = '{{ variables.EMAIL_TESTE }}'
+  AND active = 1
+```
+
+Use aspas para textos e datas. Para números e flags, normalmente use a expressão sem aspas:
+
+```sql
+SELECT *
+FROM orders
+WHERE customer_id = {{ variables.CUSTOMER_ID }}
 ```
 
 ---
@@ -73,6 +84,5 @@ SELECT * FROM users WHERE email = :1 AND active = :2
 ## Diferenças do Oracle
 
 - **Service Name** em vez de database name
-- Bind variables usam `:1`, `:2` em vez de `$1` ou `?`
 - Sintaxe SQL Oracle (ex: `ROWNUM` em vez de `LIMIT`)
 - O query builder visual gera SQL compatível automaticamente

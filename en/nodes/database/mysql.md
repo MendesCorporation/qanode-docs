@@ -40,7 +40,7 @@ Select a credential of type **MySQL** in the **Credential** field.
 
 MySQL supports the same presets as PostgreSQL:
 
-- **Custom SQL** — Free SQL with parameters
+- **Custom SQL** — Free SQL with `{{ }}` expressions directly in the query
 - **SELECT** — Visual query builder
 - **EXISTS** — Check existence
 - **COUNT** — Count records
@@ -51,10 +51,21 @@ MySQL supports the same presets as PostgreSQL:
 
 > For full details on each mode, refer to the [PostgreSQL](postgresql.md) node documentation.
 
-**Note:** In MySQL, parameter placeholders use `?` instead of `$1`, `$2`:
+**Custom SQL example with variable:**
 
 ```sql
-SELECT * FROM users WHERE email = ? AND active = ?
+SELECT *
+FROM users
+WHERE email = '{{ variables.EMAIL_TESTE }}'
+  AND active = 1;
+```
+
+Use quotes for text and dates. For numbers and flags, normally use the expression without quotes:
+
+```sql
+SELECT *
+FROM orders
+WHERE customer_id = {{ variables.CUSTOMER_ID }};
 ```
 
 ---
@@ -70,6 +81,7 @@ SELECT * FROM users WHERE email = ? AND active = ?
 
 ## Tips
 
-- Remember the placeholder difference: MySQL uses `?`, PostgreSQL uses `$1`, `$2`
+- In **Custom SQL**, write the query in the **SQL** field and use `{{ }}` for dynamic data
+- Review quotes in text and date fields
 - The visual query builder automatically generates correct SQL for MySQL
 - For more details on each query mode, see the [PostgreSQL](postgresql.md) documentation

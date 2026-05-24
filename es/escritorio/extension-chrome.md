@@ -47,6 +47,33 @@ Vea también:
 
 ## Modos de Grabación
 
+La extensión opera en modos de interacción durante la grabación:
+
+### Smart Web Capture: Touch Mode e Inspect Mode
+
+Cuando el modo del recorder es **Smart Web Flow**, la extensión permite elegir cómo se capturan los pasos:
+
+| Modo | Cómo Funciona | Cuándo Usar |
+|------|---------------|-------------|
+| **Touch mode** | Usted usa el sitio normalmente y la extensión graba clics, llenados, scroll, navegación, drag/drop y atajos especiales. | Mejor para grabar flujos rápidos, siguiendo exactamente el camino manual del usuario. |
+| **Inspect mode** | La extensión abre paneles flotantes sobre la página. Usted hace clic en un elemento para inspeccionarlo, revisa las acciones sugeridas y elige el paso que desea grabar. | Mejor para crear o corregir pasos con más precisión, principalmente en páginas dinámicas, listas, cards, menús, iframes y elementos parecidos. |
+
+En **Inspect mode**, la página muestra dos paneles:
+
+- **Controls**: muestra los pasos ya grabados, permite pausar, finalizar y copiar el JSON, eliminar pasos, copiar un paso individual y reorganizar la lista.
+- **Selected element / Actions**: muestra el elemento seleccionado, las acciones posibles para ese objetivo y los datos capturados por la extensión, como target, estrategias, cantidad de matches, confianza y ancestros.
+
+Al hacer clic en un elemento en Inspect mode, la extensión no asume automáticamente que usted quiere hacer clic en él en el escenario. Primero selecciona el objetivo y muestra acciones como **Click**, **Fill**, **Select**, **Hover**, **Press key**, **Wait visible**, **Assert**, **Extract**, **Extract list**, **Extract table** o **Drag**, según el tipo de elemento detectado.
+
+Esto ayuda a evitar pasos accidentales y deja más claro qué localizadores serán enviados a QANode. Si una estrategia aparece con muchos matches, prefiera otra más específica o revise el objetivo antes de grabar la acción.
+
+Para acciones guiadas:
+
+- **Extract list**: seleccione el item repetido y luego los campos que desea extraer dentro de ese item.
+- **Drag**: seleccione el item de origen y después el destino del drop.
+- **Press key**: seleccione el objetivo e informe la tecla deseada.
+- **Fill**: seleccione el campo e informe el valor a llenar.
+
 ### REC — Grabación Normal
 
 Graba interacciones automáticamente:

@@ -832,7 +832,7 @@ INSERT INTO logs (user_id, action, timestamp)
 VALUES ('{{ steps.login.outputs.json.userId }}', 'login', '{{ new Date().toISOString() }}')
 ```
 
-> **Cuidado:** Usa parámetros ($1, ?) en lugar de interpolación directa para prevenir SQL injection cuando sea posible.
+> **Cuidado:** En los nodos de base de datos de QANode, la query personalizada se escribe directamente en el campo SQL con expresiones `{{ }}`. Use valores controlados, revise comillas en textos/fechas y evite insertar contenido libre de usuario final sin validación.
 
 ### Body de HTTP Request
 
@@ -1183,8 +1183,8 @@ Paso 2 (set-variable): Guardar info del producto
   Value: {{ { name: steps["web-flow"].outputs.extracts.productName, price: steps["web-flow"].outputs.extracts.productPrice } }}
 
 Paso 3 (postgres-query): Guardar en base de datos
-  SQL: INSERT INTO products (name, price) VALUES ($1, $2)
-  Params: {{ [variables.product.name, variables.product.price] }}
+  SQL: INSERT INTO products (name, price)
+       VALUES ('{{ variables.product.name }}', {{ variables.product.price }})
 ```
 
 ---

@@ -40,7 +40,7 @@ Seleccione una credencial de tipo **MySQL** en el campo **Credencial**.
 
 MySQL soporta los mismos presets que PostgreSQL:
 
-- **Custom SQL** — SQL libre con parámetros
+- **Custom SQL** — SQL libre con expresiones `{{ }}` directamente en la query
 - **SELECT** — Generador de consultas visual
 - **EXISTS** — Verificar existencia
 - **COUNT** — Contar registros
@@ -51,10 +51,21 @@ MySQL soporta los mismos presets que PostgreSQL:
 
 > Para detalles completos de cada modo, consulte la documentación del nodo [PostgreSQL](postgresql.md).
 
-**Nota:** En MySQL, los marcadores de parámetros usan `?` en lugar de `$1`, `$2`:
+**Ejemplo de Custom SQL con variable:**
 
 ```sql
-SELECT * FROM users WHERE email = ? AND active = ?
+SELECT *
+FROM users
+WHERE email = '{{ variables.EMAIL_TESTE }}'
+  AND active = 1;
+```
+
+Use comillas para textos y fechas. Para números y flags, normalmente use la expresión sin comillas:
+
+```sql
+SELECT *
+FROM orders
+WHERE customer_id = {{ variables.CUSTOMER_ID }};
 ```
 
 ---
@@ -70,6 +81,7 @@ SELECT * FROM users WHERE email = ? AND active = ?
 
 ## Consejos
 
-- Recuerde la diferencia de marcadores: MySQL usa `?`, PostgreSQL usa `$1`, `$2`
+- En **Custom SQL**, escriba la query en el campo **SQL** y use `{{ }}` para datos dinámicos
+- Revise comillas en campos de texto y fechas
 - El generador de consultas visual genera SQL correcto para MySQL automáticamente
 - Para más detalles sobre cada modo de consulta, vea la documentación de [PostgreSQL](postgresql.md)

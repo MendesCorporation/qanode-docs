@@ -45,20 +45,40 @@ postgresql://usuario:senha@host:5432/banco?sslmode=require
 
 ### Custom SQL
 
-Escreva SQL livremente com suporte a parâmetros.
+Escreva SQL livremente no campo **SQL**. Para usar dados dinâmicos, coloque expressões `{{ }}` diretamente na query.
 
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
 | **SQL** | `string` | Consulta SQL (suporta `{{ }}`) |
-| **Parâmetros** | `array` | Valores para placeholders `$1`, `$2`, etc. |
 
-**Exemplo:**
+**Exemplo com variável:**
 ```sql
-SELECT * FROM users WHERE email = $1 AND active = $2
+SELECT *
+FROM users
+WHERE email = '{{ variables.EMAIL_TESTE }}'
+  AND active = true;
 ```
-Parâmetros: `["joao@exemplo.com", true]`
 
-> **Segurança:** Sempre use parâmetros (`$1`, `$2`) em vez de concatenar valores diretamente no SQL. Isso previne SQL injection.
+Se `variables.EMAIL_TESTE` for `joao@exemplo.com`, o SQL executado será equivalente a:
+
+```sql
+SELECT *
+FROM users
+WHERE email = 'joao@exemplo.com'
+  AND active = true;
+```
+
+**Exemplo com output de outro nó:**
+
+```sql
+SELECT *
+FROM users
+WHERE id = {{ steps.api.outputs.json.id }};
+```
+
+Para textos, datas e valores tratados como string, coloque aspas ao redor da expressão. Para números e booleanos, normalmente use a expressão sem aspas.
+
+> **Cuidado:** como a expressão é aplicada diretamente no SQL, use valores controlados e revise aspas em campos de texto. Evite usar conteúdo livre digitado por usuário final sem validação.
 
 ---
 
@@ -229,7 +249,7 @@ Remove registros.
 ## Dicas
 
 - **Use credenciais salvas** para gerenciar conexões de forma centralizada
-- **Use parâmetros** (`$1`, `$2`) em SQL customizado para prevenir SQL injection
+- Em **Custom SQL**, use expressões `{{ }}` diretamente na query e revise aspas para textos e datas
 - O **query builder visual** é ideal para operações simples e é menos propenso a erros de sintaxe
 - **Use expressões** nos valores: `{{ steps.api.outputs.json.id }}` para usar dados de nós anteriores
 - **Teste a conexão** antes de executar o fluxo usando o botão de teste na tela de credenciais

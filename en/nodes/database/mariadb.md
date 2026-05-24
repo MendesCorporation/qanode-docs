@@ -34,7 +34,18 @@ The **MariaDB** node allows you to execute queries and operations on a MariaDB d
 
 Supports the same presets: Custom SQL, SELECT, EXISTS, COUNT, ASSERT, INSERT, UPDATE, DELETE.
 
-> MariaDB is a fork of MySQL and uses the same SQL syntax. For full details, refer to the [PostgreSQL](postgresql.md) documentation.
+In **Custom SQL** mode, write the query directly in the **SQL** field and use `{{ }}` expressions for dynamic values.
+
+```sql
+SELECT *
+FROM users
+WHERE email = '{{ variables.EMAIL_TESTE }}'
+  AND active = 1;
+```
+
+For text and dates, wrap the expression in quotes. For numbers and flags, normally use the expression without quotes.
+
+> MariaDB is a fork of MySQL and uses compatible SQL syntax. For full details on each preset, refer to the [PostgreSQL](postgresql.md) documentation.
 
 ---
 

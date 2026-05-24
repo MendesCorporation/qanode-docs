@@ -594,17 +594,20 @@ O jeito mais simples de criar um Smart Web Flow é usar o **QANode Recorder** no
 1. Instale a extensão: [QANode Recorder na Chrome Web Store](https://chromewebstore.google.com/detail/qanode-recorder/gmdklmpafacfkjmljgnoafcjjcdjiajo)
 2. Abra a página que deseja testar.
 3. Selecione o modo **Smart Web Flow** no popup da extensão.
-4. Clique em **Start**.
-5. Execute o fluxo manualmente no site.
-6. Use os atalhos de gravação quando precisar:
+4. Escolha o modo de captura:
+   - **Touch mode** para gravar interagindo normalmente com a página;
+   - **Inspect mode** para selecionar elementos, revisar ações sugeridas e gravar passos com mais controle.
+5. Clique em **Start**.
+6. Execute o fluxo manualmente no site ou use os painéis do Inspect mode para montar as ações.
+7. Use os atalhos de gravação quando precisar:
    - `Ctrl+A` para assert;
    - `Ctrl+E` para extract;
    - `Ctrl+Shift+E` para extract list;
    - `Ctrl+Alt+W` para wait;
    - `Ctrl+Alt+T` para extract table.
-7. Clique em **Stop**.
-8. Copie o JSON.
-9. Cole no canvas do QANode com `Ctrl+V`.
+8. Clique em **Stop** ou finalize pelo painel do Inspect mode.
+9. Copie o JSON.
+10. Cole no canvas do QANode com `Ctrl+V`.
 
 A extensão grava:
 

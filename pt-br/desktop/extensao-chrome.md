@@ -48,6 +48,31 @@ Para mais detalhes sobre as diferenças entre os nós web, consulte:
 
 A extensão opera em modos de interação durante a gravação:
 
+### Smart Web Capture: Touch Mode e Inspect Mode
+
+Quando o modo do recorder é **Smart Web Flow**, a extensão permite escolher como os passos serão capturados:
+
+| Modo | Como Funciona | Quando Usar |
+|------|---------------|-------------|
+| **Touch mode** | Você usa o site normalmente e a extensão grava cliques, preenchimentos, scroll, navegação, drag/drop e atalhos especiais. | Melhor para gravar fluxos rápidos, reproduzindo exatamente o caminho manual do usuário. |
+| **Inspect mode** | A extensão abre painéis flutuantes sobre a página. Você clica em um elemento para inspecioná-lo, revisa as ações sugeridas e escolhe o passo que deseja gravar. | Melhor para montar ou corrigir passos com mais precisão, principalmente em páginas dinâmicas, listas, cards, menus, iframes e elementos parecidos. |
+
+No **Inspect mode**, a página mostra dois painéis:
+
+- **Controls**: mostra os passos já gravados, permite pausar, finalizar e copiar o JSON, excluir passos, copiar um passo individual e reorganizar a lista.
+- **Selected element / Actions**: mostra o elemento selecionado, as ações possíveis para aquele alvo e os dados capturados pela extensão, como target, estratégias, quantidade de matches, confiança e ancestrais.
+
+Ao clicar em um elemento no Inspect mode, a extensão não assume automaticamente que você quer clicar nele no cenário. Primeiro ela seleciona o alvo e mostra ações como **Click**, **Fill**, **Select**, **Hover**, **Press key**, **Wait visible**, **Assert**, **Extract**, **Extract list**, **Extract table** ou **Drag**, conforme o tipo de elemento detectado.
+
+Isso ajuda a evitar passos acidentais e deixa mais claro quais localizadores serão enviados ao QANode. Se uma estratégia aparecer com muitos matches, prefira outra mais específica ou revise o alvo antes de gravar a ação.
+
+Para ações guiadas:
+
+- **Extract list**: selecione o item repetido e depois os campos que deseja extrair dentro daquele item.
+- **Drag**: selecione o item de origem e, em seguida, o destino do drop.
+- **Press key**: selecione o alvo e informe a tecla desejada.
+- **Fill**: selecione o campo e informe o valor a preencher.
+
 ### REC — Gravação Normal
 
 Grava automaticamente suas interações:
@@ -137,15 +162,16 @@ Ao clicar em um elemento, o QANode Recorder também pisca o alvo selecionado na 
 
 1. Clique no ícone da extensão na barra de ferramentas
 2. Selecione o **modo do recorder** (Smart Web Flow, Web Flow ou Smart Locators)
-3. Clique em **Start** para iniciar a gravação
-4. O indicador fica vermelho indicando gravação ativa
-5. Navegue e interaja com o site normalmente
-6. Use **Ctrl+A** para adicionar verificações
-7. Use **Ctrl+E** para adicionar extrações de valor único
-8. Use **Ctrl+Shift+E** para adicionar extrações de lista (elementos repetidos)
-9. Use **Ctrl+Alt+W** para adicionar waits explícitos
-10. Use **Ctrl+Alt+T** para adicionar extração de tabela no modo Smart Web Flow
-11. Clique no ícone novamente e clique em **Stop** para parar
+3. Em **Smart Web Flow**, escolha **Touch mode** ou **Inspect mode**
+4. Clique em **Start** para iniciar a gravação
+5. No Touch mode, o indicador fica vermelho indicando gravação ativa
+6. Navegue e interaja com o site normalmente ou, no Inspect mode, selecione os elementos e escolha as ações nos painéis flutuantes
+7. Use **Ctrl+A** para adicionar verificações
+8. Use **Ctrl+E** para adicionar extrações de valor único
+9. Use **Ctrl+Shift+E** para adicionar extrações de lista (elementos repetidos)
+10. Use **Ctrl+Alt+W** para adicionar waits explícitos
+11. Use **Ctrl+Alt+T** para adicionar extração de tabela no modo Smart Web Flow
+12. Clique no ícone novamente e clique em **Stop** para parar, ou finalize pelo painel do Inspect mode
 
 [Popup da extensão](../../assets/images/web-recorder.mp4) 
 *Imagem: Popup da extensão mostrando botões REC/STOP, lista de passos gravados e botão Copiar JSON*

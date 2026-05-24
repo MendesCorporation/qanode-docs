@@ -828,11 +828,11 @@ SELECT * FROM orders WHERE user_id = '{{ steps["http-request"].outputs.json.user
 
 SELECT * FROM products WHERE category = '{{ variables.CATEGORY }}' AND price > {{ variables.MIN_PRICE }}
 
-INSERT INTO logs (user_id, action, timestamp) 
+INSERT INTO logs (user_id, action, timestamp)
 VALUES ('{{ steps.login.outputs.json.userId }}', 'login', '{{ new Date().toISOString() }}')
 ```
 
-> **Cuidado:** Use parâmetros ($1, ?) em vez de interpolação direta para prevenir SQL injection quando possível.
+> **Cuidado:** nos nós de banco do QANode, a query customizada é escrita diretamente no campo SQL com expressões `{{ }}`. Use valores controlados, revise aspas em textos/datas e evite inserir conteúdo livre de usuário final sem validação.
 
 ### Body de HTTP Request
 
@@ -1183,8 +1183,8 @@ Step 2 (set-variable): Store product info
   Value: {{ { name: steps["web-flow"].outputs.extracts.productName, price: steps["web-flow"].outputs.extracts.productPrice } }}
   
 Step 3 (postgres-query): Save to database
-  SQL: INSERT INTO products (name, price) VALUES ($1, $2)
-  Params: {{ [variables.product.name, variables.product.price] }}
+  SQL: INSERT INTO products (name, price)
+       VALUES ('{{ variables.product.name }}', {{ variables.product.price }})
 ```
 
 ---

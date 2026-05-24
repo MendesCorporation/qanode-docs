@@ -40,7 +40,7 @@ Selecione uma credencial do tipo **MySQL** no campo **Credencial**.
 
 O MySQL suporta os mesmos presets do PostgreSQL:
 
-- **Custom SQL** — SQL livre com parâmetros
+- **Custom SQL** — SQL livre com expressões `{{ }}` diretamente na query
 - **SELECT** — Query builder visual
 - **EXISTS** — Verificar existência
 - **COUNT** — Contar registros
@@ -51,10 +51,21 @@ O MySQL suporta os mesmos presets do PostgreSQL:
 
 > Para detalhes completos de cada modo, consulte a documentação do nó [PostgreSQL](postgresql.md).
 
-**Nota:** No MySQL, os placeholders de parâmetros usam `?` em vez de `$1`, `$2`:
+**Exemplo de Custom SQL com variável:**
 
 ```sql
-SELECT * FROM users WHERE email = ? AND active = ?
+SELECT *
+FROM users
+WHERE email = '{{ variables.EMAIL_TESTE }}'
+  AND active = 1;
+```
+
+Use aspas para textos e datas. Para números e flags, normalmente use a expressão sem aspas:
+
+```sql
+SELECT *
+FROM orders
+WHERE customer_id = {{ variables.CUSTOMER_ID }};
 ```
 
 ---
@@ -70,6 +81,7 @@ SELECT * FROM users WHERE email = ? AND active = ?
 
 ## Dicas
 
-- Lembre-se da diferença de placeholders: MySQL usa `?`, PostgreSQL usa `$1`, `$2`
+- Em **Custom SQL**, escreva a query no campo **SQL** e use `{{ }}` para dados dinâmicos
+- Revise aspas em campos de texto e datas
 - O query builder visual gera SQL correto para MySQL automaticamente
 - Para mais detalhes sobre cada modo de consulta, veja a documentação do [PostgreSQL](postgresql.md)

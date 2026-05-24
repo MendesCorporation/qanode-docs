@@ -45,20 +45,40 @@ postgresql://usuario:contraseña@host:5432/basedatos?sslmode=require
 
 ### Custom SQL
 
-Escriba SQL libremente con soporte a parámetros.
+Escriba SQL libremente en el campo **SQL**. Para usar datos dinámicos, coloque expresiones `{{ }}` directamente en la query.
 
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
 | **SQL** | `string` | Consulta SQL (soporta `{{ }}`) |
-| **Parámetros** | `array` | Valores para los marcadores `$1`, `$2`, etc. |
 
-**Ejemplo:**
+**Ejemplo con variable:**
 ```sql
-SELECT * FROM users WHERE email = $1 AND active = $2
+SELECT *
+FROM users
+WHERE email = '{{ variables.EMAIL_TESTE }}'
+  AND active = true;
 ```
-Parámetros: `["juan@ejemplo.com", true]`
 
-> **Seguridad:** Siempre use parámetros (`$1`, `$2`) en lugar de concatenar valores directamente en el SQL. Esto previene la inyección SQL.
+Si `variables.EMAIL_TESTE` es `juan@ejemplo.com`, el SQL ejecutado será equivalente a:
+
+```sql
+SELECT *
+FROM users
+WHERE email = 'juan@ejemplo.com'
+  AND active = true;
+```
+
+**Ejemplo con output de otro nodo:**
+
+```sql
+SELECT *
+FROM users
+WHERE id = {{ steps.api.outputs.json.id }};
+```
+
+Para textos, fechas y valores tratados como string, coloque comillas alrededor de la expresión. Para números y booleanos, normalmente use la expresión sin comillas.
+
+> **Cuidado:** como la expresión se aplica directamente al SQL, use valores controlados y revise comillas en campos de texto. Evite usar contenido libre digitado por usuario final sin validación.
 
 ---
 
@@ -229,7 +249,7 @@ Elimina registros.
 ## Consejos
 
 - **Use credenciales guardadas** para gestionar conexiones de forma centralizada
-- **Use parámetros** (`$1`, `$2`) en SQL personalizado para prevenir inyección SQL
+- En **Custom SQL**, escriba la query en el campo **SQL** y use `{{ }}` para datos dinámicos
 - El **generador de consultas visual** es ideal para operaciones simples y es menos propenso a errores de sintaxis
 - **Use expresiones** en los valores: `{{ steps.api.outputs.json.id }}` para usar datos de nodos anteriores
 - **Pruebe la conexión** antes de ejecutar el flujo usando el botón de prueba en la pantalla de credenciales

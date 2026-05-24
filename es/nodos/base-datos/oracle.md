@@ -44,7 +44,7 @@ host:1521/service_name
 
 Soporta los mismos presets que los demás nodos de base de datos:
 
-- **Custom SQL** — SQL libre con parámetros
+- **Custom SQL** — SQL libre con expresiones `{{ }}` directamente en la query
 - **SELECT** — Generador de consultas visual
 - **EXISTS** — Verificar existencia
 - **COUNT** — Contar registros
@@ -53,10 +53,21 @@ Soporta los mismos presets que los demás nodos de base de datos:
 - **UPDATE** — Actualizar registros
 - **DELETE** — Eliminar registros
 
-**Nota:** En Oracle, los marcadores usan `:1`, `:2` (bind variables):
+**Ejemplo de Custom SQL con variable:**
 
 ```sql
-SELECT * FROM users WHERE email = :1 AND active = :2
+SELECT *
+FROM users
+WHERE email = '{{ variables.EMAIL_TESTE }}'
+  AND active = 1
+```
+
+Use comillas para textos y fechas. Para números y flags, normalmente use la expresión sin comillas:
+
+```sql
+SELECT *
+FROM orders
+WHERE customer_id = {{ variables.CUSTOMER_ID }}
 ```
 
 ---
@@ -73,6 +84,5 @@ SELECT * FROM users WHERE email = :1 AND active = :2
 ## Diferencias de Oracle
 
 - **Service Name** en lugar del nombre de la base de datos
-- Las bind variables usan `:1`, `:2` en lugar de `$1` o `?`
 - Sintaxis SQL de Oracle (ej: `ROWNUM` en lugar de `LIMIT`)
 - El generador de consultas visual genera SQL compatible automáticamente

@@ -44,7 +44,7 @@ host:1521/service_name
 
 Supports the same presets as the other database nodes:
 
-- **Custom SQL** — Free SQL with parameters
+- **Custom SQL** — Free SQL with `{{ }}` expressions directly in the query
 - **SELECT** — Visual query builder
 - **EXISTS** — Check existence
 - **COUNT** — Count records
@@ -53,10 +53,21 @@ Supports the same presets as the other database nodes:
 - **UPDATE** — Update records
 - **DELETE** — Remove records
 
-**Note:** In Oracle, placeholders use `:1`, `:2` (bind variables):
+**Custom SQL example with variable:**
 
 ```sql
-SELECT * FROM users WHERE email = :1 AND active = :2
+SELECT *
+FROM users
+WHERE email = '{{ variables.EMAIL_TESTE }}'
+  AND active = 1
+```
+
+Use quotes for text and dates. For numbers and flags, normally use the expression without quotes:
+
+```sql
+SELECT *
+FROM orders
+WHERE customer_id = {{ variables.CUSTOMER_ID }}
 ```
 
 ---
@@ -73,6 +84,5 @@ SELECT * FROM users WHERE email = :1 AND active = :2
 ## Oracle Differences
 
 - **Service Name** instead of database name
-- Bind variables use `:1`, `:2` instead of `$1` or `?`
 - Oracle SQL syntax (e.g., `ROWNUM` instead of `LIMIT`)
 - The visual query builder automatically generates compatible SQL
