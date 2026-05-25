@@ -53,6 +53,8 @@ Quando um componente está sendo usado por cenários, o QANode avisa antes da ex
 
 O QANode abre o editor do componente. Ele usa a mesma base visual do editor de fluxos, mas em **modo de componente**.
 
+[Criando um componente](../../assets/images/criar-componente.mp4)
+
 ---
 
 ## Editor do Componente
@@ -89,6 +91,8 @@ Exemplo de entradas:
 | `senha` | `string` | Sim |
 | `perfil` | `string` | Não |
 
+[Definindo entradas de um componente](../../assets/images/entradas-componente.mp4)
+
 Durante a execução do componente, os nós internos podem usar essas entradas por expressão, como qualquer outro output de nó.
 
 Exemplo:
@@ -110,6 +114,8 @@ No nó **Output**, configure o que o componente devolve ao cenário.
 | **Nome do Campo** | Nome da saída exposta para o cenário |
 | **Tipo** | Tipo esperado do valor |
 | **Valor** | Valor literal ou expressão calculada a partir dos nós internos |
+
+[Definindo saída um componente](../../assets/images/saida-componente.mp4)
 
 Exemplo:
 
@@ -137,6 +143,8 @@ As execuções de teste servem para validar o componente isoladamente. Elas não
 
 Se um campo obrigatório não tiver dado de teste, o QANode bloqueia a execução do teste do componente até o valor ser informado.
 
+[Testando um componente](../../assets/images/testar-component.mp4)
+
 ---
 
 ## Salvando e Publicando
@@ -155,6 +163,8 @@ Regras importantes:
 - componentes em rascunho não aparecem para uso em cenários;
 - ao alterar o fluxo interno, entradas ou saída, o componente volta a exigir revisão/publicação;
 - publicar confirma que o contrato atual está pronto para ser usado por outros cenários.
+
+[Salvando e publicando um componente](../../assets/images/salvar-e-publicar.mp4)
 
 ---
 
@@ -178,6 +188,8 @@ perfil: admin
 
 Durante a execução, o QANode executa o componente como parte do cenário. Se uma entrada obrigatória estiver vazia, o cenário é bloqueado antes de rodar para evitar falha difícil de diagnosticar.
 
+[Usando um componente em cenário](../../assets/images/usar-em-cenario.mp4)
+
 ---
 
 ## Usando Outputs do Componente
@@ -196,6 +208,8 @@ Se a saída principal for um objeto:
 {{ steps.prepararUsuario.outputs.result.userId }}
 {{ steps.prepararUsuario.outputs.result.email }}
 ```
+
+[Uso de output em componente](../../assets/images/usar-output-component.mp4)
 
 ---
 
