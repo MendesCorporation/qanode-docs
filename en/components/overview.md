@@ -1,4 +1,4 @@
-# Reusable Components
+# Reusable Components 
 
 **Reusable Components** let you turn a portion of an automation into a block that can be reused across scenarios. Instead of copying the same login, test-data setup, helper query, or shared validation nodes into several scenarios, you create a component once, define its inputs and output, publish it, and use it inside scenarios.
 
@@ -53,6 +53,8 @@ When a component is used by scenarios, QANode warns before deletion to avoid acc
 
 QANode opens the component editor. It uses the same visual base as the flow editor, but in **component mode**.
 
+[Creating a Component](../../assets/images/criar-componente.mp4)
+
 ---
 
 ## Component Editor
@@ -89,6 +91,8 @@ Example inputs:
 | `password` | `string` | Yes |
 | `role` | `string` | No |
 
+[Setting component inputs](../../assets/images/entradas-componente.mp4)
+
 During component execution, internal nodes can use these inputs through expressions, like any other node output:
 
 ```
@@ -108,6 +112,8 @@ In the **Output** node, configure what the component returns to the scenario.
 | **Field Name** | Output name exposed to the scenario |
 | **Type** | Expected value type |
 | **Value** | Literal value or expression calculated from internal nodes |
+
+[Setting component output](../../assets/images/saida-componente.mp4)
 
 Example:
 
@@ -135,6 +141,8 @@ Test executions validate the component in isolation. They do not replace officia
 
 If a required field has no test data, QANode blocks the component test until the value is provided.
 
+[Testing a Component](../../assets/images/testar-component.mp4)
+
 ---
 
 ## Saving and Publishing
@@ -153,6 +161,8 @@ Important rules:
 - draft components do not appear for use in scenarios;
 - when the internal flow, inputs, or output change, the component requires review/publication again;
 - publishing confirms that the current contract is ready to be used by other scenarios.
+
+[Saving and Publishing a component](../../assets/images/salvar-e-publicar.mp4)
 
 ---
 
@@ -176,6 +186,8 @@ role: admin
 
 During execution, QANode runs the component as part of the scenario. If a required input is empty, the scenario is blocked before running to prevent hard-to-diagnose failures.
 
+[Using a component in a Scenario](../../assets/images/usar-em-cenario.mp4)
+
 ---
 
 ## Using Component Outputs
@@ -194,6 +206,8 @@ If the main output is an object:
 {{ steps.prepareUser.outputs.result.userId }}
 {{ steps.prepareUser.outputs.result.email }}
 ```
+
+[Using Component Outputs](../../assets/images/usar-output-component.mp4)
 
 ---
 

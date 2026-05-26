@@ -1,4 +1,4 @@
-# Componentes Reutilizables
+# Componentes Reutilizables 
 
 Los **Componentes Reutilizables** permiten convertir una parte de una automatización en un bloque que puede reutilizarse en varios escenarios. En vez de copiar los mismos nodos de login, preparación de datos, consulta auxiliar o validación común en muchos escenarios, se crea un componente una vez, se definen sus entradas y salida, se publica y se usa dentro de los escenarios.
 
@@ -53,6 +53,8 @@ Cuando un componente está siendo usado por escenarios, QANode avisa antes de el
 
 QANode abre el editor del componente. Usa la misma base visual del editor de flujos, pero en **modo componente**.
 
+[Creando un Componente](../../assets/images/criar-componente.mp4)
+
 ---
 
 ## Editor del Componente
@@ -89,6 +91,8 @@ Ejemplo de entradas:
 | `password` | `string` | Sí |
 | `perfil` | `string` | No |
 
+[Definiendo entradas del Componente](../../assets/images/entradas-componente.mp4)
+
 Durante la ejecución del componente, los nodos internos pueden usar estas entradas mediante expresiones, como cualquier otro output de nodo:
 
 ```
@@ -108,6 +112,8 @@ En el nodo **Output**, configure lo que el componente devuelve al escenario.
 | **Nombre del Campo** | Nombre de la salida expuesta al escenario |
 | **Tipo** | Tipo esperado del valor |
 | **Valor** | Valor literal o expresión calculada a partir de los nodos internos |
+
+[Definindo salida del Componente](../../assets/images/saida-componente.mp4)
 
 Ejemplo:
 
@@ -135,6 +141,8 @@ Las ejecuciones de prueba validan el componente de forma aislada. No sustituyen 
 
 Si un campo obligatorio no tiene dato de prueba, QANode bloquea la ejecución de prueba hasta que se informe el valor.
 
+[Probando el Componente](../../assets/images/testar-component.mp4)
+
 ---
 
 ## Guardando y Publicando
@@ -153,6 +161,8 @@ Reglas importantes:
 - los componentes en borrador no aparecen para uso en escenarios;
 - al cambiar el flujo interno, las entradas o la salida, el componente vuelve a requerir revisión/publicación;
 - publicar confirma que el contrato actual está listo para usarse en otros escenarios.
+
+[Guardando y Publicando a un componente](../../assets/images/salvar-e-publicar.mp4)
 
 ---
 
@@ -176,6 +186,8 @@ perfil: admin
 
 Durante la ejecución, QANode ejecuta el componente como parte del escenario. Si una entrada obligatoria está vacía, el escenario se bloquea antes de ejecutar para evitar fallas difíciles de diagnosticar.
 
+[Usando a un componente en un Escenario](../../assets/images/usar-em-cenario.mp4)
+
 ---
 
 ## Usando Outputs del Componente
@@ -194,6 +206,8 @@ Si la salida principal es un objeto:
 {{ steps.prepararUsuario.outputs.result.userId }}
 {{ steps.prepararUsuario.outputs.result.email }}
 ```
+
+[Usando Outputs del Componente](../../assets/images/usar-output-component.mp4)
 
 ---
 
