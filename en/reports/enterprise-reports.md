@@ -15,6 +15,8 @@ After each scenario or suite execution, a **PDF report** is automatically genera
 
 The report is available in the execution list and can be downloaded at any time.
 
+[Execution Reports](../../assets/images/relatorios-execucao.mp4)
+
 ---
 
 ## Consolidated Reports
@@ -26,7 +28,8 @@ Generate reports covering multiple executions over a period:
 3. (Optional) Filter by **project**
 4. Click **Generate Report**
 
-<!-- ![Generate report](../../assets/images/gerar-relatorio.png) -->
+[Consolidated Reports](../../assets/images/relatorios-consolidados.mp4)
+
 *Image: Reports screen with period selection, project filter, and generate button*
 
 ### Report Metrics
@@ -91,6 +94,8 @@ The report automatically includes a row of bug metrics.
 2. Click **Export PDF**
 3. The file will be downloaded with the name: `report_{project}_{start}_{end}.pdf`
 
+[Export as PDF](../../assets/images/exportar-relatorio-pdf.mp4)
+
 ### Email Delivery
 
 1. Generate the report
@@ -101,6 +106,8 @@ The report automatically includes a row of bug metrics.
 4. Click **Send**
 
 The PDF report will be sent as an **email attachment**.
+
+[Send by e-mail](../../assets/images/enviar-relatorio-email.mp4)
 
 > **Report language:** The PDF and email are generated in the language configured in the interface of the user who downloads or sends the report.
 
@@ -129,7 +136,8 @@ The PDF report layout is configurable. Go to **Settings** → **Report Template*
 | **Error Details** | Include complete error details |
 | **Metadata** | Date, execution ID, project/flow name |
 
-<!-- ![Report template](../../assets/images/template-relatorio.png) -->
+[Report Template](../../assets/images/templates-relatorios.mp4)
+
 *Image: Template configuration screen with options preview*
 
 ---

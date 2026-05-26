@@ -15,6 +15,8 @@ Após cada execução de cenário ou suíte, um **relatório PDF** é gerado aut
 
 O relatório fica disponível na lista de execuções e pode ser baixado a qualquer momento.
 
+[Relatórios de Execução](../../assets/images/relatorios-execucao.mp4)
+
 ---
 
 ## Relatórios Consolidados
@@ -26,7 +28,8 @@ Gere relatórios que abrangem múltiplas execuções em um período:
 3. (Opcional) Filtre por **projeto**
 4. Clique em **Gerar Relatório**
 
-<!-- ![Gerar relatório](../../assets/images/gerar-relatorio.png) -->
+[Gerar relatório](../../assets/images/relatorios-consolidados.mp4)
+
 *Imagem: Tela de relatórios com seleção de período, filtro de projeto e botão de gerar*
 
 ### Métricas do Relatório
@@ -91,6 +94,8 @@ O relatório inclui automaticamente uma linha de métricas de defeitos.
 2. Clique em **Exportar PDF**
 3. O arquivo será baixado com o nome: `report_{projeto}_{inicio}_{fim}.pdf`
 
+[Exportar como pdf](../../assets/images/exportar-relatorio-pdf.mp4)
+
 ### Envio por E-mail
 
 1. Gere o relatório
@@ -101,6 +106,8 @@ O relatório inclui automaticamente uma linha de métricas de defeitos.
 4. Clique em **Enviar**
 
 O relatório PDF será enviado como **anexo** do e-mail.
+
+[Enviar por e-mail](../../assets/images/enviar-relatorio-email.mp4)
 
 > **Requisito:** O SMTP deve estar configurado em Configurações para envio de e-mails. Veja [Administração](../administracao/administracao-enterprise.md).
 
@@ -129,7 +136,8 @@ O layout do relatório PDF é configurável. Acesse **Configurações** → **Te
 | **Detalhes de Erros** | Incluir detalhes completos dos erros |
 | **Metadados** | Data, ID da execução, nome do projeto/fluxo |
 
-<!-- ![Template de relatório](../../assets/images/template-relatorio.png) -->
+[Template de relatório](../../assets/images/templates-relatorios.mp4)
+
 *Imagem: Tela de configuração do template com preview das opções*
 
 ---

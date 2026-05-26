@@ -15,6 +15,8 @@ Después de cada ejecución de escenario o suite, se genera automáticamente un 
 
 El informe está disponible en la lista de ejecuciones y puede descargarse en cualquier momento.
 
+[Informes de Ejecución](../../assets/images/relatorios-execucao.mp4)
+
 ---
 
 ## Informes Consolidados
@@ -26,7 +28,8 @@ Genere informes que abarcan múltiples ejecuciones en un período:
 3. (Opcional) Filtre por **proyecto**
 4. Haga clic en **Generar Informe**
 
-<!-- ![Generar informe](../../assets/images/gerar-relatorio.png) -->
+[Informes Consolidados](../../assets/images/relatorios-consolidados.mp4)
+
 *Imagen: Pantalla de informes con selección de período, filtro de proyecto y botón de generación*
 
 ### Métricas del Informe
@@ -91,6 +94,8 @@ El informe incluye automáticamente una fila de métricas de defectos.
 2. Haga clic en **Exportar PDF**
 3. El archivo se descargará con el nombre: `report_{proyecto}_{inicio}_{fin}.pdf`
 
+[Descarga PDF](../../assets/images/exportar-relatorio-pdf.mp4)
+
 ### Envío por Correo Electrónico
 
 1. Genere el informe
@@ -101,6 +106,8 @@ El informe incluye automáticamente una fila de métricas de defectos.
 4. Haga clic en **Enviar**
 
 El informe PDF se enviará como **archivo adjunto** del correo electrónico.
+
+[Envío por Correo Electrónico](../../assets/images/enviar-relatorio-email.mp4)
 
 > **Idioma del informe:** El PDF y el correo electrónico se generan en el idioma configurado en la interfaz del usuario que realiza la descarga o el envío.
 
@@ -129,7 +136,8 @@ El diseño del informe PDF es configurable. Acceda a **Configuración** → **Pl
 | **Detalles de Errores** | Incluir detalles completos de los errores |
 | **Metadatos** | Fecha, ID de ejecución, nombre del proyecto/flujo |
 
-<!-- ![Plantilla de informe](../../assets/images/template-relatorio.png) -->
+[Plantilla de Informe](../../assets/images/templates-relatorios.mp4)
+
 *Imagen: Pantalla de configuración de la plantilla con vista previa de las opciones*
 
 ---
