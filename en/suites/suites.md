@@ -20,7 +20,7 @@
 
 4. Click **Create**
 
-<!-- ![Create suite](../../assets/images/criar-suite.png) -->
+[Create suite](../../assets/images/criando-suite.mp4)
 *Image: Suite creation form with scenario selection and stop-on-failure toggle*
 
 ---
@@ -91,6 +91,8 @@ When disabled:
 2. All scenarios will be executed in order
 3. The result appears in the execution list
 
+[Running a Suite](../../assets/images/executando-suite.mp4)
+
 ### CI/CD Execution — Enterprise
 
 In addition to manual execution, a suite can also be triggered by pipeline using `@qanode/cli` or the `/api/ci` routes.
@@ -121,7 +123,7 @@ Suites can be executed automatically at defined times.
 3. Enter the **cron expression**
 4. The system will show the next 5 execution times
 
-[Suite scheduling](../../assets/images/suites.mp4)
+[Suite scheduling](../../assets/images/agendamento-suite.mp4)
 *Image: Scheduling section with cron field, activation toggle, and preview of upcoming times*
 
 ### Cron Expressions
@@ -154,6 +156,8 @@ The cron format has 5 fields:
 ### Enable/Disable
 
 You can enable and disable scheduling without removing the cron expression. When disabled, the expression is preserved for future reactivation.
+
+[Enable and disable scheduling](../../assets/images/ativar-desativar-agendamento-suite.mp4)
 
 ---
 

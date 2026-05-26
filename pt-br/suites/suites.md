@@ -20,7 +20,7 @@
 
 4. Clique em **Criar**
 
-<!-- ![Criar suíte](../../assets/images/criar-suite.png) -->
+[Criar suíte](../../assets/images/criando-suite.mp4)
 *Imagem: Formulário de criação de suíte com seleção de cenários e toggle de parar em falha*
 
 ---
@@ -91,6 +91,8 @@ Quando desativado:
 2. Todos os cenários serão executados em ordem
 3. O resultado aparece na lista de execuções
 
+[Executando suíte](../../assets/images/executando-suite.mp4)
+
 ### Execução por CI/CD — Enterprise
 
 Além da execução manual, uma suíte pode ser disparada por pipeline usando o `@qanode/cli` ou as rotas `/api/ci`.
@@ -121,7 +123,7 @@ Suítes podem ser executadas automaticamente em horários definidos.
 3. Informe a **expressão cron**
 4. O sistema mostrará os próximos 5 horários de execução
 
-[Agendamento de suíte](../../assets/images/suites.mp4) 
+[Agendamento de suíte](../../assets/images/agendamento-suite.mp4) 
 *Imagem: Seção de agendamento com campo cron, toggle de ativação e preview dos próximos horários*
 
 ### Expressões Cron
@@ -154,6 +156,8 @@ O formato cron possui 5 campos:
 ### Ativar/Desativar
 
 Você pode ativar e desativar o agendamento sem remover a expressão cron. Quando desativado, a expressão é preservada para reativação futura.
+
+[Ativar/Desativar agendamento](../../assets/images/ativar-desativar-agendamento-suite.mp4)
 
 ---
 

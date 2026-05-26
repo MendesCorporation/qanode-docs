@@ -20,7 +20,7 @@
 
 4. Haga clic en **Crear**
 
-<!-- ![Crear suite](../../assets/images/criar-suite.png) -->
+[Crear suíte](../../assets/images/criando-suite.mp4)
 *Imagen: Formulario de creación de suite con selección de escenarios y alternador de detener en fallo*
 
 ---
@@ -91,6 +91,8 @@ Cuando está desactivado:
 2. Todos los escenarios se ejecutarán en orden
 3. El resultado aparece en la lista de ejecuciones
 
+[Ejecución Manual suíte](../../assets/images/executando-suite.mp4)
+
 ### Ejecución por CI/CD — Enterprise
 
 Además de la ejecución manual, una suite también puede dispararse por pipeline usando `@qanode/cli` o las rutas `/api/ci`.
@@ -121,7 +123,7 @@ Las suites pueden ejecutarse automáticamente en horarios definidos.
 3. Ingrese la **expresión cron**
 4. El sistema mostrará los próximos 5 horarios de ejecución
 
-[Programación de suite](../../assets/images/suites.mp4)
+[Programación de suite](../../assets/images/agendamento-suite.mp4)
 *Imagen: Sección de programación con campo cron, alternador de activación y vista previa de los próximos horarios*
 
 ### Expresiones Cron
@@ -154,6 +156,8 @@ El formato cron tiene 5 campos:
 ### Activar/Desactivar
 
 Puede activar y desactivar la programación sin eliminar la expresión cron. Cuando está desactivada, la expresión se conserva para reactivación futura.
+
+[Activar y desactivar la programación](../../assets/images/ativar-desativar-agendamento-suite.mp4)
 
 ---
 
