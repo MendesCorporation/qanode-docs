@@ -1,4 +1,4 @@
-# Flow Editor — Overview
+# Flow Editor — Overview 
 
 The **Flow Editor** is the heart of QANode. It is where you create, configure, and run your test scenarios visually.
 
@@ -8,7 +8,8 @@ The **Flow Editor** is the heart of QANode. It is where you create, configure, a
 
 The editor is divided into four main areas:
 
-<!-- ![Flow editor overview](../../assets/images/editor-visao-geral.png) -->
+[Flow editor overview](../../assets/images/interface-editor-fluxos.mp4)
+
 *Image: Flow editor showing the four areas: top bar, node palette, canvas, and properties panel*
 
 ### 1. Top Bar
@@ -76,6 +77,8 @@ When you select a node, the properties panel appears on the right with:
 5. **Save** the flow (Ctrl+S)
 6. **Run** and check the results
 
+[Typical Workflow](../../assets/images/fluxo-trabalho-editor-fluxos.mp4)
+
 ---
 
 ## Execution Order
@@ -109,6 +112,8 @@ After a run, nodes display status indicators:
 | ⚪ Gray border | Node was skipped (branch not activated) |
 | 🔵 Blue border | Node is running |
 
+[Visual Indicators](../../assets/images/indicadores-visuais-editor-fluxos.mp4)
+
 ---
 
 ## Keyboard Shortcuts
@@ -137,6 +142,8 @@ Annotations support:
 - copy, paste, duplicate, and delete.
 
 You can create an annotation from the canvas context menu or with `Shift+A`.
+
+[Canvas Annotations](../../assets/images/anotacoes-editor-fluxos.mp4)
 
 ---
 

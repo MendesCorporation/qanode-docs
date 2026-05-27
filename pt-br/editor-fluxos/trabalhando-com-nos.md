@@ -4,7 +4,7 @@ Este guia detalha como adicionar, conectar, configurar e gerenciar nós no edito
 
 ---
 
-## Adicionando Nós
+## Adicionando Nós  
 
 ### Arrastar da Paleta
 
@@ -14,7 +14,8 @@ A forma principal de adicionar nós é arrastando da **paleta de nós** (lado es
 2. Clique e arraste o nó para o canvas
 3. Solte na posição desejada
 
-[Arrastando um nó da paleta](../../assets/images/flow-editor.mp4) 
+[Arrastando um nó da paleta](../../assets/images/conectar-nos-editor-fluxos.mp4)
+
 *Imagem: Nó sendo arrastado da paleta de nós para o canvas*
 
 ### Colar JSON (Gravador Chrome)
@@ -24,6 +25,8 @@ Você também pode colar nós copiados do **Gravador Chrome** (extensão):
 1. No Gravador Chrome, clique em **Copiar JSON**
 2. No editor de fluxos, pressione **Ctrl+V**
 3. O nó correspondente ao modo do recorder será adicionado com todos os passos gravados
+
+[Colar JSON no canvas](../../assets/images/copiar-de-json-editor-fluxos.mp4) 
 
 O QANode Recorder pode gerar nós **Smart Web Flow**, **Web Flow** ou **Smart Locators**, conforme o modo selecionado na extensão.
 
@@ -38,6 +41,8 @@ Quando existem componentes publicados, o editor de cenários exibe a aba **Compo
 3. Arraste o componente para o canvas.
 4. Conecte-o como um nó comum.
 5. Preencha os campos de entrada no painel de propriedades.
+
+[Adicionar Componentes](../../assets/images/adicionar-componente-editor-fluxos.mp4) 
 
 Componentes são úteis para reutilizar blocos como login, preparação de massa, consultas auxiliares ou validações compartilhadas.
 
@@ -55,7 +60,8 @@ Para conectar dois nós:
 2. Clique e arraste até o **handle de entrada** (●) do nó de destino
 3. Solte para criar a conexão
 
-<!-- ![Conectando nós](../../assets/images/conectar-nos.png) -->
+[Conectando nós](../../assets/images/ligando-nos-fluxo-execucao.mp4)
+
 *Imagem: Linha sendo arrastada de um handle de saída para um handle de entrada*
 
 ### Handles de Entrada e Saída

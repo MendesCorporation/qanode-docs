@@ -1,4 +1,4 @@
-# Editor de Flujos — Visión General
+# Editor de Flujos — Visión General 
 
 El **Editor de Flujos** es el corazón de QANode. Es donde creas, configuras y ejecutas tus escenarios de prueba de forma visual.
 
@@ -8,7 +8,8 @@ El **Editor de Flujos** es el corazón de QANode. Es donde creas, configuras y e
 
 El editor está dividido en cuatro áreas principales:
 
-<!-- ![Visión general del editor de flujos](../../assets/images/editor-visao-geral.png) -->
+[Visión general del editor de flujos](../../assets/images/interface-editor-fluxos.mp4)
+
 *Imagen: Editor de flujos mostrando las cuatro áreas: barra superior, paleta de nodos, canvas y panel de propiedades*
 
 ### 1. Barra Superior
@@ -76,6 +77,8 @@ Al seleccionar un nodo, el panel de propiedades aparece a la derecha con:
 5. **Guarda** el flujo (Ctrl+S)
 6. **Ejecuta** y verifica los resultados
 
+[Flujo de Trabajo Típico](../../assets/images/fluxo-trabalho-editor-fluxos.mp4)
+
 ---
 
 ## Orden de Ejecución
@@ -109,6 +112,8 @@ Después de una ejecución, los nodos muestran indicadores de estado:
 | ⚪ Borde gris | Nodo omitido (rama no activada) |
 | 🔵 Borde azul | Nodo en ejecución |
 
+[Indicadores Visuales](../../assets/images/indicadores-visuais-editor-fluxos.mp4)
+
 ---
 
 ## Atajos de Teclado
@@ -137,6 +142,8 @@ Las anotaciones soportan:
 - copiar, pegar, duplicar y eliminar.
 
 Puede crear una anotación desde el menú contextual del canvas o con `Shift+A`.
+
+[Anotaciones en el Canvas](../../assets/images/anotacoes-editor-fluxos.mp4)
 
 ---
 

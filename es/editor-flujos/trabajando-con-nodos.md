@@ -2,7 +2,7 @@
 
 Esta guía detalla cómo agregar, conectar, configurar y gestionar nodos en el editor de flujos.
 
----
+--- 
 
 ## Agregando Nodos
 
@@ -14,7 +14,8 @@ La forma principal de agregar nodos es arrastrando desde la **paleta de nodos** 
 2. Haz clic y arrastra el nodo al canvas
 3. Suéltalo en la posición deseada
 
-[Arrastrando un nodo desde la paleta](../../assets/images/flow-editor.mp4)
+[Arrastrando un nodo desde la paleta](../../assets/images/conectar-nos-editor-fluxos.mp4)
+
 *Imagen: Nodo siendo arrastrado desde la paleta de nodos al canvas*
 
 ### Pegar JSON (Grabador de Chrome)
@@ -24,6 +25,8 @@ También puedes pegar nodos copiados del **Grabador de Chrome** (extensión):
 1. En el Grabador de Chrome, haz clic en **Copiar JSON**
 2. En el editor de flujos, presiona **Ctrl+V**
 3. El nodo correspondiente al modo del recorder se agregará con todos los pasos grabados
+
+[Pegar JSON de grabador en Chrome](../../assets/images/copiar-de-json-editor-fluxos.mp4)
 
 QANode Recorder puede generar nodos **Smart Web Flow**, **Web Flow** o **Smart Locators**, según el modo seleccionado en la extensión.
 
@@ -38,6 +41,8 @@ Cuando existen componentes publicados, el editor de escenarios muestra la pesta�
 3. Arrastre el componente al canvas.
 4. Conéctelo como un nodo común.
 5. Complete los campos de entrada en el panel de propiedades.
+
+[Agregar Componentes](../../assets/images/adicionar-componente-editor-fluxos.mp4)
 
 Los componentes son útiles para reutilizar bloques como login, preparación de datos, consultas auxiliares o validaciones compartidas.
 
@@ -55,7 +60,8 @@ Para conectar dos nodos:
 2. Haz clic y arrastra hasta el **handle de entrada** (●) del nodo destino
 3. Suelta para crear la conexión
 
-<!-- ![Conectando nodos](../../assets/images/conectar-nos.png) -->
+[Conectando nodos](../../assets/images/ligando-nos-fluxo-execucao.mp4)
+
 *Imagen: Línea siendo arrastrada desde un handle de salida hasta un handle de entrada*
 
 ### Handles de Entrada y Salida

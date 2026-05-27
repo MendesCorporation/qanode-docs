@@ -6,7 +6,7 @@ This guide details how to add, connect, configure, and manage nodes in the flow 
 
 ## Adding Nodes
 
-### Dragging from the Palette
+### Dragging from the Palette 
 
 The primary way to add nodes is by dragging from the **node palette** (left side) to the **canvas**:
 
@@ -14,7 +14,8 @@ The primary way to add nodes is by dragging from the **node palette** (left side
 2. Click and drag the node onto the canvas
 3. Release it at the desired position
 
-[Dragging a node from the palette](../../assets/images/flow-editor.mp4)
+[Dragging a node from the palette](../../assets/images/conectar-nos-editor-fluxos.mp4)
+
 *Image: Node being dragged from the node palette to the canvas*
 
 ### Pasting JSON (Chrome Recorder)
@@ -24,6 +25,8 @@ You can also paste nodes copied from the **Chrome Recorder** (extension):
 1. In the Chrome Recorder, click **Copy JSON**
 2. In the flow editor, press **Ctrl+V**
 3. The node matching the selected recorder mode will be added with all recorded steps
+
+[Pasting JSON on canvas](../../assets/images/copiar-de-json-editor-fluxos.mp4)
 
 QANode Recorder can generate **Smart Web Flow**, **Web Flow**, or **Smart Locators** nodes, depending on the mode selected in the extension.
 
@@ -38,6 +41,8 @@ When published components exist, the scenario editor displays the **Components**
 3. Drag the component to the canvas.
 4. Connect it like a regular node.
 5. Fill the input fields in the properties panel.
+
+[Adding Reusable Components](../../assets/images/adicionar-componente-editor-fluxos.mp4)
 
 Components are useful for reusing blocks such as login, test-data setup, helper queries, or shared validations.
 
@@ -55,7 +60,8 @@ To connect two nodes:
 2. Click and drag to the **input handle** (●) of the target node
 3. Release to create the connection
 
-<!-- ![Connecting nodes](../../assets/images/conectar-nos.png) -->
+[Connecting nodes](../../assets/images/ligando-nos-fluxo-execucao.mp4)
+
 *Image: Line being dragged from an output handle to an input handle*
 
 ### Input and Output Handles

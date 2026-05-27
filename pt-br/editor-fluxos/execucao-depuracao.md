@@ -14,7 +14,7 @@ Para executar todo o fluxo:
 2. Clique no botão **Executar** (▶️) na barra superior
 3. Aguarde a conclusão — os nós exibirão indicadores de status em tempo real
 
-[Fluxo em execução](../../assets/images/executando.mp4) 
+[Fluxo em execução](../../assets/images/execucao-completa-fluxos.mp4) 
 *Imagem: Canvas mostrando nós com indicadores de status durante a execução*
 
 ### Status de Execução
@@ -41,6 +41,8 @@ Após a execução, clique em qualquer nó para ver seus resultados no painel de
 | **Outputs** | Dados produzidos pelo nó (JSON navegável) |
 | **Erro** | Mensagem de erro detalhada (quando aplicável) |
 | **Screenshots** | Capturas de tela (nós web com evidência ativada) |
+
+[Analisando Resultados](../../assets/images/analise-resultados-editor-fluxos.mp4) 
 
 ### Outputs
 
@@ -117,7 +119,7 @@ Para nós web (Smart Web Flow, Web Flow e Smart Locators), screenshots capturado
 Os **logs** de cada nó fornecem detalhes sobre cada passo executado. Para nós web, os logs mostram:
 
 ```
-Navigated to: https://exemplo.com/login
+Navigated to: https://exemplo.com/login 
 Filled: "usuario@exemplo.com" on [getByLabel("E-mail")]
 Clicked: [getByRole("button", { name: "Entrar" })]
 Assert passed: textContains "Bem-vindo" — true
@@ -174,13 +176,15 @@ O defeito criado fica automaticamente vinculado à execução, ao cenário e ao 
 
 > **Permissão necessária:** `bug.create`
 
+[Abrindo um Defeito](../../assets/images/abrir-defeito-editor-fluxos.mp4) 
+
 ### Defeitos relacionados
 
 O detalhe da execução também exibe a seção **Defeitos Relacionados** com a lista de todos os defeitos vinculados àquela execução — bug key, título, status e severidade — com link direto para cada defeito.
 
 ---
 
-## Relatório de Execução
+## Relatório de Execução 
 
 Após cada execução, o QANode gera automaticamente um **relatório PDF** com:
 
@@ -190,6 +194,8 @@ Após cada execução, o QANode gera automaticamente um **relatório PDF** com:
 - Erros encontrados
 
 O relatório fica disponível na lista de execuções do projeto e pode ser baixado ou enviado por e-mail.
+
+[Relatório de Execução](../../assets/images/relatorio-editor-fluxos.mp4) 
 
 ---
 

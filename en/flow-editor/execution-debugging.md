@@ -4,7 +4,7 @@ Learn how to run your flows, interpret results, and diagnose failures.
 
 ---
 
-## Running a Flow
+## Running a Flow 
 
 ### Full Execution
 
@@ -14,7 +14,8 @@ To execute the entire flow:
 2. Click the **Run** button (▶️) in the top bar
 3. Wait for completion — nodes will display real-time status indicators
 
-[Flow running](../../assets/images/executando.mp4)
+[Flow running](../../assets/images/execucao-completa-fluxos.mp4)
+
 *Image: Canvas showing nodes with status indicators during execution*
 
 ### Execution Status
@@ -41,6 +42,8 @@ After execution, click on any node to see its results in the properties panel:
 | **Outputs** | Data produced by the node (navigable JSON) |
 | **Error** | Detailed error message (when applicable) |
 | **Screenshots** | Screen captures (web nodes with evidence enabled) |
+
+[Analyzing Results](../../assets/images/analise-resultados-editor-fluxos.mp4)
 
 ### Outputs
 
@@ -174,6 +177,8 @@ The created bug is automatically linked to the execution, the scenario, and the 
 
 > **Permission required:** `bug.create`
 
+[Opening a Bug](../../assets/images/abrir-defeito-editor-fluxos.mp4)
+
 ### Related bugs
 
 The execution detail also displays the **Related Bugs** section with the list of all bugs linked to that execution — bug key, title, status, and severity — with a direct link to each bug.
@@ -190,6 +195,8 @@ After each run, QANode automatically generates a **PDF report** with:
 - Errors encountered
 
 The report is available in the project's execution list and can be downloaded or sent by email.
+
+[Execution Report](../../assets/images/relatorio-editor-fluxos.mp4)
 
 ---
 

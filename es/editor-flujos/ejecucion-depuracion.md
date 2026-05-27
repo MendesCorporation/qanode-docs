@@ -3,7 +3,7 @@
 Aprende cómo ejecutar tus flujos, interpretar resultados y diagnosticar fallos.
 
 ---
-
+ 
 ## Ejecutando un Flujo
 
 ### Ejecución Completa
@@ -14,7 +14,7 @@ Para ejecutar todo el flujo:
 2. Haz clic en el botón **Ejecutar** (▶️) en la barra superior
 3. Espera la finalización — los nodos mostrarán indicadores de estado en tiempo real
 
-[Flujo en ejecución](../../assets/images/executando.mp4)
+[Flujo en ejecución](../../assets/images/execucao-completa-fluxos.mp4)
 *Imagen: Canvas mostrando nodos con indicadores de estado durante la ejecución*
 
 ### Estado de Ejecución
@@ -41,6 +41,8 @@ Después de la ejecución, haz clic en cualquier nodo para ver sus resultados en
 | **Outputs** | Datos producidos por el nodo (JSON navegable) |
 | **Error** | Mensaje de error detallado (cuando corresponda) |
 | **Screenshots** | Capturas de pantalla (nodos web con evidencia activada) |
+
+[Pestaña de Resultados](../../assets/images/analise-resultados-editor-fluxos.mp4)
 
 ### Outputs
 
@@ -174,6 +176,8 @@ El defecto creado queda automáticamente vinculado a la ejecución, al escenario
 
 > **Permiso requerido:** `bug.create`
 
+[Abrir un Defecto](../../assets/images/abrir-defeito-editor-fluxos.mp4)
+
 ### Defectos relacionados
 
 El detalle de la ejecución también muestra la sección **Defectos Relacionados** con la lista de todos los defectos vinculados a esa ejecución — bug key, título, estado y severidad — con enlace directo a cada defecto.
@@ -190,6 +194,8 @@ Después de cada ejecución, QANode genera automáticamente un **reporte PDF** c
 - Errores encontrados
 
 El reporte está disponible en la lista de ejecuciones del proyecto y puede descargarse o enviarse por correo electrónico.
+
+[Reporte de Ejecución](../../assets/images/relatorio-editor-fluxos.mp4)
 
 ---
 

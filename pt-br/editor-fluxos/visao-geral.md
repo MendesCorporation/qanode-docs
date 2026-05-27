@@ -8,7 +8,8 @@ O **Editor de Fluxos** é o coração do QANode. É nele que você cria, configu
 
 O editor é dividido em quatro áreas principais:
 
-<!-- ![Visão geral do editor de fluxos](../../assets/images/editor-visao-geral.png) -->
+[Visão geral do editor de fluxos](../../assets/images/interface-editor-fluxos.mp4)
+
 *Imagem: Editor de fluxos mostrando as quatro áreas: barra superior, paleta de nós, canvas e painel de propriedades*
 
 ### 1. Barra Superior
@@ -76,6 +77,8 @@ Ao selecionar um nó, o painel de propriedades aparece à direita com:
 5. **Salve** o fluxo (Ctrl+S)
 6. **Execute** e verifique os resultados
 
+[Fluxo de Trabalho Típico](../../assets/images/fluxo-trabalho-editor-fluxos.mp4)
+
 ---
 
 ## Ordem de Execução
@@ -109,6 +112,8 @@ Após uma execução, os nós exibem indicadores de status:
 | ⚪ Borda cinza | Nó foi pulado (branch não ativado) |
 | 🔵 Borda azul | Nó em execução |
 
+[Indicadores Visuais](../../assets/images/indicadores-visuais-editor-fluxos.mp4)
+
 ---
 
 ## Atalhos de Teclado
@@ -127,7 +132,7 @@ Após uma execução, os nós exibem indicadores de status:
 
 As **anotações** ajudam a documentar partes do fluxo diretamente no canvas. Use-as para explicar pré-condições, regras de negócio, agrupamentos lógicos, pendências ou observações importantes para o time.
 
-As anotações suportam:
+As anotações suportam: 
 
 - texto livre;
 - formatação simples em estilo Markdown;
@@ -137,6 +142,8 @@ As anotações suportam:
 - copiar, colar, duplicar e excluir.
 
 Você pode criar uma anotação pelo menu de contexto do canvas ou pelo atalho `Shift+A`.
+
+[Anotações no Canvas](../../assets/images/anotacoes-editor-fluxos.mp4) 
 
 ---
 
