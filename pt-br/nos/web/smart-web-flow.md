@@ -428,6 +428,7 @@ O Smart Web Flow grava e executa drag/drop usando uma combinação de:
 - Quando o destino é uma coluna, lista ou lane, revise se o alvo gravado representa o container e não apenas outro card.
 - Para cards dinâmicos, use texto de escopo ou variáveis para identificar o card correto.
 - Se a aplicação precisa de tempo para estabilizar depois do drop, adicione `waitAfter` ou uma espera explícita.
+- Se a extensão avisar que não conseguiu mover o item durante a gravação, ainda assim revise o passo no QANode: em sites muito customizados, a execução pode conseguir reproduzir o drag/drop mesmo quando a extensão não consegue mover visualmente o card.
 
 ---
 
@@ -517,6 +518,10 @@ Extrai um valor único da página.
 |-------|-----------|
 | **Nome** | Nome do output |
 | **Atributo** | `text`, `inputValue`, `href`, `src` ou atributo específico |
+
+Quando o passo vem da extensão, o Smart Web Flow trata extração como valor dinâmico. O texto visto durante a gravação é usado como amostra/evidência, mas o alvo deve ser encontrado por um seletor estável, por contexto ou pela posição correta entre elementos equivalentes.
+
+Isso ajuda em telas onde o valor pode mudar a cada execução, por exemplo contadores, status, saldos, totais e indicadores.
 
 O valor extraído fica disponível em:
 

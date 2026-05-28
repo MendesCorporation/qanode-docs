@@ -22,6 +22,7 @@ La barra superior contiene:
 | **Nombre del Flujo** | Campo editable con el nombre del escenario |
 | **Botón Guardar** | Guarda el flujo actual (Ctrl+S) |
 | **Botón Ejecutar** | Ejecuta el flujo y muestra los resultados |
+| **Historial de Versiones** | Abre snapshots guardados del escenario para consulta y restauración (Enterprise) |
 | **Menú de Opciones** | Exportar, importar, duplicar y otras opciones |
 
 ### 2. Paleta de Nodos (Lado Izquierdo)
@@ -61,7 +62,7 @@ El canvas es el área de trabajo donde posicionas y conectas los nodos. Funciona
 Al seleccionar un nodo, el panel de propiedades aparece a la derecha con:
 
 - **Ejecutar**: Ejecución del nodo en modo aislado
-- **Variables**: Abre las propiedades de nodos anteriores, variables locales y variables globales
+- **Variables**: Abre las propiedades de nodos anteriores, variables locales, variables globales y, cuando corresponda, variables del proyecto
 - **Configuración**: Campos específicos del tipo de nodo
 - **Outputs**: Esquema de salida del nodo (después de la ejecución, muestra los datos reales)
 - **Continuar en Fallo**: Toggle para continuar el flujo incluso si el nodo falla
@@ -155,6 +156,24 @@ El editor detecta automáticamente cuando hay cambios sin guardar. Al intentar s
 > Tienes cambios sin guardar. Si sales, tus cambios se perderán.
 
 Esto protege contra la pérdida accidental de trabajo. La advertencia solo aparece cuando hay cambios reales, no al abrir un flujo sin modificarlo.
+
+---
+
+## Historial de Versiones — Enterprise
+
+QANode Enterprise puede mantener snapshots del escenario al guardar cambios relevantes en el flujo. El historial ayuda a auditar cambios, comparar versiones y volver a una versión anterior cuando sea necesario.
+
+Para acceder:
+
+1. Abre el escenario en el editor.
+2. Haz clic en el icono de **Historial de Versiones** en la barra superior.
+3. Selecciona una versión para visualizar.
+
+Al abrir una versión antigua, el escenario se muestra en modo de consulta. Puedes navegar por el canvas, seleccionar nodos y revisar parámetros, pero no editas directamente el snapshot.
+
+Para volver a una versión anterior, usa **Restaurar esta versión**. QANode aplica ese snapshot como la versión actual del escenario y preserva la trazabilidad de la operación.
+
+> El historial de versiones está disponible solo en Enterprise. La cantidad de versiones retenidas es definida por el Super Admin en **Configuración → General**.
 
 ---
 

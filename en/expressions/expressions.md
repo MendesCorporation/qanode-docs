@@ -1,6 +1,6 @@
 # Expression System
 
-QANode uses an **expression** system with `{{ }}` syntax that allows you to inject dynamic data into any node configuration field. With expressions, you can access outputs from previous nodes, global variables, and environment variables.
+QANode uses an **expression** system with `{{ }}` syntax that allows you to inject dynamic data into any node configuration field. With expressions, you can access outputs from previous nodes, global variables, project variables, and environment variables.
 
 ---
 
@@ -120,13 +120,15 @@ The name used in `steps` is the node's **identifier**. By default, every node us
 {{ steps.query.outputs.rows[0].email }}  →  "joao@exemplo.com"
 ```
 
-### `variables` — Global Variables
+### `variables` — Global and Project Variables
 
 Access variables registered in the system:
 
 ```
 {{ variables.VARIABLE_NAME }}
 ```
+
+When the scenario belongs to a project, that project's variables are also available in the same `variables` object.
 
 **Examples:**
 

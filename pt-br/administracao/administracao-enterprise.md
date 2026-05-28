@@ -1,6 +1,6 @@
 # Administração
 
-A seção de administração permite gerenciar usuários, papéis, permissões, configurações de SMTP, alarmes, webhooks, auditoria e licenciamento.
+A seção de administração permite gerenciar usuários, papéis, permissões, configurações gerais, SMTP, alarmes, webhooks, auditoria e licenciamento.
 
 Acesse através do ícone de **engrenagem** (⚙️) no menu lateral → **Configurações**.
 
@@ -245,6 +245,58 @@ Ao criar ou editar um papel, o campo **Visão de Tabelas** define quais tabelas 
 | `settings.mfa` | Configurar MFA — permite gerenciar autenticação em dois fatores |
 | `settings.audit` | Visualizar auditoria — acesso ao log de auditoria |
 | `settings.report_template` | Gerenciar templates de relatório — permite criar e editar templates de PDF |
+
+---
+
+## Configurações Gerais — Super Admin
+
+A aba **Geral** reúne configurações que afetam a instância como um todo. Ela fica disponível para Super Admins em **Configurações → Geral**.
+
+As seções são organizadas em accordions para facilitar a navegação.
+
+### Segurança e MFA
+
+A configuração global de MFA fica em **Configurações → Geral → Segurança e MFA**.
+
+Use essa seção para exigir autenticação em dois fatores e reforçar o acesso de usuários administrativos.
+
+### Histórico de Versões — Enterprise
+
+O histórico de versões permite manter snapshots de cenários e componentes.
+
+| Configuração | Descrição |
+|--------------|-----------|
+| **Histórico de cenários** | Quantidade máxima de versões mantidas por cenário |
+| **Histórico de componentes** | Quantidade máxima de versões mantidas por componente |
+
+Como funciona:
+
+- cenários criam snapshot ao salvar uma alteração relevante no fluxo;
+- componentes criam snapshot ao publicar uma nova versão;
+- versões antigas podem ser abertas em modo de consulta;
+- a restauração cria uma nova versão atual a partir do snapshot escolhido;
+- ao reduzir o limite, versões excedentes são removidas automaticamente.
+
+O padrão recomendado é manter versões suficientes para auditoria e reversão sem acumular histórico desnecessário.
+
+### Retenção de Dados de Execução
+
+A retenção de dados remove artefatos antigos de execução, como evidências e anexos técnicos de execuções antigas. Ela não remove o registro da execução em si.
+
+Campos principais:
+
+| Campo | Descrição |
+|-------|-----------|
+| **Ativar limpeza agendada** | Executa a limpeza automaticamente uma vez por dia |
+| **Execuções com sucesso** | Dias para manter artefatos de execuções bem-sucedidas |
+| **Execuções com falha** | Dias para manter artefatos de execuções com falha |
+| **Execuções canceladas** | Dias para manter artefatos de execuções canceladas |
+| **Execuções sandbox** | Dias para manter artefatos de execuções temporárias |
+| **Manter últimas por fluxo** | Preserva as evidências mais recentes por cenário |
+
+A limpeza agendada roda uma vez por dia, após o horário fixo definido pela instância. Também é possível usar **Pré-visualizar limpeza** para estimar o impacto antes de executar.
+
+Por segurança, a limpeza preserva execuções vinculadas a defeitos ou tickets e não remove anexos de defeitos, evidências de tickets, sessões, templates de relatório ou sessões de navegador salvas.
 
 ---
 
@@ -534,7 +586,7 @@ Qualquer usuário pode alterar sua própria senha:
 
 Para maior segurança, ative a autenticação em dois fatores:
 
-1. Vá em **Configurações** → **MFA**
+1. Vá em **Configurações** → **Geral** → **Segurança e MFA**
 2. Escaneie o QR Code com um app autenticador (Google Authenticator, Authy, etc.)
 3. Informe o código gerado para confirmar
 4. O MFA estará ativo — códigos serão solicitados em cada login
@@ -559,6 +611,7 @@ Gerencie a licença do QANode:
 
 - **Configure o SMTP primeiro** — muitas funcionalidades dependem de e-mail
 - Use **papéis customizados** para controle fino de acesso
+- Revise **Configurações → Geral** para MFA, histórico de versões e retenção de dados
 - **Monitore a auditoria** regularmente para detectar ações inesperadas
 - **Ative MFA** para contas de administrador
 - **Desative usuários** em vez de excluir — preserva o histórico de auditoria

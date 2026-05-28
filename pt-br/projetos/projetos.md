@@ -87,6 +87,27 @@ Lista as suítes do projeto com informações de agendamento e último resultado
 
 > Para detalhes sobre suítes, veja [Suítes de Teste](../suites/suites.md).
 
+### Variáveis
+
+A aba **Variáveis** permite criar valores reutilizáveis apenas dentro daquele projeto.
+
+Use variáveis de projeto para dados que não devem ser globais, como URL do ambiente, usuários de teste, chaves de massa ou flags específicas daquele produto.
+
+| Informação | Descrição |
+|------------|-----------|
+| **Nome** | Identificador usado nas expressões |
+| **Tipo** | String, Number, Boolean ou JSON |
+| **Valor** | Valor salvo ou mascarado, quando secreto |
+| **Última atualização** | Data da última alteração |
+
+Nos cenários vinculados ao projeto, essas variáveis ficam disponíveis no painel **Variáveis** do editor e podem ser usadas com a mesma sintaxe:
+
+```
+{{ variables.NOME_DA_VARIAVEL }}
+```
+
+> A lista principal do menu **Variáveis** mostra apenas variáveis globais. Variáveis de projeto são gerenciadas dentro do próprio projeto.
+
 ### Execuções
 
 Histórico de todas as execuções do projeto:

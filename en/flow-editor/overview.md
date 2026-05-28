@@ -22,6 +22,7 @@ The top bar contains:
 | **Flow Name** | Editable field with the scenario name |
 | **Save Button** | Saves the current flow (Ctrl+S) |
 | **Run Button** | Executes the flow and displays the results |
+| **Version History** | Opens saved scenario snapshots for review and restore (Enterprise) |
 | **Options Menu** | Export, import, duplicate, and other options |
 
 ### 2. Node Palette (Left Side)
@@ -61,7 +62,7 @@ The canvas is the workspace where you position and connect nodes. Features:
 When you select a node, the properties panel appears on the right with:
 
 - **Run**: Executes the node in isolated mode
-- **Variables**: Opens the properties of previous nodes, local variables, and global variables
+- **Variables**: Opens the properties of previous nodes, local variables, global variables, and, when applicable, project variables
 - **Configuration**: Fields specific to the node type
 - **Outputs**: The node's output schema (after execution, shows the actual data)
 - **Continue on Failure**: Toggle to continue the flow even if the node fails
@@ -155,6 +156,24 @@ The editor automatically detects when there are unsaved changes. When you try to
 > You have unsaved changes. If you leave, your changes will be lost.
 
 This protects against accidental loss of work. The warning only appears when there are real changes — not when opening a flow without modifying it.
+
+---
+
+## Version History — Enterprise
+
+QANode Enterprise can keep scenario snapshots when relevant flow changes are saved. The history helps audit changes, compare versions, and return to an earlier version when needed.
+
+To access:
+
+1. Open the scenario in the editor.
+2. Click the **Version History** icon in the top bar.
+3. Select a version to view.
+
+When you open an older version, the scenario is shown in read-only mode. You can navigate the canvas, select nodes, and inspect parameters, but you do not edit the snapshot directly.
+
+To return to an earlier version, use **Restore this version**. QANode applies that snapshot as the current scenario version and preserves traceability of the operation.
+
+> Version history is available only in Enterprise. The number of retained versions is defined by the Super Admin in **Settings → General**.
 
 ---
 

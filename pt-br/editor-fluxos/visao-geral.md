@@ -22,6 +22,7 @@ A barra superior contém:
 | **Nome do Fluxo** | Campo editável com o nome do cenário |
 | **Botão Salvar** | Salva o fluxo atual (Ctrl+S) |
 | **Botão Executar** | Executa o fluxo e exibe os resultados |
+| **Histórico de Versões** | Abre snapshots salvos do cenário para consulta e restauração (Enterprise) |
 | **Menu de Opções** | Exportar, importar, duplicar e outras opções |
 
 ### 2. Paleta de Nós (Lado Esquerdo)
@@ -61,7 +62,7 @@ O canvas é a área de trabalho onde você posiciona e conecta os nós. Funciona
 Ao selecionar um nó, o painel de propriedades aparece à direita com:
 
 - **Executar**: Execução do node em modo isolado
-- **Variaveis**: Abre as propriedades de nodes anteriores, variaveis locais e variaveis globais
+- **Variáveis**: Abre as propriedades de nodes anteriores, variáveis locais, variáveis globais e, quando aplicável, variáveis do projeto
 - **Configuração**: Campos específicos do tipo de nó
 - **Outputs**: Schema de saída do nó (após execução, mostra os dados reais)
 - **Continuar em Falha**: Toggle para continuar o fluxo mesmo se o nó falhar
@@ -155,6 +156,24 @@ O editor detecta automaticamente quando há alterações não salvas. Ao tentar 
 > Você tem alterações não salvas. Se sair, suas alterações serão perdidas.
 
 Isso protege contra perda acidental de trabalho. O aviso só aparece quando há alterações reais — não ao abrir um fluxo sem modificá-lo.
+
+---
+
+## Histórico de Versões — Enterprise
+
+O QANode Enterprise pode manter snapshots do cenário ao salvar alterações relevantes no fluxo. O histórico ajuda a auditar mudanças, comparar versões e voltar para uma versão anterior quando necessário.
+
+Para acessar:
+
+1. Abra o cenário no editor.
+2. Clique no ícone de **Histórico de Versões** na barra superior.
+3. Selecione uma versão para visualizar.
+
+Ao abrir uma versão antiga, o cenário é exibido em modo de consulta. Você pode navegar pelo canvas, selecionar nós e conferir parâmetros, mas não edita diretamente o snapshot.
+
+Para voltar a uma versão anterior, use **Restaurar esta versão**. O QANode aplica aquele snapshot como a versão atual do cenário e preserva a rastreabilidade da operação.
+
+> O histórico de versões fica disponível apenas no Enterprise. A quantidade de versões mantidas é definida pelo Super Admin em **Configurações → Geral**.
 
 ---
 

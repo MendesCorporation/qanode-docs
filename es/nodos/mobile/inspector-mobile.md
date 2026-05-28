@@ -46,17 +46,23 @@ Muestra la captura de pantalla actualizada del dispositivo en tiempo real. Puede
 ### Área de Pasos Grabados
 
 Lista todos los pasos registrados durante la sesión. Cada acción muestra:
-- Tipo de acción (tap, type, swipe, etc.)
+- Ícono y color de la acción, siguiendo el patrón visual de QANode
+- Tipo de acción (tap, type, swipe, wait, extract, assert, etc.)
 - Descripción del objetivo o texto
-- Botón para eliminar el paso individualmente
+- Acciones para copiar o eliminar el paso individualmente
+
+También es posible reorganizar los pasos arrastrándolos en la lista antes de guardarlos en el nodo.
 
 ### Panel del Elemento Seleccionado
 
 Muestra la información del elemento tocado en modo **Inspeccionar**:
-- Clase nativa (`android.widget.Button`, `XCUIElementTypeTextField`, etc.)
-- Resource ID, Accessibility ID, XPath
-- Bounds (posición y tamaño en pantalla)
-- Texto actual y atributos relevantes
+- resumen del objetivo seleccionado;
+- texto, label, clase nativa y bounds;
+- atributos relevantes del elemento;
+- selectores detectados, con opción de marcar o desmarcar cuáles serán usados;
+- cantidad de matches cuando esta información esté disponible.
+
+La sección de selectores comienza colapsada para mantener la pantalla limpia. Ábrala cuando necesite revisar o ajustar la estrategia antes de agregar una acción.
 
 ---
 
@@ -132,10 +138,15 @@ Además de grabar toques y swipes, el Inspector Mobile ofrece botones para agreg
 
 | Acción | Descripción |
 |--------|-------------|
-| **Long Press** | Agrega un paso `long-press` en el elemento seleccionado (800ms) |
-| **Pinch In** | Agrega un paso `pinch-zoom` con gesto de pellizco sobre el elemento |
-| **Zoom Out** | Agrega un paso `pinch-zoom` con gesto de apertura sobre el elemento |
-| **Extraer valor** | Agrega un paso `extract` usando selectores estables (no basados en texto dinámico) |
+| **Toque** | Crea un paso `tap` en el elemento seleccionado |
+| **Doble Toque** | Crea un paso de doble toque en el elemento seleccionado |
+| **Presionar y Mantener** | Crea un paso `long-press` en el elemento seleccionado |
+| **Pinza para Dentro** | Crea un gesto de pinza sobre el elemento |
+| **Zoom para Fuera** | Crea un gesto de apertura sobre el elemento |
+| **Esperar Visible** | Crea una espera hasta que el elemento aparezca |
+| **Esperar Habilitado** | Crea una espera hasta que el elemento esté habilitado |
+| **Extracción** | Crea un paso `extract` usando selectores estables |
+| **Validación** | Crea un paso de assert para el elemento seleccionado |
 
 **Acciones de sistema (sin elemento seleccionado):**
 

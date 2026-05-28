@@ -87,6 +87,27 @@ Lists the project suites with scheduling information and last result.
 
 > For details about suites, see [Test Suites](../suites/suites.md).
 
+### Variables
+
+The **Variables** tab lets you create reusable values only inside that project.
+
+Use project variables for data that should not be global, such as environment URL, test users, test data keys, or flags specific to that product.
+
+| Information | Description |
+|-------------|-------------|
+| **Name** | Identifier used in expressions |
+| **Type** | String, Number, Boolean, or JSON |
+| **Value** | Saved value or masked value when secret |
+| **Last updated** | Date of the last change |
+
+In scenarios linked to the project, these variables are available in the editor **Variables** panel and can be used with the same syntax:
+
+```
+{{ variables.VARIABLE_NAME }}
+```
+
+> The main **Variables** menu lists only global variables. Project variables are managed inside the project itself.
+
 ### Executions
 
 History of all project executions:

@@ -280,6 +280,27 @@ For custom editors, Smart Web Flow can target editable regions such as `contente
 
 Drag/drop stores source and target information. When possible, the recorder captures a target container rather than a volatile sibling card, which improves behavior in kanban boards and reorderable lists. If the target is a free area, canvas, or a drop zone that only exists while dragging, review the step manually.
 
+If the extension warns that it could not move the item during recording, still review the step in QANode: on highly customized sites, execution may reproduce the drag/drop even when the extension cannot visually move the card.
+
+### extract
+
+Extracts a single value from the page.
+
+| Field | Description |
+|-------|-------------|
+| **Name** | Output name |
+| **Attribute** | `text`, `inputValue`, `href`, `src`, or a specific attribute |
+
+When the step comes from the extension, Smart Web Flow treats extraction as a dynamic value. The text seen during recording is used as a sample/evidence, but the target should be found by a stable selector, context, or the correct position among equivalent elements.
+
+This helps in screens where the value can change on each run, such as counters, statuses, balances, totals, and indicators.
+
+The extracted value is available at:
+
+```
+{{ steps["Node Name"].outputs.extracts.name }}
+```
+
 ### clock
 
 The `clock` action controls browser time for scenarios that depend on current date/time. It is useful for date pickers, expiration flows, SLA rules, time-based banners, or tests that must be deterministic.

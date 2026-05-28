@@ -65,12 +65,14 @@ In **Inspect mode**, the page shows two panels:
 
 When you click an element in Inspect mode, the extension does not automatically assume you want a click step. It first selects the target and shows actions such as **Click**, **Fill**, **Select**, **Hover**, **Press key**, **Wait visible**, **Assert**, **Extract**, **Extract list**, **Extract table**, or **Drag**, depending on the detected element type.
 
-This helps avoid accidental steps and makes it clearer which locators will be sent to QANode. If a strategy has many matches, prefer a more specific one or review the target before recording the action.
+This helps avoid accidental steps and makes it clearer which locators will be sent to QANode. The strategies shown in the panel are the strategies the extension can send in the step. You can uncheck strategies or ancestors you do not want to use before recording the action.
+
+The panel also shows the match count when possible. Strategies without a useful match are ignored to reduce noise. If a strategy has many matches, prefer a more specific one or review the target before recording the action.
 
 For guided actions:
 
-- **Extract list**: select the repeated item and then the fields to extract inside that item.
-- **Drag**: select the source item and then the drop target.
+- **Extract list**: select the repeated item; the extension highlights similar items and then lets you choose the fields to extract inside the selected item.
+- **Drag**: select the source item; the extension keeps the source highlighted and asks for the drop target.
 - **Press key**: select the target and enter the desired key.
 - **Fill**: select the field and enter the value to fill.
 
@@ -108,15 +110,18 @@ Captures a single value:
 2. Click the element to extract.
 3. An `extract` step is created.
 
+When the element value is dynamic, the extension avoids relying only on the captured text. It prioritizes unique selectors and, when needed, records the item position among visible matches so QANode extracts the future value instead of only searching for the text seen during recording.
+
 ### Ctrl+Shift+E — Extract List Mode
 
 Captures repeated elements such as table rows, cards, or list items:
 
 1. Press **Ctrl+Shift+E**.
-2. Click the repeated item that represents one row/card.
-3. Similar items are highlighted.
-4. Click the fields you want to extract inside the item.
-5. Click the **REC indicator** to finish.
+2. The indicator changes to **LIST:ITEM** — click the repeated element that represents one list item, such as a table row or card.
+3. Cyan overlays highlight all detected items with the same pattern.
+4. The indicator changes to **LIST:0** — click the fields you want to extract inside each item, such as name column or price column.
+5. Each selected field is highlighted in orange and added to the step. The counter increases with each field.
+6. Click the **REC indicator** to finish — an `extractList` step is recorded with all selected fields.
 
 Pressing **Ctrl+A** or **Ctrl+E** during list capture cancels the mode and returns to normal recording.
 
@@ -153,6 +158,23 @@ XPath Inspector helps investigate selectors directly on the page. It does not re
 6. Copy the XPath if needed.
 
 The selected element flashes on the page, helping confirm that the XPath points to the correct target.
+
+---
+
+## Recording a Test
+
+1. Click the extension icon in the toolbar.
+2. Select the **recorder mode** (Smart Web Flow, Web Flow, or Smart Locators).
+3. In **Smart Web Flow**, choose **Touch mode** or **Inspect mode**.
+4. Click **Start** to begin recording.
+5. In Touch mode, the indicator turns red to show active recording.
+6. Navigate and interact with the site normally, or, in Inspect mode, select elements and choose actions in the floating panels.
+7. Use **Ctrl+A** to add assertions.
+8. Use **Ctrl+E** to add single-value extractions.
+9. Use **Ctrl+Shift+E** to add list extractions.
+10. Use **Ctrl+Alt+W** to add explicit waits.
+11. Use **Ctrl+Alt+T** to add table extraction in Smart Web Flow mode.
+12. Click the icon again and click **Stop**, or finish from the Inspect mode panel.
 
 ---
 
@@ -208,6 +230,8 @@ During recording, QANode Recorder tries to capture:
 - gesture metadata to reproduce the movement more accurately.
 
 In **Smart Web Flow**, recording combines dragged item identity, target identity, visual/structural context, and supporting coordinates when needed. This helps with boards, kanban columns, reorderable lists, and drop areas that change during the gesture.
+
+In some sites, especially enterprise applications with highly customized drag/drop, the browser may block the movement performed by the extension itself during recording. In these cases, the extension warns that it could not visually move the item, but it can still record the step for QANode to execute later.
 
 Review the drag/drop step when:
 

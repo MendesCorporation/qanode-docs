@@ -64,12 +64,14 @@ No **Inspect mode**, a página mostra dois painéis:
 
 Ao clicar em um elemento no Inspect mode, a extensão não assume automaticamente que você quer clicar nele no cenário. Primeiro ela seleciona o alvo e mostra ações como **Click**, **Fill**, **Select**, **Hover**, **Press key**, **Wait visible**, **Assert**, **Extract**, **Extract list**, **Extract table** ou **Drag**, conforme o tipo de elemento detectado.
 
-Isso ajuda a evitar passos acidentais e deixa mais claro quais localizadores serão enviados ao QANode. Se uma estratégia aparecer com muitos matches, prefira outra mais específica ou revise o alvo antes de gravar a ação.
+Isso ajuda a evitar passos acidentais e deixa mais claro quais localizadores serão enviados ao QANode. As estratégias exibidas no painel são as estratégias que a extensão pode enviar no passo. Você pode desmarcar estratégias ou ancestrais que não deseja usar antes de gravar a ação.
+
+O painel também mostra a quantidade de matches quando possível. Estratégias sem match útil são ignoradas para evitar ruído. Se uma estratégia aparecer com muitos matches, prefira outra mais específica ou revise o alvo antes de gravar a ação.
 
 Para ações guiadas:
 
-- **Extract list**: selecione o item repetido e depois os campos que deseja extrair dentro daquele item.
-- **Drag**: selecione o item de origem e, em seguida, o destino do drop.
+- **Extract list**: selecione o item repetido; a extensão destaca itens parecidos e depois permite escolher os campos que deseja extrair dentro do item selecionado.
+- **Drag**: selecione o item de origem; a extensão mantém a origem destacada e pede o destino do drop.
 - **Press key**: selecione o alvo e informe a tecla desejada.
 - **Fill**: selecione o campo e informe o valor a preencher.
 
@@ -106,6 +108,8 @@ Captura elementos para **extração de dados**:
 1. Pressione **Ctrl+E** para ativar o modo extract
 2. Clique no elemento a extrair
 3. Um passo `extract` é criado capturando o texto/valor
+
+Quando o valor do elemento é dinâmico, a extensão evita depender apenas do texto capturado. Ela prioriza seletores únicos e, quando necessário, grava a posição do item entre os matches visíveis para que o QANode extraia o valor futuro, e não apenas procure o texto visto durante a gravação.
 
 ### CTRL+SHIFT+E — Modo Extract List
 
@@ -263,6 +267,8 @@ Durante a gravação, o QANode Recorder tenta capturar:
 - Metadados do gesto para reproduzir o movimento com mais precisão
 
 No modo **Smart Web Flow**, a gravação prioriza uma combinação de identidade do item arrastado, identidade do destino, contexto visual/estrutural e, quando necessário, coordenadas de apoio. Isso ajuda em quadros, kanbans, listas reordenáveis e áreas de drop que mudam depois do movimento.
+
+Em alguns sites, principalmente aplicações enterprise com drag/drop muito customizado, o navegador pode bloquear a movimentação feita pela própria extensão durante a gravação. Nesses casos, a extensão informa que não conseguiu mover visualmente o item, mas ainda pode gravar o passo para o QANode executar depois.
 
 No modo **Web Flow**, a gravação prioriza seletores CSS/XPath e atributos estáveis como `id`, `data-testid` e `data-qa`.
 

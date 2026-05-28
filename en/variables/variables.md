@@ -1,23 +1,61 @@
 # Variables
 
-**Variables** are global reusable values available in any test scenario. They allow you to centralize configurations such as URLs, test credentials, flags, and shared data.
+**Variables** are reusable values available in test scenarios. They allow you to centralize configurations such as URLs, test credentials, flags, and shared data.
+
+QANode has two main scopes:
+
+- **Global** — available to any scenario.
+- **Project** — available to scenarios linked to a specific project.
 
 ---
 
 ## Managing Variables
 
 1. In the sidebar, click **Variables**
-2. The list displays all registered variables
+2. The list displays registered global variables
 
 [Variable list](../../assets/images/variavel.mp4)
 *Image: Variables screen showing a list with name, type, value, and last updated*
 
 ---
 
+## Global and Project Variables
+
+### Global Variables
+
+Global variables should be used for values shared across multiple projects, such as:
+
+- common base URL;
+- execution flags;
+- reusable test data;
+- general settings.
+
+They are created from the sidebar **Variables** menu.
+
+### Project Variables
+
+Project variables live inside the **Variables** tab on the project page. Use this scope when the value belongs to a specific project, such as:
+
+- that system's staging URL;
+- a test user for that project;
+- identifiers or test data owned by that team;
+- settings that should not appear in the global list.
+
+When a scenario belongs to a project, project variables are available with the same syntax as global variables:
+
+```
+{{ variables.VARIABLE_NAME }}
+```
+
+If a global variable and a project variable have the same name, avoid relying on that overlap. Prefer clear names for each scope.
+
+---
+
 ## Creating a Variable
 
-1. Click **+ New Variable**
-2. Fill in:
+1. For a global variable, open **Variables** from the sidebar. For a project variable, open the project and go to the **Variables** tab
+2. Click **+ New Variable**
+3. Fill in:
 
 | Field | Required | Description |
 |-------|----------|-------------|
@@ -26,7 +64,7 @@
 | **Value** | Yes | Variable value |
 | **Secret** | No | If enabled, the value will be encrypted |
 
-3. Click **Save**
+4. Click **Save**
 
 ---
 
@@ -65,6 +103,8 @@ Access variables using the expression syntax:
 ```
 {{ variables.VARIABLE_NAME }}
 ```
+
+In the flow editor, the **Variables** button in the properties panel shows collapsed sections for local variables, global variables, and, when the scenario is inside a project, project variables.
 
 ### Usage Examples
 
@@ -132,7 +172,7 @@ This override:
 
 ### Naming
 
-Use **UPPER_SNAKE_CASE** for global variables:
+Use **UPPER_SNAKE_CASE** for global and project variables:
 
 | Good | Bad |
 |------|-----|
@@ -169,5 +209,6 @@ DEV_API_URL = http://localhost:3000
 - **Centralize URLs** in variables to make environment switching easier
 - **Use secret variables** for sensitive data
 - **Prefer credentials** for structured connection data
-- Variables are **global** — accessible in any flow
+- Use **global** variables for values shared across the whole instance
+- Use **project** variables for project-specific data
 - The **JSON** type is useful for grouping related configurations

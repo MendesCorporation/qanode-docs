@@ -166,6 +166,23 @@ Important rules:
 
 ---
 
+## Version History — Enterprise
+
+In QANode Enterprise, published components can keep version history.
+
+Each relevant publication can create a snapshot with the internal flow, input contract, output contract, and component metadata. This allows you to review older versions and restore a version when needed.
+
+How to use:
+
+1. Open the component.
+2. Open **Version History**.
+3. Select a version to view in read-only mode.
+4. Use **Restore this version** when you want to return to that snapshot's contract and flow.
+
+> The number of versions retained per component is defined by the Super Admin in **Settings → General**.
+
+---
+
 ## Using in a Scenario
 
 In the scenario editor:

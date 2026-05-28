@@ -114,6 +114,21 @@ Las suites pueden ejecutarse automáticamente en horarios definidos.
 
 ---
 
+## Cancelando una Suite en Ejecución
+
+Cuando una suite está en curso, los usuarios con el permiso `run.cancel` pueden cancelar la ejecución desde la lista de ejecuciones.
+
+Al cancelar una suite:
+
+- los escenarios aún pendientes no se inician;
+- los escenarios en ejecución reciben una solicitud de cancelación;
+- los resultados ya finalizados permanecen preservados;
+- el estado final de la ejecución queda como **Cancelado**.
+
+Este recurso es útil cuando una suite se inició por error, está usando datos incorrectos o está consumiendo un ambiente en un momento inadecuado.
+
+---
+
 ## Programación
 
 ### Configurar la Programación

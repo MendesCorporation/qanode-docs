@@ -1,6 +1,6 @@
 # Administration
 
-The administration section allows managing users, roles, permissions, SMTP settings, alarms, webhooks, audit logging, and licensing.
+The administration section allows managing users, roles, permissions, general settings, SMTP, alarms, webhooks, audit logging, and licensing.
 
 Access it through the **gear** icon (⚙️) in the side menu → **Settings**.
 
@@ -90,7 +90,7 @@ When creating or editing a role, the **Table View** field defines which database
 
 | Profile | Accessible Tables |
 |---------|-------------------|
-| **admin** | All tables: Projects, Flows, Suites, Runs, Run Steps, Variables, Credentials, Users, Roles, Audit Log |
+| **admin** | All tables: Projects, Flows, Suites, Runs, Run Steps, Variables, Credentials, Users, Roles, Bugs, Audit Log |
 | **architect** | Projects, Flows, Suites, Runs, Run Steps, Variables |
 | **tester** | Projects, Flows, Suites, Runs, Run Steps |
 | **none** | No tables — query builder disabled |
@@ -245,6 +245,58 @@ When creating or editing a role, the **Table View** field defines which database
 | `settings.mfa` | Configure MFA — allows managing two-factor authentication |
 | `settings.audit` | View audit — access to the audit log |
 | `settings.report_template` | Manage report templates — allows creating and editing PDF templates |
+
+---
+
+## General Settings — Super Admin
+
+The **General** tab groups settings that affect the entire instance. It is available to Super Admins in **Settings → General**.
+
+Sections are organized in accordions to make navigation easier.
+
+### Security and MFA
+
+The global MFA configuration is in **Settings → General → Security and MFA**.
+
+Use this section to require two-factor authentication and strengthen access for administrative users.
+
+### Version History — Enterprise
+
+Version history allows QANode to keep snapshots of scenarios and components.
+
+| Setting | Description |
+|---------|-------------|
+| **Scenario history** | Maximum number of versions retained per scenario |
+| **Component history** | Maximum number of versions retained per component |
+
+How it works:
+
+- scenarios create a snapshot when a relevant flow change is saved;
+- components create a snapshot when a new version is published;
+- older versions can be opened in read-only mode;
+- restoring creates a new current version from the selected snapshot;
+- when the limit is reduced, exceeding versions are removed automatically.
+
+The recommended default is to keep enough versions for auditing and rollback without accumulating unnecessary history.
+
+### Execution Data Retention
+
+Execution data retention removes old execution artifacts, such as evidence and technical attachments from older runs. It does not remove the execution record itself.
+
+Main fields:
+
+| Field | Description |
+|-------|-------------|
+| **Enable scheduled cleanup** | Runs cleanup automatically once per day |
+| **Successful executions** | Days to keep artifacts from successful executions |
+| **Failed executions** | Days to keep artifacts from failed executions |
+| **Cancelled executions** | Days to keep artifacts from cancelled executions |
+| **Sandbox executions** | Days to keep artifacts from temporary executions |
+| **Keep latest per flow** | Preserves the most recent evidence per scenario |
+
+Scheduled cleanup runs once per day after the fixed time defined by the instance. You can also use **Preview cleanup** to estimate the impact before running it.
+
+For safety, cleanup preserves executions linked to bugs or tickets and does not remove bug attachments, ticket evidence, sessions, report templates, or saved browser sessions.
 
 ---
 

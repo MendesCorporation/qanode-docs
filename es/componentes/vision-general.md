@@ -166,6 +166,23 @@ Reglas importantes:
 
 ---
 
+## Historial de Versiones — Enterprise
+
+En QANode Enterprise, los componentes publicados pueden mantener historial de versiones.
+
+Cada publicación relevante puede generar un snapshot con el flujo interno, contrato de entrada, contrato de salida y metadatos del componente. Esto permite consultar versiones anteriores y restaurar una versión cuando sea necesario.
+
+Cómo usar:
+
+1. Abra el componente.
+2. Acceda al **Historial de Versiones**.
+3. Seleccione una versión para visualizar en modo de consulta.
+4. Use **Restaurar esta versión** cuando quiera volver al contrato y al flujo de ese snapshot.
+
+> La cantidad de versiones retenidas por componente es definida por el Super Admin en **Configuración → General**.
+
+---
+
 ## Usando en un Escenario
 
 En el editor de escenarios:

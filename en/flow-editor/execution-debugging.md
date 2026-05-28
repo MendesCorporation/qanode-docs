@@ -25,7 +25,26 @@ To execute the entire flow:
 | **Running** | 🔵 Blue/Pulsing | The node is being processed |
 | **Success** | 🟢 Green | The node executed successfully |
 | **Failure** | 🔴 Red | The node encountered an error |
+| **Cancelled** | ⚪ Gray | The execution was manually interrupted |
 | **Skipped** | ⚪ Gray | The node was not executed (inactive branch) |
+
+---
+
+## Cancelling Executions
+
+Running executions can be cancelled by users with the `run.cancel` permission.
+
+Where to cancel:
+
+- **Scenario editor**: during execution, the run button changes to a stop button.
+- **Execution list**: use the action menu for the running execution.
+- **Suite execution**: cancelling the parent execution also cancels pending or running scenarios in that suite.
+
+When cancelled, the final status is **Cancelled**. Evidence and logs already generated up to that point remain available for review.
+
+Cancellation happens at safe execution points. Web, Smart Web, mobile, API, database, SSH, load, and custom JavaScript nodes check for cancellation while processing. For browser or mobile session nodes, QANode also tries to close opened resources to avoid stuck sessions.
+
+> A very long external action may finish its current segment before recognizing cancellation. In those cases, QANode cancels as soon as execution returns to a safe point.
 
 ---
 

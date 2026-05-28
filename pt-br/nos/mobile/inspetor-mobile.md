@@ -46,17 +46,23 @@ Exibe o screenshot atualizado do dispositivo em tempo real. Você pode:
 ### Área de Ações Gravadas
 
 Lista todos os passos registrados durante a sessão. Cada ação mostra:
-- Tipo da ação (tap, type, swipe, etc.)
+- Ícone e cor da ação, seguindo o padrão visual do QANode
+- Tipo da ação (tap, type, swipe, wait, extract, assert, etc.)
 - Descrição do alvo ou texto
-- Botão para remover o passo individualmente
+- Ações para copiar ou remover o passo individualmente
+
+Também é possível reorganizar passos arrastando-os na lista antes de salvar no nó.
 
 ### Painel do Elemento Selecionado
 
 Exibe as informações do elemento tocado no modo **Inspecionar**:
-- Classe nativa (`android.widget.Button`, `XCUIElementTypeTextField`, etc.)
-- Resource ID, Accessibility ID, XPath
-- Bounds (posição e tamanho na tela)
-- Texto atual e atributos relevantes
+- resumo do alvo selecionado;
+- texto, label, classe nativa e bounds;
+- atributos relevantes do elemento;
+- seletores detectados, com opção de marcar ou desmarcar quais serão usados;
+- quantidade de matches quando essa informação estiver disponível.
+
+A seção de seletores começa recolhida para manter a tela limpa. Abra quando precisar revisar ou ajustar a estratégia antes de adicionar uma ação.
 
 ---
 
@@ -130,19 +136,24 @@ Além de gravar toques e swipes, o Inspetor Mobile oferece botões para adiciona
 
 | Ação | Descrição |
 |------|-----------|
-| **Long Press** | Adiciona um passo `long-press` no elemento selecionado (800ms) |
-| **Pinch In** | Adiciona um passo `pinch-zoom` com gesto de pinça sobre o elemento |
-| **Zoom Out** | Adiciona um passo `pinch-zoom` com gesto de afastamento sobre o elemento |
-| **Extrair valor** | Adiciona um passo `extract` usando seletores estáveis (não baseados em texto dinâmico) |
+| **Toque** | Cria um passo `tap` no elemento selecionado |
+| **Duplo Toque** | Cria um passo de duplo toque no elemento selecionado |
+| **Pressionar e Segurar** | Cria um passo `long-press` no elemento selecionado |
+| **Pinça para Dentro** | Cria um gesto de pinça sobre o elemento |
+| **Zoom para Fora** | Cria um gesto de afastamento sobre o elemento |
+| **Esperar Visível** | Cria uma espera até o elemento aparecer |
+| **Esperar Habilitado** | Cria uma espera até o elemento estar habilitado |
+| **Extração** | Cria um passo `extract` usando seletores estáveis |
+| **Validação** | Cria um passo de assert para o elemento selecionado |
 
 **Ações de sistema (sem elemento selecionado):**
 
 | Ação | Descrição |
 |------|-----------|
-| **Accept Alert** | Adiciona um passo `permission` que aceita o alerta de sistema atual |
-| **Dismiss Alert** | Adiciona um passo `permission` que dispensa o alerta de sistema atual |
-| **Grant Permission** | Solicita o nome da permissão Android e adiciona um passo `permission` para concedê-la |
-| **Revoke Permission** | Solicita o nome da permissão Android e adiciona um passo `permission` para revogá-la |
+| **Aceitar Alerta** | Cria um passo `permission` que aceita o alerta de sistema atual |
+| **Dispensar Alerta** | Cria um passo `permission` que dispensa o alerta de sistema atual |
+| **Grant Permission** | Solicita o nome da permissão Android e cria um passo para concedê-la |
+| **Revoke Permission** | Solicita o nome da permissão Android e cria um passo para revogá-la |
 
 > As ações Grant/Revoke Permission são exclusivas para sessões Android e abrem um prompt solicitando o nome da permissão, por exemplo: `android.permission.CAMERA`.
 

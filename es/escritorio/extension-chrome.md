@@ -65,12 +65,14 @@ En **Inspect mode**, la página muestra dos paneles:
 
 Al hacer clic en un elemento en Inspect mode, la extensión no asume automáticamente que usted quiere hacer clic en él en el escenario. Primero selecciona el objetivo y muestra acciones como **Click**, **Fill**, **Select**, **Hover**, **Press key**, **Wait visible**, **Assert**, **Extract**, **Extract list**, **Extract table** o **Drag**, según el tipo de elemento detectado.
 
-Esto ayuda a evitar pasos accidentales y deja más claro qué localizadores serán enviados a QANode. Si una estrategia aparece con muchos matches, prefiera otra más específica o revise el objetivo antes de grabar la acción.
+Esto ayuda a evitar pasos accidentales y deja más claro qué localizadores serán enviados a QANode. Las estrategias mostradas en el panel son las estrategias que la extensión puede enviar en el paso. Puede desmarcar estrategias o ancestros que no desea usar antes de grabar la acción.
+
+El panel también muestra la cantidad de matches cuando es posible. Las estrategias sin un match útil se ignoran para reducir ruido. Si una estrategia aparece con muchos matches, prefiera otra más específica o revise el objetivo antes de grabar la acción.
 
 Para acciones guiadas:
 
-- **Extract list**: seleccione el item repetido y luego los campos que desea extraer dentro de ese item.
-- **Drag**: seleccione el item de origen y después el destino del drop.
+- **Extract list**: seleccione el item repetido; la extensión destaca items parecidos y luego permite elegir los campos que desea extraer dentro del item seleccionado.
+- **Drag**: seleccione el item de origen; la extensión mantiene el origen destacado y pide el destino del drop.
 - **Press key**: seleccione el objetivo e informe la tecla deseada.
 - **Fill**: seleccione el campo e informe el valor a llenar.
 
@@ -108,15 +110,18 @@ Captura un valor único:
 2. Haga clic en el elemento a extraer.
 3. Se crea un paso `extract`.
 
+Cuando el valor del elemento es dinámico, la extensión evita depender solo del texto capturado. Prioriza selectores únicos y, cuando es necesario, graba la posición del item entre los matches visibles para que QANode extraiga el valor futuro, y no solo busque el texto visto durante la grabación.
+
 ### Ctrl+Shift+E — Modo Extract List
 
 Captura elementos repetidos como filas de tabla, cards o items de lista:
 
 1. Presione **Ctrl+Shift+E**.
-2. Haga clic en el item repetido que representa una fila/card.
-3. Los items similares se destacan.
-4. Haga clic en los campos que desea extraer dentro del item.
-5. Haga clic en el **indicador REC** para finalizar.
+2. El indicador cambia a **LIST:ITEM** — haga clic en el elemento repetido que representa un item de la lista, como una fila de tabla o un card.
+3. Overlays cian destacan todos los items detectados con el mismo patrón.
+4. El indicador cambia a **LIST:0** — haga clic en los campos que desea extraer dentro de cada item, como columna nombre o columna precio.
+5. Cada campo seleccionado se destaca en naranja y se agrega al paso. El contador aumenta con cada campo.
+6. Haga clic en el **indicador REC** para finalizar — se graba un paso `extractList` con todos los campos seleccionados.
 
 Presionar **Ctrl+A** o **Ctrl+E** durante la captura de lista cancela el modo y vuelve a la grabación normal.
 
@@ -153,6 +158,23 @@ XPath Inspector ayuda a investigar selectores directamente en la página. No gra
 6. Copie el XPath si es necesario.
 
 El elemento seleccionado parpadea en la página, ayudando a confirmar que el XPath apunta al objetivo correcto.
+
+---
+
+## Grabando una Prueba
+
+1. Haga clic en el ícono de la extensión en la barra de herramientas.
+2. Seleccione el **modo del recorder** (Smart Web Flow, Web Flow o Smart Locators).
+3. En **Smart Web Flow**, elija **Touch mode** o **Inspect mode**.
+4. Haga clic en **Start** para iniciar la grabación.
+5. En Touch mode, el indicador queda rojo mostrando grabación activa.
+6. Navegue e interactúe con el sitio normalmente o, en Inspect mode, seleccione elementos y elija acciones en los paneles flotantes.
+7. Use **Ctrl+A** para agregar verificaciones.
+8. Use **Ctrl+E** para agregar extracciones de valor único.
+9. Use **Ctrl+Shift+E** para agregar extracciones de lista.
+10. Use **Ctrl+Alt+W** para agregar waits explícitos.
+11. Use **Ctrl+Alt+T** para agregar extracción de tabla en modo Smart Web Flow.
+12. Haga clic nuevamente en el ícono y haga clic en **Stop**, o finalice desde el panel del Inspect mode.
 
 ---
 
@@ -208,6 +230,8 @@ Durante la grabación, QANode Recorder intenta capturar:
 - metadatos del gesto para reproducir el movimiento con más precisión.
 
 En **Smart Web Flow**, la grabación combina identidad del item arrastrado, identidad del destino, contexto visual/estructural y coordenadas de apoyo cuando sea necesario. Esto ayuda en tableros, columnas kanban, listas reordenables y zonas de drop que cambian durante el gesto.
+
+En algunos sitios, principalmente aplicaciones enterprise con drag/drop muy personalizado, el navegador puede bloquear el movimiento realizado por la propia extensión durante la grabación. En esos casos, la extensión informa que no pudo mover visualmente el item, pero aún puede grabar el paso para que QANode lo ejecute después.
 
 Revise el paso de drag/drop cuando:
 

@@ -114,6 +114,21 @@ Suítes podem ser executadas automaticamente em horários definidos.
 
 ---
 
+## Cancelando uma Suíte em Execução
+
+Quando uma suíte está em andamento, usuários com permissão `run.cancel` podem cancelar a execução pela lista de execuções.
+
+Ao cancelar uma suíte:
+
+- cenários ainda pendentes não são iniciados;
+- cenários em execução recebem pedido de cancelamento;
+- resultados já concluídos permanecem preservados;
+- o status final da execução fica como **Cancelado**.
+
+Esse recurso é útil quando uma suíte foi disparada por engano, está usando dados incorretos ou está consumindo ambiente em um momento inadequado.
+
+---
+
 ## Agendamento
 
 ### Configurando o Agendamento

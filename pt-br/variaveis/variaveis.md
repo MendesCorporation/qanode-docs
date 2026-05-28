@@ -1,23 +1,61 @@
 # Variáveis
 
-**Variáveis** são valores globais reutilizáveis em qualquer cenário de teste. Elas permitem centralizar configurações como URLs, credenciais de teste, flags e dados compartilhados.
+**Variáveis** são valores reutilizáveis em cenários de teste. Elas permitem centralizar configurações como URLs, credenciais de teste, flags e dados compartilhados.
+
+No QANode existem dois escopos principais:
+
+- **Globais** — disponíveis para qualquer cenário.
+- **De projeto** — disponíveis para cenários vinculados a um projeto específico.
 
 ---
 
 ## Gerenciando Variáveis
 
 1. No menu lateral, clique em **Variáveis**
-2. A lista exibe todas as variáveis cadastradas
+2. A lista exibe as variáveis globais cadastradas
 
-[Lista de variáveis](../../assets/images/variavel.mp4) 
+[Lista de variáveis](../../assets/images/variavel.mp4)
 *Imagem: Tela de variáveis mostrando lista com nome, tipo, valor e última atualização*
+
+---
+
+## Variáveis Globais e de Projeto
+
+### Variáveis Globais
+
+Variáveis globais devem ser usadas para valores compartilhados por vários projetos, como:
+
+- URL base comum;
+- flags de execução;
+- dados de teste reutilizáveis;
+- configurações gerais.
+
+Elas são criadas no menu lateral **Variáveis**.
+
+### Variáveis de Projeto
+
+Variáveis de projeto ficam dentro da aba **Variáveis** da página do projeto. Use esse escopo quando o valor pertence a um projeto específico, como:
+
+- URL de homologação daquele sistema;
+- usuário de teste daquele projeto;
+- identificadores ou dados de massa próprios daquela equipe;
+- configurações que não devem aparecer na lista global.
+
+Quando um cenário pertence a um projeto, as variáveis do projeto ficam disponíveis com a mesma sintaxe das variáveis globais:
+
+```
+{{ variables.NOME_DA_VARIAVEL }}
+```
+
+Se uma variável global e uma variável de projeto tiverem o mesmo nome, evite depender dessa sobreposição. Prefira nomes claros para cada escopo.
 
 ---
 
 ## Criando uma Variável
 
-1. Clique em **+ Nova Variável**
-2. Preencha:
+1. Para variável global, acesse **Variáveis** no menu lateral. Para variável de projeto, abra o projeto e acesse a aba **Variáveis**
+2. Clique em **+ Nova Variável**
+3. Preencha:
 
 | Campo | Obrigatório | Descrição |
 |-------|-------------|-----------|
@@ -26,7 +64,7 @@
 | **Valor** | Sim | Valor da variável |
 | **Secreta** | Não | Se ativado, o valor será criptografado |
 
-3. Clique em **Salvar**
+4. Clique em **Salvar**
 
 ---
 
@@ -65,6 +103,8 @@ Acesse variáveis usando a sintaxe de expressões:
 ```
 {{ variables.NOME_DA_VARIAVEL }}
 ```
+
+No editor de fluxo, o botão **Variáveis** do painel de propriedades mostra seções recolhidas para variáveis locais, globais e, quando o cenário está dentro de um projeto, variáveis do projeto.
 
 ### Exemplos de Uso
 
@@ -132,7 +172,7 @@ Esse override:
 
 ### Nomenclatura
 
-Use **UPPER_SNAKE_CASE** para variáveis globais:
+Use **UPPER_SNAKE_CASE** para variáveis globais e de projeto:
 
 | Bom | Ruim |
 |-----|------|
@@ -169,5 +209,6 @@ DEV_API_URL = http://localhost:3000
 - **Centralize URLs** em variáveis para facilitar troca de ambiente
 - **Use variáveis secretas** para dados sensíveis
 - **Prefira credenciais** para dados de conexão estruturados
-- Variáveis são **globais** — acessíveis em qualquer fluxo
+- Use variáveis **globais** para valores compartilhados por toda a instância
+- Use variáveis **de projeto** para dados específicos de um projeto
 - O tipo **JSON** é útil para agrupar configurações relacionadas

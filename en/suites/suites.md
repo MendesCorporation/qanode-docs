@@ -114,6 +114,21 @@ Suites can be executed automatically at defined times.
 
 ---
 
+## Cancelling a Running Suite
+
+When a suite is running, users with the `run.cancel` permission can cancel the execution from the execution list.
+
+When cancelling a suite:
+
+- scenarios still pending are not started;
+- scenarios currently running receive a cancellation request;
+- results already completed remain preserved;
+- the final execution status becomes **Cancelled**.
+
+This is useful when a suite was started by mistake, is using incorrect data, or is consuming an environment at an inappropriate time.
+
+---
+
 ## Scheduling
 
 ### Configuring Scheduling

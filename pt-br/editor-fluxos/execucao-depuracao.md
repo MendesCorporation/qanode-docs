@@ -24,7 +24,26 @@ Para executar todo o fluxo:
 | **Executando** | 🔵 Azul/Pulsante | O nó está sendo processado |
 | **Sucesso** | 🟢 Verde | O nó foi executado com sucesso |
 | **Falha** | 🔴 Vermelho | O nó encontrou um erro |
+| **Cancelado** | ⚪ Cinza | A execução foi interrompida manualmente |
 | **Pulado** | ⚪ Cinza | O nó não foi executado (branch inativo) |
+
+---
+
+## Cancelando Execuções
+
+Execuções em andamento podem ser canceladas por usuários com permissão `run.cancel`.
+
+Onde cancelar:
+
+- **Editor do cenário**: durante a execução, o botão de executar muda para um botão de parada.
+- **Lista de execuções**: use o menu de ações da execução em andamento.
+- **Execução de suíte**: cancelar a execução principal também cancela os cenários pendentes ou em execução daquela suíte.
+
+Ao cancelar, o status final fica como **Cancelado**. Evidências e logs já gerados até aquele ponto permanecem disponíveis para consulta.
+
+O cancelamento acontece em pontos seguros da execução. Nós web, Smart Web, mobile, API, banco de dados, SSH, carga e JavaScript customizado verificam o pedido de cancelamento durante o processamento. Em nós com navegador ou sessão mobile, o QANode também tenta encerrar recursos abertos para evitar sessões presas.
+
+> Uma ação externa muito longa pode terminar o trecho atual antes de reconhecer o cancelamento. Nesses casos, o QANode cancela assim que a execução volta para um ponto seguro.
 
 ---
 

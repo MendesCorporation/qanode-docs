@@ -280,6 +280,27 @@ Para editores customizados, Smart Web Flow puede apuntar a regiones editables co
 
 Drag/drop guarda información de origen y destino. Cuando es posible, el recorder captura un contenedor de destino en vez de un card vecino volátil, mejorando el comportamiento en kanbans y listas reordenables. Si el destino es un área libre, canvas o zona de drop que solo existe mientras se arrastra, revise el paso manualmente.
 
+Si la extensión avisa que no pudo mover el item durante la grabación, aun así revise el paso en QANode: en sitios muy personalizados, la ejecución puede reproducir el drag/drop incluso cuando la extensión no consigue mover visualmente el card.
+
+### extract
+
+Extrae un valor único de la página.
+
+| Campo | Descripción |
+|-------|-------------|
+| **Nombre** | Nombre del output |
+| **Atributo** | `text`, `inputValue`, `href`, `src` o un atributo específico |
+
+Cuando el paso viene de la extensión, Smart Web Flow trata la extracción como valor dinámico. El texto visto durante la grabación se usa como muestra/evidencia, pero el objetivo debe encontrarse por un selector estable, por contexto o por la posición correcta entre elementos equivalentes.
+
+Esto ayuda en pantallas donde el valor puede cambiar en cada ejecución, por ejemplo contadores, estados, saldos, totales e indicadores.
+
+El valor extraído queda disponible en:
+
+```
+{{ steps["Nombre del Nodo"].outputs.extracts.nombre }}
+```
+
 ### clock
 
 La acción `clock` controla el tiempo del navegador para escenarios que dependen de fecha/hora actual. Es útil para date pickers, expiración, reglas de SLA, banners por tiempo o pruebas que deben ser determinísticas.

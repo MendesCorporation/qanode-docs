@@ -1,6 +1,6 @@
 # Administración
 
-La sección de administración permite gestionar usuarios, roles, permisos, configuración SMTP, alarmas, webhooks, auditoría y licenciamiento.
+La sección de administración permite gestionar usuarios, roles, permisos, configuración general, SMTP, alarmas, webhooks, auditoría y licenciamiento.
 
 Acceda a través del ícono de **engranaje** (⚙️) en el menú lateral → **Configuración**.
 
@@ -90,7 +90,7 @@ Al crear o editar un rol, el campo **Vista de Tablas** define qué tablas de la 
 
 | Perfil | Tablas accesibles |
 |--------|-------------------|
-| **admin** | Todas las tablas: Projects, Flows, Suites, Runs, Run Steps, Variables, Credentials, Users, Roles, Audit Log |
+| **admin** | Todas las tablas: Projects, Flows, Suites, Runs, Run Steps, Variables, Credentials, Users, Roles, Bugs, Audit Log |
 | **architect** | Projects, Flows, Suites, Runs, Run Steps, Variables |
 | **tester** | Projects, Flows, Suites, Runs, Run Steps |
 | **none** | Ninguna tabla — query builder deshabilitado |
@@ -245,6 +245,58 @@ Al crear o editar un rol, el campo **Vista de Tablas** define qué tablas de la 
 | `settings.mfa` | Configurar MFA — permite gestionar la autenticación de dos factores |
 | `settings.audit` | Ver auditoría — acceso al registro de auditoría |
 | `settings.report_template` | Gestionar plantillas de informe — permite crear y editar plantillas PDF |
+
+---
+
+## Configuración General — Super Admin
+
+La pestaña **General** reúne configuraciones que afectan a toda la instancia. Está disponible para Super Admins en **Configuración → General**.
+
+Las secciones están organizadas en acordeones para facilitar la navegación.
+
+### Seguridad y MFA
+
+La configuración global de MFA está en **Configuración → General → Seguridad y MFA**.
+
+Use esta sección para exigir autenticación de dos factores y reforzar el acceso de usuarios administrativos.
+
+### Historial de Versiones — Enterprise
+
+El historial de versiones permite mantener snapshots de escenarios y componentes.
+
+| Configuración | Descripción |
+|---------------|-------------|
+| **Historial de escenarios** | Cantidad máxima de versiones retenidas por escenario |
+| **Historial de componentes** | Cantidad máxima de versiones retenidas por componente |
+
+Cómo funciona:
+
+- los escenarios crean un snapshot al guardar un cambio relevante en el flujo;
+- los componentes crean un snapshot al publicar una nueva versión;
+- las versiones antiguas pueden abrirse en modo de consulta;
+- la restauración crea una nueva versión actual a partir del snapshot elegido;
+- al reducir el límite, las versiones excedentes se eliminan automáticamente.
+
+El valor recomendado es mantener suficientes versiones para auditoría y reversión sin acumular historial innecesario.
+
+### Retención de Datos de Ejecución
+
+La retención de datos elimina artefactos antiguos de ejecución, como evidencias y adjuntos técnicos de ejecuciones antiguas. No elimina el registro de la ejecución en sí.
+
+Campos principales:
+
+| Campo | Descripción |
+|-------|-------------|
+| **Activar limpieza programada** | Ejecuta la limpieza automáticamente una vez al día |
+| **Ejecuciones exitosas** | Días para mantener artefactos de ejecuciones exitosas |
+| **Ejecuciones con fallo** | Días para mantener artefactos de ejecuciones con fallo |
+| **Ejecuciones canceladas** | Días para mantener artefactos de ejecuciones canceladas |
+| **Ejecuciones sandbox** | Días para mantener artefactos de ejecuciones temporales |
+| **Mantener últimas por flujo** | Preserva las evidencias más recientes por escenario |
+
+La limpieza programada se ejecuta una vez al día después del horario fijo definido por la instancia. También es posible usar **Previsualizar limpieza** para estimar el impacto antes de ejecutarla.
+
+Por seguridad, la limpieza preserva ejecuciones vinculadas a defectos o tickets y no elimina adjuntos de defectos, evidencias de tickets, sesiones, plantillas de informe o sesiones de navegador guardadas.
 
 ---
 

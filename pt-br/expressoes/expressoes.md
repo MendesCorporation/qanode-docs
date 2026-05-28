@@ -1,6 +1,6 @@
 # Sistema de Expressões
 
-O QANode utiliza um sistema de **expressões** com a sintaxe `{{ }}` que permite injetar dados dinâmicos em qualquer campo de configuração dos nós. Com expressões, você pode acessar outputs de nós anteriores, variáveis globais e variáveis de ambiente.
+O QANode utiliza um sistema de **expressões** com a sintaxe `{{ }}` que permite injetar dados dinâmicos em qualquer campo de configuração dos nós. Com expressões, você pode acessar outputs de nós anteriores, variáveis globais, variáveis de projeto e variáveis de ambiente.
 
 ---
 
@@ -120,13 +120,15 @@ O nome usado em `steps` é o **identificador** do nó. Por padrão, todo nó usa
 {{ steps.query.outputs.rows[0].email }}  →  "joao@exemplo.com"
 ```
 
-### `variables` — Variáveis Globais
+### `variables` — Variáveis Globais e de Projeto
 
 Acesse variáveis cadastradas no sistema:
 
 ```
 {{ variables.NOME_DA_VARIAVEL }}
 ```
+
+Quando o cenário pertence a um projeto, as variáveis daquele projeto também ficam disponíveis no mesmo objeto `variables`.
 
 **Exemplos:**
 

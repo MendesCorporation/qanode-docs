@@ -46,17 +46,23 @@ Displays an updated screenshot of the device in real time. You can:
 ### Recorded Steps Area
 
 Lists all steps recorded during the session. Each action shows:
-- Action type (tap, type, swipe, etc.)
+- Icon and action color, following QANode's visual pattern
+- Action type (tap, type, swipe, wait, extract, assert, etc.)
 - Target description or text
-- Button to remove the step individually
+- Actions to copy or remove the individual step
+
+You can also reorder steps by dragging them in the list before saving to the node.
 
 ### Selected Element Panel
 
 Displays information about the tapped element in **Inspect** mode:
-- Native class (`android.widget.Button`, `XCUIElementTypeTextField`, etc.)
-- Resource ID, Accessibility ID, XPath
-- Bounds (position and size on screen)
-- Current text and relevant attributes
+- selected target summary;
+- text, label, native class, and bounds;
+- relevant element attributes;
+- detected selectors, with the option to enable or disable which ones will be used;
+- match count when this information is available.
+
+The selector section starts collapsed to keep the screen clean. Open it when you need to review or adjust the strategy before adding an action.
 
 ---
 
@@ -132,10 +138,15 @@ In addition to recording taps and swipes, the Mobile Inspector provides buttons 
 
 | Action | Description |
 |--------|-------------|
-| **Long Press** | Adds a `long-press` step on the selected element (800ms) |
-| **Pinch In** | Adds a `pinch-zoom` step with a pinch gesture over the element |
-| **Zoom Out** | Adds a `pinch-zoom` step with a spread gesture over the element |
-| **Extract value** | Adds an `extract` step using stable selectors (not based on dynamic text) |
+| **Tap** | Creates a `tap` step on the selected element |
+| **Double Tap** | Creates a double-tap step on the selected element |
+| **Long Press** | Creates a `long-press` step on the selected element |
+| **Pinch In** | Creates a pinch gesture over the element |
+| **Zoom Out** | Creates a spread gesture over the element |
+| **Wait Visible** | Creates a wait until the element appears |
+| **Wait Enabled** | Creates a wait until the element is enabled |
+| **Extract** | Creates an `extract` step using stable selectors |
+| **Assert** | Creates an assert step for the selected element |
 
 **System actions (without a selected element):**
 
