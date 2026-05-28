@@ -24,6 +24,8 @@ This means that:
 3. QANode creates a copy of the original flow marked as sandbox
 4. You are redirected to the editor with this flow
 
+[Opening the sandbox](../../assets/images/defeitos-abrir-sandbox.mp4)
+
 If an active sandbox already exists for the bug, the system reopens the existing one instead of creating a new one.
 
 ---
@@ -78,6 +80,8 @@ When the investigation is done:
 1. Go to the bug detail
 2. Click **Discard Sandbox**
 3. Confirm the action
+
+[Discarding the sandbox](../../assets/images/defeitos-descartar-sandbox.mp4)
 
 Discarding:
 - Removes the sandbox flow

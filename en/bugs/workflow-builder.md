@@ -31,19 +31,27 @@ All changes must be saved with the **Save Workflow** button to take effect.
    - **Default Queue** — if set, it is used as the destination queue when no manual routing choice is sent
    - **Allow manual assignment** — if enabled, the user can freely choose the direct assignee when transitioning to this status
 
+[Create a status](../../assets/images/defeitos-criar-status.mp4)
+
 ### Edit a status
 
 Click on the status name or the edit icon next to it. The same creation settings are available for editing.
 
+[Edit a status](../../assets/images/defeitos-editar-status.mp4)
+
 ### Remove a status
 
 Click the delete icon next to the status.
+
+[Remove a status](../../assets/images/defeitos-remover-status.mp4)
 
 > **Warning:** A status that still has open bugs associated with it cannot be removed. Move or close those bugs before removing the status.
 
 ### Reorder statuses
 
 Drag statuses by their side handle to reorganize the order in which they appear in the interface.
+
+[Reorder statuses](../../assets/images/defeitos-reordenar-status.mp4)
 
 ---
 
@@ -88,6 +96,8 @@ A transition defines the path from one status to another. Without a transition c
    - **Source Status** — the bug's current status
    - **Target Status** — the status the bug moves to when transitioning
 
+[Create a transition](../../assets/images/defeitos-criar-transicao.mp4)
+
 ### Transition fields
 
 Just like statuses, each transition can have its own visible and required fields. These fields appear in the transition modal when the user clicks the transition button.
@@ -97,6 +107,8 @@ Use transition fields to capture relevant information at the moment of the chang
 ### Remove a transition
 
 Click the delete icon next to the transition. Removing a transition does not affect existing bugs — it only prevents new bugs from using that path.
+
+[Remove a transition](../../assets/images/defeitos-remover-transicao.mp4)
 
 ---
 
@@ -133,6 +145,8 @@ Access them in the **Workflow Builder** screen itself, in the **Custom Fields** 
    - **Label** — name displayed in the interface (e.g.: "Jira Ticket")
    - **Type** — value type (text, number, date, selection)
    - **Active** — whether the field is available for use
+
+[Create a custom field](../../assets/images/defeitos-campos-customizados.mp4)
 
 ### Using custom fields in the workflow
 

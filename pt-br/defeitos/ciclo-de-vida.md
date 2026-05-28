@@ -15,6 +15,8 @@ Esta é a forma mais comum de abrir um defeito. Quando uma execução termina co
 3. Preencha os campos exigidos pelo workflow (definidos no status inicial)
 4. Clique em **Salvar**
 
+[Abrindo um defeito](../../assets/images/defeitos-abrir-defeito.mp4)
+
 O defeito é criado com vínculo direto à execução, ao fluxo e, quando aplicável, ao step que originou a falha. Esse vínculo é preservado mesmo que o fluxo seja editado depois — o defeito guarda uma foto do estado original do cenário.
 
 > **Permissão necessária:** `bug.create`
@@ -62,6 +64,8 @@ Quando um defeito é atribuído diretamente a um usuário:
 
 Um defeito sem fila e sem responsável pode ser claimado por qualquer usuário com `bug.assign`.
 
+[Atribuindo um defeito](../../assets/images/defeitos-atribuir-defeito.mp4)
+
 ---
 
 ## 4. Claim — Assumindo o defeito
@@ -72,6 +76,8 @@ Para dar claim:
 
 1. Abra o detalhe do defeito
 2. Clique em **Assumir**
+
+[Assumindo um defeito](../../assets/images/defeitos-assumir-defeito.mp4)
 
 ### Quando posso dar claim?
 
@@ -105,6 +111,8 @@ Tramitar significa mover o defeito de um status para outro seguindo as transiç�
 4. Preencha os campos obrigatórios da transição (se houver)
 5. Adicione uma nota opcional
 6. Confirme
+
+[Tramitar um defeito](../../assets/images/defeitos-tramitar-defeito.mp4)
 
 ### Regras de tramitação
 

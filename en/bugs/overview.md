@@ -24,6 +24,8 @@ The Bug Tracking module appears in the sidebar with the **bug** icon (🐛). Cli
 
 To open a bug directly from a failed execution, go to the execution detail and click **Open Bug**.
 
+[How to access](../../assets/images/defeitos-como-acessar.mp4)
+
 ---
 
 ## Permissions

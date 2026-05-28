@@ -24,6 +24,8 @@ Os comentários são o espaço de discussão do defeito. Use para:
 
 O comentário é salvo com seu nome, foto de perfil e data/hora. Além de aparecer na seção de comentários, ele também gera um evento no **histórico** do defeito.
 
+[Como comentar](../../assets/images/defeitos-como-comentar.mp4)
+
 ---
 
 ## Anexos
@@ -36,6 +38,8 @@ Anexos permitem incluir arquivos relevantes diretamente no defeito — capturas 
 2. Role até a seção **Anexos**
 3. Clique em **Adicionar Anexo** ou arraste o arquivo para a área indicada
 4. O arquivo é enviado e fica disponível para todos com acesso ao defeito
+
+[Como anexar um arquivo](../../assets/images/defeitos-anexar-arquivo.mp4)
 
 ### Excluindo anexos
 
@@ -51,6 +55,8 @@ Para excluir:
 1. Localize o anexo na seção **Anexos**
 2. Clique no ícone de exclusão ao lado do arquivo
 3. Confirme a ação
+
+[Excluindo anexos](../../assets/images/defeitos-excluir-arquivo.mp4)
 
 ---
 
@@ -76,6 +82,8 @@ O histórico é a trilha auditável completa do defeito. Cada evento registrado 
 ### Como acessar o histórico
 
 O histórico fica na seção **Histórico** no detalhe do defeito, em ordem cronológica. Você pode ver toda a linha do tempo do defeito desde a criação até o momento atual.
+
+[Como acessar o histórico](../../assets/images/defeitos-acessar-historico.mp4)
 
 ---
 

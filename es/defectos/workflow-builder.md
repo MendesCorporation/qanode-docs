@@ -31,19 +31,27 @@ Todos los cambios deben guardarse con el botón **Guardar Flujo de Trabajo** par
    - **Cola Predeterminada** — si se especifica, se usa como cola de destino cuando no se envía una elección manual de enrutamiento
    - **Permite asignación manual** — si está activado, el usuario puede elegir libremente el responsable directo al tramitar a este estado
 
+[Crear un estado](../../assets/images/defeitos-criar-status.mp4)
+
 ### Editar un estado
 
 Haga clic en el nombre del estado o en el ícono de edición junto a él. Las mismas configuraciones de creación están disponibles para edición.
 
+[Editar un estado](../../assets/images/defeitos-editar-status.mp4)
+
 ### Eliminar un estado
 
 Haga clic en el ícono de eliminación junto al estado.
+
+[Eliminar un estado](../../assets/images/defeitos-remover-status.mp4)
 
 > **Atención:** No es posible eliminar un estado que aún tiene defectos abiertos asociados. Mueva o cierre esos defectos antes de eliminar el estado.
 
 ### Reordenar estados
 
 Arrastre los estados por su asa lateral para reorganizar el orden en que aparecen en la interfaz.
+
+[Reordenar estados](../../assets/images/defeitos-reordenar-status.mp4)
 
 ---
 
@@ -88,6 +96,8 @@ Una transición define el camino de un estado a otro. Sin una transición creada
    - **Estado de Origen** — estado actual del defecto
    - **Estado de Destino** — estado al que va el defecto al tramitar
 
+[Crear una transición](../../assets/images/defeitos-criar-transicao.mp4)
+
 ### Campos de la transición
 
 Al igual que en los estados, cada transición puede tener sus propios campos visibles y obligatorios. Estos campos aparecen en el modal de tramitación cuando el usuario hace clic en el botón de transición.
@@ -97,6 +107,8 @@ Use campos de transición para capturar información relevante en el momento del
 ### Eliminar una transición
 
 Haga clic en el ícono de eliminación junto a la transición. Eliminar una transición no afecta los defectos existentes — solo impide que nuevos defectos usen ese camino.
+
+[Eliminar una transición](../../assets/images/defeitos-remover-transicao.mp4)
 
 ---
 
@@ -133,6 +145,8 @@ Acceda en la propia pantalla del **Workflow Builder**, en la sección **Campos P
    - **Etiqueta** — nombre mostrado en la interfaz (ej.: "Ticket Jira")
    - **Tipo** — tipo de valor (texto, número, fecha, selección)
    - **Activo** — si el campo está disponible para usar
+
+[Crear un campo personalizado](../../assets/images/defeitos-campos-customizados.mp4)
 
 ### Usando campos personalizados en el flujo de trabajo
 

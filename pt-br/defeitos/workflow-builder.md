@@ -31,19 +31,27 @@ Toda alteração precisa ser salva com o botão **Salvar Workflow** para entrar 
    - **Fila Padrão** — se informada, ela é usada como fila de destino na ausência de uma escolha manual de roteamento
    - **Permite atribuição manual** — se ativado, o usuário pode escolher livremente o responsável direto ao tramitar para este status
 
+[Criar um status](../../assets/images/defeitos-criar-status.mp4)
+
 ### Editar um status
 
 Clique no nome do status ou no ícone de edição ao lado dele. As mesmas configurações de criação ficam disponíveis para edição.
 
+[Editar um status](../../assets/images/defeitos-editar-status.mp4)
+
 ### Remover um status
 
 Clique no ícone de exclusão ao lado do status.
+
+[Remover um status](../../assets/images/defeitos-remover-status.mp4)
 
 > **Atenção:** Não é possível remover um status que ainda possui defeitos abertos associados a ele. Mova ou encerre esses defeitos antes de remover o status.
 
 ### Reordenar status
 
 Arraste os status pela alça lateral para reorganizar a ordem em que aparecem na interface.
+
+[Reordenar um status](../../assets/images/defeitos-reordenar-status.mp4)
 
 ---
 
@@ -88,6 +96,8 @@ Uma transição define o caminho de um status para outro. Sem uma transição cr
    - **Status de Origem** — status atual do defeito
    - **Status de Destino** — status para onde o defeito vai ao tramitar
 
+[Criar uma transição](../../assets/images/defeitos-criar-transicao.mp4)
+
 ### Campos da transição
 
 Assim como nos status, cada transição pode ter seus próprios campos visíveis e obrigatórios. Esses campos aparecem no modal de tramitação quando o usuário clica no botão da transição.
@@ -97,6 +107,8 @@ Use campos de transição para capturar informações relevantes no momento da m
 ### Remover uma transição
 
 Clique no ícone de exclusão ao lado da transição. Remover uma transição não afeta os defeitos já existentes — apenas impede que novos defeitos usem esse caminho.
+
+[Remover uma transição](../../assets/images/defeitos-remover-transicao.mp4)
 
 ---
 
@@ -133,6 +145,8 @@ Acesse na própria tela do **Workflow Builder**, na seção **Campos Customizado
    - **Rótulo** — nome exibido na interface (ex: "Ticket Jira")
    - **Tipo** — tipo do valor (texto, número, data, seleção)
    - **Ativo** — se o campo está disponível para uso
+
+[Criar um campo customizado](../../assets/images/defeitos-campos-customizados.mp4)
 
 ### Usando campos customizados no workflow
 

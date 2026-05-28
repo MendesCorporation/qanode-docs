@@ -1,4 +1,4 @@
-# Módulo de Defeitos — Visão Geral
+# Módulo de Defeitos — Visão Geral 
 
 > **Disponível em:** QANode Enterprise
 
@@ -23,6 +23,8 @@ O módulo de Defeitos transforma uma falha de execução em um processo controla
 O módulo de Defeitos aparece no menu lateral com o ícone de **bug** (🐛). Ao clicar, você vê a lista de todos os defeitos da instância com filtros por status, severidade, prioridade, fila e responsável.
 
 Para abrir um defeito diretamente de uma execução com falha, acesse o detalhe da execução e clique em **Abrir Defeito**.
+
+[Como acessar](../../assets/images/defeitos-como-acessar.mp4)
 
 ---
 

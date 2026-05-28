@@ -24,6 +24,8 @@ Comments are the discussion space for the bug. Use them to:
 
 The comment is saved with your name, profile picture, and date/time. In addition to appearing in the comments section, it also generates an event in the bug's **history**.
 
+[How to comment](../../assets/images/defeitos-como-comentar.mp4)
+
 ---
 
 ## Attachments
@@ -36,6 +38,8 @@ Attachments allow you to include relevant files directly in the bug — screensh
 2. Scroll to the **Attachments** section
 3. Click **Add Attachment** or drag the file to the designated area
 4. The file is uploaded and available to everyone with access to the bug
+
+[How to attach a file](../../assets/images/defeitos-anexar-arquivo.mp4)
 
 ### Deleting attachments
 
@@ -51,6 +55,8 @@ To delete:
 1. Find the attachment in the **Attachments** section
 2. Click the delete icon next to the file
 3. Confirm the action
+
+[Deleting attachments](../../assets/images/defeitos-excluir-arquivo.mp4)
 
 ---
 
@@ -76,6 +82,8 @@ The history is the complete auditable trail of the bug. Each recorded event show
 ### How to access the history
 
 The history is in the **History** section in the bug detail, in chronological order. You can see the entire timeline of the bug from creation to the current moment.
+
+[How to access the history](../../assets/images/defeitos-acessar-historico.mp4)
 
 ---
 

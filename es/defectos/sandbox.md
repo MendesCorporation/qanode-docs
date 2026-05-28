@@ -24,6 +24,8 @@ Esto significa que:
 3. QANode crea una copia del flujo original marcada como sandbox
 4. Se le redirige al editor con ese flujo
 
+[Abriendo el sandbox](../../assets/images/defeitos-abrir-sandbox.mp4)
+
 Si ya existe un sandbox activo para el defecto, el sistema reabre el existente en lugar de crear uno nuevo.
 
 ---
@@ -78,6 +80,8 @@ Cuando la investigación termine:
 1. Acceda al detalle del defecto
 2. Haga clic en **Descartar Sandbox**
 3. Confirme la acción
+
+[Descartando el sandbox](../../assets/images/defeitos-descartar-sandbox.mp4)
 
 El descarte:
 - Elimina el flujo sandbox

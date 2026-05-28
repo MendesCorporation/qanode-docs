@@ -15,6 +15,8 @@ Esta es la forma más común de abrir un defecto. Cuando una ejecución termina 
 3. Complete los campos requeridos por el flujo de trabajo (definidos en el estado inicial)
 4. Haga clic en **Guardar**
 
+[Apertura de un defecto](../../assets/images/defeitos-abrir-defeito.mp4)
+
 El defecto se crea con un vínculo directo a la ejecución, al flujo y, cuando aplica, al paso que originó el fallo. Este vínculo se conserva aunque el flujo sea editado después — el defecto guarda una foto del estado original del escenario.
 
 > **Permiso requerido:** `bug.create`
@@ -62,6 +64,8 @@ Cuando un defecto es asignado directamente a un usuario:
 
 Un defecto sin cola y sin responsable puede ser claimado por cualquier usuario con `bug.assign`.
 
+[Asignación de defecto](../../assets/images/defeitos-atribuir-defeito.mp4)
+
 ---
 
 ## 4. Claim — Tomando posesión
@@ -72,6 +76,8 @@ Para hacer claim:
 
 1. Abra el detalle del defecto
 2. Haga clic en **Asumir**
+
+[Tomando posesión de defecto](../../assets/images/defeitos-assumir-defeito.mp4)
 
 ### ¿Cuándo puedo hacer claim?
 
@@ -105,6 +111,8 @@ Tramitar significa mover el defecto de un estado a otro siguiendo las transicion
 4. Complete los campos obligatorios de la transición (si los hay)
 5. Agregue una nota opcional
 6. Confirme
+
+[Tramitar a un defecto](../../assets/images/defeitos-tramitar-defeito.mp4)
 
 ### Reglas de tramitación
 

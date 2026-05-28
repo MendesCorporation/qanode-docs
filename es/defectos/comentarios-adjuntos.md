@@ -24,6 +24,8 @@ Los comentarios son el espacio de discusión del defecto. Úselos para:
 
 El comentario se guarda con su nombre, foto de perfil y fecha/hora. Además de aparecer en la sección de comentarios, también genera un evento en el **historial** del defecto.
 
+[Cómo comentar](../../assets/images/defeitos-como-comentar.mp4)
+
 ---
 
 ## Adjuntos
@@ -36,6 +38,8 @@ Los adjuntos permiten incluir archivos relevantes directamente en el defecto —
 2. Desplácese hasta la sección **Adjuntos**
 3. Haga clic en **Agregar Adjunto** o arrastre el archivo al área indicada
 4. El archivo se carga y queda disponible para todos con acceso al defecto
+
+[Cómo adjuntar un archivo](../../assets/images/defeitos-anexar-arquivo.mp4)
 
 ### Eliminación de adjuntos
 
@@ -51,6 +55,8 @@ Para eliminar:
 1. Localice el adjunto en la sección **Adjuntos**
 2. Haga clic en el ícono de eliminación junto al archivo
 3. Confirme la acción
+
+[Eliminación de adjuntos](../../assets/images/defeitos-excluir-arquivo.mp4)
 
 ---
 
@@ -76,6 +82,8 @@ El historial es el rastro auditable completo del defecto. Cada evento registrado
 ### Cómo acceder al historial
 
 El historial está en la sección **Historial** en el detalle del defecto, en orden cronológico. Puede ver toda la línea de tiempo del defecto desde la creación hasta el momento actual.
+
+[Cómo acceder al historial](../../assets/images/defeitos-acessar-historico.mp4)
 
 ---
 

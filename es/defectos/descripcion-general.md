@@ -24,6 +24,8 @@ El módulo de Defectos aparece en el menú lateral con el ícono de **bug** (�
 
 Para abrir un defecto directamente desde una ejecución fallida, acceda al detalle de la ejecución y haga clic en **Abrir Defecto**.
 
+[Cómo acceder](../../assets/images/defeitos-como-acessar.mp4)
+
 ---
 
 ## Permisos

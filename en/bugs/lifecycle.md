@@ -15,6 +15,8 @@ This is the most common way to open a bug. When an execution ends with failure:
 3. Fill in the fields required by the workflow (defined in the initial status)
 4. Click **Save**
 
+[Opening a bug](../../assets/images/defeitos-abrir-defeito.mp4)
+
 The bug is created with a direct link to the execution, the flow, and, when applicable, the step that caused the failure. This link is preserved even if the flow is edited later — the bug stores a snapshot of the original scenario state.
 
 > **Permission required:** `bug.create`
@@ -62,6 +64,8 @@ When a bug is assigned directly to a user:
 
 A bug with no queue and no assignee can be claimed by any user with `bug.assign`.
 
+[Assigning a bug](../../assets/images/defeitos-atribuir-defeito.mp4)
+
 ---
 
 ## 4. Claim — Taking ownership
@@ -72,6 +76,8 @@ To claim:
 
 1. Open the bug detail
 2. Click **Claim**
+
+[Claim a bug](../../assets/images/defeitos-assumir-defeito.mp4)
 
 ### When can I claim?
 
@@ -105,6 +111,8 @@ Transitioning means moving the bug from one status to another following the tran
 4. Fill in the required transition fields (if any)
 5. Add an optional note
 6. Confirm
+
+[How to transition](../../assets/images/defeitos-tramitar-defeito.mp4)
 
 ### Transitioning rules
 
