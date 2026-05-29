@@ -20,7 +20,7 @@
 
 4. Click **Create**
 
-<!-- ![Create project](../../assets/images/criar-projeto.png) -->
+[Create project](../../assets/images/projetos-criar-novo-projeto.mp4)
 *Image: Project creation modal with all fields filled in*
 
 ---
@@ -39,6 +39,8 @@ To change the status, open the project and use the options in the header:
 - **Cancel** → Marks as cancelled
 - **Archive** → Moves to archived
 
+[Project Status](../../assets/images/projetos-alterar-status.mp4)
+
 ---
 
 ## Project Page
@@ -55,7 +57,7 @@ Displays statistics and a summary of the project:
 - **Recent Executions** — List of the latest executions
 - **Progress** — Comparison between elapsed time and executed scenarios
 
-<!-- ![Project overview](../../assets/images/projeto-visao-geral.png) -->
+[Project overview](../../assets/images/projetos-abas-do-projeto.mp4)
 *Image: Overview page showing statistics cards, recent executions, and progress bar*
 
 ### Scenarios
@@ -160,6 +162,8 @@ To create a copy of an existing project:
 1. In the project list, click the options menu (⋮) for the project
 2. Select **Duplicate**
 3. A new project will be created with the same scenarios
+
+[Duplicate Project](../../assets/images/projetos-duplicar-projetos.mp4)
 
 ---
 

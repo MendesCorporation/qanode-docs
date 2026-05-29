@@ -20,7 +20,7 @@
 
 4. Clique em **Criar**
 
-<!-- ![Criar projeto](../../assets/images/criar-projeto.png) -->
+[Criar projeto](../../assets/images/projetos-criar-novo-projeto.mp4)
 *Imagem: Modal de criação de projeto com todos os campos preenchidos*
 
 ---
@@ -39,6 +39,8 @@ Para alterar o status, acesse o projeto e use as opções no cabeçalho:
 - **Cancelar** → Marca como cancelado
 - **Arquivar** → Move para arquivados
 
+[Status do Projeto](../../assets/images/projetos-alterar-status.mp4)
+
 ---
 
 ## Página do Projeto
@@ -55,7 +57,7 @@ Exibe estatísticas e resumo do projeto:
 - **Execuções Recentes** — Lista das últimas execuções
 - **Progresso** — Comparação entre tempo decorrido e cenários executados
 
-<!-- ![Visão geral do projeto](../../assets/images/projeto-visao-geral.png) -->
+[Visão geral do projeto](../../assets/images/projetos-abas-do-projeto.mp4)
 *Imagem: Página de visão geral mostrando cards de estatísticas, execuções recentes e barra de progresso*
 
 ### Cenários
@@ -74,13 +76,7 @@ Lista todos os cenários (fluxos) do projeto:
 - **Editar** — Abre o editor de fluxos
 - **Excluir** — Remove o cenário
 
-No QANode Enterprise, esses cenários também podem ser executados por pipeline com o `@qanode/cli` usando:
-
-- **ID**
-- **nome do cenário + nome do projeto**
-
-> Para detalhes, veja [CLI e API do CI/CD](../ci-cd/cli-api.md).
-
+<<<<<<< HEAD
 ### Suítes
 
 Lista as suítes do projeto com informações de agendamento e último resultado.
@@ -109,6 +105,22 @@ Nos cenários vinculados ao projeto, essas variáveis ficam disponíveis no pain
 > A lista principal do menu **Variáveis** mostra apenas variáveis globais. Variáveis de projeto são gerenciadas dentro do próprio projeto.
 
 ### Execuções
+=======
+No QANode Enterprise, esses cenários também podem ser executados por pipeline com o `@qanode/cli` usando:
+
+- **ID**
+- **nome do cenário + nome do projeto**
+
+> Para detalhes, veja [CLI e API do CI/CD](../ci-cd/cli-api.md).
+
+### Suítes
+
+Lista as suítes do projeto com informações de agendamento e último resultado.
+
+> Para detalhes sobre suítes, veja [Suítes de Teste](../suites/suites.md).
+
+### Execuções
+>>>>>>> c924481 (docs: add video tutorials for projects page, creation, status change, duplication, and overview in Portuguese, English and Spanish)
 
 Histórico de todas as execuções do projeto:
 
@@ -160,6 +172,8 @@ Para criar uma cópia de um projeto existente:
 1. Na lista de projetos, clique nas opções (⋮) do projeto
 2. Selecione **Duplicar**
 3. Um novo projeto será criado com os mesmos cenários
+
+[Duplicar Projeto](../../assets/images/projetos-duplicar-projetos.mp4)
 
 ---
 

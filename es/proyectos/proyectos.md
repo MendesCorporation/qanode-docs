@@ -20,7 +20,7 @@
 
 4. Haga clic en **Crear**
 
-<!-- ![Crear proyecto](../../assets/images/criar-projeto.png) -->
+[Crear proyecto](../../assets/images/projetos-criar-novo-projeto.mp4)
 *Imagen: Modal de creación de proyecto con todos los campos completados*
 
 ---
@@ -39,6 +39,8 @@ Para cambiar el estado, acceda al proyecto y use las opciones en el encabezado:
 - **Cancelar** → Marca como cancelado
 - **Archivar** → Mueve a archivados
 
+[Estado del Proyecto](../../assets/images/projetos-alterar-status.mp4)
+
 ---
 
 ## Página del Proyecto
@@ -55,7 +57,7 @@ Muestra estadísticas y un resumen del proyecto:
 - **Ejecuciones Recientes** — Lista de las últimas ejecuciones
 - **Progreso** — Comparación entre el tiempo transcurrido y los escenarios ejecutados
 
-<!-- ![Resumen del proyecto](../../assets/images/projeto-visao-geral.png) -->
+[Resumen del proyecto](../../assets/images/projetos-abas-do-projeto.mp4)
 *Imagen: Página de resumen mostrando tarjetas de estadísticas, ejecuciones recientes y barra de progreso*
 
 ### Escenarios
@@ -160,6 +162,8 @@ Para crear una copia de un proyecto existente:
 1. En la lista de proyectos, haga clic en las opciones (⋮) del proyecto
 2. Seleccione **Duplicar**
 3. Se creará un nuevo proyecto con los mismos escenarios
+
+[Duplicar Proyecto](../../assets/images/projetos-duplicar-projetos.mp4)
 
 ---
 
