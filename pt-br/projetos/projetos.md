@@ -76,7 +76,13 @@ Lista todos os cenários (fluxos) do projeto:
 - **Editar** — Abre o editor de fluxos
 - **Excluir** — Remove o cenário
 
-<<<<<<< HEAD
+No QANode Enterprise, esses cenários também podem ser executados por pipeline com o `@qanode/cli` usando:
+
+- **ID**
+- **nome do cenário + nome do projeto**
+
+> Para detalhes, veja [CLI e API do CI/CD](../ci-cd/cli-api.md).
+
 ### Suítes
 
 Lista as suítes do projeto com informações de agendamento e último resultado.
@@ -105,22 +111,6 @@ Nos cenários vinculados ao projeto, essas variáveis ficam disponíveis no pain
 > A lista principal do menu **Variáveis** mostra apenas variáveis globais. Variáveis de projeto são gerenciadas dentro do próprio projeto.
 
 ### Execuções
-=======
-No QANode Enterprise, esses cenários também podem ser executados por pipeline com o `@qanode/cli` usando:
-
-- **ID**
-- **nome do cenário + nome do projeto**
-
-> Para detalhes, veja [CLI e API do CI/CD](../ci-cd/cli-api.md).
-
-### Suítes
-
-Lista as suítes do projeto com informações de agendamento e último resultado.
-
-> Para detalhes sobre suítes, veja [Suítes de Teste](../suites/suites.md).
-
-### Execuções
->>>>>>> c924481 (docs: add video tutorials for projects page, creation, status change, duplication, and overview in Portuguese, English and Spanish)
 
 Histórico de todas as execuções do projeto:
 
