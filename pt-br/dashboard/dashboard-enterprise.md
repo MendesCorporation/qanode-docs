@@ -6,7 +6,8 @@ O **Dashboard** oferece uma visão consolidada do estado dos seus testes atravé
 
 ## Visão Geral
 
-[Dashboard principal](../../assets/images/dashboard.mp4)
+[Dashboard principal](../../assets/images/dashboard-visao-geral.mp4)
+
 *Imagem: Dashboard com múltiplos widgets: cards de métrica, gráfico de barras e tabela*
 
 ---
@@ -21,6 +22,8 @@ O QANode suporta múltiplos dashboards com diferentes visibilidades:
 | **Público** | Todos os usuários | Dashboard compartilhado |
 | **Por Papel** | Usuários com papéis específicos | Dashboard por equipe/papel |
 | **Sistema** | Todos (somente leitura) | Dashboards padrão do QANode |
+
+[Dashboards com diferentes visibilidades](../../assets/images/dashboard-visibilidade-painel.mp4)
 
 ---
 
@@ -42,6 +45,8 @@ O QANode suporta múltiplos dashboards com diferentes visibilidades:
 ### Criando um Widget
 
 O assistente de criação de widget possui 3 etapas:
+
+[Criando um Widget](../../assets/images/dashboard-criando-widget.mp4)
 
 #### Etapa 1: Fonte de Dados
 
@@ -136,13 +141,17 @@ O dashboard usa um **grid de 12 colunas** responsivo:
 
 ### Reorganizando Widgets
 
+[Reorganizando Widgets](../../assets/images/dashboard-reorganizar-widgets.mp4)
+
 - **Arrastar** um widget para reposicioná-lo
 - **Redimensionar** arrastando a borda inferior-direita
 - O grid se ajusta automaticamente para evitar sobreposições
-
+- 
 ---
 
 ## Exemplos de Widgets
+
+[Exemplos de Widgets](../../assets/images/dashboard-tipos-de-widgets.mp4)
 
 ### Card: Taxa de Sucesso
 
@@ -179,6 +188,8 @@ Limite: 10
 ## Auto-Refresh
 
 Widgets podem ser configurados para atualizar automaticamente em intervalos definidos, mantendo os dados sempre atualizados.
+
+[Auto-Refresh](../../assets/images/dashboard-auto-refresh.mp4)
 
 ---
 
