@@ -6,6 +6,8 @@ O nó **Loop** permite repetir a execução de um trecho do fluxo múltiplas vez
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-loop-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `loop` |

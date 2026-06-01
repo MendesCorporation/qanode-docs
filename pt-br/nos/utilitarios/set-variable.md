@@ -6,6 +6,8 @@ O nó **Set Variable** permite definir ou atualizar variáveis em tempo de execu
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-set-variable-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `set-variable` |

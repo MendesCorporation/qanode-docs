@@ -10,6 +10,8 @@ Ele foi criado para lidar melhor com sistemas enterprise e páginas dinâmicas, 
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-smart-web-flow-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `smart-web-flow` |

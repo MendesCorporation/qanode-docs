@@ -6,6 +6,8 @@ O nó **SSH Command** permite executar comandos em servidores remotos via protoc
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-ssh-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `ssh-command` |

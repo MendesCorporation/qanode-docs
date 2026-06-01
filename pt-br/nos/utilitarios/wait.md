@@ -6,6 +6,8 @@ O nó **Wait** pausa a execução do fluxo por um tempo determinado ou até que 
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-wait-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `wait` |

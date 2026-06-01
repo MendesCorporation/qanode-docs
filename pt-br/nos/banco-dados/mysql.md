@@ -6,6 +6,8 @@ O nó **MySQL** permite executar consultas e operações no banco de dados MySQL
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-my-sql-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `mysql-query` |

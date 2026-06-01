@@ -6,6 +6,8 @@ O nó **Load Test** executa testes de carga e performance contra endpoints HTTP,
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-load-test-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `load-test` |

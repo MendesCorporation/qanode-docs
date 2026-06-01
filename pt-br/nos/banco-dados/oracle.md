@@ -6,6 +6,8 @@ O nó **Oracle** permite executar consultas e operações no banco de dados Orac
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-oracle-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `oracle-query` |

@@ -6,6 +6,8 @@ O nó **If** permite criar desvios condicionais no fluxo. Ele avalia uma express
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-if-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `if` |

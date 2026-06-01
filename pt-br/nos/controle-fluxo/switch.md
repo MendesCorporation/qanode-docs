@@ -6,6 +6,8 @@ O nó **Switch** permite criar desvios múltiplos baseados no valor de uma expre
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-switch-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `switch` |

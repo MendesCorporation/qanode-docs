@@ -6,6 +6,8 @@ O nó **SQL Server** permite executar consultas e operações em bancos Microsof
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-sql-server-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `sqlserver-query` |

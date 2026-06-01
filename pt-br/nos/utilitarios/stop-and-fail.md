@@ -6,6 +6,8 @@ O nó **Stop and Fail** interrompe imediatamente a execução do fluxo e marca o
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-stop-and-fail-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `stop-and-fail` |

@@ -6,6 +6,8 @@ O nó **Mobile Flow** permite automatizar interações com aplicativos móveis n
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-mobile-flow-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `mobile-flow` |

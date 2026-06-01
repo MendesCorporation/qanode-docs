@@ -6,6 +6,8 @@ O nó **MongoDB** permite executar operações no banco de dados MongoDB, inclui
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-mongo-db-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `mongodb-query` |

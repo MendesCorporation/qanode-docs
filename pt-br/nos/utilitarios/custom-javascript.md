@@ -8,6 +8,8 @@ Além do JavaScript puro, o nó também pode trabalhar com sessões já abertas 
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-custom-javascript-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `custom-js` |

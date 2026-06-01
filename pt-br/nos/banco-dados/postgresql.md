@@ -6,6 +6,8 @@ O nó **PostgreSQL** permite executar consultas e operações no banco de dados 
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-postgres-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `postgres-query` |

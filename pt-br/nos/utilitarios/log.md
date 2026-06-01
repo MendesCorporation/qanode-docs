@@ -6,6 +6,8 @@ O nó **Log** registra uma mensagem no log de execução. Útil para depuração
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-log-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `log` |

@@ -6,6 +6,8 @@ O nó **HTTP Request** permite fazer requisições HTTP para APIs REST, SOAP ou 
 
 ## Visão Geral
 
+[Visão geral](../../assets/images/nos-http-request-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `http-request` |

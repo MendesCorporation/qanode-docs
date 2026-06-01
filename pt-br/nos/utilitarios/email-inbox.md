@@ -6,6 +6,8 @@ O nó **Email Inbox** conecta a uma caixa de e-mail via IMAP e aguarda ou busca 
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-email-inbox-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `email-inbox` |

@@ -6,6 +6,8 @@ O nó **MariaDB** permite executar consultas e operações no banco de dados Mar
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-maria-db-visao-geral.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `mariadb-query` |
