@@ -6,6 +6,8 @@ El nodo **Mobile Flow** permite automatizar interacciones con aplicaciones móvi
 
 ## Descripción General
 
+[Descripción General](../../assets/images/nos-mobile-flow-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `mobile-flow` |

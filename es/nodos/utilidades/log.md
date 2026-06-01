@@ -6,6 +6,8 @@ El nodo **Log** registra un mensaje en el log de ejecución. Útil para depuraci
 
 ## Descripción General
 
+[Descripción General](../../assets/images/nos-log-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `log` |

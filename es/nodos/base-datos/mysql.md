@@ -6,6 +6,8 @@ El nodo **MySQL** permite ejecutar consultas y operaciones en una base de datos 
 
 ## Descripción General
 
+[Descripción General](../../assets/images/nos-my-sql-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `mysql-query` |

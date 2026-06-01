@@ -6,6 +6,8 @@ El nodo **If** permite crear bifurcaciones condicionales en el flujo. Evalúa un
 
 ## Descripción General
 
+[Descripción General](../../assets/images/nos-if-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `if` |

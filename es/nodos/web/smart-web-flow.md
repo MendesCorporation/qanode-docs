@@ -10,6 +10,8 @@ Fue diseñado para sistemas enterprise y páginas dinámicas como CRMs, ERPs, Se
 
 ## Visión General
 
+[Visión General](../../assets/images/nos-smart-web-flow-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `smart-web-flow` |

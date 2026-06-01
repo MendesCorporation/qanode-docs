@@ -6,6 +6,8 @@ El nodo **Stop and Fail** interrumpe inmediatamente la ejecución del flujo y ma
 
 ## Descripción General
 
+[Descripción General](../../assets/images/nos-stop-and-fail-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `stop-and-fail` |

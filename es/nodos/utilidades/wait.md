@@ -6,6 +6,8 @@ El nodo **Wait** pausa la ejecución del flujo durante un tiempo determinado o h
 
 ## Descripción General
 
+[Descripción General](../../assets/images/nos-wait-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `wait` |

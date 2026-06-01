@@ -6,6 +6,8 @@ El nodo **SQL Server** permite ejecutar consultas y operaciones en bases Microso
 
 ## Visión General
 
+[Visión General](../../assets/images/nos-sql-server-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `sqlserver-query` |

@@ -6,6 +6,8 @@ El nodo **Loop** permite repetir la ejecución de una sección del flujo múltip
 
 ## Descripción General
 
+[Descripción General](../../assets/images/nos-loop-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `loop` |

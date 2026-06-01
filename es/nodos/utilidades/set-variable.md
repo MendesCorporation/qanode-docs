@@ -6,6 +6,8 @@ El nodo **Set Variable** permite definir o actualizar variables en tiempo de eje
 
 ## Descripción General
 
+[Descripción General](../../assets/images/nos-set-variable-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `set-variable` |

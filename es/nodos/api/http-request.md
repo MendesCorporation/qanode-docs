@@ -6,6 +6,8 @@ El nodo **HTTP Request** permite realizar solicitudes HTTP a APIs REST, servicio
 
 ## Descripción General
 
+[Descripción General](../../assets/images/nos-http-request-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `http-request` |

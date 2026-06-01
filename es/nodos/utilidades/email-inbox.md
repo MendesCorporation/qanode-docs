@@ -6,6 +6,8 @@ El nodo **Email Inbox** se conecta a un buzón de correo vía IMAP y espera o bu
 
 ## Descripción General
 
+[Descripción General](../../assets/images/nos-email-inbox-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `email-inbox` |

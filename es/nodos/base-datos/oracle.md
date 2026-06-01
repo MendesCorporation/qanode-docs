@@ -6,6 +6,8 @@ El nodo **Oracle** permite ejecutar consultas y operaciones en una base de datos
 
 ## Descripción General
 
+[Descripción General](../../assets/images/nos-oracle-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `oracle-query` |

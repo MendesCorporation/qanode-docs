@@ -6,6 +6,8 @@ El nodo **SSH Command** permite ejecutar comandos en servidores remotos a travé
 
 ## Descripción General
 
+[Descripción General](../../assets/images/nos-ssh-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `ssh-command` |

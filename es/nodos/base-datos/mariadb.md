@@ -6,6 +6,8 @@ El nodo **MariaDB** permite ejecutar consultas y operaciones en una base de dato
 
 ## Descripción General
 
+[Descripción General](../../assets/images/nos-maria-db-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `mariadb-query` |

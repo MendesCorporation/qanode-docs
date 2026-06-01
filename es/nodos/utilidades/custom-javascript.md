@@ -8,6 +8,8 @@ Además de JavaScript puro, este nodo también puede trabajar con sesiones **Web
 
 ## Descripción General
 
+[Descripción General](../../assets/images/nos-custom-javascript-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `custom-js` |

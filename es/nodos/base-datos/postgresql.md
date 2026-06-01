@@ -6,6 +6,8 @@ El nodo **PostgreSQL** permite ejecutar consultas y operaciones en una base de d
 
 ## Descripción General
 
+[Descripción General](../../assets/images/nos-postgres-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `postgres-query` |

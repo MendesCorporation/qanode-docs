@@ -6,6 +6,8 @@ El nodo **Switch** permite crear bifurcaciones múltiples basadas en el valor de
 
 ## Descripción General
 
+[Descripción General](../../assets/images/nos-switch-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `switch` |

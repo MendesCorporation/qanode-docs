@@ -6,6 +6,8 @@ El nodo **Load Test** ejecuta pruebas de carga y rendimiento contra endpoints HT
 
 ## Visión General
 
+[Visión General](../../assets/images/nos-load-test-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `load-test` |

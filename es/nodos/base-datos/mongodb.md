@@ -6,6 +6,8 @@ El nodo **MongoDB** permite realizar operaciones en una base de datos MongoDB, i
 
 ## Descripción General
 
+[Descripción General](../../assets/images/nos-mongo-db-visao-geral.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `mongodb-query` |
