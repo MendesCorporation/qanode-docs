@@ -6,6 +6,8 @@ The **Load Test** node runs load and performance tests against HTTP endpoints, s
 
 ## Overview
 
+[Overview](../../assets/images/nos-load-test-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `load-test` |

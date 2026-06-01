@@ -6,6 +6,8 @@ The **PostgreSQL** node allows you to execute queries and operations on a Postgr
 
 ## Overview
 
+[Overview](../../assets/images/nos-postgres-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `postgres-query` |

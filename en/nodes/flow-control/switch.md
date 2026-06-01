@@ -6,6 +6,8 @@ The **Switch** node allows you to create multiple branches based on the value of
 
 ## Overview
 
+[Overview](../../assets/images/nos-switch-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `switch` |

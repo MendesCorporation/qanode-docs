@@ -6,6 +6,8 @@ The **Loop** node allows you to repeat the execution of a section of the flow mu
 
 ## Overview
 
+[Visão Geral](../../assets/images/nos-loop-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `loop` |

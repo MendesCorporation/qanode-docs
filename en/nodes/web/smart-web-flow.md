@@ -10,6 +10,8 @@ It was designed for enterprise systems and dynamic pages such as CRMs, ERPs, Ser
 
 ## Overview
 
+[Overview](../../assets/images/nos-smart-web-flow-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `smart-web-flow` |

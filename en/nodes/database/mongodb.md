@@ -6,6 +6,8 @@ The **MongoDB** node allows you to perform operations on a MongoDB database, inc
 
 ## Overview
 
+[Overview](../../assets/images/nos-mongo-db-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `mongodb-query` |

@@ -8,6 +8,8 @@ In addition to plain JavaScript, this node can also work with already-open **Web
 
 ## Overview
 
+[Overview](../../assets/images/nos-custom-javascript-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `custom-js` |

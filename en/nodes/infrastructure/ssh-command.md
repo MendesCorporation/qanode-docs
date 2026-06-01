@@ -6,6 +6,8 @@ The **SSH Command** node allows you to execute commands on remote servers via th
 
 ## Overview
 
+[Overview](../../assets/images/nos-ssh-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `ssh-command` |

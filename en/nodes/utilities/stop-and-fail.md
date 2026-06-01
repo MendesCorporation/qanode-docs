@@ -6,6 +6,8 @@ The **Stop and Fail** node immediately halts the flow execution and marks the re
 
 ## Overview
 
+[Overview](../../assets/images/nos-stop-and-fail-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `stop-and-fail` |

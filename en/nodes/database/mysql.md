@@ -6,6 +6,8 @@ The **MySQL** node allows you to execute queries and operations on a MySQL datab
 
 ## Overview
 
+[Overview](../../assets/images/nos-my-sql-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `mysql-query` |

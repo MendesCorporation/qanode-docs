@@ -6,6 +6,8 @@ The **If** node allows you to create conditional branches in the flow. It evalua
 
 ## Overview
 
+[Overview](../../assets/images/nos-if-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `if` |

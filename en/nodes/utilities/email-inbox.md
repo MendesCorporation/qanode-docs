@@ -6,6 +6,8 @@ The **Email Inbox** node connects to a mailbox via IMAP and waits for or searche
 
 ## Overview
 
+[Overview](../../assets/images/nos-email-inbox-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `email-inbox` |

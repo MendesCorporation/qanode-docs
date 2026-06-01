@@ -6,6 +6,8 @@ The **Log** node records a message in the execution log. Useful for debugging, t
 
 ## Overview
 
+[Overview](../../assets/images/nos-log-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `log` |

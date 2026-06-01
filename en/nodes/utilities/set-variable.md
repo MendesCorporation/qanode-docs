@@ -6,6 +6,8 @@ The **Set Variable** node allows you to define or update variables at runtime. V
 
 ## Overview
 
+[Overview](../../assets/images/nos-set-variable-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `set-variable` |

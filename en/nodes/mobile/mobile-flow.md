@@ -6,6 +6,8 @@ The **Mobile Flow** node allows you to automate interactions with native mobile 
 
 ## Overview
 
+[Visão Geral](../../assets/images/nos-mobile-flow-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `mobile-flow` |

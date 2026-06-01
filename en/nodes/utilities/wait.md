@@ -6,6 +6,8 @@ The **Wait** node pauses the flow execution for a specified amount of time or un
 
 ## Overview
 
+[Overview](../../assets/images/nos-wait-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `wait` |

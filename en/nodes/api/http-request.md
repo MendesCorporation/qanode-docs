@@ -6,6 +6,8 @@ The **HTTP Request** node allows you to make HTTP requests to REST APIs, SOAP se
 
 ## Overview
 
+[Overview](../../assets/images/nos-http-request-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `http-request` |

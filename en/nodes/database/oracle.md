@@ -6,6 +6,8 @@ The **Oracle** node allows you to execute queries and operations on an Oracle Da
 
 ## Overview
 
+[Overview](../../assets/images/nos-oracle-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `oracle-query` |

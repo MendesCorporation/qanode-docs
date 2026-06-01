@@ -6,6 +6,8 @@ The **MariaDB** node allows you to execute queries and operations on a MariaDB d
 
 ## Overview
 
+[Overview](../../assets/images/nos-maria-db-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `mariadb-query` |

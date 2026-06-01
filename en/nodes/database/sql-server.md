@@ -6,6 +6,8 @@ The **SQL Server** node runs queries and operations against Microsoft SQL Server
 
 ## Overview
 
+[Overview](../../assets/images/nos-sql-server-visao-geral.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `sqlserver-query` |

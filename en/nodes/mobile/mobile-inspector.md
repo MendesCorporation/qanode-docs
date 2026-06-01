@@ -6,6 +6,8 @@ The **Mobile Inspector** is a visual tool built into QANode for recording and bu
 
 ## How to Access
 
+
+
 The Mobile Inspector is opened from the flow editor:
 
 1. Add a **Mobile Flow** node to the flow
