@@ -32,6 +32,8 @@ Projetos
 
 ## Projetos
 
+[Projetos](../../assets/images/conceitos-projetos.mp4)
+
 Um **projeto** é o nível mais alto de organização. Ele agrupa cenários de teste e suítes relacionados a um sistema, funcionalidade ou equipe.
 
 Cada projeto possui:
@@ -44,6 +46,8 @@ Cada projeto possui:
 ---
 
 ## Cenários (Fluxos)
+
+[Cenários](../../assets/images/conceitos-cenarios.mp4)
 
 Um **cenário** (também chamado de **fluxo**) é um caso de teste representado visualmente como um grafo de nós conectados. Cada cenário descreve uma sequência de ações a serem executadas — como navegar em um site, chamar uma API ou consultar um banco de dados.
 
@@ -63,6 +67,8 @@ Neste exemplo, cada caixa é um nó e as setas representam conexões indicando o
 ---
 
 ## Nós (Nodes)
+
+[Nós](../../assets/images/conceitos-nos.mp4)
 
 **Nós** são os blocos fundamentais de um cenário. Cada nó executa uma ação específica e pode produzir outputs que são consumidos por nós seguintes.
 
@@ -109,6 +115,8 @@ Quando um nó é executado, ele produz **outputs** — dados que podem ser usado
 
 ## Componentes Reutilizáveis
 
+[Componentes](../../assets/images/conceitos-componentes.mp4)
+
 Um **componente** é um fluxo reutilizável com contrato de entrada e saída. Ele permite encapsular uma sequência que aparece em vários cenários, como login, preparação de massa, validação comum ou consulta auxiliar.
 
 Componentes possuem:
@@ -126,6 +134,8 @@ Depois de publicado, o componente aparece na paleta do editor de cenários e pod
 
 ## Conexões (Edges)
 
+[Conexões](../../assets/images/conceitos-conectar-nos.mp4)
+
 **Conexões** ligam a saída de um nó à entrada de outro, definindo a ordem de execução. O QANode executa os nós em **ordem topológica** — ou seja, um nó só é executado depois que todos os nós conectados à sua entrada foram concluídos.
 
 ### Conexões Condicionais
@@ -141,6 +151,8 @@ Apenas o caminho correspondente à condição avaliada será executado. Nós em 
 ---
 
 ## Execuções (Runs)
+
+[Execuções](../../assets/images/conceitos-execucao-fluxos.mp4)
 
 Uma **execução** é uma instância de um cenário sendo processado. Ao executar um cenário, o QANode:
 
@@ -160,6 +172,8 @@ Cada execução possui:
 ---
 
 ## Suítes de Teste
+
+[Suítes](../../assets/images/conceitos-suites.mp4)
 
 Uma **suíte** agrupa vários cenários para execução sequencial. Suítes são úteis para:
 
@@ -182,6 +196,8 @@ Suítes podem ser agendadas usando **expressões cron**:
 
 ## Variáveis
 
+[Variáveis](../../assets/images/conceitos-variaveis.mp4)
+
 **Variáveis** são valores globais reutilizáveis em qualquer cenário. Tipos suportados:
 
 | Tipo | Uso |
@@ -197,6 +213,8 @@ Acesse variáveis nos seus fluxos com: `{{ variables.nomeVariavel }}`
 ---
 
 ## Credenciais
+
+[Credenciais](../../assets/images/conceitos-credenciais.mp4)
 
 **Credenciais** armazenam informações de conexão de forma segura e centralizada. Tipos suportados:
 
