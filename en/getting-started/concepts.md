@@ -32,6 +32,8 @@ Projects
 
 ## Projects
 
+[Projects](../../assets/images/conceitos-projetos.mp4)
+
 A **project** is the highest level of organization. It groups test scenarios and suites related to a system, feature, or team.
 
 Each project has:
@@ -44,6 +46,8 @@ Each project has:
 ---
 
 ## Scenarios (Flows)
+
+[Scenarios](../../assets/images/conceitos-cenarios.mp4)
 
 A **scenario** (also called a **flow**) is a test case represented visually as a graph of connected nodes. Each scenario describes a sequence of actions to be executed — such as navigating a website, calling an API, or querying a database.
 
@@ -63,6 +67,8 @@ In this example, each box is a node and the arrows represent connections indicat
 ---
 
 ## Nodes
+
+[Nodes](../../assets/images/conceitos-nos.mp4)
 
 **Nodes** are the fundamental building blocks of a scenario. Each node performs a specific action and can produce outputs that are consumed by subsequent nodes.
 
@@ -109,6 +115,8 @@ When a node is executed, it produces **outputs** — data that can be used by su
 
 ## Reusable Components
 
+[Components](../../assets/images/conceitos-componentes.mp4)
+
 A **component** is a reusable flow with an input and output contract. It lets you encapsulate a sequence that appears in several scenarios, such as login, test-data setup, common validation, or a helper query.
 
 Components have:
@@ -126,6 +134,8 @@ After publishing, the component appears in the scenario editor palette and can b
 
 ## Connections (Edges)
 
+[Connections](../../assets/images/conceitos-conectar-nos.mp4)
+
 **Connections** link the output of one node to the input of another, defining the execution order. QANode executes nodes in **topological order** — meaning a node is only executed after all nodes connected to its input have been completed.
 
 ### Conditional Connections
@@ -141,6 +151,8 @@ Only the path corresponding to the evaluated condition will be executed. Nodes i
 ---
 
 ## Executions (Runs)
+
+[Executions](../../assets/images/conceitos-execucao-fluxos.mp4)
 
 An **execution** is an instance of a scenario being processed. When running a scenario, QANode:
 
@@ -160,6 +172,8 @@ Each execution has:
 ---
 
 ## Test Suites
+
+[Test Suites](../../assets/images/conceitos-suites.mp4)
 
 A **suite** groups multiple scenarios for sequential execution. Suites are useful for:
 
@@ -182,6 +196,8 @@ Suites can be scheduled using **cron expressions**:
 
 ## Variables
 
+[Variables](../../assets/images/conceitos-variaveis.mp4)
+
 **Variables** are global reusable values in any scenario. Supported types:
 
 | Type | Use |
@@ -197,6 +213,8 @@ Access variables in your flows with: `{{ variables.variableName }}`
 ---
 
 ## Credentials
+
+[Credentials](../../assets/images/conceitos-credenciais.mp4)
 
 **Credentials** store connection information securely and centrally. Supported types:
 
