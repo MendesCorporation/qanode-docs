@@ -17,6 +17,8 @@ Acceda a través del ícono de **engranaje** (⚙️) en el menú lateral → **
    - **Rol**: Rol asignado (define los permisos)
 4. Se enviará un correo de invitación con un enlace de activación
 
+[Invitando Usuarios](../../assets/images/administracao-convidar-usuarios.mp4)
+
 > **Requisito:** El SMTP debe estar configurado para el envío de invitaciones.
 
 ### Importación en Lote
@@ -40,6 +42,8 @@ Para registrar varios usuarios a la vez:
 Después del procesamiento, se muestra un resumen con:
 - Cantidad de usuarios importados con éxito
 - Lista de fallos con el número de fila, correo y motivo del error (ej.: correo ya existe, rol no encontrado, campos obligatorios faltantes)
+
+[Importación en Lote](../../assets/images/administracao-importar-usuarios.mp4)
 
 > **Nota:** La importación respeta el límite de usuarios de la licencia. Si el archivo contiene más usuarios de los que permite el plan, el sistema informará y ofrecerá la opción de importar solo hasta el límite disponible.
 
@@ -94,6 +98,8 @@ Al crear o editar un rol, el campo **Vista de Tablas** define qué tablas de la 
 | **architect** | Projects, Flows, Suites, Runs, Run Steps, Variables |
 | **tester** | Projects, Flows, Suites, Runs, Run Steps |
 | **none** | Ninguna tabla — query builder deshabilitado |
+
+[Roles Personalizados](../../assets/images/administracao-papeis-customizados.mp4)
 
 > **Nota:** Las columnas sensibles (contraseñas, tokens, datos cifrados) se ocultan automáticamente, independientemente del perfil de vista.
 
@@ -277,6 +283,8 @@ Cómo funciona:
 - la restauración crea una nueva versión actual a partir del snapshot elegido;
 - al reducir el límite, las versiones excedentes se eliminan automáticamente.
 
+[Historial de Versiones](../../assets/images/administracao-historico-versoes.mp4)
+
 El valor recomendado es mantener suficientes versiones para auditoría y reversión sin acumular historial innecesario.
 
 ### Retención de Datos de Ejecución
@@ -353,6 +361,8 @@ Configure notificaciones automáticas para fallos en suites:
 
 > **Requisito:** El SMTP debe estar configurado para el envío de alarmas por correo electrónico.
 
+[Alarmes](../../assets/images/administracao-definir-alarmes.mp4)
+
 ---
 
 ## Webhooks
@@ -372,6 +382,8 @@ Los webhooks permiten enviar automáticamente notificaciones HTTP POST a servici
 | **Secret** | (Opcional) Clave HMAC para firma del payload |
 | **Eventos** | Qué eventos disparan el webhook |
 | **Alcance** | Filtro por proyecto, suite o escenario específico |
+
+[Configurando Webhooks](../../assets/images/administracao-webhooks.mp4)
 
 ### Eventos Disponibles
 
@@ -568,6 +580,8 @@ Proyectos, Flujos, Suites, Ejecuciones, Variables, Credenciales, Proveedores, Us
 2. Navegue por el historial usando paginación
 3. Use filtros para buscar acciones específicas
 
+[Visualizar registro de auditoría](../../assets/images/administracao-visualizar-log-auditoria.mp4)
+
 
 ---
 
@@ -579,6 +593,8 @@ Cualquier usuario puede cambiar su propia contraseña:
 2. Ingrese la contraseña actual
 3. Ingrese y confirme la nueva contraseña
 4. Haga clic en **Guardar**
+
+[Cambio de Contraseña](../../assets/images/administracao-alterar-senha.mp4)
 
 ---
 
@@ -604,6 +620,8 @@ Gestione la licencia de QANode:
    - **Días restantes**
    - **Límite de usuarios**
    - **Usuarios activos** vs límite
+
+[Verificar Licencia](../../assets/images/administracao-verificar-licenca.mp4)
 
 ---
 
