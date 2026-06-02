@@ -17,6 +17,8 @@ Access it through the **gear** icon (⚙️) in the side menu → **Settings**.
    - **Role**: Assigned role (defines permissions)
 4. An invitation email will be sent with an activation link
 
+[Inviting Users](../../assets/images/administracao-convidar-usuarios.mp4)
+
 > **Requirement:** SMTP must be configured for sending invitations.
 
 ### Bulk Import
@@ -40,6 +42,8 @@ To register multiple users at once:
 After processing, a summary is displayed showing:
 - Number of users successfully imported
 - List of failures with the row number, email, and reason for the error (e.g.: email already exists, role not found, missing required fields)
+
+[Bulk Import](../../assets/images/administracao-importar-usuarios.mp4)
 
 > **Note:** The import respects the license's user limit. If the file contains more users than the plan allows, the system will notify you and offer the option to import only up to the available limit.
 
@@ -94,6 +98,8 @@ When creating or editing a role, the **Table View** field defines which database
 | **architect** | Projects, Flows, Suites, Runs, Run Steps, Variables |
 | **tester** | Projects, Flows, Suites, Runs, Run Steps |
 | **none** | No tables — query builder disabled |
+
+[Custom Roles](../../assets/images/administracao-papeis-customizados.mp4)
 
 > **Note:** Sensitive columns (passwords, tokens, encrypted data) are automatically hidden, regardless of the view profile.
 
@@ -277,6 +283,8 @@ How it works:
 - restoring creates a new current version from the selected snapshot;
 - when the limit is reduced, exceeding versions are removed automatically.
 
+[Version History](../../assets/images/administracao-historico-versoes.mp4)
+
 The recommended default is to keep enough versions for auditing and rollback without accumulating unnecessary history.
 
 ### Execution Data Retention
@@ -353,6 +361,8 @@ Configure automatic notifications for suite failures:
 
 > **Requirement:** SMTP must be configured for sending alarms by email.
 
+[Setting Alarms](../../assets/images/administracao-definir-alarmes.mp4)
+
 ---
 
 ## Webhooks
@@ -372,6 +382,8 @@ Webhooks allow automatically sending HTTP POST notifications to external service
 | **Secret** | (Optional) HMAC key for payload signing |
 | **Events** | Which events trigger the webhook |
 | **Scope** | Filter by specific project, suite, or scenario |
+
+[Configuring Webhooks](../../assets/images/administracao-webhooks.mp4)
 
 ### Available Events
 
@@ -568,6 +580,8 @@ Projects, Flows, Suites, Runs, Variables, Credentials, Providers, Users, Roles, 
 2. Navigate through the history using pagination
 3. Use filters to search for specific actions
 
+[View audit logs](../../assets/images/administracao-visualizar-log-auditoria.mp4)
+
 
 ---
 
@@ -579,6 +593,8 @@ Any user can change their own password:
 2. Enter the current password
 3. Enter and confirm the new password
 4. Click **Save**
+
+[Password Change](../../assets/images/administracao-alterar-senha.mp4)
 
 ---
 
@@ -604,6 +620,8 @@ Manage the QANode license:
    - **Remaining days**
    - **User limit**
    - **Active users** vs limit
+
+[Verify Licence](../../assets/images/administracao-verificar-licenca.mp4)
 
 ---
 
