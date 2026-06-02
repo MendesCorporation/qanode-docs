@@ -17,6 +17,8 @@ Acesse através do ícone de **engrenagem** (⚙️) no menu lateral → **Confi
    - **Papel**: Papel atribuído (define permissões)
 4. Um e-mail de convite será enviado com link de ativação
 
+[Convidando Usuários](../../assets/images/administracao-convidar-usuarios.mp4)
+
 > **Requisito:** SMTP deve estar configurado para envio de convites.
 
 ### Importação em Lote
@@ -40,6 +42,8 @@ Para cadastrar vários usuários de uma vez:
 Após o processamento, um resumo é exibido com:
 - Quantidade de usuários importados com sucesso
 - Lista de falhas com o número da linha, e-mail e motivo do erro (ex: e-mail já existe, papel não encontrado, campos obrigatórios faltando)
+
+[Importação em lote](../../assets/images/administracao-importar-usuarios.mp4)
 
 > **Nota:** A importação respeita o limite de usuários da licença. Se o arquivo contiver mais usuários do que o plano permite, o sistema informará e oferecerá a opção de importar apenas até o limite disponível.
 
@@ -94,6 +98,8 @@ Ao criar ou editar um papel, o campo **Visão de Tabelas** define quais tabelas 
 | **architect** | Projects, Flows, Suites, Runs, Run Steps, Variables |
 | **tester** | Projects, Flows, Suites, Runs, Run Steps |
 | **none** | Nenhuma tabela — query builder desabilitado |
+
+[Papéis Customizados](../../assets/images/administracao-papeis-customizados.mp4)
 
 > **Nota:** Colunas sensíveis (senhas, tokens, dados criptografados) são automaticamente ocultadas, independentemente do perfil de visão.
 
@@ -277,6 +283,8 @@ Como funciona:
 - a restauração cria uma nova versão atual a partir do snapshot escolhido;
 - ao reduzir o limite, versões excedentes são removidas automaticamente.
 
+[Histórico de Versões](../../assets/images/administracao-historico-versoes.mp4)
+
 O padrão recomendado é manter versões suficientes para auditoria e reversão sem acumular histórico desnecessário.
 
 ### Retenção de Dados de Execução
@@ -353,6 +361,8 @@ Configure notificações automáticas para falhas em suítes:
 
 > **Requisito:** SMTP deve estar configurado para envio de alarmes por e-mail.
 
+[Definir Alarmes](../../assets/images/administracao-definir-alarmes.mp4)
+
 ---
 
 ## Webhooks
@@ -372,6 +382,8 @@ Webhooks permitem enviar notificações HTTP POST automaticamente para serviços
 | **Secret** | (Opcional) Chave HMAC para assinatura do payload |
 | **Eventos** | Quais eventos disparam o webhook |
 | **Escopo** | Filtro por projeto, suíte ou cenário específico |
+
+[Configurar Webhooks](../../assets/images/administracao-webhooks.mp4)
 
 ### Eventos Disponíveis
 
@@ -568,6 +580,8 @@ Projetos, Fluxos, Suítes, Execuções, Variáveis, Credenciais, Provedores, Usu
 2. Navegue pelo histórico usando paginação
 3. Use filtros para buscar ações específicas
 
+[Visualizar logs de auditoria](../../assets/images/administracao-visualizar-log-auditoria.mp4)
+
 
 ---
 
@@ -579,6 +593,8 @@ Qualquer usuário pode alterar sua própria senha:
 2. Informe a senha atual
 3. Informe e confirme a nova senha
 4. Clique em **Salvar**
+
+[Alterar Senha](../../assets/images/administracao-alterar-senha.mp4)
 
 ---
 
@@ -604,6 +620,8 @@ Gerencie a licença do QANode:
    - **Dias restantes**
    - **Limite de usuários**
    - **Usuários ativos** vs limite
+
+[Verificar Licença](../../assets/images/administracao-verificar-licenca.mp4)
 
 ---
 
