@@ -12,7 +12,7 @@ El nodo **Switch** permite crear bifurcaciones múltiples basadas en el valor de
 |-----------|-------|
 | **Tipo** | `switch` |
 | **Categoría** | Control de Flujo |
-| **Color** | Amarillo (#f59e0b) |
+| **Color** | 🟡 Amarillo (#f59e0b) |
 | **Entrada** | `in` |
 | **Salidas** | `case-0`, `case-1`, ..., `default` (dinámicas) |
 

@@ -1,18 +1,18 @@
 # Nodo HTTP Request
 
-El nodo **HTTP Request** permite realizar solicitudes HTTP a APIs REST, servicios SOAP o cualquier endpoint web. Admite todos los métodos HTTP comunes, múltiples tipos de autenticación e integración con credenciales guardadas.
+El nodo **HTTP Request** permite realizar solicitudes HTTP a APIs REST, servicios SOAP o cualquier endpoint web. Admite métodos HTTP comunes, varios tipos de autenticación, credenciales guardadas, envío de archivos y respuestas en archivo.
 
 ---
 
-## Descripción General
+## Visión General
 
-[Descripción General](../../assets/images/nos-http-request-visao-geral.mp4)
+[Visión General](../../assets/images/nos-http-request-visao-geral.mp4)
 
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `http-request` |
 | **Categoría** | API |
-| **Color** | Morado (#a855f7) |
+| **Color** | 🟣 Morado (#a855f7) |
 | **Entrada** | `in` |
 | **Salida** | `out` |
 
@@ -28,68 +28,62 @@ El modo builder ofrece una interfaz visual para construir la solicitud:
 |-------|------|-------------|
 | **Método** | `string` | `GET`, `POST`, `PUT`, `PATCH`, `DELETE` |
 | **URL** | `string` | URL del endpoint (admite `{{ }}`) |
-| **Headers** | `object` | Encabezados HTTP (clave-valor) |
-| **Body** | `any` | Cuerpo de la solicitud (JSON o texto plano) |
+| **Headers** | `object` | Encabezados HTTP como pares clave-valor |
+| **Parámetros de query** | `array` | Pares clave-valor agregados a la URL |
+| **Tipo del cuerpo** | `string` | `Ninguno`, `JSON`, `Texto bruto`, `x-www-form-urlencoded`, `multipart/form-data` o `Archivo binario` |
+| **Tipo de respuesta** | `string` | `Auto`, `Texto`, `JSON` o `Archivo` |
 | **Credencial** | `string` | Credencial guardada para autenticación |
 
 ### Modo Raw
 
-El modo raw permite editar la solicitud como JSON puro, proporcionando control total.
+El modo raw permite editar la solicitud como JSON, ofreciendo control total.
+
+### Importar cURL
+
+**Importar cURL** convierte un comando `curl` en la configuración visual de la solicitud. QANode intenta detectar:
+
+- método HTTP;
+- URL;
+- headers;
+- parámetros de query;
+- body JSON o texto;
+- `x-www-form-urlencoded`;
+- `multipart/form-data`;
+- archivo binario enviado con `--data-binary @archivo`.
+
+Cuando el cURL referencia un archivo local, QANode muestra el nombre/camino importado y el usuario debe adjuntar o informar el `fileRef` correspondiente en el campo de archivo.
 
 ---
 
 ## Autenticación
 
-El nodo admite múltiples métodos de autenticación:
+El nodo admite varios métodos de autenticación.
 
 ### Usar Credenciales Guardadas
 
-La forma más segura y recomendada. Seleccione una credencial de tipo **HTTP/API** que contenga la URL base y el token:
+La forma más segura y recomendada. Selecciona una credencial **HTTP/API** que contenga la URL base y el token:
 
-1. En el campo **Credencial**, seleccione la credencial deseada
-2. La URL base y los encabezados de autenticación se aplicarán automáticamente
-3. En el campo **URL**, ingrese solo el path: `/api/users`
+1. Selecciona la credencial en **Credencial**
+2. La URL base y los headers de autenticación se aplican automáticamente
+3. En **URL**, informa solo el path, como `/api/users`
 
 ### Autenticación Manual
 
 | Tipo | Campos | Resultado |
 |------|--------|-----------|
 | **Bearer Token** | Token | Header `Authorization: Bearer {token}` |
-| **Basic Auth** | Usuario + Contraseña | Header `Authorization: Basic {base64}` |
-| **API Key** | Nombre del Header + Token | Header personalizado con el token |
+| **Basic Auth** | Usuario + contraseña | Header `Authorization: Basic {base64}` |
+| **API Key** | Nombre del header + token | Header personalizado con el token |
 
 ---
 
-## Métodos HTTP
+## Cuerpo
 
-| Método | Uso Típico |
-|--------|-----------|
-| **GET** | Obtener datos (listar, ver detalles) |
-| **POST** | Crear recursos, enviar datos |
-| **PUT** | Reemplazar un recurso completo |
-| **PATCH** | Actualizar parcialmente un recurso |
-| **DELETE** | Eliminar un recurso |
+Para métodos que aceptan body (POST, PUT, PATCH), elige **Tipo del cuerpo**.
 
----
+### Ninguno
 
-## Headers
-
-Agregue encabezados personalizados como pares clave-valor:
-
-| Header | Ejemplo |
-|--------|---------|
-| `Content-Type` | `application/json` |
-| `Accept` | `application/json` |
-| `X-Custom-Header` | `mi-valor` |
-| `Authorization` | `Bearer {{ variables.TOKEN }}` |
-
-> Los headers admiten expresiones `{{ }}` para valores dinámicos.
-
----
-
-## Body (Cuerpo de la Solicitud)
-
-Para métodos que aceptan body (POST, PUT, PATCH), puede enviar:
+No envía cuerpo. Es el valor por defecto para `GET` y `DELETE`.
 
 ### JSON
 
@@ -101,16 +95,73 @@ Para métodos que aceptan body (POST, PUT, PATCH), puede enviar:
 }
 ```
 
-### Form Data
+El editor JSON resalta la sintaxis y acepta expresiones `{{ }}` dentro de los valores.
 
-```json
-{
-  "username": "admin",
-  "password": "{{ variables.ADMIN_PASS }}"
-}
+### Texto bruto
+
+Usa este modo para payloads textuales, XML, SOAP, scripts o cualquier contenido que no deba tratarse como JSON.
+
+```xml
+<login>
+  <user>{{ variables.USUARIO }}</user>
+</login>
 ```
 
-> El body admite expresiones `{{ }}` en cualquier valor.
+### x-www-form-urlencoded
+
+Envía campos como `application/x-www-form-urlencoded`.
+
+| Campo | Valor |
+|-------|-------|
+| `username` | `admin` |
+| `password` | `{{ variables.ADMIN_PASS }}` |
+
+### multipart/form-data
+
+Envía campos de formulario en formato multipart, incluyendo texto y archivos.
+
+| Tipo de campo | Descripción |
+|---------------|-------------|
+| **Texto** | Campo textual común |
+| **Archivo** | Campo que recibe un `fileRef` |
+
+Ejemplo:
+
+```
+Método: POST
+URL: https://httpbin.org/post
+Tipo del cuerpo: multipart/form-data
+Campo texto:
+  description = prueba de upload
+Campo archivo:
+  file = {{ steps["file-generate"].outputs.fileRef }}
+```
+
+### Archivo binario
+
+Envía el contenido de un único archivo como cuerpo de la solicitud. Úsalo cuando la API espera el archivo directamente en el body, no dentro de un formulario multipart.
+
+```
+Tipo del cuerpo: Archivo binario
+Archivo: {{ steps["file-generate"].outputs.fileRef }}
+```
+
+> QANode usa el MIME type del archivo cuando está disponible. Si es necesario, agrega manualmente un header `Content-Type`.
+
+---
+
+## Respuestas en Archivo
+
+El campo **Tipo de respuesta** controla cómo se trata el retorno de la API:
+
+| Tipo | Comportamiento |
+|------|----------------|
+| **Auto** | Detecta JSON/texto o archivo por contenido y headers |
+| **JSON** | Intenta interpretar la respuesta como JSON |
+| **Texto** | Devuelve el cuerpo como texto |
+| **Archivo** | Guarda la respuesta como artefacto y expone `fileRef` |
+
+Usa **Archivo** cuando la API devuelve PDF, imagen, CSV, Excel, ZIP u otro contenido binario.
 
 ---
 
@@ -119,91 +170,83 @@ Para métodos que aceptan body (POST, PUT, PATCH), puede enviar:
 | Output | Tipo | Descripción |
 |--------|------|-------------|
 | `status` | `number` | Código de estado HTTP (200, 404, 500, etc.) |
-| `body` | `string` | Cuerpo de la respuesta como texto plano |
-| `json` | `any` | Cuerpo de la respuesta analizado como JSON |
+| `body` | `any` | Cuerpo de la respuesta como texto o JSON, según la respuesta |
+| `fileRef` | `fileRef` | Archivo devuelto por la API, cuando la respuesta se trata como archivo |
 
-### Acceder a los Outputs
+### Accediendo a los Outputs
 
 ```
 // Estado de la respuesta
 {{ steps["http-request"].outputs.status }}  →  200
 
-// Cuerpo JSON
-{{ steps["http-request"].outputs.json }}  →  { "id": 1, "name": "João" }
-
-// Propiedad específica del JSON
-{{ steps["http-request"].outputs.json.name }}  →  "João"
+// Cuerpo JSON o texto
+{{ steps["http-request"].outputs.body }}  →  { "id": 1, "name": "Juan" }
 
 // Array en el JSON
-{{ steps["http-request"].outputs.json.items[0].title }}  →  "Primeiro Item"
+{{ steps["http-request"].outputs.body.items[0].title }}  →  "Primer item"
 
-// Cuerpo como texto plano
-{{ steps["http-request"].outputs.body }}  →  '{"id": 1, "name": "João"}'
+// Archivo devuelto por la API
+{{ steps["http-request"].outputs.fileRef }}
 ```
+
+> Campos antiguos como `json`, `headers`, `text`, `rawBody` y `statusCode` pueden seguir accesibles en expresiones manuales durante la ventana de compatibilidad, pero el panel de variables sugiere solo la superficie nueva: `status`, `body` o `fileRef`.
 
 ---
 
 ## Ejemplos Prácticos
 
-### GET — Obtener un usuario
+### GET — Obtener usuario
 
 ```
 Método: GET
-URL: https://api.exemplo.com/users/1
+URL: https://api.example.com/users/1
 Headers: { "Accept": "application/json" }
 ```
 
-### POST — Crear un recurso
+### POST — Crear recurso
 
 ```
 Método: POST
-URL: https://api.exemplo.com/users
-Headers: { "Content-Type": "application/json" }
-Body: {
+URL: https://api.example.com/users
+Tipo del cuerpo: JSON
+JSON: {
   "name": "Maria",
-  "email": "maria@exemplo.com"
+  "email": "maria@example.com"
 }
 ```
 
-### PUT con autenticación Bearer
+### POST — Upload multipart
 
 ```
-Método: PUT
-URL: https://api.exemplo.com/users/1
-Auth: Bearer Token → {{ steps.login.outputs.json.token }}
-Body: {
-  "name": "Maria Silva",
-  "role": "admin"
-}
+Método: POST
+URL: https://httpbin.org/post
+Tipo del cuerpo: multipart/form-data
+Campo texto: description = prueba de upload
+Campo archivo: file = {{ steps["file-generate"].outputs.fileRef }}
 ```
 
-### Encadenando solicitudes
+### GET — Descargar archivo
 
 ```
-[HTTP Request: POST /login]
-    │ outputs.json.token = "abc123"
-    ▼
-[HTTP Request: GET /api/profile]
-    │ Header: Authorization = Bearer {{ steps.login.outputs.json.token }}
-    ▼
-[If: {{ steps.profile.outputs.status }} === 200]
-    │ true → [Log: "Perfil: {{ steps.profile.outputs.json.name }}"]
+Método: GET
+URL: https://httpbin.org/image/png
+Tipo de respuesta: Archivo
 ```
 
 ---
 
 ## Manejo de Errores
 
-| Estado | Significado | Acción Sugerida |
-|--------|-------------|----------------|
+| Estado | Significado | Acción sugerida |
+|--------|-------------|-----------------|
 | `200-299` | Éxito | Continuar normalmente |
-| `400` | Solicitud inválida | Verificar body/params |
-| `401` | No autorizado | Verificar token/credencial |
-| `403` | Prohibido | Verificar permisos |
-| `404` | No encontrado | Verificar URL |
-| `500` | Error del servidor | Verificar API |
+| `400` | Solicitud inválida | Revisar body/params |
+| `401` | No autorizado | Revisar token/credencial |
+| `403` | Prohibido | Revisar permisos |
+| `404` | No encontrado | Revisar URL |
+| `500` | Error del servidor | Revisar API |
 
-Use el nodo **If** después del HTTP Request para manejar diferentes códigos de estado:
+Usa un nodo **If** después de HTTP Request para tratar diferentes códigos de estado:
 
 ```
 [HTTP Request] → [If: status === 200]
@@ -215,7 +258,9 @@ Use el nodo **If** después del HTTP Request para manejar diferentes códigos de
 
 ## Consejos
 
-- **Use credenciales guardadas** en lugar de colocar tokens directamente en los campos — es más seguro y facilita el mantenimiento
-- **Verifique el estado** antes de usar el JSON — una respuesta de error puede no tener el formato esperado
-- **Use variables** para las URLs base: `{{ variables.API_URL }}/endpoint` permite cambiar de entorno fácilmente
-- El output `json` devuelve `null` si la respuesta no es JSON válido — en ese caso, use `body`
+- Usa credenciales guardadas en lugar de colocar tokens directamente en los campos.
+- Verifica `status` antes de usar `body`.
+- Usa variables para URLs base: `{{ variables.API_URL }}/endpoint`.
+- Usa `multipart/form-data` cuando la API espera upload de formulario.
+- Usa **Tipo de respuesta = Archivo** para respuestas binarias.
+

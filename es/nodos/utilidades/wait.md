@@ -83,7 +83,7 @@ Timeout: 60000
 [HTTP Request: POST /process]
     │
     ▼
-[Wait Until: {{ steps.checkStatus.outputs.json.status }} === "done"]
+[Wait Until: {{ steps.checkStatus.outputs.body.status }} === "done"]
     │ Intervalo: 5000ms, Timeout: 120000ms
     ▼
 [If: conditionMet]

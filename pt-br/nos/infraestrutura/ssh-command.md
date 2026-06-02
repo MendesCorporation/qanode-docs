@@ -52,18 +52,64 @@ Selecione uma credencial do tipo **SSH** no campo **Credencial**.
 |-------|------|--------|-----------|
 | **Timeout (ms)** | `number` | 30000 | Tempo máximo para a execução total |
 
-### Passos (SSH Steps)
+### Passos SSH
 
-O nó suporta múltiplos passos executados sequencialmente na mesma conexão SSH:
+O nó suporta múltiplos passos executados sequencialmente na mesma conexão SSH. Use **+ Adicionar passo** para incluir comandos, envios de arquivo e downloads.
+
+| Tipo de passo | Descrição |
+|---------------|-----------|
+| **Comando** | Executa um comando no shell remoto |
+| **Enviar arquivo** | Envia um `fileRef` para o servidor remoto via SFTP |
+| **Baixar arquivo** | Baixa um arquivo remoto via SFTP, com fallback para SCP |
+
+Todos os passos rodam na mesma sessão SSH. Isso significa que comandos como `cd /minha/pasta` afetam os passos seguintes quando eles usam **Pasta atual**.
+
+### Passo Comando
 
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
-| **Label** | `string` | Nome descritivo do passo |
+| **Rótulo** | `string` | Nome descritivo do passo |
 | **Comando** | `string` | Comando a executar (suporta `{{ }}`) |
 | **Aguardar Match** | `boolean` | Esperar por texto na saída |
 | **String de Match** | `string` | Texto a aguardar |
 | **Usar Regex** | `boolean` | Interpretar match como regex |
 | **Timeout do Match (ms)** | `number` | Tempo máximo para match |
+
+### Passo Enviar Arquivo
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| **Rótulo** | `string` | Nome descritivo do passo |
+| **Arquivo** | `fileRef` | Arquivo a enviar |
+| **Destino** | seleção | **Pasta atual** ou **Caminho remoto** |
+| **Caminho remoto** | `string` | Caminho absoluto ou relativo no servidor, quando o destino é caminho remoto |
+| **Manter nome do arquivo** | `boolean` | Usa o nome original do arquivo |
+| **Nome do arquivo** | `string` | Novo nome no servidor, quando **Manter nome do arquivo** está desligado |
+| **Criar pastas remotas** | `boolean` | Cria diretórios faltantes antes do envio |
+
+Com **Destino = Pasta atual**, o QANode envia o arquivo para o diretório atual do shell SSH. Isso permite fazer:
+
+```
+Passo 1: cd /opt/minha-app/uploads
+Passo 2: Enviar arquivo → Destino: Pasta atual
+```
+
+Com **Destino = Caminho remoto**, informe o caminho diretamente. Se terminar com `/`, o arquivo é salvo dentro da pasta informada.
+
+### Passo Baixar Arquivo
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| **Rótulo** | `string` | Nome descritivo do passo |
+| **Origem** | seleção | **Pasta atual** ou **Caminho remoto** |
+| **Nome do arquivo** | `string` | Nome do arquivo quando a origem é a pasta atual |
+| **Caminho remoto** | `string` | Caminho do arquivo no servidor, quando a origem é caminho remoto |
+| **Nome da variável** | `string` | Chave usada em `outputs.files` |
+| **Nome do arquivo de saída** | `string` | Nome do arquivo salvo no QANode. Se vazio, usa o nome remoto |
+
+Se a extensão for omitida no caminho remoto, o QANode tenta resolver pelo nome do arquivo na pasta remota. Por exemplo, `/tmp/massas` pode encontrar `/tmp/massas.csv` quando esse arquivo existe no servidor.
+
+O MIME type é inferido automaticamente pelo conteúdo e pelo nome do arquivo.
 
 ### Aguardar Match
 
@@ -87,9 +133,11 @@ Timeout: 10000
 | Output | Tipo | Descrição |
 |--------|------|-----------|
 | `stdout` | `string` | Saída padrão completa |
-| `stderr` | `string` | Saída de erro |
 | `exitCode` | `number` | Código de saída (0 = sucesso) |
-| `steps` | `array` | Resultado de cada passo individual |
+| `commands` | `array` | Resultado de cada passo individual |
+| `files` | `object` | Arquivos baixados, quando existe passo **Baixar arquivo** |
+| `fileRef` | `fileRef` | Atalho para o último arquivo baixado |
+| `fileInfo` | `object` | Metadados dos arquivos baixados, como nome, MIME type, tamanho, caminho remoto e método de transferência |
 
 ### Acessando os Outputs
 
@@ -101,8 +149,14 @@ Timeout: 10000
 {{ steps.ssh.outputs.exitCode }}
 
 // Resultado de um passo específico
-{{ steps.ssh.outputs.steps[0].stdout }}
-{{ steps.ssh.outputs.steps[0].exitCode }}
+{{ steps.ssh.outputs.commands[0].stdout }}
+{{ steps.ssh.outputs.commands[0].exitCode }}
+
+// Arquivo baixado pelo nome da variável
+{{ steps.ssh.outputs.files.relatorio }}
+
+// Atalho para o último arquivo baixado
+{{ steps.ssh.outputs.fileRef }}
 ```
 
 ---
@@ -155,6 +209,35 @@ Passo 3:
   Comando: ps aux --sort=-%mem | head -10
 ```
 
+### Enviar e baixar arquivo na pasta atual
+
+```
+Passo 1:
+  Rótulo: Entrar na pasta
+  Comando: cd /root/testes
+
+Passo 2:
+  Rótulo: Enviar massa
+  Tipo: Enviar arquivo
+  Arquivo: {{ steps["file-generate"].outputs.fileRef }}
+  Destino: Pasta atual
+  Manter nome do arquivo: true
+
+Passo 3:
+  Rótulo: Baixar resultado
+  Tipo: Baixar arquivo
+  Origem: Pasta atual
+  Nome do arquivo: resultado.csv
+  Nome da variável: resultado
+```
+
+Depois do download:
+
+```
+{{ steps.ssh.outputs.files.resultado }}
+{{ steps.ssh.outputs.fileInfo.resultado.name }}
+```
+
 ---
 
 ## Fluxo com Validação
@@ -182,4 +265,7 @@ Passo 3:
 - Use **expressões** nos comandos: `echo "Deploy em {{ variables.ENVIRONMENT }}"`
 - O **aguardar match** é essencial para comandos que demoram (restarts, builds)
 - Todos os passos rodam na **mesma sessão SSH** — o diretório de trabalho é mantido entre passos
+- Use **Pasta atual** quando um comando anterior já posicionou o shell no diretório correto
+- Use **Caminho remoto** quando quiser ser explícito e independente do `cd` anterior
+- Para baixar arquivos, prefira um **Nome da variável** claro, como `relatorio`, `massa` ou `evidencia`
 - Comandos com `{{ }}` são avaliados antes da execução

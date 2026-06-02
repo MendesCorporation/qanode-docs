@@ -29,11 +29,14 @@ The top bar contains:
 
 The palette displays all available nodes organized by category:
 
-- **Flow Control** — If, Switch, Loop, Merge
+- **Flow Control** — If, Switch, Loop
 - **Web** — Smart Web Flow, Web Flow, Smart Locators
+- **Mobile** — Mobile Flow
 - **API** — HTTP Request
 - **Database** — PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, MongoDB
+- **Files** — Generate File, Extract File, Base64 to File, File to Base64
 - **Infrastructure** — SSH Command
+- **Performance** — Load Test
 - **Utilities** — Set Variable, Log, Wait, Stop and Fail, Custom JavaScript
 - **Custom Nodes** — Nodes from registered providers (if any)
 

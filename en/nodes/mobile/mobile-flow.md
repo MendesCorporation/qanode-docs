@@ -12,7 +12,7 @@ The **Mobile Flow** node allows you to automate interactions with native mobile 
 |----------|-------|
 | **Type** | `mobile-flow` |
 | **Category** | Mobile |
-| **Color** | Light Red (#f87171) |
+| **Color** | 🔴 Light Red (#f87171) |
 | **Input** | `in` |
 | **Output** | `out` |
 
@@ -150,6 +150,8 @@ The Mobile Flow node executes a sequence of configurable **steps**. Each step re
 | [pinch-zoom](#pinch-zoom) | Pinch or zoom gesture on an element |
 | [multi-touch](#multi-touch) | Multi-touch gesture with two simultaneous fingers |
 | [permission](#permission) | Accept/dismiss system alerts or manage Android permissions |
+| [push-file](#push-file) | Send a file to the device |
+| [pull-file](#pull-file) | Download a file from the device to QANode |
 | [reset](#reset) | Reset the application |
 | [back](#back) | Press the Back button (Android) |
 | [home](#home) | Press the Home button (Android) |
@@ -210,6 +212,14 @@ Types text into an input field.
 | **Text** | `string` | Text to type (supports `{{ }}`) |
 | **Clear First** | `boolean` | Clear the field before typing |
 | **Retry Attempts** | `number` | Number of location attempts |
+
+For text fields, QANode tries to locate the target in layers:
+
+1. strong identifiers such as resource-id, accessibility id, name, and content-desc;
+2. `hint`, `label`, and `text` when they belong to the field itself;
+3. contextual relationship between the visible label and the nearby input;
+4. recorded coordinates as a visual fallback;
+5. generic input class only as a last resort.
 
 ---
 
@@ -403,6 +413,40 @@ Accepts or dismisses system alerts, or grants/revokes Android app permissions.
 
 ---
 
+### push-file
+
+Sends a file from QANode to the device before continuing the automation.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| **File** | `fileRef` | File to send |
+| **Device Path** | `string` | Destination path. If empty, QANode uses a platform default |
+
+Use this step when the application needs a file to exist on the device before opening a native picker, gallery, document picker, or upload flow.
+
+On Android, common paths live under `/sdcard/Download/...`. On iOS, QANode tries to send the file to the application container when available and uses an Appium/XCUITest-compatible fallback.
+
+---
+
+### pull-file
+
+Downloads a file from the device, saves it as a QANode artifact, and returns a `fileRef`.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| **Mode** | selection | Exact path, folder/pattern, or latest-file detection |
+| **Device Path** | `string` | Exact file path, when known |
+| **Folder** | `string` | Folder to inspect, such as `/sdcard/Download` |
+| **Pattern** | `string` | Name filter, such as `*.pdf`, `*.txt`, `*.jpg`, or `*` |
+| **Variable Name** | `string` | Key in `outputs.files` |
+| **Output File Name** | `string` | Name saved in QANode. If empty, uses the found name |
+
+Prefer **Exact path** when possible. When the application generates a dynamic filename, use folder/pattern to capture the most recent compatible file.
+
+Images, PDFs, text files, spreadsheets, and videos can be captured as long as Appium can read the file from the device or application container.
+
+---
+
 ### reset
 
 Resets the application, clearing its state (equivalent to uninstalling and reinstalling).
@@ -467,6 +511,20 @@ Each step can have individual evidence settings:
 | `sessionId` | `string` | Mobile session ID for reuse in other nodes |
 | `extracts` | `object` | Data extracted by `extract` steps (key → value) |
 | `asserts` | `object` | Assertion results (key → `true`/`false`) |
+| `files` | `object` | Files downloaded by `pull-file` steps |
+| `fileRef` | `fileRef` | Shortcut to the last downloaded file |
+
+### Downloaded files
+
+When a **Download file** step runs, the output is available by variable name:
+
+```
+{{ steps["mobile-flow"].outputs.files.report.fileRef }}
+{{ steps["mobile-flow"].outputs.files.report.name }}
+{{ steps["mobile-flow"].outputs.fileRef }}
+```
+
+Use the `fileRef` to pass the file to **Extract File**, **File to Base64**, **HTTP Request**, components, or other nodes that accept files.
 
 ---
 

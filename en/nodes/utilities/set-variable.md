@@ -33,14 +33,14 @@ The **Set Variable** node allows you to define or update variables at runtime. V
 
 ```
 Key: token
-Value: {{ steps.login.outputs.json.token }}
+Value: {{ steps.login.outputs.body.token }}
 ```
 
 ### Define a variable with a calculation
 
 ```
 Key: totalPrice
-Value: {{ steps.cart.outputs.json.subtotal * 1.1 }}
+Value: {{ steps.cart.outputs.body.subtotal * 1.1 }}
 ```
 
 ### Access the variable in subsequent nodes
@@ -58,7 +58,7 @@ After defining it, the variable is accessible via:
 ### Save an authentication token
 
 ```
-[HTTP Request: POST /login] → [Set Variable: token = {{ steps.login.outputs.json.token }}]
+[HTTP Request: POST /login] → [Set Variable: token = {{ steps.login.outputs.body.token }}]
     │
     ▼
 [HTTP Request: GET /profile → Header: Authorization = Bearer {{ variables.token }}]

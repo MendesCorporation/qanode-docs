@@ -47,7 +47,7 @@ Aguarda até que uma condição se torne verdadeira, verificando periodicamente.
 **Exemplo:** Aguardar até que variável esteja definida
 ```
 Modo: until
-Condição: {{ variables.processComplete === true }} 
+Condição: {{ variables.processComplete === true }}
 Intervalo: 2000
 Timeout: 60000
 ```
@@ -83,7 +83,7 @@ Timeout: 60000
 [HTTP Request: POST /process]
     │
     ▼
-[Wait Until: {{ steps.checkStatus.outputs.json.status }} === "done"]
+[Wait Until: {{ steps.checkStatus.outputs.body.status }} === "done"]
     │ Intervalo: 5000ms, Timeout: 120000ms
     ▼
 [If: conditionMet]

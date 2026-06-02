@@ -12,7 +12,7 @@ El nodo **Smart Locators** permite automatizar interacciones con páginas web us
 |-----------|-------|
 | **Tipo** | `smart-locators` |
 | **Categoría** | Web |
-| **Color** | Azul (#3b82f6) |
+| **Color** | 🔵 Azul (#3b82f6) |
 | **Entrada** | `in` |
 | **Salida** | `out` |
 

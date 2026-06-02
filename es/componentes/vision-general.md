@@ -79,7 +79,7 @@ En el nodo **Input**, configure los campos que el componente espera recibir.
 | Campo | Descripción |
 |-------|-------------|
 | **Nombre del Campo** | Nombre usado para mapear el valor en el escenario |
-| **Tipo** | `string`, `number`, `boolean`, `object` o `array` |
+| **Tipo** | `string`, `number`, `boolean`, `object`, `array` o `archivo` |
 | **Obligatorio** | Define si el escenario debe completar este valor |
 | **Datos de Prueba** | Valor usado al probar el componente directamente en el editor |
 
@@ -90,6 +90,7 @@ Ejemplo de entradas:
 | `email` | `string` | Sí |
 | `password` | `string` | Sí |
 | `perfil` | `string` | No |
+| `documento` | `archivo` | No |
 
 [Definiendo entradas del Componente](../../assets/images/entradas-componente.mp4)
 
@@ -98,6 +99,14 @@ Durante la ejecución del componente, los nodos internos pueden usar estas entra
 ```
 {{ steps.Input.outputs.email }}
 ```
+
+Para campos de tipo **Archivo**, el valor recibido es un `fileRef`. En la prueba aislada del componente, el campo muestra un botón de upload para adjuntar el archivo de prueba. Dentro del componente, úselo normalmente:
+
+```
+{{ steps.Input.outputs.documento }}
+```
+
+Ese valor puede pasarse a nodos como **Extraer Archivo**, **HTTP Request**, **SSH Command**, **Mobile Flow** o **Custom JavaScript**.
 
 > Use nombres simples y estables para los campos. Esto facilita el uso del componente en escenarios y evita expresiones difíciles de mantener.
 
@@ -120,7 +129,15 @@ Ejemplo:
 ```
 Nombre: token
 Tipo: string
-Valor: {{ steps.login.outputs.json.token }}
+Valor: {{ steps.login.outputs.body.token }}
+```
+
+Para devolver un archivo:
+
+```
+Nombre: reporte
+Tipo: archivo
+Valor: {{ steps["file-generate"].outputs.fileRef }}
 ```
 
 El escenario que llama al componente podrá usar la salida como output del nodo de componente.
@@ -223,6 +240,14 @@ Si la salida principal es un objeto:
 {{ steps.prepararUsuario.outputs.result.userId }}
 {{ steps.prepararUsuario.outputs.result.email }}
 ```
+
+Si la salida es un archivo:
+
+```
+{{ steps.generarReporte.outputs.reporte }}
+```
+
+El panel de variables muestra el archivo con nombre, tipo y tamaño en los detalles, pero el valor que debe arrastrarse a otros nodos es el `fileRef`.
 
 [Usando Outputs del Componente](../../assets/images/usar-output-component.mp4)
 

@@ -44,7 +44,30 @@ Cada tipo de teste gera um perfil de carga diferente automaticamente a partir do
 | **URL** | `string` | Endpoint alvo (suporta `{{ }}`) |
 | **Auth** | `string` | Tipo de autenticação manual (se não usar credencial) |
 | **Headers** | `object` | Cabeçalhos adicionais da requisição |
-| **Body** | `any` | Corpo da requisição (para POST, PUT, PATCH) |
+| **Parâmetros de Query** | `array` | Pares chave-valor adicionados à URL |
+| **Tipo do Corpo** | `string` | `Nenhum`, `JSON`, `Texto bruto`, `x-www-form-urlencoded`, `multipart/form-data` ou `Arquivo binário` |
+| **Body / Campos / Arquivo** | `any` | Conteúdo enviado conforme o tipo do corpo |
+
+### Corpo da Requisição
+
+O construtor de requisição do Load Test segue o mesmo modelo do nó [HTTP Request](../api/http-request.md):
+
+| Tipo | Quando usar |
+|------|-------------|
+| **Nenhum** | Requisições sem body |
+| **JSON** | APIs REST que recebem objetos ou arrays JSON |
+| **Texto bruto** | XML, SOAP, payload textual ou formato customizado |
+| **x-www-form-urlencoded** | Formulários URL encoded |
+| **multipart/form-data** | Formulários com campos de texto e arquivos |
+| **Arquivo binário** | Upload direto do conteúdo de um `fileRef` no body |
+
+Campos de header e body aceitam expressões `{{ }}`. Para enviar arquivo, use um `fileRef` vindo de outro nó:
+
+```
+Arquivo: {{ steps["file-generate"].outputs.fileRef }}
+```
+
+Também é possível importar um comando `curl`; o QANode tenta converter método, URL, headers, query, body e campos de formulário para o modo visual correspondente.
 
 ### Configuração de Carga
 
@@ -55,8 +78,8 @@ Cada tipo de teste gera um perfil de carga diferente automaticamente a partir do
 | **Think Time (ms)** | `number` | `0` | Pausa entre requisições de cada VU |
 | **Timeout (ms)** | `number` | `30000` | Tempo máximo de espera por resposta |
 
-> Para o tipo **Smoke**, o campo VUs é fixo em 1 e não é exibido.  
-> Para o tipo **Soak**, o padrão de duração é 1800s (30 min).  
+> Para o tipo **Smoke**, o campo VUs é fixo em 1 e não é exibido.
+> Para o tipo **Soak**, o padrão de duração é 1800s (30 min).
 > Para o tipo **Breakpoint**, o campo VUs representa o **máximo** de VUs que serão atingidos.
 
 #### Como o Breakpoint funciona
@@ -255,6 +278,24 @@ Limiares:
   - p99 < 2000
   - errorRate < 5
 ```
+
+### Upload sob carga
+
+```
+Tipo: Load
+URL: https://api.exemplo.com/upload
+Método: POST
+Tipo do Corpo: multipart/form-data
+Campo arquivo:
+  file = {{ steps["file-generate"].outputs.fileRef }}
+VUs: 10
+Duração: 60s
+Limiares:
+  - p95 < 1000
+  - errorRate < 1
+```
+
+Use esse padrão para validar endpoints que recebem anexos, documentos ou imagens.
 
 ### Breakpoint — Ponto de ruptura
 

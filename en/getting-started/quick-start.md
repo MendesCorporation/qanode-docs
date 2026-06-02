@@ -161,6 +161,6 @@ Want to test an API? Here is a quick example using **JSONPlaceholder**, a free p
    - **URL**: `https://jsonplaceholder.typicode.com/users/1`
 3. Drag an **If** node and connect it to the HTTP Request output
 4. Configure the condition: `{{ steps["http-request"].outputs.status === 200 }}`
-5. On the **true** output, add a **Log** node with the message: `User found: {{ steps["http-request"].outputs.json.name }}`
+5. On the **true** output, add a **Log** node with the message: `User found: {{ steps["http-request"].outputs.body.name }}`
 
 This flow makes a GET request to JSONPlaceholder and checks if the status is 200. If so, it displays the returned user's name (`Leanne Graham`).

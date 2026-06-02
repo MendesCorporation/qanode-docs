@@ -291,22 +291,23 @@ func main() {
 
 ---
 
-## Ejemplo Avanzado: Nodo con Artefacto (Screenshot)
+## Ejemplo Avanzado: Nodo con Artefactos
 
 ```javascript
-// gerar-badge/gerar-badge.node.js
+// generar-badge/generar-badge.node.js
 import { createCanvas } from 'canvas';
 
 export const manifest = {
-  type: 'gerar-badge',
-  name: 'Gerar Badge',
-  category: 'Gerador',
+  type: 'generar-badge',
+  name: 'Generar Badge',
+  category: 'Generador',
   inputSchema: {
     texto: { type: 'string', required: true },
     cor: { type: 'string', enum: ['green', 'red', 'blue', 'yellow'], default: 'green' }
   },
   outputSchema: {
-    imageName: { type: 'string' }
+    imageName: { type: 'string' },
+    reporte: { type: 'fileRef' }
   }
 };
 
@@ -323,19 +324,39 @@ export async function execute({ inputs }) {
   ctx.fillText(inputs.texto, 100, 26);
 
   const base64 = canvas.toBuffer('image/png').toString('base64');
+  const csv = Buffer.from('id,texto\n1,' + inputs.texto + '\n').toString('base64');
 
   return {
     status: 'success',
-    logs: [`Badge gerado: "${inputs.texto}" (${inputs.cor})`],
+    logs: [`Badge generado: "${inputs.texto}" (${inputs.cor})`],
     outputs: { imageName: `badge-${Date.now()}.png` },
-    artifacts: [{
-      type: 'screenshot',
-      name: `badge-${Date.now()}.png`,
-      base64
-    }]
+    artifacts: [
+      {
+        type: 'screenshot',
+        name: `badge-${Date.now()}.png`,
+        base64
+      },
+      {
+        type: 'file',
+        name: 'reporte.csv',
+        mimeType: 'text/csv',
+        key: 'reporte',
+        base64: csv
+      }
+    ]
   };
 }
 ```
+
+El artefacto `screenshot` aparece como evidencia de la ejecución. El artefacto `file`, por tener `key: "reporte"`, también queda disponible como:
+
+```
+{{ steps["generar-badge"].outputs.reporte }}
+```
+
+Ese valor es un `fileRef` y puede usarse en nodos como **Extraer Archivo**, **HTTP Request**, **SSH Command** o componentes.
+
+El `outputSchema` con `type: "fileRef"` no es obligatorio para que QANode guarde el archivo. Es útil para dejar el autocompletado y el panel de variables más claros antes de la primera ejecución.
 
 ---
 

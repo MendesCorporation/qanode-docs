@@ -92,7 +92,7 @@ For values from previous steps, use the same syntax:
 ```sql
 SELECT *
 FROM dbo.Users
-WHERE id = {{ steps.api.outputs.json.id }};
+WHERE id = {{ steps.api.outputs.body.id }};
 ```
 
 For text, dates, and values that SQL should treat as strings, add quotes:
@@ -100,7 +100,7 @@ For text, dates, and values that SQL should treat as strings, add quotes:
 ```sql
 SELECT *
 FROM dbo.Orders
-WHERE customer_email = '{{ steps.api.outputs.json.email }}'
+WHERE customer_email = '{{ steps.api.outputs.body.email }}'
   AND created_at >= '{{ variables.START_DATE }}';
 ```
 
@@ -180,7 +180,7 @@ WHERE [active] = 1;
 [HTTP Request: POST /users]
     │
     ▼
-[SQL Server: SELECT * FROM dbo.Users WHERE email = '{{ steps["http-request"].outputs.json.email }}']
+[SQL Server: SELECT * FROM dbo.Users WHERE email = '{{ steps["http-request"].outputs.body.email }}']
     │
     ▼
 [If: {{ steps["sqlserver-query"].outputs.rowCount > 0 }}]

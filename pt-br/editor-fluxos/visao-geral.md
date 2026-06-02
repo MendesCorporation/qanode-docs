@@ -29,11 +29,14 @@ A barra superior contém:
 
 A paleta exibe todos os nós disponíveis organizados por categoria:
 
-- **Controle de Fluxo** — If, Switch, Loop, Merge
+- **Controle de Fluxo** — If, Switch, Loop
 - **Web** — Smart Web Flow, Web Flow, Smart Locators
+- **Mobile** — Mobile Flow
 - **API** — HTTP Request
 - **Banco de Dados** — PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, MongoDB
+- **Arquivos** — Gerar Arquivo, Extrair Arquivo, Base64 para Arquivo, Arquivo para Base64
 - **Infraestrutura** — SSH Command
+- **Performance** — Load Test
 - **Utilitários** — Set Variable, Log, Wait, Stop and Fail, Custom JavaScript
 - **Nós Customizados** — Nós de provedores registrados (se houver)
 
@@ -133,7 +136,7 @@ Após uma execução, os nós exibem indicadores de status:
 
 As **anotações** ajudam a documentar partes do fluxo diretamente no canvas. Use-as para explicar pré-condições, regras de negócio, agrupamentos lógicos, pendências ou observações importantes para o time.
 
-As anotações suportam: 
+As anotações suportam:
 
 - texto livre;
 - formatação simples em estilo Markdown;
@@ -144,7 +147,7 @@ As anotações suportam:
 
 Você pode criar uma anotação pelo menu de contexto do canvas ou pelo atalho `Shift+A`.
 
-[Anotações no Canvas](../../assets/images/anotacoes-editor-fluxos.mp4) 
+[Anotações no Canvas](../../assets/images/anotacoes-editor-fluxos.mp4)
 
 ---
 

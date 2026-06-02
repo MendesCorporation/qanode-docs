@@ -79,7 +79,7 @@ No nó **Input**, configure os campos que o componente espera receber.
 | Campo | Descrição |
 |-------|-----------|
 | **Nome do Campo** | Nome usado para mapear o valor no cenário |
-| **Tipo** | `string`, `number`, `boolean`, `object` ou `array` |
+| **Tipo** | `string`, `number`, `boolean`, `object`, `array` ou `arquivo` |
 | **Obrigatório** | Define se o cenário precisa preencher esse valor |
 | **Dados de Teste** | Valor usado ao testar o componente diretamente no editor |
 
@@ -90,6 +90,7 @@ Exemplo de entradas:
 | `email` | `string` | Sim |
 | `senha` | `string` | Sim |
 | `perfil` | `string` | Não |
+| `documento` | `arquivo` | Não |
 
 [Definindo entradas de um componente](../../assets/images/entradas-componente.mp4)
 
@@ -100,6 +101,14 @@ Exemplo:
 ```
 {{ steps.Input.outputs.email }}
 ```
+
+Para campos do tipo **Arquivo**, o valor recebido é um `fileRef`. No teste isolado do componente, o campo mostra um botão de upload para anexar o arquivo de teste. Dentro do componente, use normalmente:
+
+```
+{{ steps.Input.outputs.documento }}
+```
+
+Esse valor pode ser passado para nós como **Extrair Arquivo**, **HTTP Request**, **SSH Command**, **Mobile Flow** ou **Custom JavaScript**.
 
 > Dê nomes simples e estáveis para os campos. Isso facilita o uso do componente em cenários e evita expressões difíceis de manter.
 
@@ -122,7 +131,15 @@ Exemplo:
 ```
 Nome: token
 Tipo: string
-Valor: {{ steps.login.outputs.json.token }}
+Valor: {{ steps.login.outputs.body.token }}
+```
+
+Para devolver arquivo:
+
+```
+Nome: relatorio
+Tipo: arquivo
+Valor: {{ steps["file-generate"].outputs.fileRef }}
 ```
 
 O cenário que chama o componente poderá usar a saída como output do nó de componente.
@@ -225,6 +242,14 @@ Se a saída principal for um objeto:
 {{ steps.prepararUsuario.outputs.result.userId }}
 {{ steps.prepararUsuario.outputs.result.email }}
 ```
+
+Se a saída for arquivo:
+
+```
+{{ steps.gerarRelatorio.outputs.relatorio }}
+```
+
+O painel de variáveis mostra o arquivo com nome, tipo e tamanho nos detalhes, mas o valor que deve ser arrastado para outros nós é o `fileRef`.
 
 [Uso de output em componente](../../assets/images/usar-output-component.mp4)
 

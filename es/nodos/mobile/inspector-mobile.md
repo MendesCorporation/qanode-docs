@@ -77,6 +77,8 @@ En el modo **Toque**, cada clic en la pantalla del dispositivo:
 
 Para **deslizar** (swipe): haz clic y arrastra en la pantalla del dispositivo — el gesto se ejecuta en el dispositivo y se graba como paso `swipe`.
 
+Cuando un campo de texto está seleccionado, el inspector también permite grabar llenado con un diálogo propio, sin cambiar de modo. La opción **Limpiar primero** viene marcada por defecto.
+
 ### Modo Inspeccionar
 
 En el modo **Inspeccionar**, hacer clic en un elemento **no envía el toque al dispositivo** — solo muestra la información del elemento en el panel lateral. Usa este modo para:
@@ -139,6 +141,7 @@ Además de grabar toques y swipes, el Inspector Mobile ofrece botones para agreg
 | Acción | Descripción |
 |--------|-------------|
 | **Toque** | Crea un paso `tap` en el elemento seleccionado |
+| **Rellenar** | Abre un diálogo para informar el texto y crea un paso `type` |
 | **Doble Toque** | Crea un paso de doble toque en el elemento seleccionado |
 | **Presionar y Mantener** | Crea un paso `long-press` en el elemento seleccionado |
 | **Pinza para Dentro** | Crea un gesto de pinza sobre el elemento |
@@ -152,12 +155,33 @@ Además de grabar toques y swipes, el Inspector Mobile ofrece botones para agreg
 
 | Acción | Descripción |
 |--------|-------------|
+| **Enviar archivo** | Envía un archivo al dispositivo y crea un paso `push-file` |
+| **Descargar archivo** | Captura un archivo del dispositivo y crea un paso `pull-file` |
 | **Accept Alert** | Agrega un paso `permission` que acepta la alerta del sistema actual |
 | **Dismiss Alert** | Agrega un paso `permission` que descarta la alerta del sistema actual |
 | **Grant Permission** | Solicita el nombre del permiso Android y agrega un paso `permission` para concederlo |
 | **Revoke Permission** | Solicita el nombre del permiso Android y agrega un paso `permission` para revocarlo |
 
 > Las acciones Grant/Revoke Permission son exclusivas para sesiones Android y abren un prompt solicitando el nombre del permiso, por ejemplo: `android.permission.CAMERA`.
+
+### Enviar archivo durante la grabación
+
+Use **Enviar archivo** cuando la app necesita recibir un archivo antes de abrir un selector nativo o continuar el flujo. El inspector envía el archivo al dispositivo durante la grabación y agrega el paso correspondiente al Mobile Flow.
+
+En Android, el destino predeterminado suele ser la carpeta de downloads. En iOS, el inspector usa el container de la aplicación cuando está disponible y aplica un fallback compatible con Appium.
+
+### Descargar archivo durante la grabación
+
+Use **Descargar archivo** cuando la app generó un archivo y la prueba necesita capturarlo como `fileRef`.
+
+El diálogo permite informar:
+
+- ruta exacta en el dispositivo;
+- carpeta y patrón de nombre para buscar el archivo más reciente;
+- nombre de variable de salida;
+- nombre del archivo guardado en QANode.
+
+Use ruta exacta cuando la app muestra o define el nombre del archivo. Use carpeta/patrón cuando el nombre es dinámico.
 
 ---
 
@@ -188,12 +212,14 @@ Al hacer clic en **"Guardar Pasos"**:
 
 El inspector genera automáticamente selectores para cada elemento tocado, priorizando en este orden:
 
-1. **`accessibility_id`** — Cuando el elemento tiene content-description o accessibility label
-2. **`id`** — Cuando el elemento tiene resource-id (Android) o nombre único (iOS)
-3. **`xpath`** con `@bounds` — Selector basado en las coordenadas del elemento (más preciso para la pantalla actual)
-4. **Coordenadas de fallback** — X/Y absolutos usados si todos los selectores fallan
+1. **`accessibility_id`**, `id`, `resource-id`, `name` o `content-desc` — señales más fuertes
+2. **`hint`**, `label` y `text` cuando pertenecen al propio elemento
+3. **Contexto cercano** — label/texto asociado al campo, útil para inputs sin identificador
+4. **`xpath`** con `@bounds` — selector basado en las coordenadas del elemento
+5. **Coordenadas de fallback** — X/Y absolutos usados si todos los selectores fallan
+6. **Clase genérica** — usada solo como último recurso
 
-> Los selectores con `@bounds` son generados por el inspector para alta precisión en la pantalla específica. En flujos automatizados, si la resolución u orientación cambia, los selectores por `accessibility_id` o `id` son más robustos.
+> Los selectores con `@bounds` y las coordenadas son fallback visual. En flujos automatizados, prefiera selectores por `accessibility_id`, `id`, `resource-id`, `label` o contexto cercano.
 
 ---
 

@@ -41,7 +41,6 @@ Bem-vindo à documentação oficial do **QANode**, a plataforma de automação d
 | [If](nos/controle-fluxo/if.md) | Desvio condicional (verdadeiro/falso) |
 | [Switch](nos/controle-fluxo/switch.md) | Desvio múltiplo por valor ou condição |
 | [Loop](nos/controle-fluxo/loop.md) | Repetição por contagem, array ou condição |
-| [Merge](nos/controle-fluxo/merge.md) | Junção de múltiplos caminhos |
 
 ### Web
 | Nó | Descrição |
@@ -60,6 +59,14 @@ Bem-vindo à documentação oficial do **QANode**, a plataforma de automação d
 | Nó | Descrição |
 |----|-----------|
 | [HTTP Request](nos/api/http-request.md) | Requisições HTTP (GET, POST, PUT, PATCH, DELETE) |
+
+### Arquivos
+| Nó | Descrição |
+|----|-----------|
+| [Gerar Arquivo](nos/arquivos/gerar-arquivo.md) | Cria arquivos TXT, JSON, CSV, Excel e PDF |
+| [Extrair Arquivo](nos/arquivos/extrair-arquivo.md) | Extrai texto e dados de TXT, JSON, CSV, Excel e PDF |
+| [Base64 para Arquivo](nos/arquivos/base64-para-arquivo.md) | Converte Base64 ou Data URI em `fileRef` |
+| [Arquivo para Base64](nos/arquivos/arquivo-para-base64.md) | Converte `fileRef` em Base64 e Data URI |
 
 ### Banco de Dados
 | Nó | Descrição |
@@ -102,7 +109,7 @@ Bem-vindo à documentação oficial do **QANode**, a plataforma de automação d
 | [Contrato da API](nos-customizados/contrato-api.md) | Endpoints obrigatórios e formato de dados |
 | [Exemplos](nos-customizados/exemplos-enterprise.md) | Exemplos em Node.js, Python, Java, C# e Go |
 | [Desktop: Nós Locais](nos-customizados/nos-locais-desktop.md) | Criando nós locais na versão desktop |
-| [QANode.MD (IA)](nos-customizados/QANode.MD) | Guia para IA criar nós e diagnosticar problemas |
+| [QANode.md (IA)](nos-customizados/QANode.md) | Guia para IA criar nós e diagnosticar problemas |
 
 ---
 

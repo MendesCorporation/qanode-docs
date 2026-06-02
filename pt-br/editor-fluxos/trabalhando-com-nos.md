@@ -4,7 +4,7 @@ Este guia detalha como adicionar, conectar, configurar e gerenciar nós no edito
 
 ---
 
-## Adicionando Nós  
+## Adicionando Nós
 
 ### Arrastar da Paleta
 
@@ -26,7 +26,7 @@ Você também pode colar nós copiados do **Gravador Chrome** (extensão):
 2. No editor de fluxos, pressione **Ctrl+V**
 3. O nó correspondente ao modo do recorder será adicionado com todos os passos gravados
 
-[Colar JSON no canvas](../../assets/images/copiar-de-json-editor-fluxos.mp4) 
+[Colar JSON no canvas](../../assets/images/copiar-de-json-editor-fluxos.mp4)
 
 O QANode Recorder pode gerar nós **Smart Web Flow**, **Web Flow** ou **Smart Locators**, conforme o modo selecionado na extensão.
 
@@ -42,7 +42,7 @@ Quando existem componentes publicados, o editor de cenários exibe a aba **Compo
 4. Conecte-o como um nó comum.
 5. Preencha os campos de entrada no painel de propriedades.
 
-[Adicionar Componentes](../../assets/images/adicionar-componente-editor-fluxos.mp4) 
+[Adicionar Componentes](../../assets/images/adicionar-componente-editor-fluxos.mp4)
 
 Componentes são úteis para reutilizar blocos como login, preparação de massa, consultas auxiliares ou validações compartilhadas.
 
@@ -183,7 +183,7 @@ O nó **If** oferece dois modos de configuração:
 
 **Modo Simples:**
 ```javascript
-{{ steps["http-request"].outputs.status === 200 }} 
+{{ steps["http-request"].outputs.status === 200 }}
 ```
 
 **Modo Visual Builder:**
@@ -223,11 +223,11 @@ O query builder permite selecionar tabelas, colunas, condições WHERE, ORDER BY
 Dê nomes descritivos aos seus nós alterando o **label**. Isso facilita a leitura do fluxo e torna as expressões mais claras:
 
 ```
-{{ steps.login.outputs.json.token }}
+{{ steps.login.outputs.body.token }}
 ```
 é mais legível que:
 ```
-{{ steps["HTTP Request 2"].outputs.json.token }}
+{{ steps["HTTP Request 2"].outputs.body.token }}
 ```
 
 ### Use Grupos Lógicos

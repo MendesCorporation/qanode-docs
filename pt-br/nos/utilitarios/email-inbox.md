@@ -12,6 +12,7 @@ O nó **Email Inbox** conecta a uma caixa de e-mail via IMAP e aguarda ou busca 
 |-------------|-------|
 | **Tipo** | `email-inbox` |
 | **Categoria** | Utilitários |
+| **Cor** | ⚪ Cinza (#6b7280) |
 | **Entrada** | `in` |
 | **Saída** | `out` |
 
@@ -72,6 +73,20 @@ Todos os filtros são opcionais. Quando preenchido, o campo deve estar **contido
 | **Max Scan** | number | `30` | Máximo de e-mails a analisar por ciclo |
 | **Max Matches** | number | `1` | Máximo de e-mails a retornar |
 
+### Anexos
+
+Por padrão, o nó lê o conteúdo do e-mail sem baixar anexos. Ative anexos apenas quando o fluxo realmente precisa usar arquivos enviados por e-mail.
+
+| Campo | Tipo | Padrão | Descrição |
+|-------|------|--------|-----------|
+| **Incluir anexos** | boolean | `false` | Baixa anexos e retorna referências `fileRef` |
+| **Exigir anexo** | boolean | `false` | Considera válido apenas e-mail que tenha anexo compatível |
+| **Incluir anexos inline** | boolean | `false` | Inclui anexos embutidos no HTML, como imagens inline |
+| **Nome do anexo contém** | texto | — | Filtra anexos pelo nome do arquivo |
+| **MIME type contém** | texto | — | Filtra anexos pelo tipo MIME, como `pdf`, `image/` ou `spreadsheet` |
+
+Quando há anexos, use o `fileRef` para enviar o arquivo para outros nós, como **Extrair Arquivo**, **HTTP Request**, **SSH Command**, **Mobile Flow** ou componentes.
+
 ### Extração de OTP (quando operação = `Extract OTP`)
 
 | Campo | Tipo | Padrão | Descrição |
@@ -103,6 +118,10 @@ Quando nenhum regex é informado, o nó procura automaticamente por sequências 
 | `links` | `array` | URLs encontradas no primeiro e-mail |
 | `otp` | `string` | Código extraído (apenas em `extractOtp`) |
 | `link` | `string` | URL extraída (apenas em `extractLink`) |
+| `attachments` | `array` | Anexos retornados quando **Incluir anexos** está ativo |
+| `attachmentCount` | `number` | Quantidade de anexos retornados |
+| `attachment` | `object` | Primeiro anexo encontrado |
+| `attachmentFileRef` | `fileRef` | Atalho para o `fileRef` do primeiro anexo |
 
 ### Estrutura do objeto `email`
 
@@ -116,7 +135,15 @@ Quando nenhum regex é informado, o nó procura automaticamente por sequências 
   "date": "2026-03-08T12:00:00.000Z",
   "text": "Seu código é 482910. Válido por 10 minutos.",
   "html": "<p>Seu código é <strong>482910</strong>...</p>",
-  "links": ["https://empresa.com/confirmar?token=xyz"]
+  "links": ["https://empresa.com/confirmar?token=xyz"],
+  "attachments": [
+    {
+      "fileRef": "referência do arquivo",
+      "name": "boleto.pdf",
+      "mimeType": "application/pdf",
+      "sizeBytes": 18452
+    }
+  ]
 }
 ```
 
@@ -171,6 +198,21 @@ Quando nenhum regex é informado, o nó procura automaticamente por sequências 
     │
     ▼
 [Navigate: {{ steps.emailInbox.outputs.link }}]
+```
+
+### Ler anexo PDF recebido por e-mail
+
+```
+[Email Inbox]
+  Operação: Extract Email
+  Subject Contains: "boleto"
+  Incluir anexos: true
+  Nome do anexo contém: ".pdf"
+    │
+    ▼
+[Extrair Arquivo]
+  Arquivo: {{ steps.emailInbox.outputs.attachmentFileRef }}
+  Tipo de extração: PDF
 ```
 
 ---

@@ -12,7 +12,7 @@ The **Smart Locators** node allows you to automate interactions with web pages u
 |----------|-------|
 | **Type** | `smart-locators` |
 | **Category** | Web |
-| **Color** | Blue (#3b82f6) |
+| **Color** | 🔵 Blue (#3b82f6) |
 | **Input** | `in` |
 | **Output** | `out` |
 

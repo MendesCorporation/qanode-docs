@@ -12,6 +12,7 @@ El nodo **Email Inbox** se conecta a un buzón de correo vía IMAP y espera o bu
 |-----------|-------|
 | **Tipo** | `email-inbox` |
 | **Categoría** | Utilidades |
+| **Color** | ⚪ Gris (#6b7280) |
 | **Entrada** | `in` |
 | **Salida** | `out` |
 
@@ -72,6 +73,20 @@ Todos los filtros son opcionales. Cuando se completan, el valor debe estar **con
 | **Max Scan** | number | `30` | Máximo de correos a analizar por ciclo |
 | **Max Matches** | number | `1` | Máximo de correos a retornar |
 
+### Anexos
+
+Por defecto, el nodo lee el contenido del correo sin descargar anexos. Active anexos solo cuando el flujo realmente necesita usar archivos enviados por email.
+
+| Campo | Tipo | Predeterminado | Descripción |
+|-------|------|----------------|-------------|
+| **Incluir anexos** | boolean | `false` | Descarga anexos y retorna referencias `fileRef` |
+| **Exigir anexo** | boolean | `false` | Considera válido solo el correo que tenga anexo compatible |
+| **Incluir anexos inline** | boolean | `false` | Incluye anexos embebidos en el HTML, como imágenes inline |
+| **Nombre del anexo contiene** | texto | — | Filtra anexos por nombre de archivo |
+| **MIME type contiene** | texto | — | Filtra anexos por tipo MIME, como `pdf`, `image/` o `spreadsheet` |
+
+Cuando hay anexos, use el `fileRef` para enviar el archivo a otros nodos, como **Extraer Archivo**, **HTTP Request**, **SSH Command**, **Mobile Flow** o componentes.
+
 ### Extracción de OTP (cuando operación = `Extract OTP`)
 
 | Campo | Tipo | Predeterminado | Descripción |
@@ -103,6 +118,10 @@ Cuando no se ingresa ningún regex, el nodo busca automáticamente secuencias nu
 | `links` | `array` | URLs encontradas en el primer correo |
 | `otp` | `string` | Código extraído (solo en `extractOtp`) |
 | `link` | `string` | URL extraída (solo en `extractLink`) |
+| `attachments` | `array` | Anexos retornados cuando **Incluir anexos** está activo |
+| `attachmentCount` | `number` | Cantidad de anexos retornados |
+| `attachment` | `object` | Primer anexo encontrado |
+| `attachmentFileRef` | `fileRef` | Atajo al `fileRef` del primer anexo |
 
 ### Estructura del objeto `email`
 
@@ -116,7 +135,15 @@ Cuando no se ingresa ningún regex, el nodo busca automáticamente secuencias nu
   "date": "2026-03-08T12:00:00.000Z",
   "text": "Tu código es 482910. Válido por 10 minutos.",
   "html": "<p>Tu código es <strong>482910</strong>...</p>",
-  "links": ["https://empresa.com/confirmar?token=xyz"]
+  "links": ["https://empresa.com/confirmar?token=xyz"],
+  "attachments": [
+    {
+      "fileRef": "referencia del archivo",
+      "name": "factura.pdf",
+      "mimeType": "application/pdf",
+      "sizeBytes": 18452
+    }
+  ]
 }
 ```
 
@@ -171,6 +198,21 @@ Cuando no se ingresa ningún regex, el nodo busca automáticamente secuencias nu
     │
     ▼
 [Navigate: {{ steps.emailInbox.outputs.link }}]
+```
+
+### Leer anexo PDF recibido por email
+
+```
+[Email Inbox]
+  Operación: Extract Email
+  Subject Contains: "factura"
+  Incluir anexos: true
+  Nombre del anexo contiene: ".pdf"
+    │
+    ▼
+[Extraer Archivo]
+  Archivo: {{ steps.emailInbox.outputs.attachmentFileRef }}
+  Tipo de extracción: PDF
 ```
 
 ---

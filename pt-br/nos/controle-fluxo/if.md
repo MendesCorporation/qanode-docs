@@ -26,7 +26,7 @@ No modo simples, você escreve uma expressão JavaScript que será avaliada como
 
 **Campo: Condição**
 ```javascript
-{{ steps["http-request"].outputs.status === 200 }} 
+{{ steps["http-request"].outputs.status === 200 }}
 ```
 
 A expressão tem acesso ao contexto de execução:
@@ -37,19 +37,19 @@ A expressão tem acesso ao contexto de execução:
 
 ```javascript
 // Verificar status HTTP
-{{ steps["http-request"].outputs.status === 200}} 
+{{ steps["http-request"].outputs.status === 200}}
 
 // Verificar se texto contém valor
 {{ steps.extract.outputs.extracts.title.includes("Bem-vindo") }}
 
 // Verificar valor numérico
-{{ steps.query.outputs.rowCount > 0 }} 
+{{ steps.query.outputs.rowCount > 0 }}
 
 // Verificar booleano
-{{ variables.featureEnabled === true }} 
+{{ variables.featureEnabled === true }}
 
 // Combinação com AND/OR
-{{ steps.api.outputs.status  === 200 && steps.api.outputs.json.active  === true }}
+{{ steps.api.outputs.status  === 200 && steps.api.outputs.body.active  === true }}
 ```
 
 ### Modo Visual Builder
@@ -109,7 +109,7 @@ Você pode adicionar múltiplas condições combinadas com **AND** (todas devem 
     │
     ▼
 [If: status === 200]
-    │ true → [Log: "Usuário encontrado: {{ steps["http-request"].outputs.json.name }}"]
+    │ true → [Log: "Usuário encontrado: {{ steps["http-request"].outputs.body.name }}"]
     │ false → [Log: "Usuário não encontrado"] → [Stop and Fail]
 ```
 

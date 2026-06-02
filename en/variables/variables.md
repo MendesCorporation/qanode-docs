@@ -104,7 +104,42 @@ Access variables using the expression syntax:
 {{ variables.VARIABLE_NAME }}
 ```
 
-In the flow editor, the **Variables** button in the properties panel shows collapsed sections for local variables, global variables, and, when the scenario is inside a project, project variables.
+In the flow editor, the **Variables** button in the properties panel opens an organized list where you can drag or click values.
+
+Variables are separated by scope:
+
+| Group | Initial state | Description |
+|-------|---------------|-------------|
+| **Flow** | Open | Local variables and outputs from previous nodes in the current flow |
+| **Project** | Closed | Variables registered in the scenario's project |
+| **Global** | Closed | Global variables for the installation |
+
+This separation avoids mixing global, project, and flow data when many variables are registered.
+
+### Previous Node Outputs
+
+Each executed node appears as a group with:
+
+- node name;
+- node type;
+- execution status;
+- number of available fields.
+
+Objects and arrays start collapsed to keep the list readable. When a field is expanded, its children appear below with a short visual name. For example, inside `fileRef`, children appear as `name`, `mimeType`, and `sizeBytes`, but the copied expression remains complete.
+
+### Files in the Variables Panel
+
+When an output is a file (`fileRef`), the panel shows the file as a draggable item. When expanded, the main details are available:
+
+| Field | Use |
+|-------|-----|
+| `name` | File name |
+| `mimeType` | MIME type |
+| `sizeBytes` | Size in bytes |
+
+Internal fields such as `source` and `path` do not appear in the main list to avoid confusing common usage, but they remain accessible by expression when needed.
+
+If an input field does not accept files, or does not accept that file type, the panel marks the field in red and shows an unsupported file message.
 
 ### Usage Examples
 

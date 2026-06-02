@@ -223,11 +223,11 @@ The query builder allows you to select tables, columns, WHERE conditions, ORDER 
 Give descriptive names to your nodes by changing the **label**. This makes the flow easier to read and makes expressions clearer:
 
 ```
-{{ steps.login.outputs.json.token }}
+{{ steps.login.outputs.body.token }}
 ```
 is more readable than:
 ```
-{{ steps["HTTP Request 2"].outputs.json.token }}
+{{ steps["HTTP Request 2"].outputs.body.token }}
 ```
 
 ### Use Logical Groups

@@ -12,7 +12,7 @@ El nodo **If** permite crear bifurcaciones condicionales en el flujo. Evalúa un
 |-----------|-------|
 | **Tipo** | `if` |
 | **Categoría** | Control de Flujo |
-| **Color** | Amarillo (#f59e0b) |
+| **Color** | 🟡 Amarillo (#f59e0b) |
 | **Entrada** | `in` |
 | **Salidas** | `true`, `false` |
 
@@ -49,7 +49,7 @@ La expresión tiene acceso al contexto de ejecución:
 {{ variables.featureEnabled === true }}
 
 // Combinación con AND/OR
-{{ steps.api.outputs.status  === 200 && steps.api.outputs.json.active  === true }}
+{{ steps.api.outputs.status  === 200 && steps.api.outputs.body.active  === true }}
 ```
 
 ### Modo Visual Builder
@@ -109,7 +109,7 @@ Puedes agregar múltiples condiciones combinadas con **AND** (todas deben ser ve
     │
     ▼
 [If: status === 200]
-    │ true → [Log: "Usuário encontrado: {{ steps["http-request"].outputs.json.name }}"]
+    │ true → [Log: "Usuário encontrado: {{ steps["http-request"].outputs.body.name }}"]
     │ false → [Log: "Usuário não encontrado"] → [Stop and Fail]
 ```
 

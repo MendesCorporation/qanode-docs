@@ -77,6 +77,8 @@ O `outputSchema` define os dados que o nó produz após a execução. Cada campo
 
 Os outputs ficam acessíveis via expressões: `{{ steps.meuNo.outputs.resultado }}`
 
+Para arquivos, você pode declarar `type: "fileRef"` no `outputSchema` para melhorar autocomplete e visualização. Isso é opcional: arquivos enviados em `artifacts` com `type: "file"` também são salvos e expostos como `fileRef` quando a execução roda.
+
 ---
 
 ### POST /execute
@@ -153,7 +155,14 @@ Executa um nó com os dados fornecidos.
 
 ## Artefatos
 
-O campo `artifacts` permite que o nó retorne arquivos como screenshots, PDFs ou outros documentos. Cada artefato pode ser enviado como **base64** inline:
+O campo `artifacts` permite que o nó retorne arquivos gerados durante a execução. O QANode aceita dois tipos de artefato:
+
+| Tipo | Uso |
+|------|-----|
+| `screenshot` | Evidências visuais da execução |
+| `file` | Arquivos que podem ser usados por outros nós |
+
+Cada artefato pode ser enviado como **base64** inline:
 
 ```json
 {
@@ -166,6 +175,8 @@ O campo `artifacts` permite que o nó retorne arquivos como screenshots, PDFs ou
     {
       "type": "file",
       "name": "relatorio.pdf",
+      "mimeType": "application/pdf",
+      "key": "relatorio",
       "base64": "JVBERi0xLjQKJeLj..."
     }
   ]
@@ -174,11 +185,53 @@ O campo `artifacts` permite que o nó retorne arquivos como screenshots, PDFs ou
 
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
-| `type` | `string` | Tipo: `screenshot`, `pdf`, `video`, `file` |
+| `type` | `string` | Tipo: `screenshot` ou `file` |
 | `name` | `string` | Nome do arquivo |
 | `base64` | `string` | Conteúdo codificado em base64 |
+| `mimeType` | `string` | Opcional. Se ausente, o QANode tenta inferir pelo conteúdo e pelo nome |
+| `key` / `outputKey` | `string` | Opcional. Nome do output criado para artefatos `file` |
 
 Os artefatos são automaticamente salvos no storage do QANode e ficam disponíveis nos resultados da execução.
+
+### Arquivos como `fileRef`
+
+Quando um artefato `file` possui `base64`, o QANode salva o conteúdo e cria um `fileRef` nos outputs.
+
+Se o artefato informar `key` ou `outputKey`:
+
+```json
+{
+  "outputs": {
+    "relatorio": {
+      "source": "runArtifact",
+      "path": "runs/run_abc123/files/relatorio.pdf",
+      "name": "relatorio.pdf",
+      "mimeType": "application/pdf",
+      "sizeBytes": 18452
+    }
+  }
+}
+```
+
+Se houver apenas um arquivo e nenhuma chave foi informada, o QANode usa `outputs.fileRef`.
+
+```json
+{
+  "outputs": {
+    "fileRef": {
+      "source": "runArtifact",
+      "path": "runs/run_abc123/files/relatorio.pdf",
+      "name": "relatorio.pdf",
+      "mimeType": "application/pdf",
+      "sizeBytes": 18452
+    }
+  }
+}
+```
+
+Se houver vários arquivos sem chave, eles ficam agrupados em `outputs.files`.
+
+> Para arquivos que o usuário deve passar para outro nó, prefira informar `key`/`outputKey` no artefato. Isso deixa o painel de variáveis mais claro.
 
 ---
 

@@ -29,11 +29,14 @@ La barra superior contiene:
 
 La paleta muestra todos los nodos disponibles organizados por categoría:
 
-- **Control de Flujo** — If, Switch, Loop, Merge
+- **Control de Flujo** — If, Switch, Loop
 - **Web** — Smart Web Flow, Web Flow, Smart Locators
+- **Mobile** — Mobile Flow
 - **API** — HTTP Request
 - **Base de Datos** — PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, MongoDB
+- **Archivos** — Generar Archivo, Extraer Archivo, Base64 a Archivo, Archivo a Base64
 - **Infraestructura** — SSH Command
+- **Performance** — Load Test
 - **Utilidades** — Set Variable, Log, Wait, Stop and Fail, Custom JavaScript
 - **Nodos Personalizados** — Nodos de proveedores registrados (si los hay)
 

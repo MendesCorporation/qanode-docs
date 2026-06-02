@@ -12,7 +12,7 @@ El nodo **Loop** permite repetir la ejecución de una sección del flujo múltip
 |-----------|-------|
 | **Tipo** | `loop` |
 | **Categoría** | Control de Flujo |
-| **Color** | Amarillo (#f59e0b) |
+| **Color** | 🟡 Amarillo (#f59e0b) |
 | **Entrada** | `in` |
 | **Salidas** | `loop` (cuerpo del loop), `done` (salida tras la finalización) |
 
@@ -65,7 +65,7 @@ Al igual que el nodo If, el modo while soporta **modo simple** (expresión JavaS
 
 **Ejemplo:** Repetir mientras haya una página siguiente
 ```javascript
-{{ steps["http-request"].outputs.json.hasNextPage }} === true
+{{ steps["http-request"].outputs.body.hasNextPage }} === true
 ```
 
 ---

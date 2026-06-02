@@ -12,7 +12,7 @@ The **If** node allows you to create conditional branches in the flow. It evalua
 |----------|-------|
 | **Type** | `if` |
 | **Category** | Flow Control |
-| **Color** | Yellow (#f59e0b) |
+| **Color** | 🟡 Yellow (#f59e0b) |
 | **Input** | `in` |
 | **Outputs** | `true`, `false` |
 
@@ -49,7 +49,7 @@ The expression has access to the execution context:
 {{ variables.featureEnabled === true }}
 
 // Combination with AND/OR
-{{ steps.api.outputs.status  === 200 && steps.api.outputs.json.active  === true }}
+{{ steps.api.outputs.status  === 200 && steps.api.outputs.body.active  === true }}
 ```
 
 ### Visual Builder Mode
@@ -109,7 +109,7 @@ You can add multiple conditions combined with **AND** (all must be true) or **OR
     │
     ▼
 [If: status === 200]
-    │ true → [Log: "Usuário encontrado: {{ steps["http-request"].outputs.json.name }}"]
+    │ true → [Log: "Usuário encontrado: {{ steps["http-request"].outputs.body.name }}"]
     │ false → [Log: "Usuário não encontrado"] → [Stop and Fail]
 ```
 

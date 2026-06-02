@@ -14,7 +14,7 @@ Para executar todo o fluxo:
 2. Clique no botão **Executar** (▶️) na barra superior
 3. Aguarde a conclusão — os nós exibirão indicadores de status em tempo real
 
-[Fluxo em execução](../../assets/images/execucao-completa-fluxos.mp4) 
+[Fluxo em execução](../../assets/images/execucao-completa-fluxos.mp4)
 *Imagem: Canvas mostrando nós com indicadores de status durante a execução*
 
 ### Status de Execução
@@ -59,9 +59,9 @@ Após a execução, clique em qualquer nó para ver seus resultados no painel de
 | **Logs** | Mensagens registradas durante a execução do nó |
 | **Outputs** | Dados produzidos pelo nó (JSON navegável) |
 | **Erro** | Mensagem de erro detalhada (quando aplicável) |
-| **Screenshots** | Capturas de tela (nós web com evidência ativada) |
+| **Arquivos e Screenshots** | Artefatos gerados, downloads, uploads capturados e evidências |
 
-[Analisando Resultados](../../assets/images/analise-resultados-editor-fluxos.mp4) 
+[Analisando Resultados](../../assets/images/analise-resultados-editor-fluxos.mp4)
 
 ### Outputs
 
@@ -70,8 +70,7 @@ Os outputs de cada nó ficam acessíveis para nós seguintes via expressões. Po
 ```json
 {
   "status": 200,
-  "body": "...",
-  "json": {
+  "body": {
     "id": 1,
     "name": "João",
     "email": "joao@exemplo.com"
@@ -81,13 +80,28 @@ Os outputs de cada nó ficam acessíveis para nós seguintes via expressões. Po
 
 Você pode então acessar esses dados em nós seguintes:
 ```
-{{ steps["http-request"].outputs.json.name }}  →  "João"
+{{ steps["http-request"].outputs.body.name }}  →  "João"
 {{ steps["http-request"].outputs.status }}     →  200
 ```
+
+Quando o output é um arquivo, o valor principal é um `fileRef`:
+
+```
+{{ steps["http-request"].outputs.fileRef }}
+{{ steps["file-generate"].outputs.fileRef }}
+```
+
+No painel de variáveis, arquivos mostram nome, MIME type e tamanho em detalhes. Campos internos como caminho no storage ficam ocultos da visualização principal.
 
 ### Screenshots (Evidências)
 
 Para nós web (Smart Web Flow, Web Flow e Smart Locators), screenshots capturados aparecem como miniaturas clicáveis. Clique para ver em tamanho completo.
+
+### Arquivos
+
+Arquivos gerados ou capturados durante a execução aparecem na seção **Arquivos** do detalhe da execução. Ao baixar, o navegador usa o nome real do arquivo quando disponível, em vez de um identificador interno da execução.
+
+Arquivos de teste isolado criados no editor são temporários e podem ser limpos automaticamente quando o usuário sai do fluxo ou por rotina de limpeza.
 
 ---
 
@@ -138,7 +152,7 @@ Para nós web (Smart Web Flow, Web Flow e Smart Locators), screenshots capturado
 Os **logs** de cada nó fornecem detalhes sobre cada passo executado. Para nós web, os logs mostram:
 
 ```
-Navigated to: https://exemplo.com/login 
+Navigated to: https://exemplo.com/login
 Filled: "usuario@exemplo.com" on [getByLabel("E-mail")]
 Clicked: [getByRole("button", { name: "Entrar" })]
 Assert passed: textContains "Bem-vindo" — true
@@ -177,7 +191,7 @@ Ative screenshots no modo **antes** para ver o estado da página antes de cada a
 Se um nó falha com valor inesperado, adicione um nó **Log** antes dele para inspecionar os valores:
 
 ```
-Valor do token: {{ steps.login.outputs.json.token }}
+Valor do token: {{ steps.login.outputs.body.token }}
 Status: {{ steps["http-request"].outputs.status }}
 ```
 
@@ -195,7 +209,7 @@ O defeito criado fica automaticamente vinculado à execução, ao cenário e ao 
 
 > **Permissão necessária:** `bug.create`
 
-[Abrindo um Defeito](../../assets/images/abrir-defeito-editor-fluxos.mp4) 
+[Abrindo um Defeito](../../assets/images/abrir-defeito-editor-fluxos.mp4)
 
 ### Defeitos relacionados
 
@@ -203,7 +217,7 @@ O detalhe da execução também exibe a seção **Defeitos Relacionados** com a 
 
 ---
 
-## Relatório de Execução 
+## Relatório de Execução
 
 Após cada execução, o QANode gera automaticamente um **relatório PDF** com:
 
@@ -214,7 +228,7 @@ Após cada execução, o QANode gera automaticamente um **relatório PDF** com:
 
 O relatório fica disponível na lista de execuções do projeto e pode ser baixado ou enviado por e-mail.
 
-[Relatório de Execução](../../assets/images/relatorio-editor-fluxos.mp4) 
+[Relatório de Execução](../../assets/images/relatorio-editor-fluxos.mp4)
 
 ---
 

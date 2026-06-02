@@ -39,12 +39,12 @@ El nombre usado en `steps` es el **identificador** del nodo. Por defecto, todo n
 
 | Situación | Identificador | Notación | Ejemplo |
 |-----------|---------------|----------|---------|
-| Tipo por defecto simple | `if`, `merge`, `loop` | Punto `.` | `steps.if.outputs.result` |
+| Tipo por defecto simple | `if`, `switch`, `loop` | Punto `.` | `steps.if.outputs.result` |
 | Tipo por defecto con guion | `http-request`, `postgres-query` | Corchetes `["..."]` | `steps["http-request"].outputs.status` |
-| Rótulo personalizado simple | `login`, `api`, `query` | Punto `.` | `steps.login.outputs.json.token` |
+| Rótulo personalizado simple | `login`, `api`, `query` | Punto `.` | `steps.login.outputs.body.token` |
 | Rótulo personalizado con espacio | `Login API`, `Consulta DB` | Corchetes `["..."]` | `steps["Consulta DB"].outputs.rows` |
 
-> **Consejo:** Si renombras el rótulo del nodo a una sola palabra sin espacios (ej: `login`, `api`, `query`), puedes usar la notación con punto, que es más simple: `steps.login.outputs.json.token`
+> **Consejo:** Si renombras el rótulo del nodo a una sola palabra sin espacios (ej: `login`, `api`, `query`), puedes usar la notación con punto, que es más simple: `steps.login.outputs.body.token`
 
 **Nodos duplicados:** Si hay dos nodos con el mismo identificador, el segundo recibe un sufijo numérico (ej: "http-request 2", "http-request 3").
 
@@ -55,7 +55,7 @@ El nombre usado en `steps` es el **identificador** del nodo. Por defecto, todo n
 | If | `if` | `steps.if` |
 | Switch | `switch` | `steps.switch` |
 | Loop | `loop` | `steps.loop` |
-| Merge | `merge` | `steps.merge` |
+| Switch | `switch` | `steps.switch` |
 | HTTP Request | `http-request` | `steps["http-request"]` |
 | Postgres | `postgres-query` | `steps["postgres-query"]` |
 | MySQL | `mysql-query` | `steps["mysql-query"]` |
@@ -78,7 +78,7 @@ El nombre usado en `steps` es el **identificador** del nodo. Por defecto, todo n
 {{ steps["http-request"].outputs.status }}  →  200
 
 // Cuerpo JSON de la respuesta
-{{ steps["http-request"].outputs.json.name }}  →  "João"
+{{ steps["http-request"].outputs.body.name }}  →  "João"
 
 // Array de base de datos
 {{ steps["postgres-query"].outputs.rows[0].email }}  →  "joao@exemplo.com"
@@ -111,7 +111,7 @@ El nombre usado en `steps` es el **identificador** del nodo. Por defecto, todo n
 ```
 // Si renombras el nodo HTTP Request a "api":
 {{ steps.api.outputs.status }}  →  200
-{{ steps.api.outputs.json.name }}  →  "João"
+{{ steps.api.outputs.body.name }}  →  "João"
 
 // Si renombras el nodo Custom JavaScript a "transform":
 {{ steps.transform.outputs.result }}  →  { "total": 42 }
@@ -174,10 +174,10 @@ Cuando la expresión está mezclada con texto, el resultado es siempre un string
 Campo: Hola, {{ steps["postgres-query"].outputs.rows[0].name }}!
 Resultado: "Hola, João!"  (string)
 
-Campo: {{ variables.API_URL }}/api/users/{{ steps["http-request"].outputs.json.id }}
+Campo: {{ variables.API_URL }}/api/users/{{ steps["http-request"].outputs.body.id }}
 Resultado: "https://api.exemplo.com/api/users/42"  (string)
 
-Campo: Estado: {{ steps["http-request"].outputs.status }} - {{ steps["http-request"].outputs.json.message }}
+Campo: Estado: {{ steps["http-request"].outputs.status }} - {{ steps["http-request"].outputs.body.message }}
 Resultado: "Estado: 200 - OK"  (string)
 ```
 
@@ -241,8 +241,8 @@ Dentro de `{{ }}`, cualquier expresión JavaScript válida funciona:
 {{ "abc".repeat(3) }}  →  "abcabcabc"
 
 // Rellenar con ceros
-{{ steps.api.outputs.json.id.toString().padStart(5, "0") }}  →  "00042"
-{{ steps.api.outputs.json.code.padEnd(10, "-") }}  →  "ABC-------"
+{{ steps.api.outputs.body.id.toString().padStart(5, "0") }}  →  "00042"
+{{ steps.api.outputs.body.code.padEnd(10, "-") }}  →  "ABC-------"
 
 // Extraer carácter
 {{ steps.extract.outputs.extracts.nome.charAt(0) }}  →  "J"
@@ -254,25 +254,25 @@ Dentro de `{{ }}`, cualquier expresión JavaScript válida funciona:
 
 ```
 // Cálculo (nodo HTTP Request renombrado a "cart")
-{{ steps.cart.outputs.json.subtotal * 1.1 }}  →  agrega 10%
-{{ steps.cart.outputs.json.price * steps.cart.outputs.json.quantity }}  →  total
+{{ steps.cart.outputs.body.subtotal * 1.1 }}  →  agrega 10%
+{{ steps.cart.outputs.body.price * steps.cart.outputs.body.quantity }}  →  total
 
 // Redondeo (nodo renombrado a "api")
-{{ Math.round(steps.api.outputs.json.score) }}  →  redondea al entero más cercano
-{{ Math.ceil(steps.api.outputs.json.score) }}  →  redondea hacia arriba
-{{ Math.floor(steps.api.outputs.json.score) }}  →  redondea hacia abajo
-{{ Math.trunc(steps.api.outputs.json.score) }}  →  elimina decimales
+{{ Math.round(steps.api.outputs.body.score) }}  →  redondea al entero más cercano
+{{ Math.ceil(steps.api.outputs.body.score) }}  →  redondea hacia arriba
+{{ Math.floor(steps.api.outputs.body.score) }}  →  redondea hacia abajo
+{{ Math.trunc(steps.api.outputs.body.score) }}  →  elimina decimales
 
 // Decimales
-{{ Math.round(steps.api.outputs.json.score * 100) / 100 }}  →  2 decimales
-{{ steps.api.outputs.json.price.toFixed(2) }}  →  "10.50" (string)
-{{ parseFloat(steps.api.outputs.json.price.toFixed(2)) }}  →  10.5 (número)
+{{ Math.round(steps.api.outputs.body.score * 100) / 100 }}  →  2 decimales
+{{ steps.api.outputs.body.price.toFixed(2) }}  →  "10.50" (string)
+{{ parseFloat(steps.api.outputs.body.price.toFixed(2)) }}  →  10.5 (número)
 
 // Formateo (nodo Postgres renombrado a "query")
 {{ steps.query.outputs.rowCount.toString().padStart(5, "0") }}  →  "00042"
 
 // Valor absoluto
-{{ Math.abs(steps.api.outputs.json.balance) }}  →  siempre positivo
+{{ Math.abs(steps.api.outputs.body.balance) }}  →  siempre positivo
 
 // Máximo y mínimo
 {{ Math.max(10, 20, 30) }}  →  30
@@ -291,7 +291,7 @@ Dentro de `{{ }}`, cualquier expresión JavaScript válida funciona:
 {{ Math.floor(Math.random() * 10) + 1 }}  →  1 a 10
 
 // Signo
-{{ Math.sign(steps.api.outputs.json.balance) }}  →  -1, 0 o 1
+{{ Math.sign(steps.api.outputs.body.balance) }}  →  -1, 0 o 1
 
 // Conversión
 {{ parseInt("42") }}  →  42
@@ -301,9 +301,9 @@ Dentro de `{{ }}`, cualquier expresión JavaScript válida funciona:
 {{ parseInt("ff", 16) }}  →  255 (hexadecimal)
 
 // Verificación
-{{ Number.isNaN(steps.api.outputs.json.value) }}  →  true si NaN
-{{ Number.isFinite(steps.api.outputs.json.value) }}  →  true si finito
-{{ Number.isInteger(steps.api.outputs.json.value) }}  →  true si entero
+{{ Number.isNaN(steps.api.outputs.body.value) }}  →  true si NaN
+{{ Number.isFinite(steps.api.outputs.body.value) }}  →  true si finito
+{{ Number.isInteger(steps.api.outputs.body.value) }}  →  true si entero
 
 // Constantes
 {{ Math.PI }}  →  3.141592653589793
@@ -370,7 +370,7 @@ Dentro de `{{ }}`, cualquier expresión JavaScript válida funciona:
 // Aplanar (flat)
 {{ [[1, 2], [3, 4]].flat() }}  →  [1, 2, 3, 4]
 {{ [[1, [2, [3]]]].flat(2) }}  →  [1, 2, 3] (2 niveles)
-{{ steps.api.outputs.json.data.flatMap(item => item.tags) }}  →  todos los tags de todos los items
+{{ steps.api.outputs.body.data.flatMap(item => item.tags) }}  →  todos los tags de todos los items
 
 // Unir en string
 {{ steps["postgres-query"].outputs.rows.map(r => r.name).join(", ") }}  →  "João, Maria, Pedro"
@@ -386,58 +386,58 @@ Dentro de `{{ }}`, cualquier expresión JavaScript válida funciona:
 {{ Array(3).fill("x") }}  →  ["x", "x", "x"]
 
 // Verificar si es array
-{{ Array.isArray(steps.api.outputs.json.data) }}  →  true
+{{ Array.isArray(steps.api.outputs.body.data) }}  →  true
 ```
 
 ### Operaciones con Objetos
 
 ```
 // Acceso profundo (nodo renombrado a "api")
-{{ steps.api.outputs.json.data.user.address.city }}
+{{ steps.api.outputs.body.data.user.address.city }}
 
 // O usando rótulo por defecto con corchetes:
-{{ steps["http-request"].outputs.json.data.user.address.city }}
+{{ steps["http-request"].outputs.body.data.user.address.city }}
 
 // Optional chaining (evita error si la propiedad no existe)
-{{ steps.api.outputs.json?.data?.user?.name }}  →  undefined si no existe
-{{ steps.api.outputs.json?.data?.user?.name ?? "Sin nombre" }}  →  valor por defecto
+{{ steps.api.outputs.body?.data?.user?.name }}  →  undefined si no existe
+{{ steps.api.outputs.body?.data?.user?.name ?? "Sin nombre" }}  →  valor por defecto
 
 // Claves (keys)
-{{ Object.keys(steps.api.outputs.json) }}  →  ["id", "name", "email"]
-{{ Object.keys(steps.api.outputs.json).length }}  →  cantidad de propiedades
-{{ Object.keys(steps.api.outputs.json).join(", ") }}  →  "id, name, email"
+{{ Object.keys(steps.api.outputs.body) }}  →  ["id", "name", "email"]
+{{ Object.keys(steps.api.outputs.body).length }}  →  cantidad de propiedades
+{{ Object.keys(steps.api.outputs.body).join(", ") }}  →  "id, name, email"
 
 // Valores (values)
-{{ Object.values(steps.api.outputs.json) }}  →  [42, "João", "joao@exemplo.com"]
+{{ Object.values(steps.api.outputs.body) }}  →  [42, "João", "joao@exemplo.com"]
 
 // Entradas (entries)
-{{ Object.entries(steps.api.outputs.json) }}  →  [["id", 42], ["name", "João"], ...]
-{{ Object.entries(steps.api.outputs.json).map(([k, v]) => `${k}: ${v}`).join(", ") }}
+{{ Object.entries(steps.api.outputs.body) }}  →  [["id", 42], ["name", "João"], ...]
+{{ Object.entries(steps.api.outputs.body).map(([k, v]) => `${k}: ${v}`).join(", ") }}
 
 // Verificar propiedad
-{{ "email" in steps.api.outputs.json }}  →  true si la propiedad existe
-{{ Object.hasOwn(steps.api.outputs.json, "email") }}  →  true si es propiedad propia
+{{ "email" in steps.api.outputs.body }}  →  true si la propiedad existe
+{{ Object.hasOwn(steps.api.outputs.body, "email") }}  →  true si es propiedad propia
 
 // Fusionar objetos
-{{ Object.assign({}, steps.api.outputs.json, {newProp: "value"}) }}
-{{ {...steps.api.outputs.json, newProp: "value"} }}  →  spread operator
+{{ Object.assign({}, steps.api.outputs.body, {newProp: "value"}) }}
+{{ {...steps.api.outputs.body, newProp: "value"} }}  →  spread operator
 
 // Stringify (convertir a JSON string)
-{{ JSON.stringify(steps.api.outputs.json) }}  →  '{"id":42,"name":"João"}'
-{{ JSON.stringify(steps.api.outputs.json, null, 2) }}  →  formateado con indentación
+{{ JSON.stringify(steps.api.outputs.body) }}  →  '{"id":42,"name":"João"}'
+{{ JSON.stringify(steps.api.outputs.body, null, 2) }}  →  formateado con indentación
 
 // Parse (convertir de JSON string)
 {{ JSON.parse(steps.api.outputs.body) }}  →  objeto JavaScript
 {{ JSON.parse(steps.api.outputs.body).data.user.name }}  →  acceso después del parse
 
 // Extraer propiedades específicas
-{{ (({id, name}) => ({id, name}))(steps.api.outputs.json) }}  →  solo id y name
+{{ (({id, name}) => ({id, name}))(steps.api.outputs.body) }}  →  solo id y name
 
 // Contar propiedades
-{{ Object.keys(steps.api.outputs.json).length }}  →  cantidad de campos
+{{ Object.keys(steps.api.outputs.body).length }}  →  cantidad de campos
 
 // Transformar objeto en array
-{{ Object.entries(steps.api.outputs.json).map(([k, v]) => ({key: k, value: v})) }}
+{{ Object.entries(steps.api.outputs.body).map(([k, v]) => ({key: k, value: v})) }}
 ```
 
 ### Condicionales (Ternario)
@@ -447,27 +447,27 @@ Dentro de `{{ }}`, cualquier expresión JavaScript válida funciona:
 {{ steps["http-request"].outputs.status === 200 ? "Éxito" : "Fallo" }}
 
 // Múltiples condiciones
-{{ steps.api.outputs.json.age >= 18 ? "Adulto" : "Menor" }}
-{{ steps.api.outputs.json.score >= 90 ? "A" : steps.api.outputs.json.score >= 80 ? "B" : "C" }}
+{{ steps.api.outputs.body.age >= 18 ? "Adulto" : "Menor" }}
+{{ steps.api.outputs.body.score >= 90 ? "A" : steps.api.outputs.body.score >= 80 ? "B" : "C" }}
 
 // Con operadores lógicos
-{{ (steps.api.outputs.json.age >= 18 && steps.api.outputs.json.active) ? "Permitido" : "Denegado" }}
+{{ (steps.api.outputs.body.age >= 18 && steps.api.outputs.body.active) ? "Permitido" : "Denegado" }}
 {{ (steps.api.outputs.status === 200 || steps.api.outputs.status === 201) ? "OK" : "Error" }}
 
 // Fallback para null/undefined
 {{ steps["web-flow"].outputs.extracts.titulo || "Sin título" }}
-{{ steps.api.outputs.json.name || "Anónimo" }}
-{{ steps.api.outputs.json.config || {} }}  →  objeto vacío si no existe
+{{ steps.api.outputs.body.name || "Anónimo" }}
+{{ steps.api.outputs.body.config || {} }}  →  objeto vacío si no existe
 
 // Nullish coalescing (solo null/undefined, no valores falsy)
-{{ steps.api.outputs.json.count ?? 0 }}  →  0 solo si null/undefined
-{{ steps.api.outputs.json.name ?? "Sin nombre" }}
+{{ steps.api.outputs.body.count ?? 0 }}  →  0 solo si null/undefined
+{{ steps.api.outputs.body.name ?? "Sin nombre" }}
 
 // Verificación de existencia
-{{ steps.api.outputs.json.email ? "Email: " + steps.api.outputs.json.email : "Sin email" }}
+{{ steps.api.outputs.body.email ? "Email: " + steps.api.outputs.body.email : "Sin email" }}
 
 // Formateo condicional
-{{ steps.api.outputs.json.price > 1000 ? "$ " + (steps.api.outputs.json.price / 1000).toFixed(1) + "k" : "$ " + steps.api.outputs.json.price }}
+{{ steps.api.outputs.body.price > 1000 ? "$ " + (steps.api.outputs.body.price / 1000).toFixed(1) + "k" : "$ " + steps.api.outputs.body.price }}
 ```
 
 ### Operaciones Lógicas y de Comparación
@@ -491,17 +491,17 @@ Dentro de `{{ }}`, cualquier expresión JavaScript válida funciona:
 
 // Comparaciones con datos
 {{ steps.api.outputs.status === 200 }}  →  true/false
-{{ steps.api.outputs.json.age > 18 }}  →  true/false
+{{ steps.api.outputs.body.age > 18 }}  →  true/false
 {{ steps["postgres-query"].outputs.rowCount > 0 }}  →  true/false
-{{ steps.api.outputs.json.email.includes("@") }}  →  true/false
+{{ steps.api.outputs.body.email.includes("@") }}  →  true/false
 
 // Múltiples condiciones
-{{ steps.api.outputs.status === 200 && steps.api.outputs.json.success }}
+{{ steps.api.outputs.status === 200 && steps.api.outputs.body.success }}
 {{ steps.api.outputs.status >= 200 && steps.api.outputs.status < 300 }}
-{{ steps.api.outputs.json.role === "admin" || steps.api.outputs.json.role === "moderator" }}
+{{ steps.api.outputs.body.role === "admin" || steps.api.outputs.body.role === "moderator" }}
 
 // Negación
-{{ !steps.api.outputs.json.disabled }}  →  true si no está deshabilitado
+{{ !steps.api.outputs.body.disabled }}  →  true si no está deshabilitado
 {{ !(steps.api.outputs.status >= 400) }}  →  true si no es un error
 ```
 
@@ -543,8 +543,8 @@ Dentro de `{{ }}`, cualquier expresión JavaScript válida funciona:
 {{ `${new Date().getHours()}:${new Date().getMinutes().toString().padStart(2, "0")}` }}  →  "10:05"
 
 // Comparación de fechas
-{{ new Date(steps.api.outputs.json.expiresAt) > new Date() }}  →  true si no expiró
-{{ new Date(steps.api.outputs.json.createdAt).getTime() > Date.now() - 86400000 }}  →  creado en las últimas 24h
+{{ new Date(steps.api.outputs.body.expiresAt) > new Date() }}  →  true si no expiró
+{{ new Date(steps.api.outputs.body.createdAt).getTime() > Date.now() - 86400000 }}  →  creado en las últimas 24h
 ```
 
 ### Conversión de Tipos
@@ -593,18 +593,18 @@ Dentro de `{{ }}`, cualquier expresión JavaScript válida funciona:
 
 ```
 // Probar patrón
-{{ /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(steps.api.outputs.json.email) }}  →  valida email
-{{ /^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(steps.api.outputs.json.cpf) }}  →  valida CPF formateado
-{{ /^[0-9]+$/.test(steps.api.outputs.json.code) }}  →  solo números
-{{ /^[A-Z]/.test(steps.api.outputs.json.name) }}  →  comienza con mayúscula
+{{ /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(steps.api.outputs.body.email) }}  →  valida email
+{{ /^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(steps.api.outputs.body.cpf) }}  →  valida CPF formateado
+{{ /^[0-9]+$/.test(steps.api.outputs.body.code) }}  →  solo números
+{{ /^[A-Z]/.test(steps.api.outputs.body.name) }}  →  comienza con mayúscula
 
 // Extraer con match
-{{ steps.api.outputs.json.text.match(/\d+/g) }}  →  todos los números
-{{ steps.api.outputs.json.url.match(/https?:\/\/([^\/]+)/)[1] }}  →  extraer dominio
+{{ steps.api.outputs.body.text.match(/\d+/g) }}  →  todos los números
+{{ steps.api.outputs.body.url.match(/https?:\/\/([^\/]+)/)[1] }}  →  extraer dominio
 
 // Reemplazar con regex
-{{ steps.api.outputs.json.phone.replace(/\D/g, "") }}  →  elimina no-dígitos
-{{ steps.api.outputs.json.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4") }}  →  formatea CPF
+{{ steps.api.outputs.body.phone.replace(/\D/g, "") }}  →  elimina no-dígitos
+{{ steps.api.outputs.body.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4") }}  →  formatea CPF
 ```
 
 ---
@@ -676,7 +676,7 @@ Dentro de `{{ }}`, cualquier expresión JavaScript válida funciona:
 
 ```
 // Extraer dominio de email
-{{ steps.api.outputs.json.email.split("@")[1] }}  →  "exemplo.com"
+{{ steps.api.outputs.body.email.split("@")[1] }}  →  "exemplo.com"
 
 // Extraer dominio de URL
 {{ new URL(variables.url).hostname }}  →  "www.exemplo.com"
@@ -793,7 +793,7 @@ Dentro de `{{ }}`, cualquier expresión JavaScript válida funciona:
 }, {}) }}
 
 // Aplanar array de arrays
-{{ steps.api.outputs.json.data.flatMap(item => item.tags) }}
+{{ steps.api.outputs.body.data.flatMap(item => item.tags) }}
 
 // Particionar array (pares e impares)
 {{ steps.query.outputs.rows.reduce((acc, item, i) => {
@@ -810,8 +810,8 @@ Dentro de `{{ }}`, cualquier expresión JavaScript válida funciona:
 
 ```
 {{ variables.BASE_URL }}/login
-{{ variables.BASE_URL }}/users/{{ steps["http-request"].outputs.json.id }}
-{{ variables.BASE_URL }}/products?category={{ steps.api.outputs.json.category }}&page={{ variables.page }}
+{{ variables.BASE_URL }}/users/{{ steps["http-request"].outputs.body.id }}
+{{ variables.BASE_URL }}/products?category={{ steps.api.outputs.body.category }}&page={{ variables.page }}
 ```
 
 ### Texto para Fill/Type
@@ -826,12 +826,12 @@ test-{{ Date.now() }}@exemplo.com
 ### SQL con Datos Dinámicos
 
 ```sql
-SELECT * FROM orders WHERE user_id = '{{ steps["http-request"].outputs.json.userId }}'
+SELECT * FROM orders WHERE user_id = '{{ steps["http-request"].outputs.body.userId }}'
 
 SELECT * FROM products WHERE category = '{{ variables.CATEGORY }}' AND price > {{ variables.MIN_PRICE }}
 
 INSERT INTO logs (user_id, action, timestamp)
-VALUES ('{{ steps.login.outputs.json.userId }}', 'login', '{{ new Date().toISOString() }}')
+VALUES ('{{ steps.login.outputs.body.userId }}', 'login', '{{ new Date().toISOString() }}')
 ```
 
 > **Cuidado:** En los nodos de base de datos de QANode, la query personalizada se escribe directamente en el campo SQL con expresiones `{{ }}`. Use valores controlados, revise comillas en textos/fechas y evite insertar contenido libre de usuario final sin validación.
@@ -840,7 +840,7 @@ VALUES ('{{ steps.login.outputs.json.userId }}', 'login', '{{ new Date().toISOSt
 
 ```json
 {
-  "token": "{{ steps.login.outputs.json.token }}",
+  "token": "{{ steps.login.outputs.body.token }}",
   "data": {
     "name": "{{ variables.TEST_NAME }}",
     "email": "{{ steps["custom-js"].outputs.result.email }}",
@@ -854,8 +854,8 @@ VALUES ('{{ steps.login.outputs.json.userId }}', 'login', '{{ new Date().toISOSt
 ### Headers de HTTP Request
 
 ```
-Authorization: Bearer {{ steps.login.outputs.json.token }}
-X-User-ID: {{ steps.api.outputs.json.userId }}
+Authorization: Bearer {{ steps.login.outputs.body.token }}
+X-User-ID: {{ steps.api.outputs.body.userId }}
 X-Request-ID: {{ Date.now() }}-{{ Math.random().toString(36).substr(2, 9) }}
 ```
 
@@ -865,32 +865,32 @@ X-Request-ID: {{ Date.now() }}-{{ Math.random().toString(36).substr(2, 9) }}
 {{ steps["http-request"].outputs.status === 200 }}
 {{ steps["postgres-query"].outputs.rowCount > 0 }}
 {{ steps["web-flow"].outputs.extracts.price < variables.MAX_PRICE }}
-{{ steps.api.outputs.json.role === "admin" || steps.api.outputs.json.role === "moderator" }}
-{{ steps.api.outputs.json.age >= 18 && steps.api.outputs.json.active }}
+{{ steps.api.outputs.body.role === "admin" || steps.api.outputs.body.role === "moderator" }}
+{{ steps.api.outputs.body.age >= 18 && steps.api.outputs.body.active }}
 ```
 
 ### Expresión del Switch
 
 ```
 {{ steps.api.outputs.status }}
-{{ steps.api.outputs.json.userType }}
-{{ Math.floor(steps.api.outputs.json.score / 10) }}
+{{ steps.api.outputs.body.userType }}
+{{ Math.floor(steps.api.outputs.body.score / 10) }}
 ```
 
 ### Items del Loop (For Each)
 
 ```
 {{ steps["postgres-query"].outputs.rows }}
-{{ steps.api.outputs.json.users }}
+{{ steps.api.outputs.body.users }}
 {{ Array.from({length: 10}, (_, i) => i + 1) }}
-{{ steps.api.outputs.json.data.filter(item => item.active) }}
+{{ steps.api.outputs.body.data.filter(item => item.active) }}
 ```
 
 ### Condición del Loop (While)
 
 ```
 {{ variables.contador < 10 }}
-{{ steps.api.outputs.json.hasMore }}
+{{ steps.api.outputs.body.hasMore }}
 {{ steps["postgres-query"].outputs.rowCount > 0 }}
 {{ variables.tentativas < variables.MAX_TENTATIVAS && !variables.sucesso }}
 ```
@@ -900,7 +900,7 @@ X-Request-ID: {{ Date.now() }}-{{ Math.random().toString(36).substr(2, 9) }}
 ```
 Usuario {{ steps["postgres-query"].outputs.rows[0].name }} tiene {{ steps["postgres-query"].outputs.rows[0].orders }} pedidos
 
-La API respondió con estado {{ steps["http-request"].outputs.status }}: {{ steps["http-request"].outputs.json.message }}
+La API respondió con estado {{ steps["http-request"].outputs.status }}: {{ steps["http-request"].outputs.body.message }}
 
 Procesados {{ variables._loopIndex + 1 }} de {{ steps.loop.outputs._loopCount }} items
 
@@ -912,11 +912,11 @@ Total: $ {{ steps.query.outputs.rows.reduce((sum, r) => sum + r.price, 0).toFixe
 ```
 // Nombre de la variable: userId
 // Valor:
-{{ steps.login.outputs.json.user.id }}
+{{ steps.login.outputs.body.user.id }}
 
 // Nombre de la variable: fullName
 // Valor:
-{{ steps.api.outputs.json.firstName + " " + steps.api.outputs.json.lastName }}
+{{ steps.api.outputs.body.firstName + " " + steps.api.outputs.body.lastName }}
 
 // Nombre de la variable: processedData
 // Valor:
@@ -983,19 +983,19 @@ Para prevenir errores, usa el operador de optional chaining o fallbacks:
 
 ```
 // Optional chaining (nodo renombrado a "api")
-{{ steps.api.outputs.json?.user?.name }}
+{{ steps.api.outputs.body?.user?.name }}
 
 // O con rótulo por defecto:
-{{ steps["http-request"].outputs.json?.user?.name }}
+{{ steps["http-request"].outputs.body?.user?.name }}
 
 // Fallback con OR
-{{ steps["http-request"].outputs.json.name || "N/A" }}
+{{ steps["http-request"].outputs.body.name || "N/A" }}
 
 // Fallback con nullish coalescing
-{{ steps.api.outputs.json.count ?? 0 }}
+{{ steps.api.outputs.body.count ?? 0 }}
 
 // Verificación antes de acceder
-{{ steps.api.outputs.json.user ? steps.api.outputs.json.user.name : "Sin usuario" }}
+{{ steps.api.outputs.body.user ? steps.api.outputs.body.user.name : "Sin usuario" }}
 
 // Verificación de array vacío
 {{ steps.query.outputs.rows.length > 0 ? steps.query.outputs.rows[0].name : "Sin resultados" }}
@@ -1022,33 +1022,33 @@ El sistema de expresiones se ejecuta en un **entorno sandbox** con restricciones
 
 ```
 // ❌ Difícil de leer
-{{ steps["http-request"].outputs.json.token }}
+{{ steps["http-request"].outputs.body.token }}
 
 // ✅ Más limpio (renombra el nodo a "login")
-{{ steps.login.outputs.json.token }}
+{{ steps.login.outputs.body.token }}
 ```
 
 ### 2. Usa Optional Chaining para Evitar Errores
 
 ```
 // ❌ Puede dar error si user no existe
-{{ steps.api.outputs.json.user.name }}
+{{ steps.api.outputs.body.user.name }}
 
 // ✅ Retorna undefined si no existe
-{{ steps.api.outputs.json?.user?.name }}
+{{ steps.api.outputs.body?.user?.name }}
 
 // ✅ Con valor por defecto
-{{ steps.api.outputs.json?.user?.name ?? "Sin nombre" }}
+{{ steps.api.outputs.body?.user?.name ?? "Sin nombre" }}
 ```
 
 ### 3. Usa Interpolación para Construir URLs y Mensajes
 
 ```
 // ✅ URL dinámica
-{{ variables.BASE_URL }}/api/users/{{ steps.api.outputs.json.id }}
+{{ variables.BASE_URL }}/api/users/{{ steps.api.outputs.body.id }}
 
 // ✅ Mensaje formateado
-Estado: {{ steps.api.outputs.status }} - {{ steps.api.outputs.json.message }}
+Estado: {{ steps.api.outputs.status }} - {{ steps.api.outputs.body.message }}
 ```
 
 ### 4. Usa Expresión Única para Mantener los Tipos
@@ -1065,7 +1065,7 @@ Rows: {{ steps.query.outputs.rows }}
 
 ```
 // Log para inspeccionar valores
-{{ JSON.stringify(steps.api.outputs.json, null, 2) }}
+{{ JSON.stringify(steps.api.outputs.body, null, 2) }}
 
 // Log de variables
 Variables: {{ JSON.stringify(variables) }}
@@ -1077,9 +1077,9 @@ Item actual: {{ JSON.stringify(variables._loopItem) }}
 ### 6. Usa Fallbacks para Datos Opcionales
 
 ```
-{{ steps.api.outputs.json.name || "Anónimo" }}
-{{ steps.api.outputs.json.config || {} }}
-{{ steps.api.outputs.json.items || [] }}
+{{ steps.api.outputs.body.name || "Anónimo" }}
+{{ steps.api.outputs.body.config || {} }}
+{{ steps.api.outputs.body.items || [] }}
 ```
 
 ### 7. Para Lógica Compleja, Usa Custom JavaScript
@@ -1122,7 +1122,7 @@ return { processedUsers: activeAdults };
 ```
 {{ Array.isArray(variables.lista) && variables.lista.length > 0 ? variables.lista[0] : "Lista vacía" }}
 
-{{ typeof steps.api.outputs.json.data === "object" ? JSON.stringify(steps.api.outputs.json.data) : "Datos inválidos" }}
+{{ typeof steps.api.outputs.body.data === "object" ? JSON.stringify(steps.api.outputs.body.data) : "Datos inválidos" }}
 ```
 
 ### 10. Usa Template Strings para Mayor Legibilidad
@@ -1148,7 +1148,7 @@ Paso 1 (http-request): Login
 
 Paso 2 (set-variable): Guardar Token
   Key: authToken
-  Value: {{ steps.login.outputs.json.token }}
+  Value: {{ steps.login.outputs.body.token }}
 
 Paso 3 (http-request): Obtener Datos de Usuario
   URL: https://api.example.com/user

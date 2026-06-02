@@ -44,7 +44,30 @@ Each test type automatically generates a different load profile from the **VUs**
 | **URL** | `string` | Target endpoint (supports `{{ }}`) |
 | **Auth** | `string` | Manual authentication type (if not using a credential) |
 | **Headers** | `object` | Additional request headers |
-| **Body** | `any` | Request body (for POST, PUT, PATCH) |
+| **Query Parameters** | `array` | Key-value pairs added to the URL |
+| **Body Type** | `string` | `None`, `JSON`, `Raw text`, `x-www-form-urlencoded`, `multipart/form-data`, or `Binary file` |
+| **Body / Fields / File** | `any` | Content sent according to the selected body type |
+
+### Request Body
+
+The Load Test request builder follows the same model as the [HTTP Request](../api/http-request.md) node:
+
+| Type | When to use |
+|------|-------------|
+| **None** | Requests without a body |
+| **JSON** | REST APIs that receive JSON objects or arrays |
+| **Raw text** | XML, SOAP, textual payloads, or custom formats |
+| **x-www-form-urlencoded** | URL-encoded forms |
+| **multipart/form-data** | Forms with text fields and files |
+| **Binary file** | Direct upload of a `fileRef` as the request body |
+
+Header and body fields accept `{{ }}` expressions. To send a file, use a `fileRef` produced by another node:
+
+```
+File: {{ steps["file-generate"].outputs.fileRef }}
+```
+
+You can also import a `curl` command; QANode tries to convert the method, URL, headers, query, body, and form fields to the matching visual mode.
 
 ### Load Configuration
 

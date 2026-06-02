@@ -291,7 +291,7 @@ func main() {
 
 ---
 
-## Exemplo Avançado: Nó com Artefato (Screenshot)
+## Exemplo Avançado: Nó com Artefatos
 
 ```javascript
 // gerar-badge/gerar-badge.node.js
@@ -306,7 +306,8 @@ export const manifest = {
     cor: { type: 'string', enum: ['green', 'red', 'blue', 'yellow'], default: 'green' }
   },
   outputSchema: {
-    imageName: { type: 'string' }
+    imageName: { type: 'string' },
+    relatorio: { type: 'fileRef' }
   }
 };
 
@@ -323,19 +324,39 @@ export async function execute({ inputs }) {
   ctx.fillText(inputs.texto, 100, 26);
 
   const base64 = canvas.toBuffer('image/png').toString('base64');
+  const csv = Buffer.from('id,texto\n1,' + inputs.texto + '\n').toString('base64');
 
   return {
     status: 'success',
     logs: [`Badge gerado: "${inputs.texto}" (${inputs.cor})`],
     outputs: { imageName: `badge-${Date.now()}.png` },
-    artifacts: [{
-      type: 'screenshot',
-      name: `badge-${Date.now()}.png`,
-      base64
-    }]
+    artifacts: [
+      {
+        type: 'screenshot',
+        name: `badge-${Date.now()}.png`,
+        base64
+      },
+      {
+        type: 'file',
+        name: 'relatorio.csv',
+        mimeType: 'text/csv',
+        key: 'relatorio',
+        base64: csv
+      }
+    ]
   };
 }
 ```
+
+O artefato `screenshot` aparece como evidência da execução. O artefato `file`, por ter `key: "relatorio"`, também fica disponível como:
+
+```
+{{ steps["gerar-badge"].outputs.relatorio }}
+```
+
+Esse valor é um `fileRef` e pode ser usado em nós como **Extrair Arquivo**, **HTTP Request**, **SSH Command** ou componentes.
+
+O `outputSchema` com `type: "fileRef"` não é obrigatório para o QANode salvar o arquivo. Ele é útil para deixar o autocomplete e o painel de variáveis mais claros antes da primeira execução.
 
 ---
 

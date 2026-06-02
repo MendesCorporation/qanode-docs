@@ -16,8 +16,7 @@ Projects
 │   └── Executions (Runs)
 │       ├── Steps
 │       ├── Logs
-│       ├── Screenshots
-│       └── PDF Report
+│       └── Artifacts and files
 ├── Components
 │   ├── Input Contract
 │   ├── Reusable Flow
@@ -70,11 +69,14 @@ In this example, each box is a node and the arrows represent connections indicat
 
 | Category | Color | Nodes |
 |----------|-------|-------|
-| **Flow Control** | 🟡 Yellow | If, Switch, Loop, Merge |
+| **Flow Control** | 🟡 Yellow | If, Switch, Loop |
 | **Web** | 🔵 Blue | Smart Web Flow, Web Flow, Smart Locators |
+| **Mobile** | 🔴 Light Red | Mobile Flow |
 | **API** | 🟣 Purple | HTTP Request |
 | **Database** | 🟢 Green | PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, MongoDB |
+| **Files** | 🟤 Gold | Generate File, Extract File, Base64 to File, File to Base64 |
 | **Infrastructure** | 🔵 Light Blue | SSH Command |
+| **Performance** | 🟫 Amber | Load Test |
 | **Utilities** | ⚪ Gray | Set Variable, Log, Wait, Stop and Fail, Custom JavaScript |
 | **Custom Nodes** | 🩷 Pink | Nodes from external providers |
 
@@ -98,7 +100,7 @@ When a node is executed, it produces **outputs** — data that can be used by su
 
 **Examples:**
 ```
-{{ steps["http-request"].outputs.json.token }}    → Token from an API response
+{{ steps["http-request"].outputs.body.token }}    → Token from an API response
 {{ steps.login.outputs.extracts.userName }}   → Text extracted from a page
 {{ steps.query.outputs.rows[0].email }}       → First email from a SQL result
 ```
@@ -147,14 +149,14 @@ An **execution** is an instance of a scenario being processed. When running a sc
 1. Resolves the topological order of the nodes
 2. Executes each node sequentially
 3. Evaluates expressions and injects data from previous outputs
-4. Records logs, screenshots, and artifacts
-5. Generates a PDF report at the end
+4. Records logs, screenshots, files, and artifacts
+5. Makes execution results available
 
 Each execution has:
 - **Status**: `running`, `success`, or `failed`
 - **Duration**: Total execution time
 - **Steps**: Individual result of each node
-- **Artifacts**: Screenshots, PDFs, and other generated files
+- **Artifacts**: Screenshots and generated files
 - **Logs**: Detailed messages from each step
 
 ---

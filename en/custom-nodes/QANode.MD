@@ -82,18 +82,32 @@ Runtime notes:
 
 ## 5) artifacts contract
 
-Artifact item (common format):
-- type: "screenshot" | "pdf" | "video" | "file"
+Each artifact item can be:
+- type: "screenshot" | "file"
 - name: string
 - base64?: string
-- path?: string
+- mimeType?: string
+- key?: string
+- outputKey?: string
 
-Example:
+Screenshot example:
 {
   "type": "screenshot",
   "name": "evidence.png",
   "base64": "iVBORw0KGgoAAA..."
 }
+
+File example:
+{
+  "type": "file",
+  "name": "report.csv",
+  "mimeType": "text/csv",
+  "key": "report",
+  "base64": "aWQsbmFtZQoxLEFuYQo="
+}
+
+File artifacts with base64 are saved by QANode and exposed as fileRef outputs.
+Use key/outputKey when the file should be available as a named output.
 
 ## 6) What you must always deliver
 

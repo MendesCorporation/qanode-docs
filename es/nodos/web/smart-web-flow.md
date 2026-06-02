@@ -16,6 +16,7 @@ Fue diseñado para sistemas enterprise y páginas dinámicas como CRMs, ERPs, Se
 |-----------|-------|
 | **Tipo** | `smart-web-flow` |
 | **Categoría** | Web |
+| **Color** | 🔵 Azul (#3b82f6) |
 | **Entrada** | `in` |
 | **Salida** | `out` |
 | **Grabación recomendada** | QANode Recorder en modo Smart Web Flow |
@@ -49,10 +50,10 @@ Considere otro nodo cuando:
 | Campo | Tipo | Predeterminado | Descripción |
 |-------|------|----------------|-------------|
 | **Modo de Sesión** | `new` / `reuse` | `new` | Abre una nueva sesión de navegador o reutiliza una existente |
-| **Session ID** | `string` | — | ID usado cuando el modo de sesión es `reuse` |
+| **ID de Sesión** | `string` | — | Nombre o expresión usada para reutilizar la sesión |
 | **Headless** | `boolean` | `true` | Ejecuta el navegador sin interfaz visible |
 | **Estrategia de Storage** | `inMemory` / `persisted` | `inMemory` | Controla si cookies/localStorage se descartan o se persisten |
-| **Clave de Storage** | `string` | — | Identificador usado para guardar/reutilizar storage persistido |
+| **ID de Sesión Persistida** | `string` | — | Nombre opcional usado para guardar/reutilizar cookies y localStorage |
 | **Browser** | `chromium` / `firefox` / `webkit` | `chromium` | Navegador usado en la ejecución |
 | **Dispositivo** | `desktop` / `mobile` | `desktop` | Viewport desktop o emulación mobile |
 | **Viewport** | preset o `custom` | `1920x1080` | Tamaño de ventana en modo desktop |
@@ -60,7 +61,22 @@ Considere otro nodo cuando:
 | **Escaneo de accesibilidad** | `boolean` | `false` | Ejecuta análisis de accesibilidad y guarda evidencia |
 | **Auditoría de performance** | `boolean` | `false` | Colecta métricas de navegación, red y APIs por pantalla |
 
-Para flujos que exigen login, MFA o SSO, use la extensión Chrome para capturar la sesión y configure storage persistido. Use `inMemory` para pruebas aisladas y `persisted` para aplicaciones que necesitan mantener autenticación entre ejecuciones.
+### Storage y Sesión
+
+Para flujos que exigen login, MFA o SSO, use storage persistido. Así QANode puede reutilizar cookies y localStorage en ejecuciones futuras sin repetir el login manualmente.
+
+Use `inMemory` para pruebas aisladas y `persisted` para aplicaciones que necesitan mantener autenticación entre ejecuciones.
+
+Cuando el modo de sesión es **nuevo** y el storage es **persistido**, el campo de ID de sesión persistida es opcional:
+
+- si se completa, guarda la sesión con ese nombre;
+- si está vacío, QANode genera una clave interna automáticamente.
+
+Las sesiones persistidas creadas por el nodo quedan disponibles para reutilización por otros usuarios de la misma instalación. Esto permite que un flujo compartido siga funcionando cuando otra persona ejecuta el escenario.
+
+Las sesiones importadas por la extensión Chrome permanecen vinculadas al usuario que grabó/importó la sesión, porque normalmente representan login, cookies y permisos personales.
+
+En modo **reutilizar**, el campo **ID de Sesión** busca sesiones nombradas de ambos alcances. Las sugerencias muestran hasta 10 sesiones y ocultan claves generadas automáticamente por UUID. Las sesiones sin uso por 30 días se limpian automáticamente.
 
 ---
 
@@ -239,7 +255,7 @@ Esto ayuda a la resiliencia: una estrategia buena pero a veces más lenta no se 
 | `extract` | Extraer un valor único |
 | `extractList` | Extraer items repetidos como filas o cards |
 | `extractTable` | Extraer tabla/grid como filas estructuradas |
-| `upload` | Subir archivos |
+| `uploadFile` | Subir un archivo a un input de archivo |
 | `dialog` | Manejar diálogos del navegador |
 | `setSlider` | Definir valor de slider/range |
 | `evaluate` | Ejecutar JavaScript controlado en la página |
@@ -278,6 +294,19 @@ Use `fill` para la mayoría de los campos. Use `type` cuando la aplicación depe
 
 Para editores customizados, Smart Web Flow puede apuntar a regiones editables como `contenteditable`, textboxes renderizados por editores ricos o campos donde la extensión capturó el objetivo real de escritura.
 
+### selectOption
+
+Selecciona una opción en un `<select>` nativo o dropdown compatible.
+
+| Campo | Descripción |
+|-------|-------------|
+| **Seleccionar por** | `value`, `label` o `index` |
+| **Valor / Label / Índice** | Opción deseada |
+
+Para dropdowns customizados que no son `<select>` nativos, la extensión normalmente graba una secuencia de `click`, `press` o `wait` en vez de `selectOption`.
+
+En el modo Inspect de la extensión, los selects nativos muestran las opciones disponibles en una lista clicable. Así el usuario elige visualmente en vez de escribir manualmente el valor.
+
 ### drag
 
 Drag/drop guarda información de origen y destino. Cuando es posible, el recorder captura un contenedor de destino en vez de un card vecino volátil, mejorando el comportamiento en kanbans y listas reordenables. Si el destino es un área libre, canvas o zona de drop que solo existe mientras se arrastra, revise el paso manualmente.
@@ -302,6 +331,37 @@ El valor extraído queda disponible en:
 ```
 {{ steps["Nombre del Nodo"].outputs.extracts.nombre }}
 ```
+
+### uploadFile
+
+Sube un archivo a un `<input type="file">`.
+
+| Campo | Descripción |
+|-------|-------------|
+| **Archivo** | `fileRef` a enviar |
+| **Locator / Estrategias** | Objetivo del input de archivo |
+| **Timeout** | Tiempo máximo para localizar el input |
+
+El paso se graba automáticamente por la extensión cuando el usuario elige un archivo en un input de upload. Al importar el flujo en QANode, si el archivo original aún no está adjunto al flujo, el paso queda destacado hasta que el usuario elija el `fileRef` que se usará en la ejecución.
+
+Use `uploadFile` para escenarios como enviar documentos, adjuntar comprobantes, subir imágenes, PDFs, CSVs, planillas o probar formularios web con upload.
+
+---
+
+## Downloads
+
+Smart Web Flow no tiene una acción separada de download. Cuando un paso de **click** dispara una descarga del navegador, QANode captura el archivo automáticamente y lo expone como `fileRef`.
+
+Los archivos descargados quedan disponibles en el output `downloads` y, cuando hay solo un download relevante, también pueden aparecer como `fileRef` en el panel de variables.
+
+Ejemplo:
+
+```
+{{ steps["smart-web-flow"].outputs.downloads.reporte }}
+{{ steps["smart-web-flow"].outputs.fileRef }}
+```
+
+Use el `fileRef` descargado en otros nodos, como **Extraer Archivo**, **HTTP Request**, **SSH Command**, **Mobile Flow** o **Custom JavaScript**.
 
 ### clock
 
@@ -337,6 +397,8 @@ Outputs típicos incluyen:
 | `screenshots` | Archivos/URLs de evidencia |
 | `sessionId` | ID de sesión del navegador, útil para reutilización |
 | `currentUrl` | URL al final del nodo |
+| `downloads` | Archivos descargados durante clics, como `fileRef` |
+| `fileRef` | Atajo al archivo descargado cuando aplica |
 
 Ejemplo de acceso:
 

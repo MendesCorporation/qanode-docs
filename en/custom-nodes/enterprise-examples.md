@@ -291,22 +291,23 @@ func main() {
 
 ---
 
-## Advanced Example: Node with Artifact (Screenshot)
+## Advanced Example: Node with Artifacts
 
 ```javascript
-// gerar-badge/gerar-badge.node.js
+// generate-badge/generate-badge.node.js
 import { createCanvas } from 'canvas';
 
 export const manifest = {
-  type: 'gerar-badge',
-  name: 'Gerar Badge',
-  category: 'Gerador',
+  type: 'generate-badge',
+  name: 'Generate Badge',
+  category: 'Generator',
   inputSchema: {
-    texto: { type: 'string', required: true },
-    cor: { type: 'string', enum: ['green', 'red', 'blue', 'yellow'], default: 'green' }
+    text: { type: 'string', required: true },
+    color: { type: 'string', enum: ['green', 'red', 'blue', 'yellow'], default: 'green' }
   },
   outputSchema: {
-    imageName: { type: 'string' }
+    imageName: { type: 'string' },
+    report: { type: 'fileRef' }
   }
 };
 
@@ -315,27 +316,47 @@ export async function execute({ inputs }) {
   const ctx = canvas.getContext('2d');
 
   // Draw the badge
-  ctx.fillStyle = inputs.cor || 'green';
+  ctx.fillStyle = inputs.color || 'green';
   ctx.fillRect(0, 0, 200, 40);
   ctx.fillStyle = 'white';
   ctx.font = 'bold 16px sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText(inputs.texto, 100, 26);
+  ctx.fillText(inputs.text, 100, 26);
 
   const base64 = canvas.toBuffer('image/png').toString('base64');
+  const csv = Buffer.from('id,text\n1,' + inputs.text + '\n').toString('base64');
 
   return {
     status: 'success',
-    logs: [`Badge gerado: "${inputs.texto}" (${inputs.cor})`],
+    logs: [`Badge generated: "${inputs.text}" (${inputs.color})`],
     outputs: { imageName: `badge-${Date.now()}.png` },
-    artifacts: [{
-      type: 'screenshot',
-      name: `badge-${Date.now()}.png`,
-      base64
-    }]
+    artifacts: [
+      {
+        type: 'screenshot',
+        name: `badge-${Date.now()}.png`,
+        base64
+      },
+      {
+        type: 'file',
+        name: 'report.csv',
+        mimeType: 'text/csv',
+        key: 'report',
+        base64: csv
+      }
+    ]
   };
 }
 ```
+
+The `screenshot` artifact appears as execution evidence. The `file` artifact, because it has `key: "report"`, is also available as:
+
+```
+{{ steps["generate-badge"].outputs.report }}
+```
+
+This value is a `fileRef` and can be used in nodes such as **Extract File**, **HTTP Request**, **SSH Command**, or components.
+
+The `outputSchema` with `type: "fileRef"` is not required for QANode to save the file. It is useful to make autocomplete and the variables panel clearer before the first execution.
 
 ---
 
