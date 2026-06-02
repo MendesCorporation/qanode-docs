@@ -161,6 +161,6 @@ Las capturas de pantalla se almacenarán como artefactos de la ejecución y se i
    - **URL**: `https://jsonplaceholder.typicode.com/users/1`
 3. Arrastra un nodo **If** y conéctalo a la salida del HTTP Request
 4. Configura la condición: `{{ steps["http-request"].outputs.status === 200 }}`
-5. En la salida **true**, agrega un nodo **Log** con el mensaje: `Usuario encontrado: {{ steps["http-request"].outputs.json.name }}`
+5. En la salida **true**, agrega un nodo **Log** con el mensaje: `Usuario encontrado: {{ steps["http-request"].outputs.body.name }}`
 
 Este flujo hace una solicitud GET a JSONPlaceholder y verifica si el estado es 200. Si es así, muestra el nombre del usuario retornado (`Leanne Graham`).

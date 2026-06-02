@@ -223,11 +223,11 @@ El constructor de consultas permite seleccionar tablas, columnas, condiciones WH
 Da nombres descriptivos a tus nodos cambiando el **label**. Esto facilita la lectura del flujo y hace las expresiones más claras:
 
 ```
-{{ steps.login.outputs.json.token }}
+{{ steps.login.outputs.body.token }}
 ```
 es más legible que:
 ```
-{{ steps["HTTP Request 2"].outputs.json.token }}
+{{ steps["HTTP Request 2"].outputs.body.token }}
 ```
 
 ### Usa Grupos Lógicos

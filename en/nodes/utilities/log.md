@@ -43,7 +43,7 @@ Message: User found: {{ steps.query.outputs.rows[0].name }} ({{ steps.query.outp
 ### Log for debugging
 
 ```
-Message: API Status: {{ steps["http-request"].outputs.status }}, Body: {{ JSON.stringify(steps["http-request"].outputs.json) }}
+Message: API Status: {{ steps["http-request"].outputs.status }}, Body: {{ JSON.stringify(steps["http-request"].outputs.body) }}
 ```
 
 ---

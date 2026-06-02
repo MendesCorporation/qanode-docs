@@ -16,8 +16,7 @@ Projetos
 │   └── Execuções (Runs)
 │       ├── Passos (Steps)
 │       ├── Logs
-│       ├── Screenshots
-│       └── Relatório PDF
+│       └── Artefatos e arquivos
 ├── Componentes
 │   ├── Contrato de Entrada
 │   ├── Fluxo Reutilizável
@@ -76,11 +75,14 @@ Neste exemplo, cada caixa é um nó e as setas representam conexões indicando o
 
 | Categoria | Cor | Nós |
 |-----------|-----|-----|
-| **Controle de Fluxo** | 🟡 Amarelo | If, Switch, Loop, Merge |
+| **Controle de Fluxo** | 🟡 Amarelo | If, Switch, Loop |
 | **Web** | 🔵 Azul | Smart Web Flow, Web Flow, Smart Locators |
+| **Mobile** | 🔴 Vermelho Claro | Mobile Flow |
 | **API** | 🟣 Roxo | HTTP Request |
 | **Banco de Dados** | 🟢 Verde | PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, MongoDB |
+| **Arquivos** | 🟤 Dourado | Gerar Arquivo, Extrair Arquivo, Base64 para Arquivo, Arquivo para Base64 |
 | **Infraestrutura** | 🔵 Azul Claro | SSH Command |
+| **Performance** | 🟫 Âmbar | Load Test |
 | **Utilitários** | ⚪ Cinza | Set Variable, Log, Wait, Stop and Fail, Custom JavaScript |
 | **Nós Customizados** | 🩷 Rosa | Nós de provedores externos |
 
@@ -104,7 +106,7 @@ Quando um nó é executado, ele produz **outputs** — dados que podem ser usado
 
 **Exemplos:**
 ```
-{{ steps["http-request"].outputs.json.token }}    → Token de uma resposta API
+{{ steps["http-request"].outputs.body.token }}    → Token de uma resposta API
 {{ steps.login.outputs.extracts.userName }}   → Texto extraído de uma página
 {{ steps.query.outputs.rows[0].email }}       → Primeiro email do resultado SQL
 ```
@@ -159,14 +161,14 @@ Uma **execução** é uma instância de um cenário sendo processado. Ao executa
 1. Resolve a ordem topológica dos nós
 2. Executa cada nó sequencialmente
 3. Avalia expressões e injeta dados dos outputs anteriores
-4. Registra logs, screenshots e artefatos
-5. Gera um relatório PDF ao final
+4. Registra logs, screenshots, arquivos e artefatos
+5. Disponibiliza os resultados da execução
 
 Cada execução possui:
 - **Status**: `running`, `success` ou `failed`
 - **Duração**: Tempo total de execução
 - **Passos**: Resultado individual de cada nó
-- **Artefatos**: Screenshots, PDFs e outros arquivos gerados
+- **Artefatos**: Screenshots e arquivos gerados
 - **Logs**: Mensagens detalhadas de cada passo
 
 ---

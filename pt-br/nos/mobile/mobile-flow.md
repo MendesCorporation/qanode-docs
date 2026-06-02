@@ -150,6 +150,8 @@ O nó Mobile Flow executa uma sequência de **passos** configuráveis. Cada pass
 | [assert](#assert) | Verificar condição no app |
 | [extract](#extract) | Extrair texto ou atributo de elemento |
 | [permission](#permission) | Aceitar/dispensar alertas e gerenciar permissões |
+| [push-file](#push-file) | Enviar arquivo para o dispositivo |
+| [pull-file](#pull-file) | Baixar arquivo do dispositivo para o QANode |
 | [reset](#reset) | Reiniciar o aplicativo |
 | [back](#back) | Pressionar botão Voltar (Android) |
 | [home](#home) | Pressionar botão Home (Android) |
@@ -233,6 +235,14 @@ Digita texto em um campo de entrada.
 | **Texto** | `string` | Texto a ser digitado (suporta `{{ }}`) |
 | **Limpar Primeiro** | `boolean` | Limpa o campo antes de digitar |
 | **Tentativas** | `number` | Número de tentativas de localização |
+
+Para campos de texto, o QANode tenta localizar em camadas:
+
+1. identificadores fortes, como resource-id, accessibility id, name e content-desc;
+2. `hint`, `label` e `text` quando pertencem ao próprio campo;
+3. relação contextual entre o label visível e o input próximo;
+4. coordenadas gravadas como fallback visual;
+5. classe genérica de input apenas como último recurso.
 
 ---
 
@@ -405,6 +415,40 @@ Gerencia alertas de sistema e permissões do aplicativo.
 
 ---
 
+### push-file
+
+Envia um arquivo do QANode para o dispositivo antes de continuar a automação.
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| **Arquivo** | `fileRef` | Arquivo a enviar |
+| **Caminho no dispositivo** | `string` | Caminho de destino. Se vazio, o QANode usa um local padrão da plataforma |
+
+Use este passo quando o aplicativo precisa que um arquivo exista no dispositivo antes de abrir um seletor nativo, galeria, picker de documentos ou fluxo de upload.
+
+No Android, caminhos comuns ficam em `/sdcard/Download/...`. No iOS, o QANode tenta enviar para o container do aplicativo quando disponível e usa fallback compatível com o Appium/XCUITest.
+
+---
+
+### pull-file
+
+Baixa um arquivo do dispositivo e salva como artefato do QANode, retornando `fileRef`.
+
+| Campo | Tipo | Descrição |
+|-------|------|-----------|
+| **Modo** | seleção | Caminho exato, pasta/padrão ou detecção mais recente |
+| **Caminho no dispositivo** | `string` | Caminho exato do arquivo, quando conhecido |
+| **Pasta** | `string` | Pasta a consultar, como `/sdcard/Download` |
+| **Padrão** | `string` | Filtro de nome, como `*.pdf`, `*.txt`, `*.jpg` ou `*` |
+| **Nome da variável** | `string` | Chave em `outputs.files` |
+| **Nome do arquivo de saída** | `string` | Nome salvo no QANode. Se vazio, usa o nome encontrado |
+
+Quando possível, prefira **Caminho exato**. Quando o aplicativo gera o arquivo com nome dinâmico, use pasta/padrão para capturar o arquivo mais recente compatível.
+
+Arquivos como imagens, PDFs, textos, planilhas e vídeos podem ser capturados desde que o Appium consiga ler o arquivo no dispositivo ou no container do aplicativo.
+
+---
+
 ### reset
 
 Reinicia o aplicativo, limpando seu estado (equivalente a desinstalar e reinstalar).
@@ -469,6 +513,20 @@ Cada passo pode ter configuração de evidência individual:
 | `sessionId` | `string` | ID da sessão mobile para reutilização em outros nós |
 | `extracts` | `object` | Dados extraídos pelos passos `extract` (chave → valor) |
 | `asserts` | `object` | Resultados das asserções (chave → `true`/`false`) |
+| `files` | `object` | Arquivos baixados por passos `pull-file` |
+| `fileRef` | `fileRef` | Atalho para o último arquivo baixado |
+
+### Arquivos baixados
+
+Quando um passo **Baixar arquivo** é executado, o output fica disponível pelo nome da variável:
+
+```
+{{ steps["mobile-flow"].outputs.files.relatorio.fileRef }}
+{{ steps["mobile-flow"].outputs.files.relatorio.name }}
+{{ steps["mobile-flow"].outputs.fileRef }}
+```
+
+Use o `fileRef` para passar o arquivo para **Extrair Arquivo**, **Arquivo para Base64**, **HTTP Request**, componentes ou outros nós que aceitam arquivo.
 
 ---
 

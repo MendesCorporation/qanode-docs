@@ -190,7 +190,7 @@ Executa um aggregation pipeline.
 [HTTP Request: POST /api/products]
     │
     ▼
-[MongoDB: findOne → { "sku": "{{ steps.api.outputs.json.sku }}" }]
+[MongoDB: findOne → { "sku": "{{ steps.api.outputs.body.sku }}" }]
     │
     ▼
 [If: {{ steps.mongo.outputs.document }} !== null]

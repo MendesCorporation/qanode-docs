@@ -41,7 +41,6 @@ Bienvenido a la documentación oficial de **QANode Community Edition**, la plata
 | [If](nodos/control-flujo/if.md) | Bifurcación condicional (verdadero/falso) |
 | [Switch](nodos/control-flujo/switch.md) | Bifurcación múltiple por valor o condición |
 | [Loop](nodos/control-flujo/loop.md) | Repetición por conteo, array o condición |
-| [Merge](nodos/control-flujo/merge.md) | Unión de múltiples caminos de ejecución |
 
 ### Web
 | Nodo | Descripción |
@@ -60,6 +59,14 @@ Bienvenido a la documentación oficial de **QANode Community Edition**, la plata
 | Nodo | Descripción |
 |------|-------------|
 | [HTTP Request](nodos/api/http-request.md) | Solicitudes HTTP (GET, POST, PUT, PATCH, DELETE) |
+
+### Archivos
+| Nodo | Descripción |
+|------|-------------|
+| [Generar Archivo](nodos/archivos/generar-archivo.md) | Crea archivos TXT, JSON, CSV, Excel y PDF |
+| [Extraer Archivo](nodos/archivos/extraer-archivo.md) | Extrae texto y datos de TXT, JSON, CSV, Excel y PDF |
+| [Base64 a Archivo](nodos/archivos/base64-a-archivo.md) | Convierte Base64 o Data URI en `fileRef` |
+| [Archivo a Base64](nodos/archivos/archivo-a-base64.md) | Convierte `fileRef` en Base64 y Data URI |
 
 ### Base de Datos
 | Nodo | Descripción |
@@ -102,7 +109,7 @@ Bienvenido a la documentación oficial de **QANode Community Edition**, la plata
 | [Contrato de la API](nodos-personalizados/contrato-api.md) | Endpoints requeridos y formato de datos |
 | [Ejemplos](nodos-personalizados/ejemplos-enterprise.md) | Ejemplos en Node.js, Python, Java, C# y Go |
 | [Escritorio: Nodos Locales](nodos-personalizados/nodos-locales-escritorio.md) | Creando nodos locales en la versión escritorio |
-| [QANode.MD (IA)](nodos-personalizados/QANode.MD) | Guia de IA para crear nodos y diagnosticar problemas |
+| [QANode.md (IA)](nodos-personalizados/QANode.md) | Guía de IA para crear nodos y diagnosticar problemas |
 
 ---
 

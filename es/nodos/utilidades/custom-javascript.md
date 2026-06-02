@@ -28,7 +28,7 @@ Además de JavaScript puro, este nodo también puede trabajar con sesiones **Web
 
 El editor de código usa el **Monaco Editor** (el mismo de VS Code) con:
 - Syntax highlighting
-- Autocomplete para `steps`, `variables`, `web`, `mobile`, `page`, `app`, `return`, `console.log`
+- Autocomplete para `steps`, `variables`, `files`, `web`, `mobile`, `page`, `app`, `return`, `console.log`
 - Validación de sintaxis
 
 ---
@@ -44,6 +44,7 @@ El código tiene acceso a:
 | `expect` | `function` | Assertions de Playwright para escenarios Web |
 | `assert` | `object` | Assertions de Node.js |
 | `fetch` | `function` | Requisiciones HTTP directas vía JavaScript |
+| `files` | `object` | Lectura y escritura segura de archivos de la ejecución |
 | `web` | `object` | Namespace para trabajar con sesiones Web ya abiertas |
 | `mobile` | `object` | Namespace para trabajar con sesiones Mobile ya abiertas |
 | `page` | `object` | Alias global de la página Web actual |
@@ -56,7 +57,7 @@ El código tiene acceso a:
 
 ```javascript
 // Output de un HTTP Request
-const userData = steps["http-request"].outputs.json;
+const userData = steps["http-request"].outputs.body;
 const userName = userData.name;
 
 // Output de una consulta PostgreSQL
@@ -73,6 +74,83 @@ const title = steps["web-flow"].outputs.extracts.pageTitle;
 const apiUrl = variables.API_URL;
 const environment = variables.ENVIRONMENT;
 ```
+
+---
+
+## Trabajando con Archivos
+
+El namespace `files` permite leer `fileRef` de nodos anteriores y crear nuevos archivos como artefactos de la ejecución.
+
+| Método | Descripción |
+|--------|-------------|
+| `files.read(fileRef)` | Lee un archivo y retorna `{ name, mimeType, sizeBytes, buffer }` |
+| `files.readText(fileRef, encoding?)` | Lee un archivo como texto |
+| `files.write({ name, mimeType?, data })` | Crea un archivo y retorna `fileRef` |
+| `files.writeText(name, text, mimeType?)` | Crea un archivo de texto y retorna `fileRef` |
+
+Los archivos creados por Custom JavaScript se guardan solo en el storage de artefactos de QANode. El código no escribe en rutas arbitrarias del filesystem.
+
+### Límites y Seguridad
+
+| Regla | Valor |
+|-------|-------|
+| Tamaño máximo por archivo | 25 MB |
+| Tamaño máximo total por nodo | 50 MB |
+| Nombre del archivo | Sanitizado automáticamente |
+| MIME type | Inferido cuando no se informa |
+| Extensiones peligrosas | Bloqueadas |
+| MIME types ejecutables/script | Bloqueados |
+
+Extensiones como `.exe`, `.sh`, `.bat`, `.cmd`, `.js`, `.jar`, `.apk`, `.dmg`, `.msi`, `.docm`, `.xlsm` y equivalentes no pueden ser generadas por Custom JavaScript.
+
+### Leer archivo como texto
+
+```javascript
+const text = await files.readText(
+  steps["file-generate"].outputs.fileRef,
+  "utf8"
+);
+
+return {
+  preview: text.slice(0, 300),
+  length: text.length
+};
+```
+
+### Leer archivo como bytes
+
+```javascript
+const file = await files.read(steps["http-request"].outputs.fileRef);
+
+return {
+  name: file.name,
+  mimeType: file.mimeType,
+  sizeBytes: file.sizeBytes,
+  firstBytes: file.buffer.subarray(0, 8).toString("hex")
+};
+```
+
+### Crear archivo con `files.write`
+
+```javascript
+return await files.write({
+  name: "reporte.csv",
+  mimeType: "text/csv",
+  data: "id,nombre\n1,Ana\n2,Bruno"
+});
+```
+
+### Crear archivo texto con `files.writeText`
+
+```javascript
+return await files.writeText(
+  "resumen.txt",
+  "Ejecución finalizada con éxito.",
+  "text/plain"
+);
+```
+
+El retorno de estos métodos es un `fileRef`, listo para usarse en nodos como **HTTP Request**, **Extraer Archivo**, **SSH Command**, **Mobile Flow** o componentes.
 
 ---
 
@@ -443,7 +521,7 @@ return await mobile.run(async ({ app, sessionId }) => {
 ### Transformar datos de una API
 
 ```javascript
-const items = steps["http-request"].outputs.json.items;
+const items = steps["http-request"].outputs.body.items;
 
 // Filtrar y transformar
 const activeItems = items
@@ -475,7 +553,7 @@ return {
 ### Validación compleja
 
 ```javascript
-const response = steps["API Check"].outputs.json;
+const response = steps["API Check"].outputs.body;
 const dbRecord = steps["DB Query"].outputs.rows[0];
 
 const validations = [];

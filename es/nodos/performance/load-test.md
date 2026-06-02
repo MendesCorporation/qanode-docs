@@ -44,7 +44,30 @@ Cada tipo genera un perfil de carga diferente automáticamente a partir de los c
 | **URL** | `string` | Endpoint objetivo (soporta `{{ }}`) |
 | **Auth** | `string` | Tipo de autenticación manual (si no usa credencial) |
 | **Headers** | `object` | Cabeceras adicionales de la solicitud |
-| **Body** | `any` | Cuerpo de la solicitud (para POST, PUT, PATCH) |
+| **Parámetros de Query** | `array` | Pares clave-valor agregados a la URL |
+| **Tipo del Cuerpo** | `string` | `Ninguno`, `JSON`, `Texto bruto`, `x-www-form-urlencoded`, `multipart/form-data` o `Archivo binario` |
+| **Body / Campos / Archivo** | `any` | Contenido enviado según el tipo de cuerpo |
+
+### Cuerpo de la Solicitud
+
+El constructor de solicitud del Load Test sigue el mismo modelo del nodo [HTTP Request](../api/http-request.md):
+
+| Tipo | Cuándo usar |
+|------|-------------|
+| **Ninguno** | Solicitudes sin body |
+| **JSON** | APIs REST que reciben objetos o arrays JSON |
+| **Texto bruto** | XML, SOAP, payload textual o formato personalizado |
+| **x-www-form-urlencoded** | Formularios URL encoded |
+| **multipart/form-data** | Formularios con campos de texto y archivos |
+| **Archivo binario** | Upload directo del contenido de un `fileRef` en el body |
+
+Los campos de header y body aceptan expresiones `{{ }}`. Para enviar un archivo, use un `fileRef` que venga de otro nodo:
+
+```
+Archivo: {{ steps["file-generate"].outputs.fileRef }}
+```
+
+También es posible importar un comando `curl`; QANode intenta convertir método, URL, headers, query, body y campos de formulario al modo visual correspondiente.
 
 ### Configuración de Carga
 

@@ -125,7 +125,7 @@ Exemplo de payload recebido:
 | `status` | `string` | Obrigatório | `success` ou `failed` |
 | `logs` | `string[]` | Recomendado | Logs de diagnostico |
 | `outputs` | `object` | Recomendado | Dados de saida do no |
-| `artifacts` | `array` | Recomendado | Arquivos (screenshot/pdf/file etc.) |
+| `artifacts` | `array` | Recomendado | Artefatos `screenshot` ou `file` |
 | `error` | `object` | Quando `failed` | Ex: `{ "message": "..." }` |
 
 ### Comportamento real do runtime local
@@ -210,7 +210,7 @@ export async function execute({ inputs = {} }) {
 
 ## Artifacts (formato)
 
-Cada item em `artifacts` pode ser:
+Cada item em `artifacts` pode ser `screenshot` ou `file`.
 
 ```json
 {
@@ -222,10 +222,46 @@ Cada item em `artifacts` pode ser:
 
 Campos comuns:
 
-- `type`: `screenshot`, `pdf`, `video`, `file`
+- `type`: `screenshot` ou `file`
 - `name`: nome do arquivo
 - `base64`: conteudo em base64
-- `path`: opcional quando ja existe caminho externo
+- `mimeType`: opcional. Se ausente, o QANode tenta inferir pelo conteudo e pelo nome
+- `key` ou `outputKey`: opcional para artefatos `file`; define a chave criada em `outputs`
+
+### Arquivo retornando como fileRef
+
+```javascript
+return {
+  status: "success",
+  logs: ["arquivo gerado"],
+  outputs: {},
+  artifacts: [
+    {
+      type: "file",
+      name: "relatorio.csv",
+      mimeType: "text/csv",
+      key: "relatorio",
+      base64: Buffer.from("id,nome\n1,Ana\n").toString("base64")
+    }
+  ]
+};
+```
+
+O QANode salva o arquivo no storage e cria o output:
+
+```json
+{
+  "relatorio": {
+    "source": "runArtifact",
+    "path": "runs/run_abc123/files/relatorio.csv",
+    "name": "relatorio.csv",
+    "mimeType": "text/csv",
+    "sizeBytes": 14
+  }
+}
+```
+
+Se houver apenas um arquivo sem `key`, o output criado será `fileRef`. Se houver vários arquivos sem `key`, eles ficam agrupados em `files`.
 
 ---
 

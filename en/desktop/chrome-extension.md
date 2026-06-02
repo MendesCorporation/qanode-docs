@@ -63,7 +63,7 @@ In **Inspect mode**, the page shows two panels:
 - **Controls**: shows recorded steps, lets you pause, finish and copy the JSON, delete steps, copy an individual step, and reorder the list.
 - **Selected element / Actions**: shows the selected element, the actions available for that target, and captured data such as target identity, strategies, match count, confidence, and ancestors.
 
-When you click an element in Inspect mode, the extension does not automatically assume you want a click step. It first selects the target and shows actions such as **Click**, **Fill**, **Select**, **Hover**, **Press key**, **Wait visible**, **Assert**, **Extract**, **Extract list**, **Extract table**, or **Drag**, depending on the detected element type.
+When you click an element in Inspect mode, the extension does not automatically assume you want a click step. It first selects the target and shows actions such as **Click**, **Fill**, **Select**, **Upload file**, **Hover**, **Press key**, **Wait visible**, **Assert**, **Extract**, **Extract list**, **Extract table**, or **Drag**, depending on the detected element type.
 
 This helps avoid accidental steps and makes it clearer which locators will be sent to QANode. The strategies shown in the panel are the strategies the extension can send in the step. You can uncheck strategies or ancestors you do not want to use before recording the action.
 
@@ -75,6 +75,8 @@ For guided actions:
 - **Drag**: select the source item; the extension keeps the source highlighted and asks for the drop target.
 - **Press key**: select the target and enter the desired key.
 - **Fill**: select the field and enter the value to fill.
+- **Select option**: for native selects, the extension shows the available options in a clickable list.
+- **Upload file**: for file inputs, the extension records the upload step and asks for the file required to continue recording.
 
 ### REC — Normal Recording
 
@@ -85,6 +87,7 @@ Records interactions automatically:
 | **Click** on element | `click` with target information |
 | **Type** in field | `fill`/`type` with text and target |
 | **Select** option | `selectOption`/`select` with selected value |
+| **Choose file** in upload input | `uploadFile` with the input target |
 | **Scroll** page | `scroll` with position |
 | **Drag and drop** element | `drag` with source, target, and/or coordinates |
 | **Navigate** to URL | `navigate` with URL |
@@ -93,6 +96,10 @@ Records interactions automatically:
 In **Smart Web Flow** mode, recorded actions may also carry target identity, scoped text, alternative strategies, iframe context, expected effects, evidence, and session bootstrap data.
 
 When a click opens a new tab/window, the extension can insert a **Switch Page / Tab** (`switchPage`) step after the click so the next steps continue on the correct page.
+
+When a click triggers a browser download, Smart Web Flow captures the file during execution. There is no need to record a separate download action.
+
+When the page opens a file picker, the extension records the upload step and asks for a file during recording so the user can continue the next site steps. When imported into QANode, the step stays highlighted until the user chooses the `fileRef` that will be used during execution.
 
 ### Ctrl+A — Assert Mode
 

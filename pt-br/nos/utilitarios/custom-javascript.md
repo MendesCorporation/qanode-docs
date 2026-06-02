@@ -28,7 +28,7 @@ Além do JavaScript puro, o nó também pode trabalhar com sessões já abertas 
 
 O editor de código usa o **Monaco Editor** (mesmo do VS Code) com:
 - Syntax highlighting
-- Autocomplete para `steps`, `variables`, `web`, `mobile`, `page`, `app`, `return`, `console.log`
+- Autocomplete para `steps`, `variables`, `files`, `web`, `mobile`, `page`, `app`, `return`, `console.log`
 - Validação de sintaxe
 
 ---
@@ -44,6 +44,7 @@ O código tem acesso a:
 | `expect` | `function` | Assertions do Playwright para cenários Web |
 | `assert` | `object` | Assertions do Node.js |
 | `fetch` | `function` | Requisições HTTP diretas via JavaScript |
+| `files` | `object` | Leitura e escrita segura de arquivos da execução |
 | `web` | `object` | Namespace para trabalhar com sessões Web já abertas |
 | `mobile` | `object` | Namespace para trabalhar com sessões Mobile já abertas |
 | `page` | `object` | Alias global da página Web atual |
@@ -56,7 +57,7 @@ O código tem acesso a:
 
 ```javascript
 // Output de um HTTP Request
-const userData = steps["http-request"].outputs.json;
+const userData = steps["http-request"].outputs.body;
 const userName = userData.name;
 
 // Output de uma query PostgreSQL
@@ -73,6 +74,83 @@ const title = steps["web-flow"].outputs.extracts.pageTitle;
 const apiUrl = variables.API_URL;
 const environment = variables.ENVIRONMENT;
 ```
+
+---
+
+## Trabalhando com Arquivos
+
+O namespace `files` permite ler `fileRef` de nós anteriores e criar novos arquivos como artefatos da execução.
+
+| Método | Descrição |
+|--------|-----------|
+| `files.read(fileRef)` | Lê um arquivo e retorna `{ name, mimeType, sizeBytes, buffer }` |
+| `files.readText(fileRef, encoding?)` | Lê um arquivo como texto |
+| `files.write({ name, mimeType?, data })` | Cria um arquivo e retorna `fileRef` |
+| `files.writeText(name, text, mimeType?)` | Cria um arquivo de texto e retorna `fileRef` |
+
+Arquivos criados pelo Custom JavaScript são salvos apenas no storage de artefatos do QANode. O código não escreve em caminhos arbitrários do filesystem.
+
+### Limites e Segurança
+
+| Regra | Valor |
+|-------|-------|
+| Tamanho máximo por arquivo | 25 MB |
+| Tamanho máximo total por nó | 50 MB |
+| Nome do arquivo | Sanitizado automaticamente |
+| MIME type | Inferido quando não informado |
+| Extensões perigosas | Bloqueadas |
+| MIME types executáveis/script | Bloqueados |
+
+Extensões como `.exe`, `.sh`, `.bat`, `.cmd`, `.js`, `.jar`, `.apk`, `.dmg`, `.msi`, `.docm`, `.xlsm` e equivalentes não podem ser geradas pelo Custom JavaScript.
+
+### Ler arquivo como texto
+
+```javascript
+const text = await files.readText(
+  steps["file-generate"].outputs.fileRef,
+  "utf8"
+);
+
+return {
+  preview: text.slice(0, 300),
+  length: text.length
+};
+```
+
+### Ler arquivo como bytes
+
+```javascript
+const file = await files.read(steps["http-request"].outputs.fileRef);
+
+return {
+  name: file.name,
+  mimeType: file.mimeType,
+  sizeBytes: file.sizeBytes,
+  firstBytes: file.buffer.subarray(0, 8).toString("hex")
+};
+```
+
+### Criar arquivo com `files.write`
+
+```javascript
+return await files.write({
+  name: "relatorio.csv",
+  mimeType: "text/csv",
+  data: "id,nome\n1,Ana\n2,Bruno"
+});
+```
+
+### Criar arquivo texto com `files.writeText`
+
+```javascript
+return await files.writeText(
+  "resumo.txt",
+  "Execução finalizada com sucesso.",
+  "text/plain"
+);
+```
+
+O retorno desses métodos é um `fileRef`, pronto para ser usado em nós como **HTTP Request**, **Extrair Arquivo**, **SSH Command**, **Mobile Flow** ou componentes.
 
 ---
 
@@ -281,7 +359,7 @@ O namespace `mobile` expõe a sessão Mobile atual e utilitários avançados bas
 
 ### `app` e `client`
 
-O nome principal para Mobile é **`app`**.  
+O nome principal para Mobile é **`app`**.
 `client` continua existindo por compatibilidade, mas o uso recomendado é `app`.
 
 ### Métodos expostos em `app`
@@ -443,7 +521,7 @@ return await mobile.run(async ({ app, sessionId }) => {
 ### Transformar dados de API
 
 ```javascript
-const items = steps["http-request"].outputs.json.items;
+const items = steps["http-request"].outputs.body.items;
 
 // Filtrar e transformar
 const activeItems = items
@@ -475,7 +553,7 @@ return {
 ### Validação complexa
 
 ```javascript
-const response = steps["API Check"].outputs.json;
+const response = steps["API Check"].outputs.body;
 const dbRecord = steps["DB Query"].outputs.rows[0];
 
 const validations = [];
@@ -547,7 +625,7 @@ return {
 - Use nomes descritivos para o nó: "Transformar Dados", "Gerar Credenciais", "Validar Resposta", "Código Web Avançado", "Código Mobile Avançado"
 - **Sempre retorne** um valor — sem `return`, o output será `undefined`
 - Para depuração, use `console.log()` — as mensagens aparecem nos logs do nó
-- O Monaco Editor oferece autocomplete — digite `steps.`, `web.` ou `mobile.` para ver as opções disponíveis
+- O Monaco Editor oferece autocomplete — digite `steps.`, `files.`, `web.` ou `mobile.` para ver as opções disponíveis
 - Para automação Web avançada, prefira `web.run(...)`
 - Para automação Mobile avançada, prefira `mobile.run(...)`
 - Use `web.screenshot()` e `mobile.screenshot()` quando quiser evidências adicionais

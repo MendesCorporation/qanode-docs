@@ -33,14 +33,14 @@ El nodo **Set Variable** permite definir o actualizar variables en tiempo de eje
 
 ```
 Clave: token
-Valor: {{ steps.login.outputs.json.token }}
+Valor: {{ steps.login.outputs.body.token }}
 ```
 
 ### Definir una variable con cálculo
 
 ```
 Clave: totalPrice
-Valor: {{ steps.cart.outputs.json.subtotal * 1.1 }}
+Valor: {{ steps.cart.outputs.body.subtotal * 1.1 }}
 ```
 
 ### Acceder a la variable en nodos siguientes
@@ -58,7 +58,7 @@ Después de definirla, la variable es accesible mediante:
 ### Guardar un token de autenticación
 
 ```
-[HTTP Request: POST /login] → [Set Variable: token = {{ steps.login.outputs.json.token }}]
+[HTTP Request: POST /login] → [Set Variable: token = {{ steps.login.outputs.body.token }}]
     │
     ▼
 [HTTP Request: GET /profile → Header: Authorization = Bearer {{ variables.token }}]

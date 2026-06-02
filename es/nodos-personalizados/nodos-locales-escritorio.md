@@ -125,7 +125,7 @@ Payload de ejemplo:
 | `status` | `string` | Obligatorio | `success` o `failed` |
 | `logs` | `string[]` | Recomendado | Logs de diagnostico |
 | `outputs` | `object` | Recomendado | Datos de salida del nodo |
-| `artifacts` | `array` | Recomendado | Archivos (screenshot/pdf/file/etc.) |
+| `artifacts` | `array` | Recomendado | Artefactos `screenshot` o `file` |
 | `error` | `object` | Cuando failed | Ej: `{ "message": "..." }` |
 
 ### Comportamiento real del runtime local
@@ -210,7 +210,7 @@ export async function execute({ inputs = {} }) {
 
 ## Artifacts (formato)
 
-Cada item en `artifacts` puede ser:
+Cada item en `artifacts` puede ser `screenshot` o `file`.
 
 ```json
 {
@@ -222,10 +222,46 @@ Cada item en `artifacts` puede ser:
 
 Campos comunes:
 
-- `type`: `screenshot`, `pdf`, `video`, `file`
+- `type`: `screenshot` o `file`
 - `name`: nombre del archivo
 - `base64`: contenido en base64
-- `path`: opcional cuando ya existe ruta externa
+- `mimeType`: opcional. Si falta, QANode intenta inferirlo por el contenido y el nombre
+- `key` u `outputKey`: opcional para artefactos `file`; define la clave creada en `outputs`
+
+### Archivo retornando como fileRef
+
+```javascript
+return {
+  status: "success",
+  logs: ["archivo generado"],
+  outputs: {},
+  artifacts: [
+    {
+      type: "file",
+      name: "reporte.csv",
+      mimeType: "text/csv",
+      key: "reporte",
+      base64: Buffer.from("id,nombre\n1,Ana\n").toString("base64")
+    }
+  ]
+};
+```
+
+QANode guarda el archivo en el storage y crea este output:
+
+```json
+{
+  "reporte": {
+    "source": "runArtifact",
+    "path": "runs/run_abc123/files/reporte.csv",
+    "name": "reporte.csv",
+    "mimeType": "text/csv",
+    "sizeBytes": 14
+  }
+}
+```
+
+Si hay un solo archivo sin `key`, el output creado será `fileRef`. Si hay varios archivos sin `key`, quedan agrupados en `files`.
 
 ---
 

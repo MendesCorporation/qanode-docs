@@ -12,7 +12,7 @@ The **Web Flow** node allows you to automate interactions with web pages using *
 |----------|-------|
 | **Type** | `web-flow` |
 | **Category** | Web |
-| **Color** | Blue (#3b82f6) |
+| **Color** | 🔵 Blue (#3b82f6) |
 | **Input** | `in` |
 | **Output** | `out` |
 

@@ -12,7 +12,7 @@ The **Switch** node allows you to create multiple branches based on the value of
 |----------|-------|
 | **Type** | `switch` |
 | **Category** | Flow Control |
-| **Color** | Yellow (#f59e0b) |
+| **Color** | 🟡 Yellow (#f59e0b) |
 | **Input** | `in` |
 | **Outputs** | `case-0`, `case-1`, ..., `default` (dynamic) |
 

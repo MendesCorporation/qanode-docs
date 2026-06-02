@@ -12,6 +12,7 @@ The **Email Inbox** node connects to a mailbox via IMAP and waits for or searche
 |----------|-------|
 | **Type** | `email-inbox` |
 | **Category** | Utilities |
+| **Color** | ⚪ Gray (#6b7280) |
 | **Input** | `in` |
 | **Output** | `out` |
 
@@ -72,6 +73,20 @@ All filters are optional. When filled, the value must be **contained** in the em
 | **Max Scan** | number | `30` | Maximum emails to scan per cycle |
 | **Max Matches** | number | `1` | Maximum emails to return |
 
+### Attachments
+
+By default, the node reads email content without downloading attachments. Enable attachments only when the flow really needs to use files sent by email.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| **Include attachments** | boolean | `false` | Downloads attachments and returns `fileRef` references |
+| **Require attachment** | boolean | `false` | Only considers emails valid when they have a compatible attachment |
+| **Include inline attachments** | boolean | `false` | Includes inline HTML attachments, such as embedded images |
+| **Attachment name contains** | text | — | Filters attachments by filename |
+| **MIME type contains** | text | — | Filters attachments by MIME type, such as `pdf`, `image/`, or `spreadsheet` |
+
+When attachments are returned, use the `fileRef` in other nodes such as **Extract File**, **HTTP Request**, **SSH Command**, **Mobile Flow**, or components.
+
 ### OTP Extraction (when operation = `Extract OTP`)
 
 | Field | Type | Default | Description |
@@ -103,6 +118,10 @@ When no regex is provided, the node automatically searches for numeric sequences
 | `links` | `array` | URLs found in the first email |
 | `otp` | `string` | Extracted code (only in `extractOtp`) |
 | `link` | `string` | Extracted URL (only in `extractLink`) |
+| `attachments` | `array` | Attachments returned when **Include attachments** is enabled |
+| `attachmentCount` | `number` | Number of returned attachments |
+| `attachment` | `object` | First attachment found |
+| `attachmentFileRef` | `fileRef` | Shortcut to the first attachment's `fileRef` |
 
 ### `email` Object Structure
 
@@ -116,7 +135,15 @@ When no regex is provided, the node automatically searches for numeric sequences
   "date": "2026-03-08T12:00:00.000Z",
   "text": "Your code is 482910. Valid for 10 minutes.",
   "html": "<p>Your code is <strong>482910</strong>...</p>",
-  "links": ["https://company.com/confirm?token=xyz"]
+  "links": ["https://company.com/confirm?token=xyz"],
+  "attachments": [
+    {
+      "fileRef": "file reference",
+      "name": "invoice.pdf",
+      "mimeType": "application/pdf",
+      "sizeBytes": 18452
+    }
+  ]
 }
 ```
 
@@ -171,6 +198,21 @@ When no regex is provided, the node automatically searches for numeric sequences
     │
     ▼
 [Navigate: {{ steps.emailInbox.outputs.link }}]
+```
+
+### Read a PDF attachment received by email
+
+```
+[Email Inbox]
+  Operation: Extract Email
+  Subject Contains: "invoice"
+  Include attachments: true
+  Attachment name contains: ".pdf"
+    │
+    ▼
+[Extract File]
+  File: {{ steps.emailInbox.outputs.attachmentFileRef }}
+  Extraction type: PDF
 ```
 
 ---

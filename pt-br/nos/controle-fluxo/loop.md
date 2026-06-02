@@ -65,7 +65,7 @@ Assim como o nó If, o modo while suporta **modo simples** (expressão JavaScrip
 
 **Exemplo:** Repetir enquanto houver próxima página
 ```javascript
-{{ steps["http-request"].outputs.json.hasNextPage }} === true
+{{ steps["http-request"].outputs.body.hasNextPage }} === true
 ```
 
 ---

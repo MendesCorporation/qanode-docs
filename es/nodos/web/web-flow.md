@@ -12,7 +12,7 @@ El nodo **Web Flow** permite automatizar interacciones con páginas web usando *
 |-----------|-------|
 | **Tipo** | `web-flow` |
 | **Categoría** | Web |
-| **Color** | Azul (#3b82f6) |
+| **Color** | 🔵 Azul (#3b82f6) |
 | **Entrada** | `in` |
 | **Salida** | `out` |
 

@@ -75,7 +75,7 @@ WHERE email = 'john@example.com'
 ```sql
 SELECT *
 FROM users
-WHERE id = {{ steps.api.outputs.json.id }};
+WHERE id = {{ steps.api.outputs.body.id }};
 ```
 
 For text, dates, and string-like values, wrap the expression in quotes. For numbers and booleans, normally use the expression without quotes.
@@ -253,5 +253,5 @@ Removes records.
 - **Use saved credentials** to manage connections in a centralized way
 - In **Custom SQL**, write the query in the **SQL** field and use `{{ }}` for dynamic data
 - The **visual query builder** is ideal for simple operations and is less prone to syntax errors
-- **Use expressions** in values: `{{ steps.api.outputs.json.id }}` to use data from previous nodes
+- **Use expressions** in values: `{{ steps.api.outputs.body.id }}` to use data from previous nodes
 - **Test the connection** before running the flow using the test button on the credentials screen

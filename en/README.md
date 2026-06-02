@@ -41,7 +41,6 @@ Welcome to the official documentation of **QANode Community Edition**, the test 
 | [If](nodes/flow-control/if.md) | Conditional branch (true/false) |
 | [Switch](nodes/flow-control/switch.md) | Multiple branch by value or condition |
 | [Loop](nodes/flow-control/loop.md) | Repeat by count, array, or condition |
-| [Merge](nodes/flow-control/merge.md) | Join multiple execution paths |
 
 ### Web
 | Node | Description |
@@ -60,6 +59,14 @@ Welcome to the official documentation of **QANode Community Edition**, the test 
 | Node | Description |
 |------|-------------|
 | [HTTP Request](nodes/api/http-request.md) | HTTP requests (GET, POST, PUT, PATCH, DELETE) |
+
+### Files
+| Node | Description |
+|------|-------------|
+| [Generate File](nodes/files/generate-file.md) | Creates TXT, JSON, CSV, Excel, and PDF files |
+| [Extract File](nodes/files/extract-file.md) | Extracts text and data from TXT, JSON, CSV, Excel, and PDF files |
+| [Base64 to File](nodes/files/base64-to-file.md) | Converts Base64 or Data URI content into `fileRef` |
+| [File to Base64](nodes/files/file-to-base64.md) | Converts a `fileRef` into Base64 and Data URI |
 
 ### Database
 | Node | Description |
@@ -102,7 +109,7 @@ Welcome to the official documentation of **QANode Community Edition**, the test 
 | [API Contract](custom-nodes/api-contract.md) | Required endpoints and data format |
 | [Examples](custom-nodes/enterprise-examples.md) | Examples in Node.js, Python, Java, C#, and Go |
 | [Desktop: Local Nodes](custom-nodes/local-desktop-nodes.md) | Creating local nodes in the desktop version |
-| [QANode.MD (AI)](custom-nodes/QANode.MD) | AI guide to build nodes and troubleshoot issues |
+| [QANode.md (AI)](custom-nodes/QANode.md) | AI guide to build nodes and troubleshoot issues |
 
 ---
 

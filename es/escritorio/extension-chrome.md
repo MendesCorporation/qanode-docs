@@ -63,7 +63,7 @@ En **Inspect mode**, la página muestra dos paneles:
 - **Controls**: muestra los pasos ya grabados, permite pausar, finalizar y copiar el JSON, eliminar pasos, copiar un paso individual y reorganizar la lista.
 - **Selected element / Actions**: muestra el elemento seleccionado, las acciones posibles para ese objetivo y los datos capturados por la extensión, como target, estrategias, cantidad de matches, confianza y ancestros.
 
-Al hacer clic en un elemento en Inspect mode, la extensión no asume automáticamente que usted quiere hacer clic en él en el escenario. Primero selecciona el objetivo y muestra acciones como **Click**, **Fill**, **Select**, **Hover**, **Press key**, **Wait visible**, **Assert**, **Extract**, **Extract list**, **Extract table** o **Drag**, según el tipo de elemento detectado.
+Al hacer clic en un elemento en Inspect mode, la extensión no asume automáticamente que usted quiere hacer clic en él en el escenario. Primero selecciona el objetivo y muestra acciones como **Click**, **Fill**, **Select**, **Upload file**, **Hover**, **Press key**, **Wait visible**, **Assert**, **Extract**, **Extract list**, **Extract table** o **Drag**, según el tipo de elemento detectado.
 
 Esto ayuda a evitar pasos accidentales y deja más claro qué localizadores serán enviados a QANode. Las estrategias mostradas en el panel son las estrategias que la extensión puede enviar en el paso. Puede desmarcar estrategias o ancestros que no desea usar antes de grabar la acción.
 
@@ -75,6 +75,8 @@ Para acciones guiadas:
 - **Drag**: seleccione el item de origen; la extensión mantiene el origen destacado y pide el destino del drop.
 - **Press key**: seleccione el objetivo e informe la tecla deseada.
 - **Fill**: seleccione el campo e informe el valor a llenar.
+- **Select option**: en selects nativos, la extensión muestra las opciones disponibles en una lista clicable.
+- **Upload file**: en inputs de archivo, la extensión graba el paso de upload y pide el archivo necesario para continuar la grabación.
 
 ### REC — Grabación Normal
 
@@ -85,6 +87,7 @@ Graba interacciones automáticamente:
 | **Clic** en elemento | `click` con información del objetivo |
 | **Escribir** en campo | `fill`/`type` con texto y objetivo |
 | **Seleccionar** opción | `selectOption`/`select` con valor seleccionado |
+| **Elegir archivo** en input de upload | `uploadFile` con el objetivo del input |
 | **Desplazar** página | `scroll` con posición |
 | **Arrastrar y soltar** elemento | `drag` con origen, destino y/o coordenadas |
 | **Navegar** a URL | `navigate` con URL |
@@ -93,6 +96,10 @@ Graba interacciones automáticamente:
 En modo **Smart Web Flow**, las acciones grabadas también pueden cargar identidad del objetivo, texto de alcance, estrategias alternativas, contexto de iframe, efectos esperados, evidencias y datos de sesión.
 
 Cuando un clic abre una nueva pestaña/ventana, la extensión puede insertar un paso **Cambiar página / pestaña** (`switchPage`) después del clic para que los siguientes pasos continúen en la página correcta.
+
+Cuando un clic dispara una descarga del navegador, Smart Web Flow captura el archivo durante la ejecución. No es necesario grabar una acción separada de download.
+
+Cuando la página abre un selector de archivo, la extensión graba el paso de upload y solicita un archivo durante la grabación para que el usuario pueda continuar los próximos pasos del sitio. Al importar en QANode, el paso queda destacado hasta que el usuario elija el `fileRef` que se usará en la ejecución.
 
 ### Ctrl+A — Modo Assert
 

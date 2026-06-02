@@ -113,7 +113,7 @@ Após a execução, cada passo mostrará seu status:
 - ❌ **Vermelho**: Passo falhou
 - ⏭️ **Cinza**: Passo não executado (pulado)
 
-[Resultado da execução](../../assets/images/execucao.mp4) 
+[Resultado da execução](../../assets/images/execucao.mp4)
 *Imagem: Editor mostrando os nós com indicadores de sucesso/falha e o painel de resultados*
 
 Clique em qualquer nó para ver detalhes:
@@ -161,6 +161,6 @@ Quer testar uma API? Veja um exemplo rápido usando a **JSONPlaceholder**, uma A
    - **URL**: `https://jsonplaceholder.typicode.com/users/1`
 3. Arraste um nó **If** e conecte à saída do HTTP Request
 4. Configure a condição: `{{ steps["http-request"].outputs.status === 200 }}`
-5. Na saída **true**, adicione um nó **Log** com a mensagem: `Usuário encontrado: {{ steps["http-request"].outputs.json.name }}`
+5. Na saída **true**, adicione um nó **Log** com a mensagem: `Usuário encontrado: {{ steps["http-request"].outputs.body.name }}`
 
 Esse fluxo faz uma requisição GET à JSONPlaceholder e verifica se o status é 200. Se positivo, exibe o nome do usuário retornado (`Leanne Graham`).

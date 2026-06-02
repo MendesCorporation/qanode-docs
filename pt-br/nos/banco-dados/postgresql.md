@@ -75,7 +75,7 @@ WHERE email = 'joao@exemplo.com'
 ```sql
 SELECT *
 FROM users
-WHERE id = {{ steps.api.outputs.json.id }};
+WHERE id = {{ steps.api.outputs.body.id }};
 ```
 
 Para textos, datas e valores tratados como string, coloque aspas ao redor da expressão. Para números e booleanos, normalmente use a expressão sem aspas.
@@ -253,5 +253,5 @@ Remove registros.
 - **Use credenciais salvas** para gerenciar conexões de forma centralizada
 - Em **Custom SQL**, use expressões `{{ }}` diretamente na query e revise aspas para textos e datas
 - O **query builder visual** é ideal para operações simples e é menos propenso a erros de sintaxe
-- **Use expressões** nos valores: `{{ steps.api.outputs.json.id }}` para usar dados de nós anteriores
+- **Use expressões** nos valores: `{{ steps.api.outputs.body.id }}` para usar dados de nós anteriores
 - **Teste a conexão** antes de executar o fluxo usando o botão de teste na tela de credenciais

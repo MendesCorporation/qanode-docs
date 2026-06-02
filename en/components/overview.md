@@ -79,7 +79,7 @@ In the **Input** node, configure the fields the component expects to receive.
 | Field | Description |
 |-------|-------------|
 | **Field Name** | Name used to map the value in the scenario |
-| **Type** | `string`, `number`, `boolean`, `object`, or `array` |
+| **Type** | `string`, `number`, `boolean`, `object`, `array`, or `file` |
 | **Required** | Defines whether the scenario must fill this value |
 | **Test Data** | Value used when testing the component directly in the editor |
 
@@ -90,6 +90,7 @@ Example inputs:
 | `email` | `string` | Yes |
 | `password` | `string` | Yes |
 | `role` | `string` | No |
+| `document` | `file` | No |
 
 [Setting component inputs](../../assets/images/entradas-componente.mp4)
 
@@ -98,6 +99,14 @@ During component execution, internal nodes can use these inputs through expressi
 ```
 {{ steps.Input.outputs.email }}
 ```
+
+For **File** fields, the received value is a `fileRef`. In isolated component tests, the field shows an upload button so you can attach a test file. Inside the component, use it normally:
+
+```
+{{ steps.Input.outputs.document }}
+```
+
+This value can be passed to nodes such as **Extract File**, **HTTP Request**, **SSH Command**, **Mobile Flow**, or **Custom JavaScript**.
 
 > Use simple, stable field names. This makes the component easier to consume and prevents hard-to-maintain expressions.
 
@@ -120,7 +129,15 @@ Example:
 ```
 Name: token
 Type: string
-Value: {{ steps.login.outputs.json.token }}
+Value: {{ steps.login.outputs.body.token }}
+```
+
+To return a file:
+
+```
+Name: report
+Type: file
+Value: {{ steps["file-generate"].outputs.fileRef }}
 ```
 
 The scenario that calls the component can use this value as the component node output.
@@ -223,6 +240,14 @@ If the main output is an object:
 {{ steps.prepareUser.outputs.result.userId }}
 {{ steps.prepareUser.outputs.result.email }}
 ```
+
+If the output is a file:
+
+```
+{{ steps.generateReport.outputs.report }}
+```
+
+The variables panel shows the file with name, type, and size in the details, but the value to drag into other nodes is the `fileRef`.
 
 [Using Component Outputs](../../assets/images/usar-output-component.mp4)
 

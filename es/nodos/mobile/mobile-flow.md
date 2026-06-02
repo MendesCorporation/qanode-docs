@@ -12,7 +12,7 @@ El nodo **Mobile Flow** permite automatizar interacciones con aplicaciones móvi
 |-----------|-------|
 | **Tipo** | `mobile-flow` |
 | **Categoría** | Mobile |
-| **Color** | Rojo claro (#f87171) |
+| **Color** | 🔴 Rojo claro (#f87171) |
 | **Entrada** | `in` |
 | **Salida** | `out` |
 
@@ -150,6 +150,8 @@ El nodo Mobile Flow ejecuta una secuencia de **pasos** configurables. Cada paso 
 | [pinch-zoom](#pinch-zoom) | Gesto de pellizco o zoom sobre un elemento |
 | [multi-touch](#multi-touch) | Gesto multitáctil con dos dedos simultáneos |
 | [permission](#permission) | Aceptar/descartar alertas del sistema o gestionar permisos Android |
+| [push-file](#push-file) | Enviar archivo al dispositivo |
+| [pull-file](#pull-file) | Descargar archivo del dispositivo a QANode |
 | [reset](#reset) | Reiniciar la aplicación |
 | [back](#back) | Presionar el botón Atrás (Android) |
 | [home](#home) | Presionar el botón Home (Android) |
@@ -210,6 +212,14 @@ Escribe texto en un campo de entrada.
 | **Texto** | `string` | Texto a escribir (soporta `{{ }}`) |
 | **Limpiar Primero** | `boolean` | Limpia el campo antes de escribir |
 | **Intentos** | `number` | Número de intentos de localización |
+
+Para campos de texto, QANode intenta localizar el objetivo por capas:
+
+1. identificadores fuertes como resource-id, accessibility id, name y content-desc;
+2. `hint`, `label` y `text` cuando pertenecen al propio campo;
+3. relación contextual entre el label visible y el input cercano;
+4. coordenadas grabadas como fallback visual;
+5. clase genérica de input solo como último recurso.
 
 ---
 
@@ -403,6 +413,40 @@ Acepta o descarta alertas del sistema, o concede/revoca permisos de la app Andro
 
 ---
 
+### push-file
+
+Envía un archivo de QANode al dispositivo antes de continuar la automatización.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| **Archivo** | `fileRef` | Archivo a enviar |
+| **Ruta en el dispositivo** | `string` | Ruta de destino. Si está vacía, QANode usa un lugar predeterminado de la plataforma |
+
+Use este paso cuando la aplicación necesita que un archivo exista en el dispositivo antes de abrir un selector nativo, galería, picker de documentos o flujo de upload.
+
+En Android, las rutas comunes quedan en `/sdcard/Download/...`. En iOS, QANode intenta enviar al container de la aplicación cuando está disponible y usa un fallback compatible con Appium/XCUITest.
+
+---
+
+### pull-file
+
+Descarga un archivo del dispositivo, lo guarda como artefacto de QANode y retorna `fileRef`.
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| **Modo** | selección | Ruta exacta, carpeta/patrón o detección del más reciente |
+| **Ruta en el dispositivo** | `string` | Ruta exacta del archivo, cuando se conoce |
+| **Carpeta** | `string` | Carpeta a consultar, como `/sdcard/Download` |
+| **Patrón** | `string` | Filtro de nombre, como `*.pdf`, `*.txt`, `*.jpg` o `*` |
+| **Nombre de la variable** | `string` | Clave en `outputs.files` |
+| **Nombre del archivo de salida** | `string` | Nombre guardado en QANode. Si está vacío, usa el nombre encontrado |
+
+Cuando sea posible, prefiera **Ruta exacta**. Cuando la aplicación genera el archivo con nombre dinámico, use carpeta/patrón para capturar el archivo compatible más reciente.
+
+Archivos como imágenes, PDFs, textos, planillas y videos pueden capturarse siempre que Appium consiga leer el archivo en el dispositivo o en el container de la aplicación.
+
+---
+
 ### reset
 
 Reinicia la aplicación, limpiando su estado (equivalente a desinstalar y reinstalar).
@@ -467,6 +511,20 @@ Cada paso puede tener configuración de evidencia individual:
 | `sessionId` | `string` | ID de sesión mobile para reutilización en otros nodos |
 | `extracts` | `object` | Datos extraídos por los pasos `extract` (clave → valor) |
 | `asserts` | `object` | Resultados de aserciones (clave → `true`/`false`) |
+| `files` | `object` | Archivos descargados por pasos `pull-file` |
+| `fileRef` | `fileRef` | Atajo para el último archivo descargado |
+
+### Archivos descargados
+
+Cuando se ejecuta un paso **Descargar archivo**, el output queda disponible por el nombre de la variable:
+
+```
+{{ steps["mobile-flow"].outputs.files.reporte.fileRef }}
+{{ steps["mobile-flow"].outputs.files.reporte.name }}
+{{ steps["mobile-flow"].outputs.fileRef }}
+```
+
+Use el `fileRef` para pasar el archivo a **Extraer Archivo**, **Archivo a Base64**, **HTTP Request**, componentes u otros nodos que aceptan archivo.
 
 ---
 

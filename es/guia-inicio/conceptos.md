@@ -16,8 +16,7 @@ Proyectos
 │   └── Ejecuciones (Runs)
 │       ├── Pasos (Steps)
 │       ├── Logs
-│       ├── Screenshots
-│       └── Reporte PDF
+│       └── Artefactos y archivos
 ├── Componentes
 │   ├── Contrato de Entrada
 │   ├── Flujo Reutilizable
@@ -76,11 +75,14 @@ Los **nodos** son los bloques fundamentales de un escenario. Cada nodo ejecuta u
 
 | Categoría | Color | Nodos |
 |-----------|-------|-------|
-| **Control de Flujo** | 🟡 Amarillo | If, Switch, Loop, Merge |
+| **Control de Flujo** | 🟡 Amarillo | If, Switch, Loop |
 | **Web** | 🔵 Azul | Smart Web Flow, Web Flow, Smart Locators |
+| **Mobile** | 🔴 Rojo claro | Mobile Flow |
 | **API** | 🟣 Morado | HTTP Request |
 | **Base de Datos** | 🟢 Verde | PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, MongoDB |
+| **Archivos** | 🟤 Dorado | Generar Archivo, Extraer Archivo, Base64 a Archivo, Archivo a Base64 |
 | **Infraestructura** | 🔵 Azul Claro | SSH Command |
+| **Performance** | 🟫 Ámbar | Load Test |
 | **Utilidades** | ⚪ Gris | Set Variable, Log, Wait, Stop and Fail, Custom JavaScript |
 | **Nodos Personalizados** | 🩷 Rosa | Nodos de proveedores externos |
 
@@ -104,7 +106,7 @@ Cuando un nodo se ejecuta, produce **outputs** — datos que pueden ser usados p
 
 **Ejemplos:**
 ```
-{{ steps["http-request"].outputs.json.token }}    → Token de una respuesta de API
+{{ steps["http-request"].outputs.body.token }}    → Token de una respuesta de API
 {{ steps.login.outputs.extracts.userName }}   → Texto extraído de una página
 {{ steps.query.outputs.rows[0].email }}       → Primer email del resultado SQL
 ```
@@ -159,14 +161,14 @@ Una **ejecución** es una instancia de un escenario siendo procesado. Al ejecuta
 1. Resuelve el orden topológico de los nodos
 2. Ejecuta cada nodo secuencialmente
 3. Evalúa expresiones e inyecta datos de los outputs anteriores
-4. Registra logs, capturas de pantalla y artefactos
-5. Genera un reporte PDF al final
+4. Registra logs, capturas de pantalla, archivos y artefactos
+5. Disponibiliza los resultados de la ejecución
 
 Cada ejecución tiene:
 - **Estado**: `running`, `success` o `failed`
 - **Duración**: Tiempo total de ejecución
 - **Pasos**: Resultado individual de cada nodo
-- **Artefactos**: Capturas de pantalla, PDFs y otros archivos generados
+- **Artefactos**: Capturas de pantalla y archivos generados
 - **Logs**: Mensajes detallados de cada paso
 
 ---

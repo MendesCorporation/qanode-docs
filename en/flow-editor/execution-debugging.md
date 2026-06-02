@@ -60,7 +60,7 @@ After execution, click on any node to see its results in the properties panel:
 | **Logs** | Messages recorded during node execution |
 | **Outputs** | Data produced by the node (navigable JSON) |
 | **Error** | Detailed error message (when applicable) |
-| **Screenshots** | Screen captures (web nodes with evidence enabled) |
+| **Files and Screenshots** | Generated artifacts, downloads, captured uploads, and evidence |
 
 [Analyzing Results](../../assets/images/analise-resultados-editor-fluxos.mp4)
 
@@ -71,8 +71,7 @@ The outputs of each node are accessible to subsequent nodes via expressions. For
 ```json
 {
   "status": 200,
-  "body": "...",
-  "json": {
+  "body": {
     "id": 1,
     "name": "João",
     "email": "joao@exemplo.com"
@@ -82,13 +81,28 @@ The outputs of each node are accessible to subsequent nodes via expressions. For
 
 You can then access this data in subsequent nodes:
 ```
-{{ steps["http-request"].outputs.json.name }}  →  "João"
+{{ steps["http-request"].outputs.body.name }}  →  "João"
 {{ steps["http-request"].outputs.status }}     →  200
 ```
+
+When an output is a file, the main value is a `fileRef`:
+
+```
+{{ steps["http-request"].outputs.fileRef }}
+{{ steps["file-generate"].outputs.fileRef }}
+```
+
+In the variables panel, files show name, MIME type, and size in their details. Internal storage path fields are hidden from the main view.
 
 ### Screenshots (Evidence)
 
 For web nodes (Smart Web Flow, Web Flow, and Smart Locators), captured screenshots appear as clickable thumbnails. Click to view at full size.
+
+### Files
+
+Files generated or captured during execution appear in the **Files** section of the execution detail. When downloading, the browser uses the real file name when available instead of an internal execution identifier.
+
+Isolated test files created in the editor are temporary and can be cleaned up automatically when the user leaves the flow or by the cleanup routine.
 
 ---
 
@@ -178,7 +192,7 @@ Enable screenshots in **before** mode to see the page state before each action. 
 If a node fails with an unexpected value, add a **Log** node before it to inspect the values:
 
 ```
-Token value: {{ steps.login.outputs.json.token }}
+Token value: {{ steps.login.outputs.body.token }}
 Status: {{ steps["http-request"].outputs.status }}
 ```
 

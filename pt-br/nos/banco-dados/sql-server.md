@@ -92,7 +92,7 @@ Para valores vindos de passos anteriores, use a mesma sintaxe:
 ```sql
 SELECT *
 FROM dbo.Users
-WHERE id = {{ steps.api.outputs.json.id }};
+WHERE id = {{ steps.api.outputs.body.id }};
 ```
 
 Para textos, datas e valores que precisam ser tratados como string no SQL, coloque aspas:
@@ -100,7 +100,7 @@ Para textos, datas e valores que precisam ser tratados como string no SQL, coloq
 ```sql
 SELECT *
 FROM dbo.Orders
-WHERE customer_email = '{{ steps.api.outputs.json.email }}'
+WHERE customer_email = '{{ steps.api.outputs.body.email }}'
   AND created_at >= '{{ variables.DATA_INICIAL }}';
 ```
 
@@ -180,7 +180,7 @@ WHERE [active] = 1;
 [HTTP Request: POST /users]
     │
     ▼
-[SQL Server: SELECT * FROM dbo.Users WHERE email = '{{ steps["http-request"].outputs.json.email }}']
+[SQL Server: SELECT * FROM dbo.Users WHERE email = '{{ steps["http-request"].outputs.body.email }}']
     │
     ▼
 [If: {{ steps["sqlserver-query"].outputs.rowCount > 0 }}]

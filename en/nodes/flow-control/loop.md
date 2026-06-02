@@ -12,7 +12,7 @@ The **Loop** node allows you to repeat the execution of a section of the flow mu
 |----------|-------|
 | **Type** | `loop` |
 | **Category** | Flow Control |
-| **Color** | Yellow (#f59e0b) |
+| **Color** | 🟡 Yellow (#f59e0b) |
 | **Input** | `in` |
 | **Outputs** | `loop` (loop body), `done` (output after completion) |
 
@@ -65,7 +65,7 @@ Like the If node, while mode supports **simple mode** (JavaScript expression) an
 
 **Example:** Repeat while there is a next page
 ```javascript
-{{ steps["http-request"].outputs.json.hasNextPage }} === true
+{{ steps["http-request"].outputs.body.hasNextPage }} === true
 ```
 
 ---

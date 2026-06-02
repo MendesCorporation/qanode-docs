@@ -104,7 +104,42 @@ Acesse variáveis usando a sintaxe de expressões:
 {{ variables.NOME_DA_VARIAVEL }}
 ```
 
-No editor de fluxo, o botão **Variáveis** do painel de propriedades mostra seções recolhidas para variáveis locais, globais e, quando o cenário está dentro de um projeto, variáveis do projeto.
+No editor de fluxo, o botão **Variáveis** do painel de propriedades abre uma lista organizada para arrastar ou clicar em valores.
+
+As variáveis aparecem separadas por escopo:
+
+| Grupo | Estado inicial | Descrição |
+|-------|----------------|-----------|
+| **Fluxo** | Aberto | Variáveis locais e outputs de nós anteriores do fluxo atual |
+| **Projeto** | Fechado | Variáveis cadastradas no projeto do cenário |
+| **Global** | Fechado | Variáveis globais da instalação |
+
+Essa separação evita misturar dados globais, de projeto e do fluxo quando há muitas variáveis cadastradas.
+
+### Outputs de nós anteriores
+
+Cada nó executado aparece como um grupo com:
+
+- nome do nó;
+- tipo do nó;
+- status da execução;
+- quantidade de campos disponíveis.
+
+Objetos e arrays começam fechados para manter a lista legível. Ao expandir um campo, os filhos aparecem abaixo com nome visual curto. Por exemplo, dentro de `fileRef`, os filhos aparecem como `name`, `mimeType` e `sizeBytes`, mas a expressão copiada continua completa.
+
+### Arquivos no painel de variáveis
+
+Quando um output é arquivo (`fileRef`), o painel mostra o arquivo como um item arrastável. Ao expandir, os detalhes principais ficam disponíveis:
+
+| Campo | Uso |
+|-------|-----|
+| `name` | Nome do arquivo |
+| `mimeType` | Tipo MIME |
+| `sizeBytes` | Tamanho em bytes |
+
+Campos internos como `source` e `path` não aparecem na lista principal para não confundir o uso comum, mas continuam acessíveis por expressão quando necessário.
+
+Se um campo de entrada não aceita arquivo, ou não aceita aquele tipo de arquivo, o painel marca o campo em vermelho e mostra uma mensagem de arquivo não suportado.
 
 ### Exemplos de Uso
 

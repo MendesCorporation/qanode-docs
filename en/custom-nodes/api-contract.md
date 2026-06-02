@@ -16,20 +16,20 @@ Returns the list of available nodes in the provider.
 {
   "nodes": [
     {
-      "type": "meu-no-customizado",
-      "name": "Meu Nó Customizado",
+      "type": "my-custom-node",
+      "name": "My Custom Node",
       "category": "Custom Nodes",
       "timeoutMs": 600000,
       "inputSchema": {
-        "campo1": {
+        "field1": {
           "type": "string",
           "required": true,
-          "description": "Descrição do campo"
+          "description": "Field description"
         },
-        "campo2": {
+        "field2": {
           "type": "number",
           "default": 10,
-          "description": "Campo numérico opcional"
+          "description": "Optional numeric field"
         }
       },
       "outputSchema": {
@@ -75,7 +75,9 @@ The `outputSchema` defines the data the node produces after execution. Each fiel
 |----------|------|-------------|
 | `type` | `string` | Data type |
 
-Outputs are accessible via expressions: `{{ steps.meuNo.outputs.resultado }}`
+Outputs are accessible via expressions: `{{ steps.myNode.outputs.result }}`
+
+For files, you can declare `type: "fileRef"` in `outputSchema` to improve autocomplete and visualization. This is optional: files sent in `artifacts` with `type: "file"` are also saved and exposed as `fileRef` when the execution runs.
 
 ---
 
@@ -87,10 +89,10 @@ Executes a node with the provided data.
 
 ```json
 {
-  "nodeType": "meu-no-customizado",
+  "nodeType": "my-custom-node",
   "inputs": {
-    "campo1": "valor do campo",
-    "campo2": 42
+    "field1": "field value",
+    "field2": 42
   },
   "runId": "run_abc123",
   "nodeId": "node_xyz789"
@@ -110,11 +112,11 @@ Executes a node with the provided data.
 {
   "status": "success",
   "logs": [
-    "Processando campo1: valor do campo",
-    "Resultado calculado com sucesso"
+    "Processing field1: field value",
+    "Result calculated successfully"
   ],
   "outputs": {
-    "resultado": "dados processados",
+    "result": "processed data",
     "timestamp": "2024-01-15T10:30:00Z"
   },
   "artifacts": []
@@ -127,12 +129,12 @@ Executes a node with the provided data.
 {
   "status": "failed",
   "logs": [
-    "Processando campo1: valor do campo",
-    "ERRO: Campo inválido"
+    "Processing field1: field value",
+    "ERROR: Invalid field"
   ],
   "outputs": {},
   "error": {
-    "message": "Descrição detalhada do erro"
+    "message": "Detailed error description"
   },
   "artifacts": []
 }
@@ -153,7 +155,14 @@ Executes a node with the provided data.
 
 ## Artifacts
 
-The `artifacts` field allows the node to return files such as screenshots, PDFs, or other documents. Each artifact can be sent as inline **base64**:
+The `artifacts` field allows the node to return generated files during execution. QANode accepts two artifact types:
+
+| Type | Use |
+|------|-----|
+| `screenshot` | Visual execution evidence |
+| `file` | Files that can be used by other nodes |
+
+Each artifact can be sent as inline **base64**:
 
 ```json
 {
@@ -165,7 +174,9 @@ The `artifacts` field allows the node to return files such as screenshots, PDFs,
     },
     {
       "type": "file",
-      "name": "relatorio.pdf",
+      "name": "report.pdf",
+      "mimeType": "application/pdf",
+      "key": "report",
       "base64": "JVBERi0xLjQKJeLj..."
     }
   ]
@@ -174,11 +185,53 @@ The `artifacts` field allows the node to return files such as screenshots, PDFs,
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `type` | `string` | Type: `screenshot`, `pdf`, `video`, `file` |
+| `type` | `string` | Type: `screenshot` or `file` |
 | `name` | `string` | File name |
 | `base64` | `string` | Base64-encoded content |
+| `mimeType` | `string` | Optional. If missing, QANode tries to infer it from the content and file name |
+| `key` / `outputKey` | `string` | Optional. Output name created for `file` artifacts |
 
 Artifacts are automatically saved to QANode's storage and are available in the execution results.
+
+### Files as `fileRef`
+
+When a `file` artifact has `base64`, QANode saves the content and creates a `fileRef` in the outputs.
+
+If the artifact includes `key` or `outputKey`:
+
+```json
+{
+  "outputs": {
+    "report": {
+      "source": "runArtifact",
+      "path": "runs/run_abc123/files/report.pdf",
+      "name": "report.pdf",
+      "mimeType": "application/pdf",
+      "sizeBytes": 18452
+    }
+  }
+}
+```
+
+If there is only one file and no key was provided, QANode uses `outputs.fileRef`.
+
+```json
+{
+  "outputs": {
+    "fileRef": {
+      "source": "runArtifact",
+      "path": "runs/run_abc123/files/report.pdf",
+      "name": "report.pdf",
+      "mimeType": "application/pdf",
+      "sizeBytes": 18452
+    }
+  }
+}
+```
+
+If several files have no key, they are grouped in `outputs.files`.
+
+> For files the user should pass to another node, prefer setting `key`/`outputKey` on the artifact. This makes the variables panel clearer.
 
 ---
 

@@ -33,14 +33,14 @@ O nó **Set Variable** permite definir ou atualizar variáveis em tempo de execu
 
 ```
 Chave: token
-Valor: {{ steps.login.outputs.json.token }}
+Valor: {{ steps.login.outputs.body.token }}
 ```
 
 ### Definir variável com cálculo
 
 ```
 Chave: totalPrice
-Valor: {{ steps.cart.outputs.json.subtotal * 1.1 }}
+Valor: {{ steps.cart.outputs.body.subtotal * 1.1 }}
 ```
 
 ### Acessar a variável em nós seguintes
@@ -58,7 +58,7 @@ Após definir, a variável fica acessível via:
 ### Salvar token de autenticação
 
 ```
-[HTTP Request: POST /login] → [Set Variable: token = {{ steps.login.outputs.json.token }}]
+[HTTP Request: POST /login] → [Set Variable: token = {{ steps.login.outputs.body.token }}]
     │
     ▼
 [HTTP Request: GET /profile → Header: Authorization = Bearer {{ variables.token }}]

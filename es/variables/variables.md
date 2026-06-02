@@ -104,7 +104,42 @@ Acceda a las variables usando la sintaxis de expresiones:
 {{ variables.NOMBRE_DE_VARIABLE }}
 ```
 
-En el editor de flujo, el botón **Variables** del panel de propiedades muestra secciones contraídas para variables locales, globales y, cuando el escenario está dentro de un proyecto, variables de proyecto.
+En el editor de flujo, el botón **Variables** del panel de propiedades abre una lista organizada para arrastrar o hacer clic en valores.
+
+Las variables aparecen separadas por alcance:
+
+| Grupo | Estado inicial | Descripción |
+|-------|----------------|-------------|
+| **Flujo** | Abierto | Variables locales y outputs de nodos anteriores del flujo actual |
+| **Proyecto** | Cerrado | Variables registradas en el proyecto del escenario |
+| **Global** | Cerrado | Variables globales de la instalación |
+
+Esta separación evita mezclar datos globales, de proyecto y del flujo cuando hay muchas variables registradas.
+
+### Outputs de nodos anteriores
+
+Cada nodo ejecutado aparece como un grupo con:
+
+- nombre del nodo;
+- tipo del nodo;
+- estado de la ejecución;
+- cantidad de campos disponibles.
+
+Los objetos y arreglos empiezan cerrados para mantener la lista legible. Al expandir un campo, los hijos aparecen debajo con un nombre visual corto. Por ejemplo, dentro de `fileRef`, los hijos aparecen como `name`, `mimeType` y `sizeBytes`, pero la expresión copiada sigue siendo completa.
+
+### Archivos en el panel de variables
+
+Cuando un output es un archivo (`fileRef`), el panel muestra el archivo como un elemento arrastrable. Al expandirlo, los detalles principales quedan disponibles:
+
+| Campo | Uso |
+|-------|-----|
+| `name` | Nombre del archivo |
+| `mimeType` | Tipo MIME |
+| `sizeBytes` | Tamaño en bytes |
+
+Los campos internos como `source` y `path` no aparecen en la lista principal para no confundir el uso común, pero siguen accesibles por expresión cuando sea necesario.
+
+Si un campo de entrada no acepta archivos, o no acepta ese tipo de archivo, el panel marca el campo en rojo y muestra un mensaje de archivo no soportado.
 
 ### Ejemplos de Uso
 

@@ -59,7 +59,7 @@ Después de la ejecución, haz clic en cualquier nodo para ver sus resultados en
 | **Logs** | Mensajes registrados durante la ejecución del nodo |
 | **Outputs** | Datos producidos por el nodo (JSON navegable) |
 | **Error** | Mensaje de error detallado (cuando corresponda) |
-| **Screenshots** | Capturas de pantalla (nodos web con evidencia activada) |
+| **Archivos y Screenshots** | Artefactos generados, downloads, uploads capturados y evidencias |
 
 [Pestaña de Resultados](../../assets/images/analise-resultados-editor-fluxos.mp4)
 
@@ -70,8 +70,7 @@ Los outputs de cada nodo quedan accesibles para nodos siguientes mediante expres
 ```json
 {
   "status": 200,
-  "body": "...",
-  "json": {
+  "body": {
     "id": 1,
     "name": "João",
     "email": "joao@exemplo.com"
@@ -81,13 +80,28 @@ Los outputs de cada nodo quedan accesibles para nodos siguientes mediante expres
 
 Luego puedes acceder a estos datos en nodos siguientes:
 ```
-{{ steps["http-request"].outputs.json.name }}  →  "João"
+{{ steps["http-request"].outputs.body.name }}  →  "João"
 {{ steps["http-request"].outputs.status }}     →  200
 ```
+
+Cuando el output es un archivo, el valor principal es un `fileRef`:
+
+```
+{{ steps["http-request"].outputs.fileRef }}
+{{ steps["file-generate"].outputs.fileRef }}
+```
+
+En el panel de variables, los archivos muestran nombre, MIME type y tamaño en los detalles. Los campos internos como el camino en el storage quedan ocultos en la visualización principal.
 
 ### Screenshots (Evidencias)
 
 Para nodos web (Smart Web Flow, Web Flow y Smart Locators), las capturas de pantalla aparecen como miniaturas clicables. Haz clic para verlas a tamaño completo.
+
+### Archivos
+
+Los archivos generados o capturados durante la ejecución aparecen en la sección **Archivos** del detalle de la ejecución. Al descargarlos, el navegador usa el nombre real del archivo cuando está disponible, en vez de un identificador interno de la ejecución.
+
+Los archivos de prueba aislada creados en el editor son temporales y pueden limpiarse automáticamente cuando el usuario sale del flujo o por una rutina de limpieza.
 
 ---
 
@@ -177,7 +191,7 @@ Activa las capturas de pantalla en modo **antes** para ver el estado de la pági
 Si un nodo falla con un valor inesperado, agrega un nodo **Log** antes de él para inspeccionar los valores:
 
 ```
-Valor del token: {{ steps.login.outputs.json.token }}
+Valor del token: {{ steps.login.outputs.body.token }}
 Estado: {{ steps["http-request"].outputs.status }}
 ```
 

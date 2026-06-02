@@ -92,7 +92,7 @@ Para valores de pasos anteriores, use la misma sintaxis:
 ```sql
 SELECT *
 FROM dbo.Users
-WHERE id = {{ steps.api.outputs.json.id }};
+WHERE id = {{ steps.api.outputs.body.id }};
 ```
 
 Para textos, fechas y valores que deben tratarse como string en SQL, coloque comillas:
@@ -100,7 +100,7 @@ Para textos, fechas y valores que deben tratarse como string en SQL, coloque com
 ```sql
 SELECT *
 FROM dbo.Orders
-WHERE customer_email = '{{ steps.api.outputs.json.email }}'
+WHERE customer_email = '{{ steps.api.outputs.body.email }}'
   AND created_at >= '{{ variables.FECHA_INICIAL }}';
 ```
 
@@ -180,7 +180,7 @@ WHERE [active] = 1;
 [HTTP Request: POST /users]
     │
     ▼
-[SQL Server: SELECT * FROM dbo.Users WHERE email = '{{ steps["http-request"].outputs.json.email }}']
+[SQL Server: SELECT * FROM dbo.Users WHERE email = '{{ steps["http-request"].outputs.body.email }}']
     │
     ▼
 [If: {{ steps["sqlserver-query"].outputs.rowCount > 0 }}]

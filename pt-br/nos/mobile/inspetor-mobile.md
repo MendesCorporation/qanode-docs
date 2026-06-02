@@ -77,6 +77,8 @@ No modo **Toque**, cada clique na tela do dispositivo:
 
 Para **deslizar** (swipe): clique e arraste na tela do dispositivo — o gesto é executado no dispositivo e gravado como passo `swipe`.
 
+Quando um campo de texto está selecionado, o inspetor também permite gravar preenchimento com diálogo próprio, sem precisar alternar para outro modo. A opção **Limpar primeiro** vem marcada por padrão.
+
 ### Modo Inspecionar
 
 No modo **Inspecionar**, clicar em um elemento **não envia o toque ao dispositivo** — apenas exibe as informações do elemento no painel inferior. Use este modo para:
@@ -137,6 +139,7 @@ Além de gravar toques e swipes, o Inspetor Mobile oferece botões para adiciona
 | Ação | Descrição |
 |------|-----------|
 | **Toque** | Cria um passo `tap` no elemento selecionado |
+| **Preencher** | Abre um diálogo para informar o texto e cria um passo `type` |
 | **Duplo Toque** | Cria um passo de duplo toque no elemento selecionado |
 | **Pressionar e Segurar** | Cria um passo `long-press` no elemento selecionado |
 | **Pinça para Dentro** | Cria um gesto de pinça sobre o elemento |
@@ -150,12 +153,33 @@ Além de gravar toques e swipes, o Inspetor Mobile oferece botões para adiciona
 
 | Ação | Descrição |
 |------|-----------|
+| **Enviar arquivo** | Envia um arquivo para o dispositivo e cria um passo `push-file` |
+| **Baixar arquivo** | Captura um arquivo do dispositivo e cria um passo `pull-file` |
 | **Aceitar Alerta** | Cria um passo `permission` que aceita o alerta de sistema atual |
 | **Dispensar Alerta** | Cria um passo `permission` que dispensa o alerta de sistema atual |
-| **Grant Permission** | Solicita o nome da permissão Android e cria um passo para concedê-la |
-| **Revoke Permission** | Solicita o nome da permissão Android e cria um passo para revogá-la |
+| **Conceder Permissão** | Solicita o nome da permissão Android e cria um passo para concedê-la |
+| **Revogar Permissão** | Solicita o nome da permissão Android e cria um passo para revogá-la |
 
-> As ações Grant/Revoke Permission são exclusivas para sessões Android e abrem um prompt solicitando o nome da permissão, por exemplo: `android.permission.CAMERA`.
+> As ações **Conceder Permissão** e **Revogar Permissão** são exclusivas para sessões Android e abrem um prompt solicitando o nome da permissão, por exemplo: `android.permission.CAMERA`.
+
+### Enviar arquivo durante a gravação
+
+Use **Enviar arquivo** quando o app precisa receber um arquivo antes de abrir um seletor nativo ou continuar o fluxo. O inspetor envia o arquivo para o dispositivo durante a gravação e adiciona o passo correspondente ao Mobile Flow.
+
+No Android, o destino padrão costuma ser a pasta de downloads. No iOS, o inspetor usa o container do aplicativo quando disponível e aplica fallback compatível com o Appium.
+
+### Baixar arquivo durante a gravação
+
+Use **Baixar arquivo** quando o app gerou um arquivo e o teste precisa capturá-lo como `fileRef`.
+
+O diálogo permite informar:
+
+- caminho exato no dispositivo;
+- pasta e padrão de nome para buscar o arquivo mais recente;
+- nome da variável de saída;
+- nome do arquivo salvo no QANode.
+
+Use caminho exato quando o app mostra ou define o nome do arquivo. Use pasta/padrão quando o nome é dinâmico.
 
 ---
 
@@ -186,12 +210,14 @@ Ao clicar em **"Salvar Passos"**:
 
 O inspetor gera automaticamente seletores para cada elemento tocado, priorizando nesta ordem:
 
-1. **`accessibility_id`** — Quando o elemento tem content-description ou accessibility label
-2. **`id`** — Quando o elemento tem resource-id (Android) ou nome único (iOS)
-3. **`xpath`** com `@bounds` — Seletor baseado nas coordenadas do elemento (mais preciso para tela atual)
-4. **Coordenadas de fallback** — X/Y absolutos usados se todos os seletores falharem
+1. **`accessibility_id`**, `id`, `resource-id`, `name` ou `content-desc` — sinais mais estáveis
+2. **`hint`**, `label` e `text` quando pertencem ao próprio elemento
+3. **Contexto próximo** — label/texto associado ao campo, útil para inputs sem identificador
+4. **`xpath`** com `@bounds` — seletor baseado nas coordenadas do elemento
+5. **Coordenadas de fallback** — X/Y absolutos usados se todos os seletores falharem
+6. **Classe genérica** — usada apenas como último recurso
 
-> Os seletores com `@bounds` são gerados pelo inspetor para manter alta precisão na tela específica. Em fluxos automatizados, se a resolução ou orientação mudar, os seletores por `accessibility_id` ou `id` são mais robustos.
+> Os seletores com `@bounds` e as coordenadas são fallback visual. Em fluxos automatizados, prefira seletores por `accessibility_id`, `id`, `resource-id`, `label` ou contexto próximo.
 
 ---
 
