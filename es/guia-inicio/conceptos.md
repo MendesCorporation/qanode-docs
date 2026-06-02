@@ -32,6 +32,8 @@ Proyectos
 
 ## Proyectos
 
+[Proyectos](../../assets/images/conceitos-projetos.mp4)
+
 Un **proyecto** es el nivel más alto de organización. Agrupa escenarios de prueba y suites relacionados con un sistema, funcionalidad o equipo.
 
 Cada proyecto tiene:
@@ -44,6 +46,8 @@ Cada proyecto tiene:
 ---
 
 ## Escenarios (Flujos)
+
+[Escenarios](../../assets/images/conceitos-cenarios.mp4)
 
 Un **escenario** (también llamado **flujo**) es un caso de prueba representado visualmente como un grafo de nodos conectados. Cada escenario describe una secuencia de acciones a ejecutar — como navegar por un sitio web, llamar a una API o consultar una base de datos.
 
@@ -63,6 +67,8 @@ En este ejemplo, cada caja es un nodo y las flechas representan conexiones que i
 ---
 
 ## Nodos (Nodes)
+
+[Nodos](../../assets/images/conceitos-nos.mp4)
 
 Los **nodos** son los bloques fundamentales de un escenario. Cada nodo ejecuta una acción específica y puede producir outputs que son consumidos por los nodos siguientes.
 
@@ -109,6 +115,8 @@ Cuando un nodo se ejecuta, produce **outputs** — datos que pueden ser usados p
 
 ## Componentes Reutilizables
 
+[Componentes](../../assets/images/conceitos-componentes.mp4)
+
 Un **componente** es un flujo reutilizable con contrato de entrada y salida. Permite encapsular una secuencia que aparece en varios escenarios, como login, preparación de datos, validación común o consulta auxiliar.
 
 Los componentes tienen:
@@ -126,6 +134,8 @@ Después de publicado, el componente aparece en la paleta del editor de escenari
 
 ## Conexiones (Edges)
 
+[Conexiones](../../assets/images/conceitos-conectar-nos.mp4)
+
 Las **conexiones** vinculan la salida de un nodo con la entrada de otro, definiendo el orden de ejecución. QANode ejecuta los nodos en **orden topológico** — es decir, un nodo solo se ejecuta después de que todos los nodos conectados a su entrada hayan sido completados.
 
 ### Conexiones Condicionales
@@ -141,6 +151,8 @@ Solo se ejecutará la ruta correspondiente a la condición evaluada. Los nodos e
 ---
 
 ## Ejecuciones (Runs)
+
+[Ejecuciones](../../assets/images/conceitos-execucao-fluxos.mp4)
 
 Una **ejecución** es una instancia de un escenario siendo procesado. Al ejecutar un escenario, QANode:
 
@@ -160,6 +172,8 @@ Cada ejecución tiene:
 ---
 
 ## Suites de Prueba
+
+[Suites de Prueba](../../assets/images/conceitos-suites.mp4)
 
 Una **suite** agrupa varios escenarios para ejecución secuencial. Las suites son útiles para:
 
@@ -182,6 +196,8 @@ Las suites pueden programarse usando **expresiones cron**:
 
 ## Variables
 
+[Variables](../../assets/images/conceitos-variaveis.mp4)
+
 Las **variables** son valores globales reutilizables en cualquier escenario. Tipos soportados:
 
 | Tipo | Uso |
@@ -197,6 +213,8 @@ Accede a las variables en tus flujos con: `{{ variables.nombreVariable }}`
 ---
 
 ## Credenciales
+
+[Credenciales](../../assets/images/conceitos-credenciais.mp4)
 
 Las **credenciales** almacenan información de conexión de forma segura y centralizada. Tipos soportados:
 
