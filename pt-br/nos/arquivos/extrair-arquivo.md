@@ -6,6 +6,8 @@ O nó **Extrair Arquivo** lê um arquivo recebido como `fileRef` e devolve texto
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-extract-file.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `file-extract` |

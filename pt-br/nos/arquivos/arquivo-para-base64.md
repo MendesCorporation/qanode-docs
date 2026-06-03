@@ -6,6 +6,8 @@ O nó **Arquivo para Base64** recebe um `fileRef` e devolve o conteúdo do arqui
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-file-to-base64.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `file-to-base64` |

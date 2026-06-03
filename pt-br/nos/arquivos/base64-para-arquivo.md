@@ -6,6 +6,8 @@ O nó **Base64 para Arquivo** recebe conteúdo Base64 ou Data URI e cria um arqu
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-base64-to-file.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `file-from-base64` |

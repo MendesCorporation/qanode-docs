@@ -6,6 +6,8 @@ O nó **Gerar Arquivo** cria arquivos dentro da execução do QANode. Ele pode g
 
 ## Visão Geral
 
+[Visão Geral](../../assets/images/nos-generate-file.mp4)
+
 | Propriedade | Valor |
 |-------------|-------|
 | **Tipo** | `file-generate` |
