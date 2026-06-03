@@ -6,6 +6,8 @@ The **Generate File** node creates files inside a QANode execution. It can gener
 
 ## Overview
 
+[Overview](../../assets/images/nos-generate-file.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `file-generate` |

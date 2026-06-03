@@ -6,6 +6,8 @@ The **Base64 to File** node receives Base64 content or a Data URI and creates a 
 
 ## Overview
 
+[Overview](../../assets/images/nos-base64-to-file.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `file-from-base64` |

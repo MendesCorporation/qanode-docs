@@ -6,6 +6,8 @@ The **Extract File** node reads a file received as `fileRef` and returns text or
 
 ## Overview
 
+[Overview](../../assets/images/nos-extract-file.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `file-extract` |

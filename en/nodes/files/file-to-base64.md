@@ -6,6 +6,8 @@ The **File to Base64** node receives a `fileRef` and returns the file content as
 
 ## Overview
 
+[Overview](../../assets/images/nos-file-to-base64.mp4)
+
 | Property | Value |
 |----------|-------|
 | **Type** | `file-to-base64` |
