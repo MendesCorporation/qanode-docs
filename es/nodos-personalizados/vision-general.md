@@ -78,7 +78,7 @@ La **ejecución** se realiza mediante `POST /execute`, donde QANode envía los d
 4. Haz clic en **Probar Conexión** para verificar
 5. Guarda el proveedor
 
-<!-- ![Registrando un proveedor](../../assets/images/registrar-provedor.png) -->
+[Registrando un proveedor](../../assets/images/nos-customizados-registrando-provider.mp4)
 *Imagen: Pantalla de configuraciones mostrando la lista de proveedores con el botón de agregar*
 
 Tras el registro, los nodos del proveedor aparecerán automáticamente en la paleta del editor de flujos bajo la categoría **Nodos Personalizados** (o la categoría definida en el manifiesto).

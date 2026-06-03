@@ -78,7 +78,7 @@ A **execução** é feita via `POST /execute`, onde o QANode envia os dados de e
 4. Clique em **Testar Conexão** para verificar
 5. Salve o provedor
 
-<!-- ![Registrando um provedor](../../assets/images/registrar-provedor.png) -->
+[Registrando um provedor](../../assets/images/nos-customizados-registrando-provider.mp4)
 *Imagem: Tela de configurações mostrando a lista de provedores com botão de adicionar*
 
 Após o registro, os nós do provedor aparecerão automaticamente na paleta do editor de fluxos na categoria **Nós Customizados** (ou na categoria definida no manifesto).

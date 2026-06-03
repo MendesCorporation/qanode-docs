@@ -78,7 +78,7 @@ The **manifest** is the response from the `GET /manifest` route, which describes
 4. Click **Test Connection** to verify
 5. Save the provider
 
-<!-- ![Registering a provider](../../assets/images/registrar-provedor.png) -->
+[Registering a provider](../../assets/images/nos-customizados-registrando-provider.mp4)
 *Image: Settings screen showing the provider list with an add button*
 
 After registration, the provider's nodes will automatically appear in the flow editor palette under the **Custom Nodes** category (or the category defined in the manifest).
