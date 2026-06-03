@@ -6,6 +6,8 @@ El nodo **Extraer Archivo** lee un archivo recibido como `fileRef` y devuelve te
 
 ## Visión General
 
+[Visión General](../../assets/images/nos-extract-file.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `file-extract` |

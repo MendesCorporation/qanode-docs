@@ -6,6 +6,8 @@ El nodo **Archivo a Base64** recibe un `fileRef` y devuelve el contenido del arc
 
 ## Visión General
 
+[Visión General](../../assets/images/nos-file-to-base64.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `file-to-base64` |

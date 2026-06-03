@@ -6,6 +6,8 @@ El nodo **Base64 a Archivo** recibe contenido Base64 o Data URI y crea un archiv
 
 ## Visión General
 
+[Visión General](../../assets/images/nos-base64-to-file.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `file-from-base64` |

@@ -6,6 +6,8 @@ El nodo **Generar Archivo** crea archivos dentro de una ejecución de QANode. Pu
 
 ## Visión General
 
+[Visión General](../../assets/images/nos-generate-file.mp4)
+
 | Propiedad | Valor |
 |-----------|-------|
 | **Tipo** | `file-generate` |
