@@ -34,6 +34,8 @@ Na configuração padrão do produto:
 
 ## Criando um token
 
+[Criando token](../../assets/images/ci-cd-criando-access-token.mp4)
+
 1. Acesse **Configurações → Access Tokens**
 2. Clique em **Gerar Token**
 3. Defina:

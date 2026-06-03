@@ -34,6 +34,8 @@ In the default product setup:
 
 ## Creating a token
 
+[Creating a token](../../assets/images/ci-cd-criando-access-token.mp4)
+
 1. Go to **Settings → Access Tokens**
 2. Click **Generate Token**
 3. Define:
