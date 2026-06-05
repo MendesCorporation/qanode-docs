@@ -14,6 +14,8 @@ O Inspetor Mobile é aberto a partir do editor de fluxos:
 
 > Na **versão desktop**, o Appium é iniciado automaticamente ao conectar. Na versão web/server, certifique-se de que o Appium está rodando antes de abrir o inspetor.
 
+[Como Acessar](/qanode-docs/assets/images/mobile-como-acessar.mp4)
+
 ---
 
 ## Interface
@@ -37,6 +39,8 @@ O Inspetor Mobile é dividido em três áreas principais:
 ```
 
 ### Área da Tela do Dispositivo
+
+[Área da Tela do Dispositivo](/qanode-docs/assets/images/mobile-area-dispositivo.mp4)
 
 Exibe o screenshot atualizado do dispositivo em tempo real. Você pode:
 - **Tocar** em elementos para gerar passos `tap`
@@ -70,6 +74,8 @@ A seção de seletores começa recolhida para manter a tela limpa. Abra quando p
 
 ### Modo Toque (padrão)
 
+[Modo Toque](/qanode-docs/assets/images/mobile-modo-toque.mp4)
+
 No modo **Toque**, cada clique na tela do dispositivo:
 1. Envia o toque para o dispositivo via Appium
 2. Grava um passo `tap` ou `tap-coords` com os seletores do elemento tocado
@@ -80,6 +86,8 @@ Para **deslizar** (swipe): clique e arraste na tela do dispositivo — o gesto �
 Quando um campo de texto está selecionado, o inspetor também permite gravar preenchimento com diálogo próprio, sem precisar alternar para outro modo. A opção **Limpar primeiro** vem marcada por padrão.
 
 ### Modo Inspecionar
+
+[Modo Inspecionar](/qanode-docs/assets/images/mobile-modo-inspecionar.mp4)
 
 No modo **Inspecionar**, clicar em um elemento **não envia o toque ao dispositivo** — apenas exibe as informações do elemento no painel inferior. Use este modo para:
 - Explorar a hierarquia de elementos sem interagir com o app
@@ -92,6 +100,8 @@ No modo **Inspecionar**, clicar em um elemento **não envia o toque ao dispositi
 
 ### Passo de Toque (tap)
 
+[Passo de Toque](/qanode-docs/assets/images/mobile-passo-toque.mp4)
+
 1. Certifique-se de estar no **Modo Toque**
 2. Clique no elemento desejado na tela do dispositivo
 3. O inspetor detecta o elemento, extrai seus seletores e grava um passo `tap`
@@ -101,6 +111,8 @@ No modo **Inspecionar**, clicar em um elemento **não envia o toque ao dispositi
 
 ### Passo de Digitação (type)
 
+[Passo de Digitação](/qanode-docs/assets/images/mobile-passo-digitacao.mp4)
+
 Após tocar em um campo de texto:
 1. O inspetor detecta que o campo está ativo
 2. Digite o texto no seu teclado físico — o inspetor captura as teclas em tempo real
@@ -108,6 +120,8 @@ Após tocar em um campo de texto:
 4. Pressionar **Backspace** apaga caracteres e atualiza o passo
 
 ### Passo de Swipe
+
+[Passo de Swipe](/qanode-docs/assets/images/mobile-passo-swipe.mp4)
 
 1. No **Modo Toque**, clique e **arraste** na tela do dispositivo
 2. O gesto é executado no dispositivo
@@ -164,11 +178,15 @@ Além de gravar toques e swipes, o Inspetor Mobile oferece botões para adiciona
 
 ### Enviar arquivo durante a gravação
 
+[Enviar arquivo](/qanode-docs/assets/images/mobile-enviar-arquivo.mp4)
+
 Use **Enviar arquivo** quando o app precisa receber um arquivo antes de abrir um seletor nativo ou continuar o fluxo. O inspetor envia o arquivo para o dispositivo durante a gravação e adiciona o passo correspondente ao Mobile Flow.
 
 No Android, o destino padrão costuma ser a pasta de downloads. No iOS, o inspetor usa o container do aplicativo quando disponível e aplica fallback compatível com o Appium.
 
 ### Baixar arquivo durante a gravação
+
+[Baixar arquivo](/qanode-docs/assets/images/mobile-baixar-arquivo.mp4)
 
 Use **Baixar arquivo** quando o app gerou um arquivo e o teste precisa capturá-lo como `fileRef`.
 
@@ -184,6 +202,8 @@ Use caminho exato quando o app mostra ou define o nome do arquivo. Use pasta/pad
 ---
 
 ## Salvando os Passos
+
+[Salvando os Passos](/qanode-docs/assets/images/mobile-salvar-passos.mp4)
 
 Ao clicar em **"Salvar Passos"**:
 1. Todos os passos gravados na sessão são transferidos para o nó Mobile Flow
