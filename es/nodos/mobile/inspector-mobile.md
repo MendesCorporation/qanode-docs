@@ -14,6 +14,8 @@ El Inspector Mobile se abre desde el editor de flujos:
 
 > En la **edición Desktop**, Appium se inicia automáticamente al conectar. En la edición web/servidor, asegúrate de que Appium esté en ejecución antes de abrir el inspector.
 
+[Como Acessar](../../assets/images/mobile-como-acessar.mp4)
+
 ---
 
 ## Interfaz
@@ -37,6 +39,8 @@ El Inspector Mobile está dividido en tres áreas principales:
 ```
 
 ### Área de Pantalla del Dispositivo
+
+[Área de Pantalla del Dispositivo](../../assets/images/mobile-area-dispositivo.mp4)
 
 Muestra la captura de pantalla actualizada del dispositivo en tiempo real. Puedes:
 - **Tocar** elementos para generar pasos `tap`
@@ -70,6 +74,8 @@ La sección de selectores comienza colapsada para mantener la pantalla limpia. �
 
 ### Modo Toque (predeterminado)
 
+[Modo Toque](../../assets/images/mobile-modo-toque.mp4)
+
 En el modo **Toque**, cada clic en la pantalla del dispositivo:
 1. Envía el toque al dispositivo via Appium
 2. Graba un paso `tap` o `tap-coords` con los selectores del elemento tocado
@@ -80,6 +86,8 @@ Para **deslizar** (swipe): haz clic y arrastra en la pantalla del dispositivo �
 Cuando un campo de texto está seleccionado, el inspector también permite grabar llenado con un diálogo propio, sin cambiar de modo. La opción **Limpiar primero** viene marcada por defecto.
 
 ### Modo Inspeccionar
+
+[Modo Inspeccionar](../../assets/images/mobile-modo-inspecionar.mp4)
 
 En el modo **Inspeccionar**, hacer clic en un elemento **no envía el toque al dispositivo** — solo muestra la información del elemento en el panel lateral. Usa este modo para:
 - Explorar la jerarquía de elementos sin interactuar con la app
@@ -94,6 +102,8 @@ En el modo **Inspeccionar**, hacer clic en un elemento **no envía el toque al d
 
 ### Paso de Toque (tap)
 
+[Paso de Toque](../../assets/images/mobile-passo-toque.mp4)
+
 1. Asegúrate de estar en el **Modo Toque**
 2. Haz clic en el elemento deseado en la pantalla del dispositivo
 3. El inspector detecta el elemento, extrae sus selectores y graba un paso `tap`
@@ -103,6 +113,8 @@ En el modo **Inspeccionar**, hacer clic en un elemento **no envía el toque al d
 
 ### Paso de Escritura (type)
 
+[Paso de Escritura](../../assets/images/mobile-passo-digitacao.mp4)
+
 Después de tocar un campo de texto:
 1. El inspector detecta que el campo está activo
 2. Escribe el texto en tu teclado físico — el inspector captura las pulsaciones en tiempo real
@@ -110,6 +122,8 @@ Después de tocar un campo de texto:
 4. Presionar **Backspace** borra caracteres y actualiza el paso
 
 ### Paso de Swipe
+
+[Paso de Swipe](../../assets/images/mobile-passo-swipe.mp4)
 
 1. En el **Modo Toque**, haz clic y **arrastra** en la pantalla del dispositivo
 2. El gesto se ejecuta en el dispositivo
@@ -166,11 +180,15 @@ Además de grabar toques y swipes, el Inspector Mobile ofrece botones para agreg
 
 ### Enviar archivo durante la grabación
 
+[Enviar archivo](../../assets/images/mobile-enviar-arquivo.mp4)
+
 Use **Enviar archivo** cuando la app necesita recibir un archivo antes de abrir un selector nativo o continuar el flujo. El inspector envía el archivo al dispositivo durante la grabación y agrega el paso correspondiente al Mobile Flow.
 
 En Android, el destino predeterminado suele ser la carpeta de downloads. En iOS, el inspector usa el container de la aplicación cuando está disponible y aplica un fallback compatible con Appium.
 
 ### Descargar archivo durante la grabación
+
+[Descargar archivo](../../assets/images/mobile-baixar-arquivo.mp4)
 
 Use **Descargar archivo** cuando la app generó un archivo y la prueba necesita capturarlo como `fileRef`.
 
@@ -186,6 +204,8 @@ Use ruta exacta cuando la app muestra o define el nombre del archivo. Use carpet
 ---
 
 ## Guardando los Pasos
+
+[Guardando los Pasos](../../assets/images/mobile-salvar-passos.mp4)
 
 Al hacer clic en **"Guardar Pasos"**:
 1. Todos los pasos grabados en la sesión se transfieren al nodo Mobile Flow

@@ -16,6 +16,8 @@ The Mobile Inspector is opened from the flow editor:
 
 > In the **Desktop edition**, Appium starts automatically when connecting. In the web/server edition, make sure Appium is running before opening the inspector.
 
+[How to Access](../../assets/images/mobile-como-acessar.mp4)
+
 ---
 
 ## Interface
@@ -39,6 +41,8 @@ The Mobile Inspector is divided into three main areas:
 ```
 
 ### Device Screen Area
+
+[Device Screen Area](../../assets/images/mobile-area-dispositivo.mp4)
 
 Displays an updated screenshot of the device in real time. You can:
 - **Tap** elements to generate `tap` steps
@@ -72,6 +76,8 @@ The selector section starts collapsed to keep the screen clean. Open it when you
 
 ### Tap Mode (default)
 
+[Tap Mode](../../assets/images/mobile-modo-toque.mp4)
+
 In **Tap** mode, each click on the device screen:
 1. Sends the tap to the device via Appium
 2. Records a `tap` or `tap-coords` step with the tapped element's selectors
@@ -82,6 +88,8 @@ To **swipe**: click and drag on the device screen — the gesture is executed on
 When a text field is selected, the inspector can also record filling through its own dialog without switching modes. **Clear first** is enabled by default.
 
 ### Inspect Mode
+
+[Inspect Mode](../../assets/images/mobile-modo-inspecionar.mp4)
 
 In **Inspect** mode, clicking an element **does not send the tap to the device** — it only displays the element's information in the side panel. Use this mode to:
 - Explore the element hierarchy without interacting with the app
@@ -96,6 +104,8 @@ In **Inspect** mode, clicking an element **does not send the tap to the device**
 
 ### Tap Step
 
+[Tap Step](../../assets/images/mobile-passo-toque.mp4)
+
 1. Make sure you are in **Tap Mode**
 2. Click the desired element on the device screen
 3. The inspector detects the element, extracts its selectors, and records a `tap` step
@@ -105,6 +115,8 @@ In **Inspect** mode, clicking an element **does not send the tap to the device**
 
 ### Type Step
 
+[Type Step](../../assets/images/mobile-passo-digitacao.mp4)
+
 After tapping a text field:
 1. The inspector detects that the field is active
 2. Type the text on your physical keyboard — the inspector captures keystrokes in real time
@@ -112,6 +124,8 @@ After tapping a text field:
 4. Pressing **Backspace** deletes characters and updates the step
 
 ### Swipe Step
+
+[Swipe Step](../../assets/images/mobile-passo-swipe.mp4)
 
 1. In **Tap Mode**, click and **drag** on the device screen
 2. The gesture is executed on the device
@@ -168,11 +182,15 @@ In addition to recording taps and swipes, the Mobile Inspector provides buttons 
 
 ### Sending a file during recording
 
+[Sending a file](../../assets/images/mobile-enviar-arquivo.mp4)
+
 Use **Send File** when the app needs to receive a file before opening a native picker or continuing the flow. The inspector sends the file to the device during recording and adds the corresponding step to Mobile Flow.
 
 On Android, the default destination is usually the downloads folder. On iOS, the inspector uses the application container when available and applies an Appium-compatible fallback.
 
 ### Downloading a file during recording
+
+[Downloading a file](../../assets/images/mobile-baixar-arquivo.mp4)
 
 Use **Download File** when the app generated a file and the test needs to capture it as a `fileRef`.
 
@@ -188,6 +206,8 @@ Use exact path when the app shows or defines the filename. Use folder/pattern wh
 ---
 
 ## Saving Steps
+
+[Saving Steps](../../assets/images/mobile-salvar-passos.mp4)
 
 When you click **"Save Steps"**:
 1. All recorded steps are transferred to the Mobile Flow node
