@@ -15,6 +15,7 @@ El módulo de Defectos transforma una ejecución fallida en un proceso controlad
 - **Investigación en sandbox** — copia desechable del flujo original para investigar sin afectar ejecuciones oficiales ni KPIs
 - **Campos personalizados** — campos adicionales definidos por su organización
 - **Comentarios, adjuntos e historial completo** — toda interacción con el defecto queda registrada
+- **Integración MCP** — clientes de IA permitidos pueden inspeccionar defectos, adjuntos, evidencias de la ejecución original y transiciones del workflow usando los permisos del usuario
 
 ---
 
@@ -25,6 +26,8 @@ El módulo de Defectos aparece en el menú lateral con el ícono de **bug** (�
 Para abrir un defecto directamente desde una ejecución fallida, acceda al detalle de la ejecución y haga clic en **Abrir Defecto**.
 
 [Cómo acceder](../../assets/images/defeitos-como-acessar.mp4)
+
+Cuando un defecto se analiza vía MCP, el diagnóstico vuelve en el chat de la IA. No se publica automáticamente como comentario público, salvo que el usuario pida explícitamente un comentario o adjunto.
 
 ---
 

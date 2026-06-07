@@ -89,7 +89,7 @@ Cada paso puede cargar varias pistas para encontrar el objetivo correcto. En vez
 | **Localizador semántico** | `getByRole`, `getByLabel`, `getByText` | Botones, enlaces, campos, opciones y elementos accesibles |
 | **Selectores CSS/XPath** | `#email`, `[data-testid="submit"]`, XPath | Páginas con IDs, atributos estables o estructura conocida |
 | **Identidad del objetivo** | texto, role, tag, atributos, posición aproximada | Confirma que el selector encontrado aún representa el mismo elemento |
-| **Contexto de fila/card** | texto de alcance, item padre, fila de tabla | Pantallas con elementos repetidos |
+| **Contexto de fila/card** | referencia del objetivo, item padre, fila de tabla | Pantallas con elementos repetidos |
 | **Contexto de control** | label cercano, valor esperado, tipo del control | Inputs customizados, combos, calendarios y checkboxes estilizados |
 | **Frame/Iframe** | contexto de frame grabado | Aplicaciones que renderizan contenido dentro de iframes |
 
@@ -97,9 +97,9 @@ El objetivo es ser resiliente sin hacer clic en “cualquier cosa parecida”. C
 
 ---
 
-## Texto de Alcance
+## Referencia del Objetivo
 
-El **Texto de alcance** aparece cuando el paso fue grabado dentro de un item repetido, como:
+La **Referencia del objetivo** aparece cuando el paso fue grabado dentro de un item repetido, como:
 
 - fila de tabla;
 - card de kanban;
@@ -107,7 +107,7 @@ El **Texto de alcance** aparece cuando el paso fue grabado dentro de un item rep
 - bloque de resultado;
 - contenedor con varios botones iguales.
 
-Indica a QANode **en qué fila/card/lista debe buscar antes de resolver el objetivo**.
+Indica a QANode **qué registro, fila, card o item debe servir como referencia antes de resolver el objetivo**.
 
 Ejemplo:
 
@@ -116,15 +116,15 @@ Ejemplo:
 | INC0010001 | Apptrix | Abrir |
 | INC0010002 | QANode | Abrir |
 
-Si el objetivo es el botón **Abrir** de la fila `INC0010002`, el localizador del botón no es suficiente. El texto de alcance puede ser:
+Si el objetivo es el botón **Abrir** de la fila `INC0010002`, el localizador del botón no es suficiente. La referencia del objetivo puede ser:
 
 ```
 INC0010002
 ```
 
-QANode busca primero la fila/card que contiene ese texto y solo después resuelve el elemento dentro de ese alcance.
+QANode busca primero la fila/card que contiene ese texto y solo después resuelve el elemento dentro de ese contexto.
 
-El texto de alcance acepta expresiones:
+La referencia del objetivo acepta expresiones:
 
 ```
 {{ variables.numeroTicket }}
@@ -151,7 +151,7 @@ En una ejecución normal, Smart Web Flow intenta resolver el paso usando las est
 5. recuperación conservadora cuando **Self Healing** está habilitado;
 6. falla con diagnóstico cuando no hay confianza suficiente.
 
-El usuario normalmente no necesita configurar este orden manualmente. Lo importante es revisar si el paso grabado representa la intención correcta: acción, objetivo, texto de alcance, datos, evidencia y efecto esperado.
+El usuario normalmente no necesita configurar este orden manualmente. Lo importante es revisar si el paso grabado representa la intención correcta: acción, objetivo, referencia del objetivo, datos, evidencia y efecto esperado.
 
 ---
 
@@ -326,6 +326,8 @@ Cuando el paso viene de la extensión, Smart Web Flow trata la extracción como 
 
 Esto ayuda en pantallas donde el valor puede cambiar en cada ejecución, por ejemplo contadores, estados, saldos, totales e indicadores.
 
+Cuando la extracción está dentro de una fila, card o item repetido, use **Referencia del objetivo** para extraer solo desde el registro correcto.
+
 El valor extraído queda disponible en:
 
 ```
@@ -421,7 +423,7 @@ Ejemplo de acceso:
 5. Detenga la grabación o finalice desde el panel de Inspect mode.
 6. Pegue el JSON en el canvas de QANode.
 7. Revise las acciones generadas.
-8. Confirme el texto de alcance en filas/cards repetidos.
+8. Confirme la referencia del objetivo en filas/cards repetidos.
 9. Mantenga efectos esperados activos en pasos donde la pantalla debe cambiar.
 10. Agregue `wait` o `assert` explícitos para validaciones críticas de negocio.
 11. Use variables para datos dinámicos.
@@ -432,8 +434,8 @@ Ejemplo de acceso:
 
 ## Buenas Prácticas
 
-- Prefiera texto de alcance corto y estable para items repetidos.
-- Use variables en el texto de alcance cuando el objetivo cambia por datos de prueba.
+- Prefiera una referencia del objetivo corta y estable para items repetidos.
+- Use variables en la referencia del objetivo cuando el objetivo cambia por datos de prueba.
 - Mantenga efectos esperados activos para menús, modales, cambios de página y nuevas pestañas.
 - Desactive efectos esperados solo en pasos volátiles o cuando ya agregó una espera explícita mejor.
 - Use `fill` para inputs normales y `type` para máscaras, autocomplete y rich text.
@@ -447,6 +449,6 @@ Ejemplo de acceso:
 
 - Iframes cross-origin pueden limitar grabación o ejecución.
 - Controles basados solo en canvas pueden requerir coordenadas o lógica customizada.
-- Listas virtualizadas muy dinámicas pueden necesitar texto de alcance y waits explícitos.
+- Listas virtualizadas muy dinámicas pueden necesitar referencia del objetivo y waits explícitos.
 - Self Healing es conservador y puede fallar cuando la UI está ambigua.
 - Los efectos esperados son generados automáticamente; el usuario puede activarlos/desactivarlos, pero no configurar cada efecto interno desde la UI.

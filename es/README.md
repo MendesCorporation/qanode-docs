@@ -124,12 +124,20 @@ Bienvenido a la documentación oficial de **QANode Community Edition**, la plata
 
 ---
 
+## IA y MCP — Enterprise
+
+| Página | Descripción |
+|--------|-------------|
+| [MCP — Integración con IA](mcp/vision-general.md) | Cómo conectar un cliente de IA a QANode para crear, editar, diagnosticar y ejecutar recursos de la plataforma |
+
+---
+
 ## CI/CD — Enterprise
 
 | Página | Descripción |
 |--------|-------------|
 | [Visión General](ci-cd/vision-general.md) | Qué ofrece la integración, permisos y conceptos principales |
-| [Tokens de Integración](ci-cd/tokens-integracion.md) | Generación, revocación, expiración y gobernanza de tokens |
+| [Tokens de Integración](ci-cd/tokens-integracion.md) | Generación, revocación, expiración y gobernanza de tokens usados por CI/CD y MCP |
 | [CLI y API del CI/CD](ci-cd/cli-api.md) | Cómo usar `@qanode/cli`, las rutas `/api/ci` y los patrones operativos |
 | [Ejemplos de Pipeline](ci-cd/ejemplos-pipelines.md) | Ejemplos listos para GitHub Actions y Azure DevOps |
 | [Overrides por Ejecución](ci-cd/overrides.md) | Cómo sobrescribir variables y credenciales sin persistir cambios |

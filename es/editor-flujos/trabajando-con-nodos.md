@@ -142,7 +142,7 @@ Puedes:
 
 ### Smart Web Flow
 
-**Smart Web Flow** es el nodo recomendado para nuevas automatizaciones web. Guarda más contexto por paso, incluyendo localizadores, selectores alternativos, identidad del objetivo, texto de alcance, efectos esperados y metadatos de grabación.
+**Smart Web Flow** es el nodo recomendado para nuevas automatizaciones web. Guarda más contexto por paso, incluyendo localizadores, selectores alternativos, identidad del objetivo, referencia del objetivo, efectos esperados y metadatos de grabación.
 
 Úselo principalmente cuando el flujo fue creado por la extensión Chrome o cuando la aplicación tiene componentes dinámicos como menús, modales, iframes, grids, tablas, cards y drag/drop.
 

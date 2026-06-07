@@ -89,7 +89,7 @@ Each step can carry multiple clues for finding the correct target. Instead of de
 | **Semantic locator** | `getByRole`, `getByLabel`, `getByText` | Buttons, links, fields, options, and accessible elements |
 | **CSS/XPath selectors** | `#email`, `[data-testid="submit"]`, XPath | Pages with stable IDs, attributes, or known structure |
 | **Target identity** | text, role, tag, attributes, approximate position | Confirms that the resolved selector still represents the same element |
-| **Row/card context** | scoped text, parent item, table row | Screens with repeated elements |
+| **Row/card context** | target reference, parent item, table row | Screens with repeated elements |
 | **Control context** | nearby label, expected value, control type | Custom inputs, combos, calendars, and styled checkboxes |
 | **Frame/Iframe** | recorded frame context | Applications that render content inside iframes |
 
@@ -97,9 +97,9 @@ The goal is resilience without clicking “anything similar”. When a page is a
 
 ---
 
-## Scoped Text
+## Target Reference
 
-**Scoped Text** appears when the step was recorded inside a repeated item, such as:
+**Target Reference** appears when the step was recorded inside a repeated item, such as:
 
 - a table row;
 - a kanban card;
@@ -107,7 +107,7 @@ The goal is resilience without clicking “anything similar”. When a page is a
 - a search result block;
 - a container with many identical buttons.
 
-It tells QANode **which row/card/list item should be used before resolving the target**.
+It tells QANode **which record, row, card, or item should be used as the reference before resolving the target**.
 
 Example:
 
@@ -116,15 +116,15 @@ Example:
 | INC0010001 | Apptrix | Open |
 | INC0010002 | QANode | Open |
 
-If the target is the **Open** button in row `INC0010002`, the button locator alone is not enough. The scoped text can be:
+If the target is the **Open** button in row `INC0010002`, the button locator alone is not enough. The target reference can be:
 
 ```
 INC0010002
 ```
 
-QANode first finds the row/card containing that text and only then resolves the element inside that scope.
+QANode first finds the row/card containing that text and only then resolves the element inside that context.
 
-Scoped text supports expressions:
+Target reference supports expressions:
 
 ```
 {{ variables.ticketNumber }}
@@ -151,7 +151,7 @@ In a normal run, Smart Web Flow tries the recorded strategies and metadata in a 
 5. conservative recovery when **Self Healing** is enabled;
 6. failure with diagnostics when confidence is not enough.
 
-Users usually do not need to configure this order manually. Review whether the recorded step represents the correct intent: action, target, scoped text, data, evidence, and expected effect.
+Users usually do not need to configure this order manually. Review whether the recorded step represents the correct intent: action, target, target reference, data, evidence, and expected effect.
 
 ---
 
@@ -326,6 +326,8 @@ When the step comes from the extension, Smart Web Flow treats extraction as a dy
 
 This helps in screens where the value can change on each run, such as counters, statuses, balances, totals, and indicators.
 
+When the extraction is inside a repeated row, card, or list item, use **Target Reference** to extract only from the correct record.
+
 The extracted value is available at:
 
 ```
@@ -421,7 +423,7 @@ Access example:
 5. Stop the recording or finish it from the Inspect mode panel.
 6. Paste the JSON into the QANode canvas.
 7. Review the generated actions.
-8. Confirm scoped text in repeated rows/cards.
+8. Confirm the target reference in repeated rows/cards.
 9. Keep expected effects enabled on steps where the screen must change.
 10. Add explicit `wait` or `assert` for business-critical validations.
 11. Use variables for dynamic data.
@@ -432,8 +434,8 @@ Access example:
 
 ## Best Practices
 
-- Prefer short, stable scoped text for repeated items.
-- Use variables in scoped text when the target changes by test data.
+- Prefer a short, stable target reference for repeated items.
+- Use variables in the target reference when the target changes by test data.
 - Keep expected effects enabled for menus, modals, page changes, and new tabs.
 - Disable expected effects only for volatile steps or when you already added a better explicit wait.
 - Use `fill` for normal inputs and `type` for masks, autocomplete, and rich text.
@@ -447,6 +449,6 @@ Access example:
 
 - Cross-origin iframes may restrict recording or execution.
 - Canvas-only controls can require coordinates or custom logic.
-- Highly dynamic virtualized lists may need scoped text and explicit waits.
+- Highly dynamic virtualized lists may need target reference and explicit waits.
 - Self Healing is conservative and may fail when the UI is ambiguous.
 - Expected effects are generated automatically; the user can enable/disable them, but not configure each internal expected effect from the UI.

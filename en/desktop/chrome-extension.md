@@ -93,7 +93,7 @@ Records interactions automatically:
 | **Navigate** to URL | `navigate` with URL |
 | **Reload** page | `refresh` |
 
-In **Smart Web Flow** mode, recorded actions may also carry target identity, scoped text, alternative strategies, iframe context, expected effects, evidence, and session bootstrap data.
+In **Smart Web Flow** mode, recorded actions may also carry target identity, target reference, alternative strategies, iframe context, expected effects, evidence, and session bootstrap data.
 
 When a click opens a new tab/window, the extension can insert a **Switch Page / Tab** (`switchPage`) step after the click so the next steps continue on the correct page.
 
@@ -214,12 +214,12 @@ In Smart Web Flow mode, the extension records more than a selector. A step may i
 
 This lets QANode execute the step with more context and avoids relying only on a fragile selector.
 
-When the extension detects that a target is inside a repeated row, card, or list item, it may record **Scoped Text**. QANode uses it to find the correct item first and only then resolve the button, link, field, or control inside it.
+When the extension detects that a target is inside a repeated row, card, or list item, it may record a **Target Reference**. QANode uses it to find the correct item first and only then resolve the button, link, field, or control inside it.
 
 Example:
 
 ```
-Scoped Text: INC0010008
+Target Reference: INC0010008
 Target: "Open" button
 ```
 
@@ -327,7 +327,7 @@ Smart Web Flow JSON may include extra identity, context, expected-effect, and ev
 2. Record the interaction with the extension
 3. Paste into QANode (Ctrl+V)
 4. Review generated steps
-5. Review expected effects and scoped text when present
+5. Review expected effects and target reference when present
 6. Add waits where needed
 7. Add assertions for validations
 8. Adjust selectors/locators if necessary
@@ -355,5 +355,5 @@ Smart Web Flow JSON may include extra identity, context, expected-effect, and ev
 - Use **Ctrl+Shift+E** for repeated elements such as tables and card lists.
 - Use **Ctrl+Alt+W** when an element must appear before the next step.
 - Use **Ctrl+Alt+T** for tables and grids in Smart Web Flow.
-- Review **Scoped Text** in rows, cards, and lists.
+- Review **Target Reference** in rows, cards, and lists.
 - Prefer `data-testid`, `data-qa`, `aria-label`, and accessible names when you can influence the application.

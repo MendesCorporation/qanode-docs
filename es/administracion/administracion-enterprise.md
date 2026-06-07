@@ -334,7 +334,7 @@ Los **Tokens de Integración** permiten autenticar pipelines y automatizaciones 
 
 Para acceder:
 
-1. Vaya a **Configuración** → **Access Tokens**
+1. Vaya a **Configuración** → **Tokens de Acceso**
 2. Genere un token
 3. Guarde el valor como secret del pipeline
 4. Úselo con `QANODE_URL` y `QANODE_TOKEN`

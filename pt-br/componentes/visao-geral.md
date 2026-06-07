@@ -22,6 +22,8 @@ Use componentes quando houver uma sequência que se repete em muitos cenários, 
 
 Evite componentes para ações muito específicas de um único cenário. Se a lógica só aparece uma vez, manter os nós diretamente no cenário costuma ser mais simples.
 
+Com MCP, também é possível pedir para uma IA criar componentes. Use essa opção quando você realmente quer um bloco reutilizável; para um cenário único, normalmente é melhor manter os nós diretamente no fluxo.
+
 ---
 
 ## Onde Encontrar

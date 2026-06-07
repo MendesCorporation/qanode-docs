@@ -93,7 +93,7 @@ Graba interacciones automáticamente:
 | **Navegar** a URL | `navigate` con URL |
 | **Recargar** página | `refresh` |
 
-En modo **Smart Web Flow**, las acciones grabadas también pueden cargar identidad del objetivo, texto de alcance, estrategias alternativas, contexto de iframe, efectos esperados, evidencias y datos de sesión.
+En modo **Smart Web Flow**, las acciones grabadas también pueden cargar identidad del objetivo, referencia del objetivo, estrategias alternativas, contexto de iframe, efectos esperados, evidencias y datos de sesión.
 
 Cuando un clic abre una nueva pestaña/ventana, la extensión puede insertar un paso **Cambiar página / pestaña** (`switchPage`) después del clic para que los siguientes pasos continúen en la página correcta.
 
@@ -214,12 +214,12 @@ En modo Smart Web Flow, la extensión graba más que un selector. Un paso puede 
 
 Esto permite que QANode ejecute el paso con más contexto y evite depender solo de un selector frágil.
 
-Cuando la extensión detecta que el objetivo está dentro de una fila, card o item repetido, puede grabar un **Texto de alcance**. QANode lo usa para encontrar primero el item correcto y solo después resolver el botón, enlace, campo o control dentro de él.
+Cuando la extensión detecta que el objetivo está dentro de una fila, card o item repetido, puede grabar una **Referencia del objetivo**. QANode la usa para encontrar primero el item correcto y solo después resolver el botón, enlace, campo o control dentro de él.
 
 Ejemplo:
 
 ```
-Texto de alcance: INC0010008
+Referencia del objetivo: INC0010008
 Objetivo: botón "Abrir"
 ```
 
@@ -327,7 +327,7 @@ El JSON de Smart Web Flow puede incluir campos adicionales de identidad, context
 2. Grabe la interacción con la extensión
 3. Pegue en QANode (Ctrl+V)
 4. Revise los pasos generados
-5. Revise efectos esperados y texto de alcance cuando existan
+5. Revise efectos esperados y referencia del objetivo cuando existan
 6. Agregue waits donde sea necesario
 7. Agregue asserts para validaciones
 8. Ajuste selectores/localizadores si es necesario
@@ -355,5 +355,5 @@ El JSON de Smart Web Flow puede incluir campos adicionales de identidad, context
 - Use **Ctrl+Shift+E** para elementos repetidos como tablas y listas de cards.
 - Use **Ctrl+Alt+W** cuando un elemento necesita aparecer antes del siguiente paso.
 - Use **Ctrl+Alt+T** para tablas y grids en Smart Web Flow.
-- Revise el **Texto de alcance** en filas, cards y listas.
+- Revise la **Referencia del objetivo** en filas, cards y listas.
 - Prefiera `data-testid`, `data-qa`, `aria-label` y nombres accesibles cuando pueda influir en la aplicación.

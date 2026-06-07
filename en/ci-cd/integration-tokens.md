@@ -2,7 +2,7 @@
 
 > **Available in:** QANode Enterprise
 
-Integration tokens are dedicated credentials for automation. They allow pipelines and scripts to call the QANode CLI or API without relying on a browser login session.
+Integration tokens are dedicated credentials for automation. They allow pipelines, scripts, MCP clients, and external automations to call QANode without relying on a browser login session.
 
 ---
 
@@ -77,7 +77,7 @@ When the global policy is fixed, users no longer choose an individual expiration
 
 ## Revocation
 
-Revoking a token immediately stops it from being used in new CLI commands or API calls.
+Revoking a token immediately stops it from being used in new CLI commands, API calls, or MCP connections.
 
 You can revoke:
 
@@ -90,6 +90,7 @@ You can revoke:
 
 - Store `QANODE_TOKEN` in your CI/CD provider's **Secrets**
 - Never commit tokens to versioned files
+- Use different tokens for CI/CD and MCP when you want separate audit trails
 - Prefer one token per pipeline or integrated system
 - Revoke tokens that are no longer used
 - Use expiration when your company requires periodic rotation

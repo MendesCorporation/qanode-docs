@@ -142,7 +142,7 @@ You can:
 
 ### Smart Web Flow
 
-**Smart Web Flow** is the recommended node for new web automations. It stores more context per step, including locators, alternative selectors, target identity, scoped text, expected effects, and recording metadata.
+**Smart Web Flow** is the recommended node for new web automations. It stores more context per step, including locators, alternative selectors, target identity, target reference, expected effects, and recording metadata.
 
 Use it mainly when the flow was created by the Chrome extension or when the application has dynamic components such as menus, modals, iframes, grids, tables, cards, and drag/drop.
 

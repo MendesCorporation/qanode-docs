@@ -132,6 +132,10 @@ A credencial centraliza as configurações de conexão e capacidades do disposit
 
 O nó Mobile Flow executa uma sequência de **passos** configuráveis. Cada passo representa uma ação no dispositivo.
 
+Quando o fluxo é gravado via MCP, os passos aparecem no editor visual com o mesmo padrão do Inspetor Mobile, incluindo destaques de interação e informações úteis para revisar falhas.
+
+Use o MCP para gravar ou ajustar jornadas mobile quando a IA precisa interagir com Appium, mas revise no editor visual se o alvo gravado representa a intenção correta.
+
 ### Ações Disponíveis
 
 | Ação | Descrição |

@@ -144,6 +144,10 @@ Project file management:
 - **Download** — Download attached documents
 - **Delete** — Remove documents
 
+When using MCP, project documents can be read by an AI client to help create or review scenarios. QANode supports text PDFs, scanned PDFs/images with OCR, DOCX, TXT, JSON, CSV, XLSX previews, and metadata from other files. For large PDFs, it is usually better to read specific pages or page ranges.
+
+When scenarios in the project are created or updated through MCP, the project scenario list receives the same realtime updates used by the QANode interface.
+
 ---
 
 ## Filtering and Search

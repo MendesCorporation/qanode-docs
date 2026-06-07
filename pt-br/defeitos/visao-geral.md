@@ -15,6 +15,7 @@ O módulo de Defeitos transforma uma falha de execução em um processo controla
 - **Investigação em sandbox** — cópia descartável do fluxo original para investigar sem impactar execuções oficiais
 - **Campos customizados** — campos adicionais definidos pela sua empresa
 - **Comentários, anexos e histórico completo** — toda interação com o defeito fica registrada
+- **Integração MCP** — uma IA pode criar, diagnosticar, anexar, comentar e tramitar defeitos respeitando permissões, campos obrigatórios e workflow
 
 ---
 
@@ -73,6 +74,8 @@ Claim é o ato de assumir o defeito. Ao dar claim, o defeito passa a ser seu. A 
 ### Sandbox
 
 O sandbox é uma cópia descartável do fluxo original usada para investigar a falha. Alterações no sandbox não afetam o fluxo oficial nem contam nos KPIs e relatórios. Veja [Sandbox de Investigação](./sandbox.md).
+
+Quando a investigação é feita por MCP, o diagnóstico técnico volta para o chat da IA. Comentários e anexos só são registrados no defeito quando a ação é solicitada ou necessária para auditar uma operação.
 
 ---
 

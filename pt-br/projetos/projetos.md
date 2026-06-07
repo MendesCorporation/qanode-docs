@@ -76,6 +76,8 @@ Lista todos os cenários (fluxos) do projeto:
 - **Editar** — Abre o editor de fluxos
 - **Excluir** — Remove o cenário
 
+Quando um cenário do projeto é criado ou atualizado por MCP, a lista do projeto recebe a atualização em tempo real para evitar que usuários trabalhando na tela vejam dados desatualizados.
+
 No QANode Enterprise, esses cenários também podem ser executados por pipeline com o `@qanode/cli` usando:
 
 - **ID**
@@ -143,6 +145,21 @@ Gerenciamento de arquivos do projeto:
 - **Upload** — Faça upload de documentos (requisitos, especificações, etc.)
 - **Download** — Baixe documentos anexados
 - **Excluir** — Remova documentos
+
+Os documentos do projeto também podem ser lidos por integrações MCP, respeitando as permissões do usuário. Isso permite que uma IA entenda requisitos antes de criar ou ajustar cenários.
+
+Formatos suportados para leitura:
+
+| Tipo | Como o QANode trata |
+|------|---------------------|
+| PDF | Extrai texto; permite escolher página única, intervalo ou todas as páginas |
+| PDF escaneado / imagem | Usa OCR quando não há texto digital disponível |
+| DOCX | Extrai conteúdo textual |
+| TXT / JSON / CSV | Lê diretamente como texto/dados |
+| XLSX | Mostra prévia das planilhas e linhas |
+| Outros arquivos | Retorna metadados ou permite download, quando o usuário tem permissão |
+
+Para documentos grandes, prefira ler páginas ou intervalos específicos em vez de carregar tudo de uma vez.
 
 ---
 

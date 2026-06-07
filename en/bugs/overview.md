@@ -15,6 +15,7 @@ The Bug Tracking module turns a failed execution into a controlled tracking proc
 - **Sandbox investigation** — a disposable copy of the original flow to investigate without affecting official runs or KPIs
 - **Custom fields** — additional fields defined by your organization
 - **Comments, attachments, and full history** — every interaction with the bug is recorded
+- **MCP integration** — allowed AI clients can inspect bugs, attachments, original run evidence, and workflow transitions using the user's permissions
 
 ---
 
@@ -25,6 +26,8 @@ The Bug Tracking module appears in the sidebar with the **bug** icon (🐛). Cli
 To open a bug directly from a failed execution, go to the execution detail and click **Open Bug**.
 
 [How to access](../../assets/images/defeitos-como-acessar.mp4)
+
+When a bug is analyzed through MCP, the diagnosis returns in the AI chat. It is not automatically posted as a public comment unless the user explicitly asks for a comment or attachment.
 
 ---
 

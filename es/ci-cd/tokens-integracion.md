@@ -2,7 +2,7 @@
 
 > **Disponible en:** QANode Enterprise
 
-Los tokens de integración son credenciales dedicadas para automatización. Permiten que pipelines y scripts llamen a la CLI o a la API de QANode sin depender de una sesión de navegador.
+Los tokens de integración son credenciales dedicadas para automatización. Permiten que pipelines, scripts, clientes MCP y automatizaciones externas llamen a QANode sin depender de una sesión de navegador.
 
 ---
 
@@ -10,7 +10,7 @@ Los tokens de integración son credenciales dedicadas para automatización. Perm
 
 Vaya a:
 
-**Configuración → Access Tokens**
+**Configuración → Tokens de Acceso**
 
 Esta pantalla solo aparece para usuarios con los permisos requeridos.
 
@@ -36,7 +36,7 @@ En la configuración predeterminada del producto:
 
 [Crear un token](../../assets/images/ci-cd-criando-access-token.mp4)
 
-1. Vaya a **Configuración → Access Tokens**
+1. Vaya a **Configuración → Tokens de Acceso**
 2. Haga clic en **Generar Token**
 3. Defina:
    - el **nombre** del token
@@ -64,7 +64,7 @@ Esto facilita su identificación en logs, variables de entorno y almacenes de se
 
 Los usuarios con `settings.integration_token_all` pueden configurar la política global en:
 
-**Configuración → Access Tokens → Política Global de Expiración de Tokens**
+**Configuración → Tokens de Acceso → Política Global de Expiración de Tokens**
 
 Las opciones disponibles son:
 
@@ -77,7 +77,7 @@ Cuando la política global es fija, el usuario deja de elegir una expiración in
 
 ## Revocación
 
-Revocar un token impide de inmediato su uso en nuevos comandos CLI o llamadas API.
+Revocar un token impide de inmediato su uso en nuevos comandos CLI, llamadas API o conexiones MCP.
 
 Puede revocar:
 
@@ -90,6 +90,7 @@ Puede revocar:
 
 - Guarde `QANODE_TOKEN` en los **Secrets** de su proveedor de CI/CD
 - Nunca escriba tokens en archivos versionados
+- Use tokens diferentes para CI/CD y MCP cuando quiera separar auditoría
 - Prefiera un token por pipeline o por sistema integrado
 - Revoque tokens que ya no se usen
 - Use expiración cuando su empresa requiera rotación periódica

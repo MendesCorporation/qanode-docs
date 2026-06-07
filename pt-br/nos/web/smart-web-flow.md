@@ -89,7 +89,7 @@ Cada passo pode ter mais de uma pista para encontrar o alvo correto. Em vez de d
 | **Localizador semântico** | `getByRole`, `getByLabel`, `getByText` | Botões, links, campos, opções e elementos com acessibilidade razoável |
 | **Seletores CSS/XPath** | `#email`, `[data-testid="submit"]`, XPath | Páginas com IDs, atributos estáveis ou estrutura conhecida |
 | **Identidade do alvo** | texto, role, tag, atributos, posição aproximada | Confirma que o seletor encontrado ainda representa o mesmo elemento |
-| **Contexto de linha/card** | texto de escopo, item pai, linha de tabela | Telas com elementos repetidos |
+| **Contexto de linha/card** | referência do alvo, item pai, linha de tabela | Telas com elementos repetidos |
 | **Contexto de controle** | label próximo, valor esperado, tipo do controle | Inputs customizados, combos, calendários e checkboxes estilizados |
 | **Frame/Iframe** | contexto do frame gravado | Aplicações que renderizam conteúdo dentro de iframes |
 
@@ -97,9 +97,9 @@ O objetivo é ser resiliente sem clicar em qualquer coisa parecida. Quando a tel
 
 ---
 
-## Texto do Escopo
+## Referência do Alvo
 
-O campo **Texto do escopo** aparece quando o passo foi gravado dentro de um item repetido, como:
+O campo **Referência do alvo** aparece quando o passo foi gravado dentro de um item repetido, como:
 
 - linha de tabela;
 - card de kanban;
@@ -107,7 +107,9 @@ O campo **Texto do escopo** aparece quando o passo foi gravado dentro de um item
 - bloco de resultado;
 - container com vários botões iguais.
 
-Ele informa ao QANode **em qual linha/card/lista procurar o alvo**.
+Ele informa ao QANode **qual registro, linha, card ou item deve servir de referência para encontrar o alvo**.
+
+Em termos práticos: primeiro o QANode localiza a referência, depois procura o botão, campo, texto ou ação dentro daquele contexto.
 
 ### Exemplo
 
@@ -118,17 +120,17 @@ Imagine uma tabela com vários botões **Abrir**:
 | INC0010001 | Apptrix | Abrir |
 | INC0010002 | QANode | Abrir |
 
-Se o alvo é o botão **Abrir** da linha `INC0010002`, o localizador do botão sozinho não é suficiente. O **Texto do escopo** pode ser:
+Se o alvo é o botão **Abrir** da linha `INC0010002`, o localizador do botão sozinho não é suficiente. A **Referência do alvo** pode ser:
 
 ```
 INC0010002
 ```
 
-Assim, o QANode procura primeiro a linha/card que contém esse texto e só depois resolve o elemento dentro desse escopo.
+Assim, o QANode procura primeiro a linha/card que contém esse texto e só depois resolve o elemento dentro desse contexto.
 
 ### Usando Variáveis
 
-O texto do escopo aceita expressões:
+A referência do alvo aceita expressões:
 
 ```
 {{ variables.numeroChamado }}
@@ -139,7 +141,7 @@ Isso é útil quando o dado muda a cada execução, mas a intenção permanece a
 
 ### Boas Práticas
 
-- Use um texto curto e único dentro do item, como número, código, nome ou título.
+- Use uma referência curta e única dentro do item, como número, código, nome ou título.
 - Evite usar o texto completo de um card grande se uma parte menor já identifica o item.
 - Para dados variáveis, use `{{ }}` em vez de deixar o valor gravado fixo.
 - Se vários itens possuem textos parecidos, complemente o fluxo com asserts ou extrações para confirmar o item correto.
@@ -332,7 +334,7 @@ Executam clique ou duplo clique em um elemento.
 | Campo | Descrição |
 |-------|-----------|
 | **Locator** | Localizador semântico principal |
-| **Texto do escopo** | Restringe a busca a uma linha/card/item |
+| **Referência do alvo** | Restringe a busca a uma linha, card, item ou registro específico |
 | **Estratégias CSS/XPath** | Seletores alternativos gravados |
 | **Tentativas** | Número de ciclos de tentativa do passo |
 | **Usar efeitos esperados** | Liga/desliga a validação automática do resultado observado no clique |
@@ -443,7 +445,7 @@ O Smart Web Flow grava e executa drag/drop usando uma combinação de:
 
 - Prefira gravar a ação real pela extensão.
 - Quando o destino é uma coluna, lista ou lane, revise se o alvo gravado representa o container e não apenas outro card.
-- Para cards dinâmicos, use texto de escopo ou variáveis para identificar o card correto.
+- Para cards dinâmicos, use **Referência do alvo** ou variáveis para identificar o card correto.
 - Se a aplicação precisa de tempo para estabilizar depois do drop, adicione `waitAfter` ou uma espera explícita.
 - Se a extensão avisar que não conseguiu mover o item durante a gravação, ainda assim revise o passo no QANode: em sites muito customizados, a execução pode conseguir reproduzir o drag/drop mesmo quando a extensão não consegue mover visualmente o card.
 
@@ -525,6 +527,8 @@ Modos disponíveis incluem:
 
 Asserts são importantes para transformar uma automação em teste: eles provam que o resultado esperado apareceu.
 
+Quando a validação está dentro de uma tabela, lista ou card repetido, combine o assert com **Referência do alvo** para validar o registro certo, e não o primeiro texto parecido da tela.
+
 ---
 
 ### extract
@@ -539,6 +543,8 @@ Extrai um valor único da página.
 Quando o passo vem da extensão, o Smart Web Flow trata extração como valor dinâmico. O texto visto durante a gravação é usado como amostra/evidência, mas o alvo deve ser encontrado por um seletor estável, por contexto ou pela posição correta entre elementos equivalentes.
 
 Isso ajuda em telas onde o valor pode mudar a cada execução, por exemplo contadores, status, saldos, totais e indicadores.
+
+Quando a extração está dentro de uma linha, card ou item repetido, use **Referência do alvo** para extrair apenas o valor do registro correto.
 
 O valor extraído fica disponível em:
 

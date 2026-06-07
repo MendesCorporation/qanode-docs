@@ -271,6 +271,7 @@ In environments with access control, components use their own permissions:
 ## Best Practices
 
 - Use components for logic that is truly shared.
+- When working through MCP, create a component only when the user explicitly wants a reusable component. For one-off automations, keep the nodes in the scenario.
 - Keep the contract small and clear.
 - Name inputs and outputs with business terms, not internal technical details.
 - Use categories to organize components by domain, such as `Login`, `Test data`, `Orders`, or `CRM`.

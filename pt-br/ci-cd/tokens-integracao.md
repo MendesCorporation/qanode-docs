@@ -2,7 +2,12 @@
 
 > **Disponível em:** QANode Enterprise
 
-Tokens de integração são credenciais próprias para automação. Eles permitem que pipelines e scripts chamem a CLI ou a API do QANode sem depender de login no navegador.
+Tokens de integração são credenciais próprias para automação. Eles permitem que pipelines, scripts e clientes MCP chamem o QANode sem depender de login no navegador.
+
+O mesmo token pode ser usado para:
+
+- **CI/CD** — executar cenários, suítes, consultar runs e baixar relatórios por CLI/API;
+- **MCP** — permitir que uma IA opere o QANode respeitando as permissões do usuário autenticado.
 
 ---
 
@@ -10,7 +15,7 @@ Tokens de integração são credenciais próprias para automação. Eles permite
 
 Vá em:
 
-**Configurações → Access Tokens**
+**Configurações → Tokens de Acesso**
 
 Essa tela só aparece para usuários com as permissões adequadas.
 
@@ -36,13 +41,13 @@ Na configuração padrão do produto:
 
 [Criando token](../../assets/images/ci-cd-criando-access-token.mp4)
 
-1. Acesse **Configurações → Access Tokens**
+1. Acesse **Configurações → Tokens de Acesso**
 2. Clique em **Gerar Token**
 3. Defina:
    - **Nome** do token
    - **Prazo de expiração**, quando a política global permitir escolha individual
 4. Copie o valor gerado
-5. Salve esse valor em um **secret** do seu pipeline
+5. Salve esse valor em um **secret** do seu pipeline, da IDE ou do cliente MCP
 
 O token é exibido integralmente apenas no momento da criação. Depois disso, a interface mantém apenas informações de referência e auditoria.
 
@@ -64,7 +69,7 @@ Esse prefixo facilita a identificação em logs, variáveis de ambiente e cofres
 
 Usuários com `settings.integration_token_all` podem configurar a política global em:
 
-**Configurações → Access Tokens → Política Global de Expiração de Tokens**
+**Configurações → Tokens de Acesso → Política Global de Expiração de Tokens**
 
 As opções são:
 
@@ -77,7 +82,7 @@ Quando a política global for fixa, o usuário deixa de escolher o prazo individ
 
 ## Revogação
 
-Revogar um token interrompe imediatamente o uso dele em novos comandos CLI ou chamadas API.
+Revogar um token interrompe imediatamente o uso dele em novos comandos CLI, chamadas API ou conexões MCP.
 
 Você pode revogar:
 
@@ -89,8 +94,9 @@ Você pode revogar:
 ## Boas práticas de segurança
 
 - Guarde `QANODE_TOKEN` em **Secrets** do provedor de CI/CD
+- Para MCP, guarde o token no cofre/configuração segura da IDE ou do cliente de IA
 - Nunca escreva tokens em arquivos versionados
-- Prefira um token por pipeline ou por sistema integrado
+- Prefira um token por pipeline, por cliente MCP ou por sistema integrado
 - Revogue tokens que não são mais usados
 - Use expiração quando o processo da sua empresa exigir rotação periódica
 
@@ -104,6 +110,27 @@ export QANODE_TOKEN=qnt_xxxxx
 ```
 
 No GitHub Actions ou Azure DevOps, o valor normalmente fica em um secret do job e não em texto puro no repositório.
+
+---
+
+## Exemplo de uso com MCP
+
+Clientes MCP usam a URL da API do QANode e enviam o token no header `Authorization`.
+
+```json
+{
+  "mcpServers": {
+    "qanode": {
+      "url": "https://qanode.empresa.com/api/mcp",
+      "headers": {
+        "Authorization": "Bearer ${QANODE_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+> Para detalhes de uso com IA, veja [MCP — Integração com IA](../mcp/visao-geral.md).
 
 ---
 
@@ -122,3 +149,4 @@ Isso ajuda a rastrear quem criou ou revogou cada chave operacional.
 ## Próximos Passos
 
 - [CLI e API do CI/CD](./cli-api.md) — Veja como autenticar, disparar execuções e consultar resultados
+- [MCP — Integração com IA](../mcp/visao-geral.md) — Veja como conectar uma IA ao QANode

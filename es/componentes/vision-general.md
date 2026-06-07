@@ -271,6 +271,7 @@ En ambientes con control de acceso, los componentes respetan permisos propios:
 ## Buenas Prácticas
 
 - Use componentes para lógicas realmente compartidas.
+- Al trabajar vía MCP, cree un componente solo cuando el usuario pida explícitamente un componente reutilizable. Para automatizaciones puntuales, mantenga los nodos en el escenario.
 - Mantenga el contrato pequeño y claro.
 - Nombre entradas y salidas con términos de negocio, no detalles técnicos internos.
 - Use categorías para organizar componentes por dominio, como `Login`, `Datos de prueba`, `Pedidos` o `CRM`.

@@ -41,6 +41,19 @@ Anexos permitem incluir arquivos relevantes diretamente no defeito — capturas 
 
 [Como anexar um arquivo](../../assets/images/defeitos-anexar-arquivo.mp4)
 
+### Anexos do defeito vs. artefatos da execução
+
+Existem dois tipos de arquivos relacionados a falhas:
+
+| Tipo | Onde fica | Uso |
+|------|-----------|-----|
+| **Artefatos da execução** | Run/evidências | Screenshots, logs, PDFs e arquivos gerados durante uma execução |
+| **Anexos do defeito** | Detalhe do defeito | Arquivos enviados manualmente para colaborar na investigação |
+
+Quando um defeito foi aberto a partir de uma run, os artefatos originais continuam vinculados à execução. Já os anexos do defeito são materiais adicionados depois, como evidências complementares, logs externos, vídeos ou arquivos enviados pelo time.
+
+Integrações MCP conseguem listar e baixar anexos do defeito quando o usuário tem permissão. Para evidências originais da execução, a IA deve consultar os artefatos da run vinculada.
+
 ### Excluindo anexos
 
 A exclusão de anexos segue uma regra de autoria:
@@ -74,6 +87,7 @@ O histórico é a trilha auditável completa do defeito. Cada evento registrado 
 | Atribuição de responsável | "Responsável alterado para [usuário]" |
 | Mudança de fila | "Fila alterada para [fila]" |
 | Comentário adicionado | "Comentário de [usuário]" |
+| Ação via MCP | Evento ou comentário indicando que a ação foi feita via integração, quando aplicável |
 | Sandbox criado | "Sandbox de investigação criado" |
 | Sandbox descartado | "Sandbox de investigação descartado" |
 | Anexo adicionado | Gera evento no histórico com o nome do arquivo; o arquivo também aparece na seção **Anexos** |

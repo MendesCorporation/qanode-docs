@@ -78,6 +78,13 @@ El historial es el rastro auditable completo del defecto. Cada evento registrado
 | Sandbox descartado | "Sandbox de investigación descartado" |
 | Adjunto agregado | Genera un evento en el historial con el nombre del archivo; el archivo también aparece en la sección **Adjuntos** |
 | Adjunto eliminado | Genera un evento en el historial con el nombre del archivo eliminado; la eliminación también afecta la sección **Adjuntos** |
+| Acción vía MCP | Muestra cuando un cambio fue realizado mediante una integración MCP |
+
+### Adjuntos Del Defecto vs. Artefactos De La Ejecución
+
+Los adjuntos del defecto son archivos agregados intencionalmente al registro del defecto. Los artefactos de ejecución son evidencias generadas por la ejecución original, como screenshots, logs, descargas o informes.
+
+Cuando un defecto se abre desde una ejecución fallida, la ejecución original permanece vinculada al defecto. Usuarios e integraciones con permiso pueden inspeccionar los artefactos de la ejecución sin duplicar todos los archivos como adjuntos del defecto.
 
 ### Cómo acceder al historial
 

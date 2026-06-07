@@ -4,13 +4,15 @@
 
 QANode's CI/CD integration allows your company to trigger scenarios and suites from the pipeline, authenticate with integration tokens, and download the consolidated execution report without relying on a browser user session.
 
+The same integration tokens can also authenticate MCP clients, allowing an AI client to operate QANode with the permissions of the token owner. For that use case, see [MCP — AI Integration](../mcp/overview.md).
+
 Instead of treating QANode as only a visual interface, your company can use it as an official part of build validation, pull request checks, release gates, or deployment pipelines.
 
 ---
 
 ## What the integration provides
 
-- **Integration tokens** for pipeline and automation authentication
+- **Integration tokens** for pipelines, automations, and MCP clients
 - **Official CLI (`@qanode/cli`)** for GitHub Actions, Azure DevOps, GitLab, Jenkins, and local scripts
 - **Dedicated `/api/ci` routes** for scenarios, suites, run lookup, and report download
 - **Execution by ID or by name** with project support when needed
@@ -103,7 +105,7 @@ Some behaviors are important to understand up front:
 
 | Page | What you will learn |
 |------|---------------------|
-| [Integration Tokens](./integration-tokens.md) | How to generate, revoke, and govern pipeline tokens |
+| [Integration Tokens](./integration-tokens.md) | How to generate, revoke, and govern CI/CD and MCP tokens |
 | [CI/CD CLI and API](./cli-api.md) | How to authenticate, trigger scenarios/suites, and use overrides |
 | [Pipeline Examples](./pipeline-examples.md) | How to integrate with GitHub Actions and Azure DevOps |
 | [Per-execution Overrides](./overrides.md) | How to override variables and credentials safely |
@@ -112,4 +114,4 @@ Some behaviors are important to understand up front:
 
 ## Next Steps
 
-- [Integration Tokens](./integration-tokens.md) — Learn how to generate, revoke, and govern the keys used by the pipeline
+- [Integration Tokens](./integration-tokens.md) — Learn how to generate, revoke, and govern the keys used by CI/CD and MCP

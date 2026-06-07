@@ -217,12 +217,12 @@ No modo Smart Web Flow, a extensão grava mais do que um seletor. Cada passo pod
 
 Isso permite que o QANode execute o passo com mais contexto e evite depender apenas de um seletor frágil.
 
-Quando a extensão detecta que o alvo está dentro de uma linha, card ou item repetido, ela pode gravar um **Texto do escopo**. Esse texto ajuda o Smart Web Flow a encontrar primeiro o item correto e só depois o botão, link, campo ou controle dentro dele.
+Quando a extensão detecta que o alvo está dentro de uma linha, card ou item repetido, ela pode gravar uma **Referência do alvo**. Essa referência ajuda o Smart Web Flow a encontrar primeiro o item correto e só depois o botão, link, campo ou controle dentro dele.
 
 Exemplo:
 
 ```
-Texto do escopo: INC0010008
+Referência do alvo: INC0010008
 Alvo: botão "Abrir"
 ```
 
@@ -565,6 +565,6 @@ O JSON copiado é compatível com o nó correspondente ao modo selecionado.
 - **Use Ctrl+Alt+W** (wait) quando um elemento precisa aparecer antes do próximo passo
 - **Use Ctrl+Alt+T** (extract table) para tabelas e grids no modo Smart Web Flow
 - **Adicione waits** no QANode para elementos que demoram a carregar
-- **Revise o Texto do escopo** — em linhas, cards e listas, confirme se o texto identifica o item correto
+- **Revise a Referência do alvo** — em linhas, cards e listas, confirme se o texto identifica o item correto
 - **Revise os seletores** — no modo Web Flow, prefira `data-testid`; nos modos semânticos, prefira `getByRole` ou `getByLabel`
 - **Grave em segmentos** — para fluxos longos, grave por partes e combine no QANode

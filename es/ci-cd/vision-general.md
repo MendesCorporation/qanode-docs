@@ -4,13 +4,15 @@
 
 La integración CI/CD de QANode permite que su empresa ejecute escenarios y suites desde el pipeline, autentique con tokens de integración y descargue el informe consolidado de cada ejecución sin depender de una sesión de navegador.
 
+Los mismos tokens de integración también pueden autenticar clientes MCP, permitiendo que un cliente de IA opere QANode con los permisos del dueño del token. Para este uso, vea [MCP — Integración con IA](../mcp/vision-general.md).
+
 En lugar de tratar QANode solo como una interfaz visual, su empresa puede usarlo como parte oficial de la validación de builds, pull requests, releases o despliegues.
 
 ---
 
 ## Qué ofrece la integración
 
-- **Tokens de integración** para autenticación de pipelines y automatizaciones
+- **Tokens de integración** para autenticación de pipelines, automatizaciones y clientes MCP
 - **CLI oficial (`@qanode/cli`)** para GitHub Actions, Azure DevOps, GitLab, Jenkins y scripts locales
 - **Rutas `/api/ci` dedicadas** para escenarios, suites, consulta de ejecuciones y descarga de informes
 - **Ejecución por ID o por nombre** con soporte de proyecto cuando sea necesario
@@ -24,7 +26,7 @@ En lugar de tratar QANode solo como una interfaz visual, su empresa puede usarlo
 
 El flujo operativo más común es:
 
-1. El equipo crea un **token de integración** en **Configuración → Access Tokens**
+1. El equipo crea un **token de integración** en **Configuración → Tokens de Acceso**
 2. El pipeline guarda ese token como **secret**
 3. El job ejecuta la CLI de QANode con `QANODE_URL` y `QANODE_TOKEN`
 4. QANode crea una ejecución real en la instancia
@@ -103,7 +105,7 @@ Hay algunos comportamientos importantes para evitar expectativas incorrectas:
 
 | Página | Lo que aprenderá |
 |--------|------------------|
-| [Tokens de Integración](./tokens-integracion.md) | Cómo generar, revocar y gobernar tokens de pipeline |
+| [Tokens de Integración](./tokens-integracion.md) | Cómo generar, revocar y gobernar tokens de CI/CD y MCP |
 | [CLI y API del CI/CD](./cli-api.md) | Cómo autenticar, disparar escenarios/suites y usar overrides |
 | [Ejemplos de Pipeline](./ejemplos-pipelines.md) | Cómo integrar con GitHub Actions y Azure DevOps |
 | [Overrides por Ejecución](./overrides.md) | Cómo sobrescribir variables y credenciales de forma segura |
@@ -112,4 +114,4 @@ Hay algunos comportamientos importantes para evitar expectativas incorrectas:
 
 ## Próximos Pasos
 
-- [Tokens de Integración](./tokens-integracion.md) — Aprenda a generar, revocar y gobernar las claves usadas por el pipeline
+- [Tokens de Integración](./tokens-integracion.md) — Aprenda a generar, revocar y gobernar las claves usadas por CI/CD y MCP

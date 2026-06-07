@@ -4,13 +4,15 @@
 
 O módulo de integração CI/CD do QANode permite disparar cenários e suítes a partir do pipeline da sua empresa, autenticar com tokens de integração e baixar o relatório consolidado de cada execução sem depender de sessão de usuário no navegador.
 
+Os mesmos tokens de integração também podem autenticar clientes MCP, permitindo que uma IA opere o QANode com as permissões do usuário dono do token. Para esse uso, veja [MCP — Integração com IA](../mcp/visao-geral.md).
+
 Em vez de tratar o QANode apenas como uma interface visual, sua empresa pode usá-lo como parte oficial do processo de validação de build, pull request, release ou deploy.
 
 ---
 
 ## O que a integração oferece
 
-- **Tokens de integração** para autenticação em pipelines e automações
+- **Tokens de integração** para autenticação em pipelines, automações e clientes MCP
 - **CLI oficial (`@qanode/cli`)** para uso em GitHub Actions, Azure DevOps, GitLab, Jenkins e scripts locais
 - **Rotas `/api/ci` dedicadas** para cenários, suítes, consulta de execução e download de relatório
 - **Execução por ID ou por nome** com suporte a projeto quando necessário
@@ -24,7 +26,7 @@ Em vez de tratar o QANode apenas como uma interface visual, sua empresa pode us�
 
 O fluxo operacional mais comum é:
 
-1. O time cria um **token de integração** em **Configurações → Access Tokens**
+1. O time cria um **token de integração** em **Configurações → Tokens de Acesso**
 2. O pipeline salva esse token como **secret**
 3. O job executa a CLI do QANode com `QANODE_URL` e `QANODE_TOKEN`
 4. O QANode cria uma execução real na instância

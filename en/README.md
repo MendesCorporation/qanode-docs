@@ -124,12 +124,20 @@ Welcome to the official documentation of **QANode Community Edition**, the test 
 
 ---
 
+## AI and MCP — Enterprise
+
+| Page | Description |
+|------|-------------|
+| [MCP — AI Integration](mcp/overview.md) | How to connect an AI client to QANode to create, edit, diagnose, and execute platform resources |
+
+---
+
 ## CI/CD — Enterprise
 
 | Page | Description |
 |------|-------------|
 | [Overview](ci-cd/overview.md) | What the integration provides, permissions, and key concepts |
-| [Integration Tokens](ci-cd/integration-tokens.md) | Token creation, revocation, expiration, and governance |
+| [Integration Tokens](ci-cd/integration-tokens.md) | Token creation, revocation, expiration, and governance for CI/CD and MCP |
 | [CI/CD CLI and API](ci-cd/cli-api.md) | How to use `@qanode/cli`, `/api/ci` routes, and operational patterns |
 | [Pipeline Examples](ci-cd/pipeline-examples.md) | Ready-to-use examples for GitHub Actions and Azure DevOps |
 | [Per-execution Overrides](ci-cd/overrides.md) | How to override variables and credentials without persisting changes |

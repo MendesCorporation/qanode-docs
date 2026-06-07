@@ -34,12 +34,20 @@ O QANode suporta múltiplos dashboards com diferentes visibilidades:
 | Tipo | Descrição | Uso Típico |
 |------|-----------|-----------|
 | **Card de Métrica** | Valor numérico único com formatação condicional | Total de execuções, taxa de sucesso |
+| **Gauge** | Indicador semicircular com mínimo, máximo e valor atual | Taxa de sucesso, SLA, progresso |
 | **Gráfico de Barras** | Barras verticais com uma ou mais séries | Execuções por dia, falhas por projeto |
 | **Barras Empilhadas** | Barras verticais com múltiplas séries empilhadas | Comparação acumulada entre categorias |
 | **Barras Horizontais** | Barras horizontais com uma ou mais séries | Rankings, comparações categóricas |
 | **Gráfico de Linha** | Linhas de tendência | Evolução da taxa de sucesso |
+| **Linha Empilhada** | Múltiplas linhas com séries acumuladas | Evolução por status ou equipe |
 | **Gráfico de Área** | Área preenchida | Acumulado de execuções |
+| **Área Empilhada** | Áreas acumuladas por série | Volume por status ao longo do tempo |
 | **Gráfico de Pizza** | Distribuição proporcional | Proporção sucesso/falha |
+| **Donut** | Distribuição proporcional com centro livre para total | Distribuição por status com valor central |
+| **Funnel** | Etapas em formato de funil | Conversão, qualidade ou etapas de processo |
+| **Calendar Heatmap** | Intensidade por dia em calendário | Falhas por dia, execuções por dia |
+| **Scatter** | Pontos por eixo X/Y | Duração por quantidade de passos |
+| **Bubble** | Scatter com tamanho variável | Duração, passos e severidade |
 | **Tabela** | Dados tabulares | Lista de últimas execuções |
 
 ### Criando um Widget
@@ -79,20 +87,21 @@ Defina de onde os dados virão:
 
 **SQL Direto:**
 
-Para consultas mais complexas, use o modo SQL com o editor Monaco:
+Para consultas mais complexas, use o modo SQL com o editor Monaco. Prefira o Query Builder para widgets simples e use SQL quando precisar de CTEs, joins, agregações condicionais ou cálculos que ficariam difíceis no construtor.
 
 ```sql
 SELECT
-  DATE(started_at) as dia,
+  DATE("startedAt") AS dia,
   status,
-  COUNT(*) as total
-FROM runs
-WHERE started_at >= NOW() - INTERVAL '30 days'
+  COUNT(*)::int AS total
+FROM "Run"
+WHERE "isSandbox" = false
+  AND "startedAt" >= CURRENT_DATE - INTERVAL '30 days'
 GROUP BY dia, status
-ORDER BY dia
+ORDER BY dia;
 ```
 
-> O SQL também suporta CTEs (Common Table Expressions) com a cláusula `WITH`. Consultas que modificam dados (INSERT, UPDATE, DELETE, DROP, etc.) continuam bloqueadas.
+> O SQL também suporta CTEs (Common Table Expressions) com a cláusula `WITH`. Consultas que modificam dados (INSERT, UPDATE, DELETE, DROP, etc.) continuam bloqueadas por guardrails de leitura.
 
 > O modo SQL requer a permissão `dashboard.sql`.
 
@@ -102,10 +111,12 @@ Escolha o tipo de gráfico e mapeie os campos:
 
 | Configuração | Descrição |
 |-------------|-----------|
-| **Tipo de Gráfico** | Card, Barras, Linha, Área, Pizza, Tabela |
+| **Tipo de Gráfico** | Métrica, Gauge, Barras, Linha, Área, Pizza, Donut, Funnel, Heatmap, Scatter, Bubble ou Tabela |
 | **Eixo X** | Campo para o eixo horizontal |
 | **Eixo Y** | Campo para o eixo vertical (valor numérico) |
 | **Série** | Campo para múltiplas séries (quando pivot) |
+| **Label** | Campo de rótulo, usado por pizza, donut, funnel, scatter, bubble e tabelas |
+| **Tamanho** | Campo numérico usado por Bubble |
 | **Legenda** | Exibir/ocultar legenda |
 | **Tooltip** | Exibir valores ao passar o mouse |
 
@@ -116,6 +127,8 @@ Escolha o tipo de gráfico e mapeie os campos:
 | **Título** | Nome exibido no widget |
 | **Cores** | Cores customizadas por série/categoria |
 | **Formatação Condicional** | Regras de cores baseadas em valores |
+| **Colunas de Progresso** | Exibe colunas numéricas da tabela como barra de progresso |
+| **Limite / Alvo** | Referências visuais para Gauge e indicadores |
 
 **Formatação Condicional** (para cards e tabelas):
 
@@ -125,6 +138,32 @@ Escolha o tipo de gráfico e mapeie os campos:
 | `<` | Se valor < 50 → vermelho |
 | `=` | Se valor = "failed" → vermelho |
 | `contains` | Se contém "error" → amarelo |
+
+### Tabelas com Progresso
+
+Em widgets de tabela, colunas numéricas podem ser exibidas como barra de progresso. Isso é útil para acompanhar:
+
+- avanço de projetos;
+- percentual de sucesso;
+- cobertura de cenários;
+- consumo de SLA;
+- progresso de pipelines.
+
+Cada coluna de progresso pode ter cor própria e valores mínimo/máximo. Campos textuais, IDs e datas não são recomendados para progresso.
+
+### Formatação Condicional em Tabelas
+
+As regras de formatação condicional permitem destacar linhas ou células conforme valores da própria consulta.
+
+Exemplos:
+
+| Regra | Resultado |
+|-------|-----------|
+| `status = failed` | Linha em vermelho |
+| `taxa_sucesso < 80` | Indicador de atenção |
+| `falhas > 0` | Destacar cenários com falha |
+
+Use formatação condicional para chamar atenção para problemas, mas evite aplicar muitas cores ao mesmo tempo.
 
 ---
 
@@ -146,7 +185,7 @@ O dashboard usa um **grid de 12 colunas** responsivo:
 - **Arrastar** um widget para reposicioná-lo
 - **Redimensionar** arrastando a borda inferior-direita
 - O grid se ajusta automaticamente para evitar sobreposições
-- 
+
 ---
 
 ## Exemplos de Widgets
@@ -199,4 +238,6 @@ Widgets podem ser configurados para atualizar automaticamente em intervalos defi
 - Use **formatação condicional** para destacar problemas (taxa abaixo de 80% = vermelho)
 - **Dashboards por equipe** — crie dashboards com visibilidade por papel
 - Use o **modo pivot** para criar gráficos com múltiplas séries sem SQL
+- Use **SQL** apenas quando o Query Builder não expressar bem a consulta
+- Em tabelas, use **colunas de progresso** apenas para campos numéricos de negócio
 - **Limite os dados** — consultas grandes podem impactar a performance

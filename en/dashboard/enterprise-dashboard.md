@@ -34,12 +34,20 @@ QANode supports multiple dashboards with different visibility settings:
 | Type | Description | Typical Use |
 |------|-------------|-------------|
 | **Metric Card** | Single numeric value with conditional formatting | Total executions, success rate |
+| **Gauge** | Semicircular indicator with minimum, maximum, and current value | Success rate, SLA, progress |
 | **Bar Chart** | Vertical bars with one or more series | Executions per day, failures per project |
 | **Stacked Bars** | Vertical bars with multiple stacked series | Cumulative comparison between categories |
 | **Horizontal Bars** | Horizontal bars with one or more series | Rankings, categorical comparisons |
 | **Line Chart** | Trend lines | Success rate evolution |
+| **Stacked Line** | Multiple lines with accumulated series | Evolution by status or team |
 | **Area Chart** | Filled area | Cumulative executions |
+| **Stacked Area** | Areas accumulated by series | Volume by status over time |
 | **Pie Chart** | Proportional distribution | Success/failure ratio |
+| **Donut** | Proportional distribution with a free center for totals | Status distribution with central value |
+| **Funnel** | Funnel-shaped process stages | Conversion, quality, or process stages |
+| **Calendar Heatmap** | Daily intensity in a calendar view | Failures per day, runs per day |
+| **Scatter** | Points mapped by X/Y axes | Duration by number of steps |
+| **Bubble** | Scatter chart with variable point size | Duration, steps, and severity |
 | **Table** | Tabular data | List of recent executions |
 
 ### Creating a Widget
@@ -79,17 +87,18 @@ Define where the data will come from:
 
 **Direct SQL:**
 
-For more complex queries, use SQL mode with the Monaco editor:
+For more complex queries, use SQL mode with the Monaco editor. Prefer Query Builder for simple widgets and use SQL when you need CTEs, joins, conditional aggregations, or calculations that would be hard to express in the builder:
 
 ```sql
 SELECT
-  DATE(started_at) as dia,
+  DATE("startedAt") AS day,
   status,
-  COUNT(*) as total
-FROM runs
-WHERE started_at >= NOW() - INTERVAL '30 days'
-GROUP BY dia, status
-ORDER BY dia
+  COUNT(*)::int AS total
+FROM "Run"
+WHERE "isSandbox" = false
+  AND "startedAt" >= CURRENT_DATE - INTERVAL '30 days'
+GROUP BY day, status
+ORDER BY day;
 ```
 
 > SQL mode requires the `dashboard.sql` permission.
@@ -102,10 +111,12 @@ Choose the chart type and map the fields:
 
 | Setting | Description |
 |---------|-------------|
-| **Chart Type** | Card, Bar, Stacked Bar, Horizontal Bar, Line, Area, Pie, Table |
+| **Chart Type** | Metric, Gauge, Bar, Stacked Bar, Horizontal Bar, Line, Area, Pie, Donut, Funnel, Heatmap, Scatter, Bubble, or Table |
 | **X Axis** | Field for the horizontal axis |
 | **Y Axis** | Field for the vertical axis (numeric value) |
 | **Series** | Field for multiple series (when using pivot) |
+| **Label** | Label field, used by pie, donut, funnel, scatter, bubble, and tables |
+| **Size** | Numeric field used by Bubble |
 | **Legend** | Show/hide legend |
 | **Tooltip** | Show values on mouse hover |
 
@@ -116,6 +127,8 @@ Choose the chart type and map the fields:
 | **Title** | Name displayed on the widget |
 | **Colors** | Custom colors per series/category |
 | **Conditional Formatting** | Color rules based on values |
+| **Progress Columns** | Displays numeric table columns as progress bars |
+| **Threshold / Target** | Visual references for gauges and indicators |
 
 **Conditional Formatting** (for cards and tables):
 
@@ -125,6 +138,32 @@ Choose the chart type and map the fields:
 | `<` | If value < 50 → red |
 | `=` | If value = "failed" → red |
 | `contains` | If contains "error" → yellow |
+
+### Tables With Progress
+
+In table widgets, numeric columns can be shown as progress bars. This is useful for tracking:
+
+- project progress;
+- success percentage;
+- scenario coverage;
+- SLA consumption;
+- pipeline progress.
+
+Each progress column can have its own color and minimum/maximum values. Text fields, IDs, and dates are not recommended for progress.
+
+### Conditional Formatting In Tables
+
+Conditional formatting rules let you highlight rows or cells based on values returned by the query.
+
+Examples:
+
+| Rule | Result |
+|------|--------|
+| `status = failed` | Red row |
+| `success_rate < 80` | Attention indicator |
+| `failures > 0` | Highlight scenarios with failures |
+
+Use conditional formatting to draw attention to issues, but avoid applying too many colors at the same time.
 
 ---
 
@@ -146,6 +185,7 @@ The dashboard uses a responsive **12-column grid**:
 - **Drag** a widget to reposition it
 - **Resize** by dragging the bottom-right corner
 - The grid adjusts automatically to prevent overlaps
+- Default widget sizes are optimized by type: metrics are smaller, while charts and tables start larger.
 
 ---
 

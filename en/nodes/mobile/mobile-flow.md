@@ -132,6 +132,10 @@ The credential centralizes connection settings and device capabilities. Configur
 
 The Mobile Flow node executes a sequence of configurable **steps**. Each step represents an action on the device.
 
+When the flow is recorded through MCP, steps appear in the visual editor with the same review pattern as Mobile Inspector, including interaction highlights and useful information for reviewing failures.
+
+Use MCP to record or adjust mobile journeys when an AI client needs to interact with Appium, but review the visual editor to confirm that each recorded target matches the intended action.
+
 ### Available Actions
 
 | Action | Description |
