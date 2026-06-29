@@ -10,7 +10,7 @@ Após cada execução de cenário ou suíte, um **relatório PDF** é gerado aut
 
 - **Resumo**: Status, duração, data de execução
 - **Detalhes por Nó**: Status individual, logs, outputs, duração
-- **Screenshots**: Capturas de tela (quando configuradas nos nós web)
+- **Screenshots**: Capturas de tela (quando configuradas nos nós web), com data/hora quando habilitado no template
 - **Erros**: Detalhes das falhas encontradas
 
 O relatório fica disponível na lista de execuções e pode ser baixado a qualquer momento.
@@ -126,6 +126,7 @@ O layout do relatório PDF é configurável. Acesse **Configurações** → **Te
 | **Exibir Logo** | Ativar/desativar logo |
 | **Incluir Screenshots** | Incluir capturas de tela |
 | **Tamanho dos Screenshots** | Dimensão das imagens no relatório |
+| **Exibir data/hora das capturas** | Mostrar quando cada screenshot foi capturado |
 | **Incluir Logs** | Incluir logs de cada nó |
 | **Máximo de Logs** | Limite de linhas de log por nó |
 | **Incluir Outputs** | Incluir dados de saída dos nós |

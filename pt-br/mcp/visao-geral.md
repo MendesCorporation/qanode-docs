@@ -83,8 +83,8 @@ O token não concede acesso extra. Ele apenas autentica a IA como aquele usuári
 
 | Área | Exemplos de uso |
 |------|-----------------|
-| **Projetos** | Buscar projetos, criar projeto e ler documentos anexados |
-| **Cenários** | Criar fluxos, adicionar nós, conectar etapas, validar e executar |
+| **Projetos** | Buscar projetos, pesquisar trechos em documentos e ler anexos quando necessário |
+| **Cenários** | Criar fluxos, importar nós, adicionar etapas, conectar, validar e executar |
 | **Smart Web** | Gravar navegação web, validar telas, extrair dados e reaproveitar sessão quando necessário |
 | **Mobile** | Gravar jornadas Android/iOS com Appium e salvar como Mobile Flow |
 | **Banco de Dados** | Consultar schema e criar validações ou consultas em nós de banco |
@@ -155,7 +155,9 @@ Para sessões web já autenticadas, como sistemas enterprise com SSO, use sessõ
 
 ## Documentos de Projeto
 
-O MCP permite que clientes de IA leiam documentos anexados ao projeto como contexto para criar cenários.
+O MCP permite que clientes de IA usem documentos anexados ao projeto como contexto para criar cenários, tirar dúvidas ou entender regras de negócio.
+
+Para documentos grandes, a IA pode pesquisar primeiro por trechos relevantes dentro dos anexos do projeto. Assim, ela encontra páginas, seções ou partes do texto antes de abrir o documento completo.
 
 O QANode consegue ler:
 
@@ -166,7 +168,27 @@ O QANode consegue ler:
 - XLSX com prévia de planilhas;
 - metadados de outros arquivos.
 
-Para documentos grandes, peça para a IA ler páginas ou intervalos específicos.
+Quando o trecho encontrado não for suficiente, peça para a IA ler uma página, um intervalo de páginas ou o documento completo.
+
+---
+
+## Documentação Oficial do QANode
+
+Além dos documentos do seu projeto, o MCP também pode consultar a documentação oficial do QANode.
+
+Use isso quando quiser perguntar como configurar um nó, entender um recurso ou confirmar o comportamento de uma área do produto sem sair do cliente de IA.
+
+Exemplos:
+
+```text
+Como eu configuro um Smart Web Flow com sessão persistida?
+```
+
+```text
+Quais opções existem para criar widgets de dashboard?
+```
+
+A busca usa o idioma solicitado quando disponível e retorna os trechos mais relevantes da documentação.
 
 ---
 

@@ -60,6 +60,8 @@ Considere usar outro nó quando:
 | **Self Healing** | `boolean` | `true` | Permite recuperação conservadora quando o alvo original não é encontrado |
 | **Varredura de acessibilidade** | `boolean` | `false` | Executa análise de acessibilidade e gera evidências |
 | **Auditoria de performance** | `boolean` | `false` | Coleta métricas de navegação, rede e APIs por tela |
+| **Capturar console do navegador** | `boolean` | `false` | Registra mensagens de console, warnings e erros da página durante a execução |
+| **Falhar em erros de console** | `boolean` | `false` | Faz o nó falhar quando um erro de console relevante é encontrado |
 
 ### Storage e Sessão
 
@@ -639,6 +641,16 @@ Cada passo pode capturar screenshot.
 | **Delay** | Tempo extra antes da captura |
 
 Use screenshots em ações críticas, validações, transições de tela e pontos que precisam aparecer no relatório.
+
+---
+
+## Console do Navegador
+
+Quando a captura de console está habilitada, o Smart Web Flow registra mensagens emitidas pela página durante a execução, como `console.log`, warnings, erros JavaScript e falhas reportadas pelo navegador.
+
+Essas informações aparecem nos detalhes da execução e podem ser baixadas como evidência. Use esse recurso para investigar telas que parecem funcionar visualmente, mas geram erros no frontend ou em integrações chamadas pelo navegador.
+
+A opção **Falhar em erros de console** deve ser usada quando um erro no console representa falha real do teste. Em sistemas legados ou muito ruidosos, habilite primeiro apenas a captura para entender o volume de mensagens antes de transformar esses erros em falha automática.
 
 ---
 

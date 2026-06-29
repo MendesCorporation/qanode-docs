@@ -134,6 +134,8 @@ The Mobile Flow node executes a sequence of configurable **steps**. Each step re
 
 When the flow is recorded through MCP, steps appear in the visual editor with the same review pattern as Mobile Inspector, including interaction highlights and useful information for reviewing failures.
 
+During execution, the canvas shows Mobile Flow step progress, helping you track which action is running, passed, or failed.
+
 Use MCP to record or adjust mobile journeys when an AI client needs to interact with Appium, but review the visual editor to confirm that each recorded target matches the intended action.
 
 ### Available Actions

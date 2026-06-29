@@ -134,6 +134,8 @@ El nodo Mobile Flow ejecuta una secuencia de **pasos** configurables. Cada paso 
 
 Cuando el flujo se graba vía MCP, los pasos aparecen en el editor visual con el mismo patrón de revisión del Inspector Mobile, incluyendo destaques de interacción e información útil para revisar fallos.
 
+Durante la ejecución, el canvas muestra el progreso de los pasos del Mobile Flow, ayudando a acompañar qué acción se está ejecutando, pasó o falló.
+
 Use MCP para grabar o ajustar jornadas mobile cuando un cliente de IA necesita interactuar con Appium, pero revise el editor visual para confirmar que cada objetivo grabado representa la acción esperada.
 
 ### Acciones Disponibles

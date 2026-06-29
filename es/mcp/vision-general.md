@@ -83,8 +83,8 @@ El token no concede acceso extra. Solo autentica el cliente de IA como ese usuar
 
 | Área | Ejemplos de uso |
 |------|-----------------|
-| **Proyectos** | Buscar proyectos, crear proyecto y leer documentos adjuntos |
-| **Escenarios** | Crear flujos, agregar nodos, conectar etapas, validar y ejecutar |
+| **Proyectos** | Buscar proyectos, buscar fragmentos en documentos y leer adjuntos cuando sea necesario |
+| **Escenarios** | Crear flujos, importar nodos, agregar etapas, conectar, validar y ejecutar |
 | **Smart Web** | Grabar navegación web, validar pantallas, extraer datos y reutilizar sesión cuando sea necesario |
 | **Mobile** | Grabar jornadas Android/iOS con Appium y guardarlas como Mobile Flow |
 | **Base de Datos** | Consultar schema y crear consultas o validaciones de base |
@@ -155,7 +155,9 @@ Para sesiones web ya autenticadas, como sistemas enterprise con SSO, use sesione
 
 ## Documentos De Proyecto
 
-MCP permite que clientes de IA lean documentos adjuntos al proyecto como contexto para crear escenarios.
+MCP permite que clientes de IA usen documentos adjuntos al proyecto como contexto para crear escenarios, responder dudas o entender reglas de negocio.
+
+Para documentos grandes, el cliente de IA puede buscar primero fragmentos relevantes dentro de los adjuntos del proyecto. Así encuentra páginas, secciones o partes del texto antes de abrir el documento completo.
 
 QANode puede leer:
 
@@ -166,7 +168,27 @@ QANode puede leer:
 - XLSX con vista previa de planillas;
 - metadatos de otros archivos.
 
-Para documentos grandes, pida leer páginas o rangos específicos.
+Cuando el fragmento encontrado no sea suficiente, pida al cliente de IA que lea una página, un rango de páginas o el documento completo.
+
+---
+
+## Documentación Oficial de QANode
+
+Además de los documentos de su proyecto, MCP también puede consultar la documentación oficial de QANode.
+
+Use esto cuando quiera preguntar cómo configurar un nodo, entender una funcionalidad o confirmar el comportamiento de un área del producto sin salir del cliente de IA.
+
+Ejemplos:
+
+```text
+¿Cómo configuro un Smart Web Flow con sesión persistida?
+```
+
+```text
+¿Qué opciones existen para crear widgets de dashboard?
+```
+
+La búsqueda usa el idioma solicitado cuando está disponible y devuelve los fragmentos más relevantes de la documentación.
 
 ---
 

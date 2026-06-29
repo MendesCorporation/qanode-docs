@@ -148,6 +148,8 @@ Gerenciamento de arquivos do projeto:
 
 Os documentos do projeto também podem ser lidos por integrações MCP, respeitando as permissões do usuário. Isso permite que uma IA entenda requisitos antes de criar ou ajustar cenários.
 
+Em projetos com muitos anexos ou documentos grandes, a integração MCP pode pesquisar trechos relevantes antes de abrir o arquivo completo. Isso ajuda a encontrar uma regra, requisito, tela ou termo específico sem carregar todo o documento de uma vez.
+
 Formatos suportados para leitura:
 
 | Tipo | Como o QANode trata |
@@ -159,7 +161,7 @@ Formatos suportados para leitura:
 | XLSX | Mostra prévia das planilhas e linhas |
 | Outros arquivos | Retorna metadados ou permite download, quando o usuário tem permissão |
 
-Para documentos grandes, prefira ler páginas ou intervalos específicos em vez de carregar tudo de uma vez.
+Para documentos grandes, prefira pesquisar termos, ler páginas ou intervalos específicos em vez de carregar tudo de uma vez.
 
 ---
 

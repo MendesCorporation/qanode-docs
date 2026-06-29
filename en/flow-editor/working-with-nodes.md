@@ -32,6 +32,16 @@ QANode Recorder can generate **Smart Web Flow**, **Web Flow**, or **Smart Locato
 
 ---
 
+### MCP-Assisted Import
+
+When you use QANode through an MCP integration, the AI client can import nodes from one scenario into another.
+
+This is useful for reusing parts of existing flows, such as test data setup, login, helper queries, or shared validations.
+
+During import, QANode preserves selected nodes, internal connections, and labels whenever possible. If there are name conflicts or expressions that depend on nodes outside the selection, review the flow in the editor before running it in critical suites.
+
+---
+
 ### Adding Reusable Components
 
 When published components exist, the scenario editor displays the **Components** tab in the side palette.

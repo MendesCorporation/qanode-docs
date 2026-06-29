@@ -32,6 +32,16 @@ O QANode Recorder pode gerar nós **Smart Web Flow**, **Web Flow** ou **Smart Lo
 
 ---
 
+### Importação Assistida por MCP
+
+Quando você usa o QANode por uma integração MCP, a IA pode importar nós de um cenário para outro.
+
+Esse recurso é útil para reaproveitar partes de fluxos já existentes, como preparação de massa, login, consultas auxiliares ou validações comuns.
+
+Ao importar, o QANode preserva os nós selecionados, conexões internas e labels quando possível. Se houver conflito de nomes ou expressões que dependem de nós que ficaram fora da seleção, revise o fluxo no editor antes de executar em suítes críticas.
+
+---
+
 ### Adicionar Componentes Reutilizáveis
 
 Quando existem componentes publicados, o editor de cenários exibe a aba **Componentes** na paleta lateral.

@@ -83,8 +83,8 @@ The token does not grant extra access. It only authenticates the AI client as th
 
 | Area | Example uses |
 |------|--------------|
-| **Projects** | Search projects, create a project, and read attached documents |
-| **Scenarios** | Create flows, add nodes, connect steps, validate, and execute |
+| **Projects** | Search projects, search snippets inside documents, and read attachments when needed |
+| **Scenarios** | Create flows, import nodes, add steps, connect, validate, and execute |
 | **Smart Web** | Record web navigation, validate screens, extract data, and reuse sessions when needed |
 | **Mobile** | Record Android/iOS journeys with Appium and save them as Mobile Flow nodes |
 | **Database** | Inspect schema and create database queries or validations |
@@ -155,7 +155,9 @@ For already authenticated web sessions, such as enterprise systems with SSO, use
 
 ## Project Documents
 
-MCP lets AI clients read project documents as context for creating scenarios.
+MCP lets AI clients use project documents as context for creating scenarios, answering questions, or understanding business rules.
+
+For large documents, the AI client can first search for relevant snippets inside the project attachments. This helps it find pages, sections, or parts of the text before opening the full document.
 
 QANode can read:
 
@@ -166,7 +168,27 @@ QANode can read:
 - XLSX with spreadsheet preview;
 - metadata from other files.
 
-For large documents, ask the AI client to read specific pages or page ranges.
+When the snippet is not enough, ask the AI client to read a page, a page range, or the full document.
+
+---
+
+## Official QANode Documentation
+
+In addition to your project documents, MCP can also search the official QANode documentation.
+
+Use this when you want to ask how to configure a node, understand a feature, or confirm the behavior of a product area without leaving the AI client.
+
+Examples:
+
+```text
+How do I configure a Smart Web Flow with persisted session?
+```
+
+```text
+What options exist for creating dashboard widgets?
+```
+
+The search uses the requested language when available and returns the most relevant documentation snippets.
 
 ---
 

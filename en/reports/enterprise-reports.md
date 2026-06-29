@@ -10,7 +10,7 @@ After each scenario or suite execution, a **PDF report** is automatically genera
 
 - **Summary**: Status, duration, execution date
 - **Details per Node**: Individual status, logs, outputs, duration
-- **Screenshots**: Screen captures (when configured in web nodes)
+- **Screenshots**: Screen captures (when configured in web nodes), with date/time when enabled in the template
 - **Errors**: Details of the failures encountered
 
 The report is available in the execution list and can be downloaded at any time.
@@ -126,6 +126,7 @@ The PDF report layout is configurable. Go to **Settings** → **Report Template*
 | **Show Logo** | Enable/disable logo |
 | **Include Screenshots** | Include screen captures |
 | **Screenshot Size** | Image dimensions in the report |
+| **Show screenshot date/time** | Show when each screenshot was captured |
 | **Include Logs** | Include logs from each node |
 | **Maximum Logs** | Log line limit per node |
 | **Include Outputs** | Include node output data |

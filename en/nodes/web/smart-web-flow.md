@@ -60,6 +60,8 @@ Consider another node when:
 | **Self Healing** | `boolean` | `true` | Allows conservative recovery when the original target is not found |
 | **Accessibility Scan** | `boolean` | `false` | Runs accessibility analysis and stores evidence |
 | **Performance Audit** | `boolean` | `false` | Collects navigation, network, and API metrics per page |
+| **Capture Browser Console** | `boolean` | `false` | Records console messages, warnings, and page errors during execution |
+| **Fail on Console Errors** | `boolean` | `false` | Fails the node when a relevant console error is found |
 
 ### Storage and Session
 
@@ -383,6 +385,16 @@ Each step can capture screenshots:
 | `none` | No screenshot for the step |
 
 Use screenshots for critical points: login, navigation, modal opening, form submission, drag/drop, important assertions, and failures that need visual diagnosis.
+
+---
+
+## Browser Console
+
+When console capture is enabled, Smart Web Flow records messages emitted by the page during execution, such as `console.log`, warnings, JavaScript errors, and browser-reported failures.
+
+These entries appear in the run details and can be downloaded as evidence. Use this feature to investigate screens that look correct visually but still generate frontend errors or browser-side integration failures.
+
+Use **Fail on Console Errors** when a console error should make the test fail. For legacy or noisy systems, first enable capture only to understand the volume of messages before turning console errors into automatic failures.
 
 ---
 

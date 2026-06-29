@@ -32,6 +32,16 @@ QANode Recorder puede generar nodos **Smart Web Flow**, **Web Flow** o **Smart L
 
 ---
 
+### Importación Asistida por MCP
+
+Cuando usa QANode mediante una integración MCP, el cliente de IA puede importar nodos de un escenario a otro.
+
+Este recurso es útil para reutilizar partes de flujos existentes, como preparación de datos, login, consultas auxiliares o validaciones compartidas.
+
+Al importar, QANode conserva los nodos seleccionados, conexiones internas y labels cuando es posible. Si hay conflictos de nombres o expresiones que dependen de nodos que quedaron fuera de la selección, revise el flujo en el editor antes de ejecutarlo en suites críticas.
+
+---
+
 ### Agregar Componentes Reutilizables
 
 Cuando existen componentes publicados, el editor de escenarios muestra la pestaña **Componentes** en la paleta lateral.

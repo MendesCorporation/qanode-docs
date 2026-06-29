@@ -60,6 +60,8 @@ Considere otro nodo cuando:
 | **Self Healing** | `boolean` | `true` | Permite recuperación conservadora cuando el objetivo original no se encuentra |
 | **Escaneo de accesibilidad** | `boolean` | `false` | Ejecuta análisis de accesibilidad y guarda evidencia |
 | **Auditoría de performance** | `boolean` | `false` | Colecta métricas de navegación, red y APIs por pantalla |
+| **Capturar consola del navegador** | `boolean` | `false` | Registra mensajes de consola, warnings y errores de la página durante la ejecución |
+| **Fallar con errores de consola** | `boolean` | `false` | Hace fallar el nodo cuando se encuentra un error de consola relevante |
 
 ### Storage y Sesión
 
@@ -383,6 +385,16 @@ Cada paso puede capturar screenshots:
 | `none` | Sin screenshot para el paso |
 
 Use screenshots en puntos críticos: login, navegación, apertura de modal, envío de formulario, drag/drop, aserciones importantes y fallas que requieren diagnóstico visual.
+
+---
+
+## Consola del Navegador
+
+Cuando la captura de consola está habilitada, Smart Web Flow registra mensajes emitidos por la página durante la ejecución, como `console.log`, warnings, errores JavaScript y fallas reportadas por el navegador.
+
+Estas entradas aparecen en los detalles de la ejecución y pueden descargarse como evidencia. Use este recurso para investigar pantallas que parecen funcionar visualmente, pero generan errores en el frontend o fallas de integración del lado del navegador.
+
+Use **Fallar con errores de consola** cuando un error de consola debe reprobar la prueba. En sistemas legados o muy ruidosos, habilite primero solo la captura para entender el volumen de mensajes antes de convertir esos errores en fallas automáticas.
 
 ---
 

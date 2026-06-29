@@ -10,7 +10,7 @@ Después de cada ejecución de escenario o suite, se genera automáticamente un 
 
 - **Resumen**: Estado, duración, fecha de ejecución
 - **Detalles por Nodo**: Estado individual, registros, salidas, duración
-- **Capturas de Pantalla**: Imágenes capturadas (cuando están configuradas en los nodos web)
+- **Capturas de Pantalla**: Imágenes capturadas (cuando están configuradas en los nodos web), con fecha/hora cuando está habilitado en la plantilla
 - **Errores**: Detalles de los fallos encontrados
 
 El informe está disponible en la lista de ejecuciones y puede descargarse en cualquier momento.
@@ -126,6 +126,7 @@ El diseño del informe PDF es configurable. Acceda a **Configuración** → **Pl
 | **Mostrar Logo** | Activar/desactivar logo |
 | **Incluir Capturas** | Incluir capturas de pantalla |
 | **Tamaño de Capturas** | Dimensión de las imágenes en el informe |
+| **Mostrar fecha/hora de las capturas** | Mostrar cuándo se capturó cada screenshot |
 | **Incluir Registros** | Incluir registros de cada nodo |
 | **Máximo de Registros** | Límite de líneas de registro por nodo |
 | **Incluir Salidas** | Incluir datos de salida de los nodos |

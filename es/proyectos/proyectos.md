@@ -144,7 +144,9 @@ Gestión de archivos del proyecto:
 - **Descargar** — Descargue documentos adjuntos
 - **Eliminar** — Elimine documentos
 
-Al usar MCP, los documentos del proyecto pueden ser leídos por un cliente de IA para ayudar a crear o revisar escenarios. QANode soporta PDFs con texto, PDFs escaneados/imágenes con OCR, DOCX, TXT, JSON, CSV, vista previa de XLSX y metadatos de otros archivos. Para PDFs grandes, normalmente es mejor leer páginas o rangos específicos.
+Al usar MCP, los documentos del proyecto pueden ser leídos por un cliente de IA para ayudar a crear o revisar escenarios. QANode soporta PDFs con texto, PDFs escaneados/imágenes con OCR, DOCX, TXT, JSON, CSV, vista previa de XLSX y metadatos de otros archivos.
+
+En proyectos con muchos adjuntos o documentos grandes, la integración MCP puede buscar fragmentos relevantes antes de abrir el archivo completo. Esto ayuda a encontrar una regla, requisito, pantalla o término específico sin cargar todo el documento de una vez. Para PDFs grandes, normalmente es mejor buscar términos, leer páginas específicas o leer rangos.
 
 Cuando los escenarios del proyecto se crean o actualizan por MCP, la lista de escenarios del proyecto recibe las mismas actualizaciones realtime usadas por la interfaz de QANode.
 
