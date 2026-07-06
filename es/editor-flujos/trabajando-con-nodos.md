@@ -105,6 +105,9 @@ Al hacer clic en un nodo, el panel de propiedades se abre a la derecha. Cada tip
 |-------|-------------|
 | **Label** | Nombre del nodo (mostrado en el canvas) |
 | **Continuar en Fallo** | Si está activado, el flujo continúa aunque este nodo falle |
+| **Omitir durante la ejecución** | Mantiene el nodo en el canvas, pero las ejecuciones normales registran el nodo como omitido en lugar de ejecutarlo |
+
+Use **Omitir durante la ejecución** para borradores, experimentos o partes del flujo que aún no deben ejecutarse. No use esta opción para ocultar un fallo real: si el nodo debe seguir formando parte de la prueba, corrija su configuración o deje que el fallo aparezca en la ejecución.
 
 ### Usando Expresiones en los Campos
 

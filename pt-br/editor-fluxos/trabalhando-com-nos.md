@@ -105,6 +105,9 @@ Ao clicar em um nó, o painel de propriedades abre à direita. Cada tipo de nó 
 |-------|-----------|
 | **Label** | Nome do nó (exibido no canvas) |
 | **Continuar em Falha** | Se ativado, o fluxo continua mesmo se este nó falhar |
+| **Ignorar na execução** | Mantém o nó no canvas, mas faz execuções normais registrarem o nó como pulado em vez de executá-lo |
+
+Use **Ignorar na execução** para rascunhos, experimentos ou partes do fluxo que ainda não devem rodar. Não use essa opção para esconder uma falha real: se o nó precisa continuar fazendo parte do teste, corrija a configuração ou deixe a falha aparecer na execução.
 
 ### Usando Expressões nos Campos
 

@@ -21,6 +21,14 @@ Acesse através do ícone de **engrenagem** (⚙️) no menu lateral → **Confi
 
 > **Requisito:** SMTP deve estar configurado para envio de convites.
 
+### Convite Manual
+
+Quando o SMTP não está disponível, um administrador pode criar um convite manual pela tela de usuários. Use **Ctrl + clique** em **Convidar Usuário** para abrir o modo manual.
+
+Nesse modo, o QANode cria o usuário pendente e mostra o link de convite na tela, sem enviar e-mail. Copie o link e envie diretamente para a pessoa por um canal seguro.
+
+Use convite manual apenas como alternativa operacional quando o envio por e-mail não puder ser usado.
+
 ### Importação em Lote
 
 Para cadastrar vários usuários de uma vez:

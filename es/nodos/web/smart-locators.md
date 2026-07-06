@@ -25,10 +25,10 @@ Idéntica al nodo Web Flow:
 | Campo | Tipo | Predeterminado | Descripción |
 |-------|------|----------------|-------------|
 | **Modo de Sesión** | `new` / `reuse` | `new` | Nueva sesión o reutilizar una existente |
-| **Session ID** | `string` | — | ID de la sesión a reutilizar |
+| **ID de sesión** | `string` | — | ID de la sesión a reutilizar |
 | **Headless** | `boolean` | `true` | Ejecutar sin interfaz gráfica visible |
-| **Estrategia de Storage** | `inMemory` / `persisted` | `inMemory` | Persistir cookies/localStorage |
-| **Clave de Storage** | `string` | — | Identificador del storage persistido |
+| **Almacenamiento de sesión** | `inMemory` / `persisted` | `inMemory` | Persistir cookies/localStorage |
+| **Nombre de sesión** | `string` | — | Nombre usado para guardar/reutilizar la sesión cuando el almacenamiento es `persisted` |
 | **Navegador** | `chromium` / `firefox` / `webkit` | `chromium` | Navegador a usar en la ejecución |
 | **Dispositivo** | `desktop` / `mobile` | `desktop` | Modo de emulación |
 | **Viewport** | preset o `custom` | `1920x1080` | Tamaño de ventana (modo Desktop) |
@@ -42,6 +42,8 @@ Idéntica al nodo Web Flow:
 | **Self Healing** | `boolean` | `false` | Intenta recuperar localizadores cuando el elemento cambia y el locator original ya no resuelve el objetivo |
 
 > Las opciones de Navegador & Dispositivo son idénticas al nodo Web Flow — consulta la [documentación de Web Flow](web-flow.md#navegador) para detalles sobre presets de viewport y dispositivos mobile disponibles.
+
+El comportamiento de sesión también sigue Web Flow: al seleccionar `reuse`, el editor usa **Almacenamiento de sesión** como `persisted` por defecto y puede avisar cuando el nodo de origen aún está configurado como `inMemory`.
 
 ### Auditoría de Rendimiento
 

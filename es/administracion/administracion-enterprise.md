@@ -21,6 +21,14 @@ Acceda a través del ícono de **engranaje** (⚙️) en el menú lateral → **
 
 > **Requisito:** El SMTP debe estar configurado para el envío de invitaciones.
 
+### Invitación Manual
+
+Cuando el SMTP no está disponible, un administrador puede crear una invitación manual desde la pantalla de usuarios. Use **Ctrl + clic** en **Invitar Usuario** para abrir el modo manual.
+
+En este modo, QANode crea el usuario pendiente y muestra el enlace de invitación en pantalla, sin enviar correo electrónico. Copie el enlace y envíelo directamente a la persona por un canal seguro.
+
+Use la invitación manual solo como alternativa operativa cuando el envío por correo no pueda utilizarse.
+
 ### Importación en Lote
 
 Para registrar varios usuarios a la vez:

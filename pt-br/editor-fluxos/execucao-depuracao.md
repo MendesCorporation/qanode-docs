@@ -25,7 +25,7 @@ Para executar todo o fluxo:
 | **Sucesso** | 🟢 Verde | O nó foi executado com sucesso |
 | **Falha** | 🔴 Vermelho | O nó encontrou um erro |
 | **Cancelado** | ⚪ Cinza | A execução foi interrompida manualmente |
-| **Pulado** | ⚪ Cinza | O nó não foi executado (branch inativo) |
+| **Pulado** | ⚪ Cinza | O nó não foi executado (branch inativo ou nó marcado como ignorado) |
 
 ---
 
@@ -59,6 +59,7 @@ Após a execução, clique em qualquer nó para ver seus resultados no painel de
 | **Logs** | Mensagens registradas durante a execução do nó |
 | **Outputs** | Dados produzidos pelo nó (JSON navegável) |
 | **Erro** | Mensagem de erro detalhada (quando aplicável) |
+| **Possível causa** | Dica amigável exibida em alguns passos com falha, com sugestão de correção |
 | **Arquivos e Screenshots** | Artefatos gerados, downloads, uploads capturados e evidências |
 
 [Analisando Resultados](../../assets/images/analise-resultados-editor-fluxos.mp4)
@@ -112,6 +113,14 @@ Arquivos de teste isolado criados no editor são temporários e podem ser limpos
 1. Procure nós com borda **vermelha** (🔴) no canvas
 2. Clique no nó com falha
 3. Verifique a **mensagem de erro** e os **logs**
+
+### Dicas Amigáveis de Falha
+
+Quando um passo falha por um erro conhecido, o detalhe da execução pode mostrar uma seção **Possível causa** com uma sugestão objetiva. Ela aparece apenas em passos com falha e o QANode mostra uma dica por vez para evitar mensagens conflitantes.
+
+As dicas cobrem problemas comuns como sessão expirada, credenciais, expressões quebradas, arquivos ausentes, alvo ambíguo, campo oculto, desabilitado ou somente leitura, clique bloqueado, timeout, assert que não bateu e efeito esperado que não apareceu depois da ação.
+
+Use a dica como ponto de partida e confirme nas evidências, logs e screenshots antes de alterar o fluxo.
 
 ### Mensagens de Erro Comuns
 
@@ -219,14 +228,14 @@ O detalhe da execução também exibe a seção **Defeitos Relacionados** com a 
 
 ## Relatório de Execução
 
-Após cada execução, o QANode gera automaticamente um **relatório PDF** com:
+Após cada execução, o QANode disponibiliza um **relatório PDF** com:
 
 - Resumo da execução (status, duração, data)
 - Detalhes de cada passo (status, logs, outputs, duração)
 - Screenshots capturados
 - Erros encontrados
 
-O relatório fica disponível na lista de execuções do projeto e pode ser baixado ou enviado por e-mail.
+O relatório fica disponível na lista de execuções do projeto e pode ser baixado ou enviado por e-mail. Dependendo do template ativo, o PDF pode ser gerado automaticamente ao fim da execução ou apenas quando alguém solicita o download.
 
 [Relatório de Execução](../../assets/images/relatorio-editor-fluxos.mp4)
 

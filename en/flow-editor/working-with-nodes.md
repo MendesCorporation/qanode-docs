@@ -105,6 +105,9 @@ When you click on a node, the properties panel opens on the right. Each node typ
 |-------|-------------|
 | **Label** | Node name (displayed on the canvas) |
 | **Continue on Failure** | If enabled, the flow continues even if this node fails |
+| **Skip during run** | Keeps the node on the canvas, but normal executions record the node as skipped instead of running it |
+
+Use **Skip during run** for drafts, experiments, or parts of the flow that should not run yet. Do not use this option to hide a real failure: if the node still needs to be part of the test, fix its configuration or let the failure appear in the execution.
 
 ### Using Expressions in Fields
 

@@ -1,19 +1,19 @@
 # Informes
 
-QANode genera automáticamente **informes PDF** después de cada ejecución y permite generar informes consolidados por período, con exportación y envío por correo electrónico.
+QANode genera **informes PDF** de ejecución e informes consolidados por período, con exportación y envío por correo electrónico. La generación del PDF puede ocurrir automáticamente al finalizar la ejecución o bajo demanda, en el momento de la descarga, según la plantilla activa.
 
 ---
 
 ## Informes de Ejecución
 
-Después de cada ejecución de escenario o suite, se genera automáticamente un **informe PDF** con:
+Después de cada ejecución de escenario o suite, QANode prepara los datos del informe con:
 
 - **Resumen**: Estado, duración, fecha de ejecución
 - **Detalles por Nodo**: Estado individual, registros, salidas, duración
 - **Capturas de Pantalla**: Imágenes capturadas (cuando están configuradas en los nodos web), con fecha/hora cuando está habilitado en la plantilla
 - **Errores**: Detalles de los fallos encontrados
 
-El informe está disponible en la lista de ejecuciones y puede descargarse en cualquier momento.
+El informe está disponible en la lista de ejecuciones y puede descargarse en cualquier momento. Cuando la plantilla activa usa generación bajo demanda, el PDF se crea solo al hacer clic en **Descargar PDF**. En ese caso, QANode muestra el progreso de preparación e inicia la descarga automáticamente cuando el archivo está listo.
 
 [Informes de Ejecución](../../assets/images/relatorios-execucao.mp4)
 
@@ -127,6 +127,7 @@ El diseño del informe PDF es configurable. Acceda a **Configuración** → **Pl
 | **Incluir Capturas** | Incluir capturas de pantalla |
 | **Tamaño de Capturas** | Dimensión de las imágenes en el informe |
 | **Mostrar fecha/hora de las capturas** | Mostrar cuándo se capturó cada screenshot |
+| **Generar informe automáticamente** | Crear el PDF en cuanto termina la ejecución. Cuando está desactivado, el PDF se genera solo en la descarga |
 | **Incluir Registros** | Incluir registros de cada nodo |
 | **Máximo de Registros** | Límite de líneas de registro por nodo |
 | **Incluir Salidas** | Incluir datos de salida de los nodos |
@@ -145,7 +146,7 @@ El diseño del informe PDF es configurable. Acceda a **Configuración** → **Pl
 
 ## Consejos
 
-- **Configure la plantilla** antes de generar informes — especialmente logo e imagen de fondo
+- **Configure la plantilla** antes de generar informes — especialmente logo, imagen de fondo y modo de generación del PDF
 - **Incluya capturas de pantalla** para evidencias visuales — fundamental para auditorías
 - **Use el filtro por proyecto** para informes enfocados
 - **Programe envíos** — use suites programadas + alarmas para informes automáticos

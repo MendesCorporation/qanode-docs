@@ -1,19 +1,19 @@
 # Reports
 
-QANode automatically generates **PDF reports** after each execution and allows generating consolidated reports by period, with export and email delivery options.
+QANode generates execution **PDF reports** and consolidated reports by period, with export and email delivery options. PDF generation can happen automatically when the execution finishes or on demand when someone downloads it, depending on the active template.
 
 ---
 
 ## Execution Reports
 
-After each scenario or suite execution, a **PDF report** is automatically generated with:
+After each scenario or suite execution, QANode prepares report data with:
 
 - **Summary**: Status, duration, execution date
 - **Details per Node**: Individual status, logs, outputs, duration
 - **Screenshots**: Screen captures (when configured in web nodes), with date/time when enabled in the template
 - **Errors**: Details of the failures encountered
 
-The report is available in the execution list and can be downloaded at any time.
+The report is available in the execution list and can be downloaded at any time. When the active template uses on-demand generation, the PDF is created only when someone clicks **Download PDF**. In that case, QANode shows preparation progress and starts the download automatically when the file is ready.
 
 [Execution Reports](../../assets/images/relatorios-execucao.mp4)
 
@@ -127,6 +127,7 @@ The PDF report layout is configurable. Go to **Settings** → **Report Template*
 | **Include Screenshots** | Include screen captures |
 | **Screenshot Size** | Image dimensions in the report |
 | **Show screenshot date/time** | Show when each screenshot was captured |
+| **Generate report automatically** | Create the PDF as soon as the execution finishes. When disabled, the PDF is generated only on download |
 | **Include Logs** | Include logs from each node |
 | **Maximum Logs** | Log line limit per node |
 | **Include Outputs** | Include node output data |
@@ -145,7 +146,7 @@ The PDF report layout is configurable. Go to **Settings** → **Report Template*
 
 ## Tips
 
-- **Configure the template** before generating reports — especially logo and background image
+- **Configure the template** before generating reports — especially logo, background image, and PDF generation mode
 - **Include screenshots** for visual evidence — essential for audits
 - **Use project filter** for focused reports
 - **Schedule deliveries** — use scheduled suites + alarms for automatic reports

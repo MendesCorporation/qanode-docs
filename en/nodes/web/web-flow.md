@@ -23,10 +23,10 @@ The **Web Flow** node allows you to automate interactions with web pages using *
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | **Session Mode** | `new` / `reuse` | `new` | New session or reuse an existing one |
-| **Session ID** | `string` | — | Session ID to reuse (when `reuse`) |
+| **Session Id** | `string` | — | Session Id to reuse (when `reuse`) |
 | **Headless** | `boolean` | `true` | Run without a visible graphical interface |
-| **Storage Strategy** | `inMemory` / `persisted` | `inMemory` | Persist cookies/localStorage between executions |
-| **Storage Key** | `string` | — | Identifier for the persisted storage |
+| **Session Storage** | `inMemory` / `persisted` | `inMemory` | Persist cookies/localStorage between executions |
+| **Session Name** | `string` | — | Name used to save/reuse the session when storage is `persisted` |
 | **Browser** | `chromium` / `firefox` / `webkit` | `chromium` | Browser to use for the execution |
 | **Device** | `desktop` / `mobile` | `desktop` | Emulation mode |
 | **Viewport** | preset or `custom` | `1920x1080` | Window size (Desktop mode) |
@@ -79,7 +79,9 @@ Uses real Playwright device profiles (viewport, user agent, pixel scale ratio, t
 - **New Session (`new`)**: Opens a new browser for each execution. Ideal for isolated tests.
 - **Reuse Session (`reuse`)**: Uses a browser session already opened by another compatible web node. Useful for splitting long tests into multiple nodes while keeping the same browser and cookies.
 
-### Storage Strategy
+When selecting `reuse`, the editor sets **Session Storage** to `persisted` by default. If the node that creates the session is still using `inMemory`, QANode may warn that the session will be closed before another node can reuse it.
+
+### Session Storage
 
 - **In Memory (`inMemory`)**: Cookies and localStorage are discarded at the end of the execution.
 - **Persisted (`persisted`)**: Cookies and localStorage are saved with a key and can be reused in future executions. Ideal for maintaining login sessions between executions.

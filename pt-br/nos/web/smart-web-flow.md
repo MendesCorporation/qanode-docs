@@ -50,10 +50,10 @@ Considere usar outro nó quando:
 | Campo | Tipo | Padrão | Descrição |
 |-------|------|--------|-----------|
 | **Modo de Sessão** | `new` / `reuse` | `new` | Define se o nó abre uma nova sessão de navegador ou reutiliza uma sessão existente |
-| **ID da Sessão** | `string` | — | Nome ou expressão usada para reutilizar a sessão |
+| **ID da sessão** | `string` | — | Nome ou expressão usada para reutilizar a sessão |
 | **Headless** | `boolean` | `true` | Executa o navegador sem interface visível |
-| **Estratégia de Storage** | `inMemory` / `persisted` | `inMemory` | Controla se cookies/localStorage serão descartados ou persistidos |
-| **ID da Sessão Persistida** | `string` | — | Nome opcional usado para salvar/reutilizar cookies e localStorage |
+| **Armazenamento da sessão** | `inMemory` / `persisted` | `inMemory` | Controla se cookies/localStorage serão descartados ou persistidos |
+| **Nome da sessão** | `string` | — | Nome opcional usado para salvar/reutilizar cookies e localStorage quando o armazenamento é `persisted` |
 | **Browser** | `chromium` / `firefox` / `webkit` | `chromium` | Navegador usado na execução |
 | **Dispositivo** | `desktop` / `mobile` | `desktop` | Define se a execução usa viewport desktop ou emulação mobile |
 | **Viewport** | preset ou `custom` | `1920x1080` | Tamanho da janela em modo desktop |
@@ -63,22 +63,24 @@ Considere usar outro nó quando:
 | **Capturar console do navegador** | `boolean` | `false` | Registra mensagens de console, warnings e erros da página durante a execução |
 | **Falhar em erros de console** | `boolean` | `false` | Faz o nó falhar quando um erro de console relevante é encontrado |
 
-### Storage e Sessão
+### Armazenamento da sessão
 
-Para fluxos que exigem login, MFA ou SSO, use storage persistido. Assim, o QANode pode reutilizar cookies e localStorage em execuções futuras sem refazer o login manualmente.
+Para fluxos que exigem login, MFA ou SSO, use armazenamento persistido. Assim, o QANode pode reutilizar cookies e localStorage em execuções futuras sem refazer o login manualmente.
 
 Use `inMemory` para testes isolados e `persisted` para aplicações que precisam manter autenticação entre execuções.
 
-Quando o modo de sessão é **novo** e o storage é **persistido**, o campo de ID da sessão persistida é opcional:
+Quando você muda o **Modo de Sessão** para `reuse`, o editor usa `persisted` por padrão para manter a sessão disponível para os próximos nós. Se o nó de origem estiver com armazenamento em memória, o QANode pode avisar que a sessão será encerrada ao fim daquele nó e sugerir armazenamento persistido.
+
+Quando o modo de sessão é **novo** e o armazenamento da sessão é `persisted`, o campo **Nome da sessão** é opcional:
 
 - se preenchido, salva a sessão com esse nome;
-- se vazio, o QANode gera uma chave interna automaticamente.
+- se vazio, o QANode gera um identificador interno automaticamente.
 
 Sessões persistidas criadas pelo nó ficam disponíveis para reutilização por outros usuários da mesma instalação. Isso permite que um fluxo compartilhado continue funcionando quando outra pessoa executa o cenário.
 
 Sessões importadas pela extensão Chrome permanecem vinculadas ao usuário que gravou/importou a sessão, porque normalmente representam login, cookies e permissões pessoais.
 
-No modo **reutilizar**, o campo **ID da Sessão** busca sessões nomeadas dos dois escopos. As sugestões mostram até 10 sessões e escondem chaves geradas automaticamente por UUID. Sessões sem uso por 30 dias são limpas automaticamente.
+No modo **reutilizar**, o campo **ID da sessão** busca sessões nomeadas dos dois escopos. As sugestões mostram até 10 sessões e escondem identificadores gerados automaticamente por UUID. Sessões sem uso por 30 dias são limpas automaticamente.
 
 ---
 
@@ -236,6 +238,16 @@ Quando uma recuperação é usada, a execução mostra o item em **Self-healing 
 
 ---
 
+## Dicas de Falha no Detalhe da Execução
+
+Quando um passo de Smart Web falha por um erro conhecido, o detalhe da execução pode mostrar uma seção **Possível causa** com uma sugestão de correção.
+
+O QANode exibe apenas uma dica por passo com falha. Exemplos comuns incluem alvo ambíguo, elemento oculto, campo desabilitado ou somente leitura, clique bloqueado, timeout, assert que não encontrou o texto esperado, sessão expirada e efeito esperado que não apareceu depois da ação.
+
+Essas dicas não alteram o resultado da execução. Use-as junto com logs, screenshots, console e evidências para decidir se o fluxo precisa de ajuste, se o site mudou ou se um efeito esperado deve ser desativado naquele passo.
+
+---
+
 ## Otimizações Após Execução
 
 Depois de execuções bem-sucedidas, o QANode pode sugerir melhorias para o Smart Web Flow.
@@ -246,9 +258,10 @@ As sugestões mais comuns são:
 - adicionar espera antes de um alvo que apareceu tarde;
 - registrar um frame/iframe detectado automaticamente;
 - remover hover opcional que não foi necessário para a execução passar;
+- remover scroll opcional que não foi necessário para a execução passar;
 - ajustar validações de efeito esperado que foram confirmadas.
 
-Essas otimizações aparecem nos detalhes da execução. Revise antes de aplicar.
+Essas otimizações aparecem nos detalhes da execução apenas quando o fluxo termina com sucesso. Revise antes de aplicar.
 
 O QANode evita mostrar a mesma sugestão repetidamente quando a definição do fluxo não mudou. Se você alterar passos, seletores ou dados relevantes da UI, novas sugestões podem aparecer.
 
@@ -390,6 +403,8 @@ Use quando um menu ou submenu aparece apenas ao passar o mouse.
 
 O Smart Web Flow trata hover como uma ação curta e objetiva. Se o próximo alvo já estiver visível sem hover, a execução pode sugerir remover o hover opcional para reduzir ruído no fluxo.
 
+Essa recomendação só aparece quando a execução completa passa sem depender do hover.
+
 ---
 
 ### focus
@@ -464,6 +479,8 @@ Rola a página ou um container.
 | **By pixels** | Rola uma quantidade de pixels |
 | **To bottom** | Rola até o fim |
 
+Quando um scroll opcional não é necessário para o fluxo passar, o detalhe da execução pode sugerir removê-lo. A recomendação só aparece em execução bem-sucedida, para evitar remover um scroll que pode estar mascarando outro problema.
+
 ---
 
 ### refresh
@@ -528,6 +545,8 @@ Modos disponíveis incluem:
 - título.
 
 Asserts são importantes para transformar uma automação em teste: eles provam que o resultado esperado apareceu.
+
+O Smart Web Flow respeita o modo selecionado no assert. Validações de texto usam o texto renderizado da página e normalizam espaços em branco para reduzir falhas por quebras de linha ou espaçamentos visuais.
 
 Quando a validação está dentro de uma tabela, lista ou card repetido, combine o assert com **Referência do alvo** para validar o registro certo, e não o primeiro texto parecido da tela.
 
@@ -707,9 +726,11 @@ A extensão grava:
 - contexto de escopo;
 - identidade do alvo;
 - iframes;
-- sessão/storage, quando habilitado;
-- efeitos esperados para menus, overlays, navegação e próximos alvos.
+- sessão e armazenamento, quando habilitado;
+- efeitos esperados para menus, overlays, navegação e próximos alvos;
 - passos de upload de arquivo, quando a página usa input de arquivo.
+
+Em formulários com seções repetidas, como endereço de cobrança e endereço de entrega com campos de mesmo `name`, a gravação preserva sinais como contexto, índice e posição do controle. Isso evita perder um preenchimento só porque dois campos diferentes compartilham o mesmo seletor genérico.
 
 ---
 

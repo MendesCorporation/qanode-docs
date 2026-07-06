@@ -55,13 +55,16 @@ appium driver install --source=npm appium-xcuitest-driver@10.25.0
 |-------|------|--------|-----------|
 | **Credencial** | `select` | — | Credencial Mobile com configurações de conexão |
 | **Modo de Sessão** | `new` / `reuse` | `new` | Nova sessão ou reutilizar sessão existente |
-| **Session ID** | `string` | — | ID para identificar/reutilizar a sessão |
+| **ID da sessão** | `string` | — | ID para identificar/reutilizar a sessão |
+| **Armazenamento da sessão** | `inMemory` / `persisted` | `inMemory` | Controla se a sessão mobile será encerrada ao fim do nó ou mantida para reutilização |
 | **Self Healing** | `boolean` | `false` | Tenta recuperar elementos quando os seletores mobile deixam de localizar o alvo original |
 
 ### Modo de Sessão
 
 - **Nova Sessão (`new`)**: Abre uma nova sessão Appium a cada execução. Ideal para testes isolados.
 - **Reutilizar Sessão (`reuse`)**: Reaproveita uma sessão já criada por outro nó Mobile Flow no mesmo fluxo. Útil para dividir automações longas em múltiplos nós mantendo o mesmo dispositivo conectado.
+
+Ao selecionar `reuse`, o editor usa **Armazenamento da sessão** como `persisted` por padrão. Use `inMemory` quando a sessão deve ser encerrada ao final do nó; use `persisted` quando outro nó precisa continuar no mesmo app/dispositivo durante a execução.
 
 ### Self Healing
 
@@ -565,12 +568,12 @@ Passos configurados no nó:
 ### Reutilizando Sessão entre Nós
 
 **Nó 1 — Mobile Flow (Login)**
-- Session ID: `sessao-android`
+- ID da sessão: `sessao-android`
 - Passos: login no app
 
 **Nó 2 — Mobile Flow (Verificar Pedido)**
 - Modo de Sessão: `reuse`
-- Session ID: `sessao-android`
+- ID da sessão: `sessao-android`
 - Passos: navegar para pedidos, verificar status
 
 Ambos os nós compartilham o mesmo dispositivo e estado de sessão.
@@ -585,4 +588,4 @@ Ambos os nós compartilham o mesmo dispositivo e estado de sessão.
 - Configure **screenshots** nos passos críticos para facilitar a identificação de falhas
 - Use **Continuar em Falha** em asserções de monitoramento para coletar múltiplos resultados sem interromper o fluxo
 - Para apps que demoram para iniciar, adicione um passo `wait` com `elementVisible` antes de interagir
-- O `Session ID` personalizado facilita a reutilização de sessão entre múltiplos nós Mobile Flow no mesmo fluxo
+- O `ID da sessão` personalizado facilita a reutilização de sessão entre múltiplos nós Mobile Flow no mesmo fluxo

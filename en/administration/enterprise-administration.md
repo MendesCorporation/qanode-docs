@@ -21,6 +21,14 @@ Access it through the **gear** icon (⚙️) in the side menu → **Settings**.
 
 > **Requirement:** SMTP must be configured for sending invitations.
 
+### Manual Invite
+
+When SMTP is not available, an administrator can create a manual invite from the Users settings. Use **Ctrl + click** on **Invite User** to open manual mode.
+
+In this mode, QANode creates the pending user and shows the invite link on screen without sending email. Copy the link and send it directly to the person through a secure channel.
+
+Use manual invites only as an operational fallback when email delivery cannot be used.
+
 ### Bulk Import
 
 To register multiple users at once:

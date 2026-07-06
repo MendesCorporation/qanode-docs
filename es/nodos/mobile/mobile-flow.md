@@ -55,13 +55,16 @@ appium driver install --source=npm appium-xcuitest-driver@10.25.0
 |-------|------|----------------|-------------|
 | **Credencial** | `select` | — | Credencial Mobile con configuraciones de conexión |
 | **Modo de Sesión** | `new` / `reuse` | `new` | Nueva sesión o reutilizar sesión existente |
-| **Session ID** | `string` | — | ID para identificar/reutilizar la sesión |
+| **ID de sesión** | `string` | — | ID para identificar/reutilizar la sesión |
+| **Almacenamiento de sesión** | `inMemory` / `persisted` | `inMemory` | Controla si la sesión mobile se cierra al final del nodo o se mantiene para reutilización |
 | **Self Healing** | `boolean` | `false` | Intenta recuperar elementos cuando los selectores mobile dejan de localizar el objetivo original |
 
 ### Modo de Sesión
 
 - **Nueva Sesión (`new`)**: Abre una nueva sesión Appium en cada ejecución. Ideal para pruebas aisladas.
 - **Reutilizar Sesión (`reuse`)**: Reutiliza una sesión ya creada por otro nodo Mobile Flow en el mismo flujo. Útil para dividir automatizaciones largas en múltiples nodos manteniendo el mismo dispositivo conectado.
+
+Al seleccionar `reuse`, el editor usa **Almacenamiento de sesión** como `persisted` por defecto. Use `inMemory` cuando la sesión debe cerrarse al final del nodo; use `persisted` cuando otro nodo necesita continuar en la misma app/dispositivo durante la ejecución.
 
 ### Self Healing
 
@@ -563,12 +566,12 @@ Pasos configurados en el nodo:
 ### Reutilizando Sesión entre Nodos
 
 **Nodo 1 — Mobile Flow (Inicio de sesión)**
-- Session ID: `sesion-android`
+- ID de sesión: `sesion-android`
 - Pasos: inicio de sesión en la app
 
 **Nodo 2 — Mobile Flow (Verificar Pedido)**
 - Modo de Sesión: `reuse`
-- Session ID: `sesion-android`
+- ID de sesión: `sesion-android`
 - Pasos: navegar a pedidos, verificar estado
 
 Ambos nodos comparten el mismo dispositivo y estado de sesión.
@@ -583,4 +586,4 @@ Ambos nodos comparten el mismo dispositivo y estado de sesión.
 - Configura **capturas de pantalla** en los pasos críticos para facilitar la identificación de fallos
 - Usa **Continuar en Fallo** en aserciones de monitoreo para recopilar múltiples resultados sin interrumpir el flujo
 - Para apps que tardan en iniciar, agrega un paso `wait` con `elementVisible` antes de interactuar
-- El `Session ID` personalizado facilita la reutilización de sesión entre múltiples nodos Mobile Flow en el mismo flujo
+- El `ID de sesión` personalizado facilita la reutilización de sesión entre múltiples nodos Mobile Flow en el mismo flujo

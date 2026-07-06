@@ -206,7 +206,7 @@ El namespace `web` expone la sesión Web actual y utilidades avanzadas basadas e
 | `context` | Instancia Playwright `context` |
 | `browser` | Instancia Playwright `browser` |
 | `session` | Objeto bruto de la sesión |
-| `storageStrategy` | Estrategia de storage de la sesión |
+| `storageStrategy` | Almacenamiento de sesión |
 | `persistedKey` | Clave de persistencia de la sesión |
 | `url()` | Retorna la URL actual |
 | `title()` | Retorna el título actual |
@@ -268,7 +268,7 @@ await web.screenshot("pagina-completa", { fullPage: true });
 | `session` | Sesión actual |
 | `sessionId` | ID de la sesión |
 | `id` | ID interno de la sesión |
-| `storageStrategy` | Estrategia de storage |
+| `storageStrategy` | Almacenamiento de sesión |
 | `persistedKey` | Clave de persistencia |
 | `url` | Helper para la URL actual |
 | `title` | Helper para el título actual |

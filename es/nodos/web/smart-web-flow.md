@@ -50,10 +50,10 @@ Considere otro nodo cuando:
 | Campo | Tipo | Predeterminado | Descripción |
 |-------|------|----------------|-------------|
 | **Modo de Sesión** | `new` / `reuse` | `new` | Abre una nueva sesión de navegador o reutiliza una existente |
-| **ID de Sesión** | `string` | — | Nombre o expresión usada para reutilizar la sesión |
+| **ID de sesión** | `string` | — | Nombre o expresión usada para reutilizar la sesión |
 | **Headless** | `boolean` | `true` | Ejecuta el navegador sin interfaz visible |
-| **Estrategia de Storage** | `inMemory` / `persisted` | `inMemory` | Controla si cookies/localStorage se descartan o se persisten |
-| **ID de Sesión Persistida** | `string` | — | Nombre opcional usado para guardar/reutilizar cookies y localStorage |
+| **Almacenamiento de sesión** | `inMemory` / `persisted` | `inMemory` | Controla si cookies/localStorage se descartan o se persisten |
+| **Nombre de sesión** | `string` | — | Nombre opcional usado para guardar/reutilizar cookies y localStorage cuando el almacenamiento es `persisted` |
 | **Browser** | `chromium` / `firefox` / `webkit` | `chromium` | Navegador usado en la ejecución |
 | **Dispositivo** | `desktop` / `mobile` | `desktop` | Viewport desktop o emulación mobile |
 | **Viewport** | preset o `custom` | `1920x1080` | Tamaño de ventana en modo desktop |
@@ -63,22 +63,24 @@ Considere otro nodo cuando:
 | **Capturar consola del navegador** | `boolean` | `false` | Registra mensajes de consola, warnings y errores de la página durante la ejecución |
 | **Fallar con errores de consola** | `boolean` | `false` | Hace fallar el nodo cuando se encuentra un error de consola relevante |
 
-### Storage y Sesión
+### Almacenamiento de sesión
 
-Para flujos que exigen login, MFA o SSO, use storage persistido. Así QANode puede reutilizar cookies y localStorage en ejecuciones futuras sin repetir el login manualmente.
+Para flujos que exigen login, MFA o SSO, use almacenamiento persistido. Así QANode puede reutilizar cookies y localStorage en ejecuciones futuras sin repetir el login manualmente.
 
 Use `inMemory` para pruebas aisladas y `persisted` para aplicaciones que necesitan mantener autenticación entre ejecuciones.
 
-Cuando el modo de sesión es **nuevo** y el storage es **persistido**, el campo de ID de sesión persistida es opcional:
+Cuando cambia el **Modo de Sesión** a `reuse`, el editor usa `persisted` por defecto para mantener la sesión disponible para los próximos nodos. Si el nodo de origen usa almacenamiento en memoria, QANode puede avisar que la sesión se cerrará al finalizar ese nodo y sugerir almacenamiento persistido.
+
+Cuando el modo de sesión es **nuevo** y el **Almacenamiento de sesión** es `persisted`, el campo **Nombre de sesión** es opcional:
 
 - si se completa, guarda la sesión con ese nombre;
-- si está vacío, QANode genera una clave interna automáticamente.
+- si está vacío, QANode genera un identificador interno automáticamente.
 
 Las sesiones persistidas creadas por el nodo quedan disponibles para reutilización por otros usuarios de la misma instalación. Esto permite que un flujo compartido siga funcionando cuando otra persona ejecuta el escenario.
 
 Las sesiones importadas por la extensión Chrome permanecen vinculadas al usuario que grabó/importó la sesión, porque normalmente representan login, cookies y permisos personales.
 
-En modo **reutilizar**, el campo **ID de Sesión** busca sesiones nombradas de ambos alcances. Las sugerencias muestran hasta 10 sesiones y ocultan claves generadas automáticamente por UUID. Las sesiones sin uso por 30 días se limpian automáticamente.
+En modo **reutilizar**, el campo **ID de sesión** busca sesiones nombradas de ambos alcances. Las sugerencias muestran hasta 10 sesiones y ocultan identificadores generados automáticamente por UUID. Las sesiones sin uso por 30 días se limpian automáticamente.
 
 ---
 
@@ -223,11 +225,23 @@ Si el selector recuperado ya existe en el paso, QANode suprime sugerencias innec
 
 ---
 
+## Sugerencias de Fallo en el Detalle de Ejecución
+
+Cuando un paso de Smart Web falla por un error conocido, el detalle de la ejecución puede mostrar una sección **Causa posible** con una sugerencia de corrección.
+
+QANode muestra solo una sugerencia por paso con fallo. Ejemplos comunes incluyen objetivo ambiguo, elemento oculto, campo deshabilitado o de solo lectura, clic bloqueado, timeout, assert que no coincide, sesión expirada y efecto esperado que no apareció después de la acción.
+
+Estas sugerencias no cambian el resultado de la ejecución. Úselas junto con logs, capturas, consola y evidencias para decidir si el flujo necesita ajuste, si el sitio cambió o si un efecto esperado debe desactivarse en ese paso.
+
+---
+
 ## Estrategia Preferida Aprendida
 
 Después de ejecuciones exitosas, Smart Web Flow puede aprender qué estrategia resolvió el paso con confiabilidad. Guarda información de éxito solo cuando la ejecución pasó. Ejecuciones fallidas no promocionan ni sobrescriben la estrategia preferida.
 
 Esto ayuda a la resiliencia: una estrategia buena pero a veces más lenta no se reemplaza solo porque otra tentativa apareció después de un cambio de timing. En una ejecución futura, QANode puede intentar la estrategia preferida con polling rápido durante su ventana promedio aprendida y luego seguir con la lista normal si no resuelve.
+
+Las ejecuciones exitosas también pueden sugerir eliminar pasos opcionales de hover o scroll cuando QANode comprueba que el flujo pasó sin ellos. Estas sugerencias aparecen solo cuando todo el flujo pasa, para no eliminar un scroll o hover mientras otro fallo todavía puede estar ocultando su necesidad real.
 
 ---
 
@@ -348,6 +362,10 @@ Sube un archivo a un `<input type="file">`.
 
 El paso se graba automáticamente por la extensión cuando el usuario elige un archivo en un input de upload. Al importar el flujo en QANode, si el archivo original aún no está adjunto al flujo, el paso queda destacado hasta que el usuario elija el `fileRef` que se usará en la ejecución.
 
+### assert
+
+Smart Web Flow respeta el modo de assert seleccionado. Las validaciones de texto usan el texto renderizado de la página y normalizan espacios en blanco para reducir fallos causados solo por saltos de línea o espaciados visuales.
+
 Use `uploadFile` para escenarios como enviar documentos, adjuntar comprobantes, subir imágenes, PDFs, CSVs, planillas o probar formularios web con upload.
 
 ---
@@ -441,6 +459,8 @@ Ejemplo de acceso:
 11. Use variables para datos dinámicos.
 12. Ejecute una vez e inspeccione evidencias.
 13. Aplique solo sugerencias que coincidan con la intención real del usuario.
+
+En formularios con secciones repetidas, como dirección de facturación y dirección de entrega con campos que comparten el mismo `name`, la grabación preserva señales como contexto, índice y posición del control. Esto evita perder un paso de llenado solo porque dos campos diferentes comparten el mismo selector genérico.
 
 ---
 

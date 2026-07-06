@@ -25,10 +25,10 @@ Identical to the Web Flow node:
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | **Session Mode** | `new` / `reuse` | `new` | New session or reuse an existing one |
-| **Session ID** | `string` | — | Session ID to reuse |
+| **Session Id** | `string` | — | Session Id to reuse |
 | **Headless** | `boolean` | `true` | Run without a visible graphical interface |
-| **Storage Strategy** | `inMemory` / `persisted` | `inMemory` | Persist cookies/localStorage |
-| **Storage Key** | `string` | — | Identifier for the persisted storage |
+| **Session Storage** | `inMemory` / `persisted` | `inMemory` | Persist cookies/localStorage |
+| **Session Name** | `string` | — | Name used to save/reuse the session when storage is `persisted` |
 | **Browser** | `chromium` / `firefox` / `webkit` | `chromium` | Browser to use for the execution |
 | **Device** | `desktop` / `mobile` | `desktop` | Emulation mode |
 | **Viewport** | preset or `custom` | `1920x1080` | Window size (Desktop mode) |
@@ -42,6 +42,8 @@ Identical to the Web Flow node:
 | **Self Healing** | `boolean` | `false` | Tries to recover locators when the element changes and the original locator no longer resolves the target |
 
 > The Browser & Device options are identical to the Web Flow node — see the [Web Flow documentation](web-flow.md#browser) for details on viewport presets and available mobile devices.
+
+Session behavior also follows Web Flow: when selecting `reuse`, the editor sets **Session Storage** to `persisted` by default and may warn when the source node is still configured as `inMemory`.
 
 ### Performance Audit
 

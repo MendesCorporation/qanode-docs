@@ -26,7 +26,7 @@ To execute the entire flow:
 | **Success** | 🟢 Green | The node executed successfully |
 | **Failure** | 🔴 Red | The node encountered an error |
 | **Cancelled** | ⚪ Gray | The execution was manually interrupted |
-| **Skipped** | ⚪ Gray | The node was not executed (inactive branch) |
+| **Skipped** | ⚪ Gray | The node was not executed (inactive branch or node marked as skipped) |
 
 ---
 
@@ -60,6 +60,7 @@ After execution, click on any node to see its results in the properties panel:
 | **Logs** | Messages recorded during node execution |
 | **Outputs** | Data produced by the node (navigable JSON) |
 | **Error** | Detailed error message (when applicable) |
+| **Possible cause** | Friendly hint shown for some failed steps, with a suggested fix |
 | **Files and Screenshots** | Generated artifacts, downloads, captured uploads, and evidence |
 
 [Analyzing Results](../../assets/images/analise-resultados-editor-fluxos.mp4)
@@ -113,6 +114,14 @@ Isolated test files created in the editor are temporary and can be cleaned up au
 1. Look for nodes with a **red** border (🔴) on the canvas
 2. Click on the failing node
 3. Check the **error message** and the **logs**
+
+### Friendly Failure Hints
+
+When a step fails with a known error, the run detail can show a **Possible cause** section with an objective suggestion. It appears only on failed steps, and QANode shows one hint at a time to avoid conflicting messages.
+
+Hints cover common issues such as expired sessions, credentials, broken expressions, missing files, ambiguous targets, hidden, disabled, or read-only fields, blocked clicks, timeouts, assertion mismatches, and expected effects that did not appear after the action.
+
+Use the hint as a starting point and confirm it with evidence, logs, and screenshots before changing the flow.
 
 ### Common Error Messages
 
@@ -220,14 +229,14 @@ The execution detail also displays the **Related Bugs** section with the list of
 
 ## Execution Report
 
-After each run, QANode automatically generates a **PDF report** with:
+After each run, QANode provides a **PDF report** with:
 
 - Execution summary (status, duration, date)
 - Details of each step (status, logs, outputs, duration)
 - Captured screenshots
 - Errors encountered
 
-The report is available in the project's execution list and can be downloaded or sent by email.
+The report is available in the project's execution list and can be downloaded or sent by email. Depending on the active template, the PDF can be generated automatically when the execution finishes or only when someone requests the download.
 
 [Execution Report](../../assets/images/relatorio-editor-fluxos.mp4)
 

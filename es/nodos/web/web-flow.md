@@ -23,10 +23,10 @@ El nodo **Web Flow** permite automatizar interacciones con páginas web usando *
 | Campo | Tipo | Predeterminado | Descripción |
 |-------|------|----------------|-------------|
 | **Modo de Sesión** | `new` / `reuse` | `new` | Nueva sesión o reutilizar una existente |
-| **Session ID** | `string` | — | ID de la sesión a reutilizar (cuando `reuse`) |
+| **ID de sesión** | `string` | — | ID de la sesión a reutilizar (cuando `reuse`) |
 | **Headless** | `boolean` | `true` | Ejecutar sin interfaz gráfica visible |
-| **Estrategia de Storage** | `inMemory` / `persisted` | `inMemory` | Persistir cookies/localStorage entre ejecuciones |
-| **Clave de Storage** | `string` | — | Identificador del storage persistido |
+| **Almacenamiento de sesión** | `inMemory` / `persisted` | `inMemory` | Persistir cookies/localStorage entre ejecuciones |
+| **Nombre de sesión** | `string` | — | Nombre usado para guardar/reutilizar la sesión cuando el almacenamiento es `persisted` |
 | **Navegador** | `chromium` / `firefox` / `webkit` | `chromium` | Navegador a usar en la ejecución |
 | **Dispositivo** | `desktop` / `mobile` | `desktop` | Modo de emulación |
 | **Viewport** | preset o `custom` | `1920x1080` | Tamaño de ventana (modo Desktop) |
@@ -79,7 +79,9 @@ Usa perfiles reales de Playwright (viewport, user agent, escala de píxeles, tou
 - **Nueva Sesión (`new`)**: Abre un nuevo navegador para cada ejecución. Ideal para pruebas aisladas.
 - **Reutilizar Sesión (`reuse`)**: Usa una sesión de navegador ya abierta por otro nodo web compatible. Útil para dividir pruebas largas en múltiples nodos manteniendo el mismo navegador y cookies.
 
-### Estrategia de Storage
+Al seleccionar `reuse`, el editor usa **Almacenamiento de sesión** como `persisted` por defecto. Si el nodo que crea la sesión aún usa `inMemory`, QANode puede avisar que la sesión se cerrará antes de que otro nodo pueda reutilizarla.
+
+### Almacenamiento de sesión
 
 - **En Memoria (`inMemory`)**: Las cookies y el localStorage se descartan al final de la ejecución.
 - **Persistido (`persisted`)**: Las cookies y el localStorage se guardan con una clave y pueden reutilizarse en ejecuciones futuras. Ideal para mantener sesiones de inicio de sesión entre ejecuciones.

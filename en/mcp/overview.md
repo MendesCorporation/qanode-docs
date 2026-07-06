@@ -2,17 +2,17 @@
 
 > **Available in:** QANode Enterprise
 
-**MCP** connects AI tools to QANode so users can request actions from an IDE, corporate chat, or any compatible client.
+**MCP** connects AI tools to QANode so users can work with projects, scenarios, runs, dashboards, and bugs directly from an IDE, corporate chat, or any compatible client.
 
-With this integration, an AI client can operate QANode with the permissions of the authenticated user: create scenarios, adjust flows, inspect runs, read project documentation, create dashboards, investigate failures, work with bugs, and use the platform's visual nodes.
+In practice, the connected MCP client calls QANode resources using the permissions of the authenticated user. Everything created or changed continues to exist inside QANode as a normal platform object.
 
 ---
 
 ## When To Use
 
-Use MCP when you want to:
+Use MCP when you want to work with QANode without leaving the environment where you are already investigating, documenting, or implementing:
 
-- ask an AI assistant to create or adjust QANode scenarios;
+- create or adjust QANode scenarios with AI assistance;
 - automate flows that involve web, API, database, files, SSH, or mobile;
 - investigate an existing scenario that is failing;
 - turn project documentation into initial scenarios;
@@ -26,7 +26,7 @@ MCP does not replace the visual editor. Everything created through MCP still app
 ## How To Connect
 
 1. Generate a token in **Settings → Access Tokens**
-2. Configure the MCP client used by your AI tool
+2. Configure the compatible MCP client
 3. Provide the QANode API URL
 4. Send the token in the `Authorization` header
 
@@ -57,7 +57,7 @@ Generic example:
 }
 ```
 
-The exact format depends on the AI client, but the URL and header are the same.
+The exact format depends on the compatible client, but the URL and header are the same.
 
 ---
 
@@ -75,40 +75,39 @@ MCP follows the same QANode permissions.
 | Dashboards | Queries and widgets follow data permissions |
 | Bugs | Workflow, required fields, and transitions still apply |
 
-The token does not grant extra access. It only authenticates the AI client as that user or integration.
+The token does not grant extra access. It only authenticates the connected client as that user or integration.
 
 ---
 
-## What You Can Request
+## What MCP Lets You Do
 
-| Area | Example uses |
+| Area | What becomes available |
 |------|--------------|
-| **Projects** | Search projects, search snippets inside documents, and read attachments when needed |
+| **Projects** | Search projects, consult attached documents, and use that context in scenarios or diagnostics |
 | **Scenarios** | Create flows, import nodes, add steps, connect, validate, and execute |
-| **Smart Web** | Record web navigation, validate screens, extract data, and reuse sessions when needed |
-| **Mobile** | Record Android/iOS journeys with Appium and save them as Mobile Flow nodes |
+| **Smart Web** | Create web automations, validate screens, extract data, and reuse sessions when needed |
+| **Mobile** | Create Android/iOS journeys with Appium and save them as Mobile Flow nodes |
 | **Database** | Inspect schema and create database queries or validations |
 | **Files** | Generate, extract, and reuse files in flows |
 | **Variables** | Create global or project variables for reuse |
-| **Credentials** | Create credentials when the user provides the required data |
+| **Credentials** | Register credentials from data provided by the user |
 | **Suites** | Create, edit, execute, schedule, and diagnose failures |
 | **Bugs** | Open, comment, attach files, transition, and investigate bugs |
 | **Dashboards** | Create panels, widgets, and quick queries over QANode data |
-| **Components** | Create reusable components when the user explicitly asks for one |
+| **Components** | Create reusable components for recurring flows |
 
 ---
 
-## How To Ask
+## How A Request Works
 
-Clearer requests produce better results. Include:
+When the user requests an action from the connected client, the general flow is:
 
-- the project where the scenario should be created;
-- the target URL or system;
-- credentials or the name of an existing credential;
-- allowed test data;
-- expected result;
-- cleanup rules, such as deleting created test data at the end;
-- whether the flow should only be created or also executed.
+1. The client sends the request to QANode through MCP.
+2. QANode validates authentication, permissions, and required data.
+3. The action is applied to real QANode objects, such as a scenario, run, dashboard, or bug.
+4. The result returns to the client with the data available to that user.
+
+For scenarios and tests, information such as project, target system, credential, test data, expected result, and cleanup rules helps QANode create a flow closer to real usage.
 
 Example:
 
@@ -118,7 +117,7 @@ logs in with the test user, creates a task, marks it as completed,
 and validates in the database that the status is completed.
 ```
 
-When important information is missing, confirm the data before creating records, changing real data, or executing destructive actions.
+Sensitive actions, such as using credentials, creating data in real systems, running destructive scenarios, or transitioning bugs, should be handled with the same care they would require inside QANode.
 
 ---
 
@@ -126,7 +125,7 @@ When important information is missing, confirm the data before creating records,
 
 On pages with tables, cards, kanban boards, or repeated lists, the same button or status can appear several times on the screen.
 
-In these cases, use the Smart Web **Target Reference**. It tells QANode which row, card, or item should be used as the reference before clicking, validating, or extracting a value.
+The Smart Web **Target Reference** records which row, card, or item should be used as context before clicking, validating, or extracting a value. This applies both to flows created in the editor and to flows created or adjusted through MCP.
 
 Example:
 
@@ -141,9 +140,9 @@ This helps QANode act on the correct record even when the data changes on every 
 
 ## Web And Mobile Sessions
 
-When a scenario is split across more than one Smart Web or Mobile node, state whether the nodes need to continue in the same session.
+When a scenario is split across more than one Smart Web or Mobile node, session reuse determines whether the nodes continue in the same browser, web context, or mobile session.
 
-Use this when:
+This is useful when:
 
 - the first node logs in and the second continues authenticated;
 - a purchase or registration starts on one screen and finishes on another;
@@ -151,13 +150,23 @@ Use this when:
 
 For already authenticated web sessions, such as enterprise systems with SSO, use named persisted sessions. For common flows that log in during the run itself, a temporary session per run is usually enough.
 
+When a later node needs to reuse the session opened by an earlier node, **Session Storage** must keep that session available. The behavior is the same in the editor and in actions performed through MCP.
+
+---
+
+## Skipped Nodes In Executions
+
+Nodes marked as **Skip during run** stay visible on the canvas, but normal executions record those nodes as skipped and continue the flow without running them.
+
+This behavior also applies to executions started through MCP or scenarios edited through MCP. It is useful for drafts, experiments, and temporarily isolated parts of a flow, but it does not replace fixing a real failure.
+
 ---
 
 ## Project Documents
 
-MCP lets AI clients use project documents as context for creating scenarios, answering questions, or understanding business rules.
+MCP exposes project documents as context for creating scenarios, answering questions, or understanding business rules.
 
-For large documents, the AI client can first search for relevant snippets inside the project attachments. This helps it find pages, sections, or parts of the text before opening the full document.
+For large documents, QANode can first search for relevant snippets inside the project attachments. This helps the client find pages, sections, or parts of the text before opening the full document.
 
 QANode can read:
 
@@ -168,7 +177,7 @@ QANode can read:
 - XLSX with spreadsheet preview;
 - metadata from other files.
 
-When the snippet is not enough, ask the AI client to read a page, a page range, or the full document.
+When the snippet is not enough, the client can request a page, a page range, or the full document.
 
 ---
 
@@ -176,7 +185,7 @@ When the snippet is not enough, ask the AI client to read a page, a page range, 
 
 In addition to your project documents, MCP can also search the official QANode documentation.
 
-Use this when you want to ask how to configure a node, understand a feature, or confirm the behavior of a product area without leaving the AI client.
+This feature helps understand how to configure a node, confirm product behavior, or find the right documentation page without leaving the connected client.
 
 Examples:
 
@@ -194,7 +203,7 @@ The search uses the requested language when available and returns the most relev
 
 ## Dashboards
 
-You can ask an AI client to create dashboards or answer one-off questions about QANode data.
+Through MCP, the user can create dashboards or query QANode metrics in natural language.
 
 Examples:
 
@@ -213,18 +222,18 @@ For simple widgets, QANode uses the visual query builder. For more complex queri
 
 ## Bugs
 
-With MCP, an AI client can help investigate and follow up on bugs.
+With MCP, the user can investigate and follow up on bugs from the connected client.
 
 Examples:
 
 - open a bug from a failed run;
 - analyze logs and evidence from the original run;
 - download bug attachments;
-- comment when the user asks;
+- comment when needed;
 - transition to a queue or user, when allowed;
 - open a sandbox to investigate without affecting the official scenario.
 
-The diagnosis returns in the chat. It does not automatically become a public bug comment.
+The diagnosis returns to the connected client. It does not automatically become a public bug comment.
 
 ---
 
@@ -233,10 +242,10 @@ The diagnosis returns in the chat. It does not automatically become a public bug
 - Use different tokens for CI/CD and MCP when you want separate audit trails.
 - Revoke tokens that are no longer in use.
 - Prefer saved credentials instead of pasting passwords into prompts.
-- Request explicit validations when the goal is a test scenario.
+- Define explicit validations when the goal is a test scenario.
 - Review automation-created scenarios before using them in critical suites.
 - Use role-based dashboards when the panel contains team-specific data.
-- For bugs, ask for the diagnosis before transitioning or commenting.
+- For bugs, review the diagnosis before transitioning or commenting.
 
 ---
 

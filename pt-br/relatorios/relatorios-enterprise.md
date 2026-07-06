@@ -1,19 +1,19 @@
 # Relatórios
 
-O QANode gera **relatórios PDF** automaticamente após cada execução e permite gerar relatórios consolidados por período, com exportação e envio por e-mail.
+O QANode gera **relatórios PDF** de execução e relatórios consolidados por período, com exportação e envio por e-mail. A geração do PDF pode acontecer automaticamente ao fim da execução ou sob demanda, no momento do download, conforme o template ativo.
 
 ---
 
 ## Relatórios de Execução
 
-Após cada execução de cenário ou suíte, um **relatório PDF** é gerado automaticamente com:
+Após cada execução de cenário ou suíte, o QANode prepara os dados do relatório com:
 
 - **Resumo**: Status, duração, data de execução
 - **Detalhes por Nó**: Status individual, logs, outputs, duração
 - **Screenshots**: Capturas de tela (quando configuradas nos nós web), com data/hora quando habilitado no template
 - **Erros**: Detalhes das falhas encontradas
 
-O relatório fica disponível na lista de execuções e pode ser baixado a qualquer momento.
+O relatório fica disponível na lista de execuções e pode ser baixado a qualquer momento. Quando o template ativo usa geração sob demanda, o PDF é criado apenas ao clicar em **Download PDF**. Nesse caso, o QANode mostra o progresso de preparação e inicia o download automaticamente quando o arquivo fica pronto.
 
 [Relatórios de Execução](../../assets/images/relatorios-execucao.mp4)
 
@@ -127,6 +127,7 @@ O layout do relatório PDF é configurável. Acesse **Configurações** → **Te
 | **Incluir Screenshots** | Incluir capturas de tela |
 | **Tamanho dos Screenshots** | Dimensão das imagens no relatório |
 | **Exibir data/hora das capturas** | Mostrar quando cada screenshot foi capturado |
+| **Gerar relatório automaticamente** | Criar o PDF assim que a execução termina. Quando desativado, o PDF é gerado apenas no download |
 | **Incluir Logs** | Incluir logs de cada nó |
 | **Máximo de Logs** | Limite de linhas de log por nó |
 | **Incluir Outputs** | Incluir dados de saída dos nós |
@@ -145,7 +146,7 @@ O layout do relatório PDF é configurável. Acesse **Configurações** → **Te
 
 ## Dicas
 
-- **Configure o template** antes de gerar relatórios — especialmente logo e imagem de fundo
+- **Configure o template** antes de gerar relatórios — especialmente logo, imagem de fundo e modo de geração do PDF
 - **Inclua screenshots** para evidências visuais — fundamental para auditorias
 - **Use filtro por projeto** para relatórios focados
 - **Agende envios** — use suítes agendadas + alarmes para relatórios automáticos

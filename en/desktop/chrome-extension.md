@@ -95,6 +95,8 @@ Records interactions automatically:
 
 In **Smart Web Flow** mode, recorded actions may also carry target identity, target reference, alternative strategies, iframe context, expected effects, evidence, and session bootstrap data.
 
+On screens with repeated fields, such as billing and shipping addresses with visually similar fields, the extension records enough context for QANode to distinguish the controls. This avoids relying only on repeated generic selectors such as `textarea[name="street"]`.
+
 When a click opens a new tab/window, the extension can insert a **Switch Page / Tab** (`switchPage`) step after the click so the next steps continue on the correct page.
 
 When a click triggers a browser download, Smart Web Flow captures the file during execution. There is no need to record a separate download action.
@@ -279,7 +281,7 @@ Recording survives page reloads:
 
 ### Browser Session
 
-When possible, the extension captures cookies and localStorage together with the JSON. When pasted into QANode, this session can be imported as persisted storage, avoiding manual login before the first run.
+When possible, the extension captures cookies and localStorage together with the JSON. When pasted into QANode, this session can be imported as persisted **Session Storage**, avoiding manual login before the first run.
 
 Review imported sessions when authentication expires quickly, depends on MFA/IP/device, or when the scenario must start without cookies.
 

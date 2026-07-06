@@ -206,7 +206,7 @@ The `web` namespace exposes the current Web session and advanced utilities power
 | `context` | Playwright `context` instance |
 | `browser` | Playwright `browser` instance |
 | `session` | Raw session object |
-| `storageStrategy` | Session storage strategy |
+| `storageStrategy` | Session Storage |
 | `persistedKey` | Session persistence key |
 | `url()` | Returns the current URL |
 | `title()` | Returns the current page title |
@@ -268,7 +268,7 @@ await web.screenshot("full-page", { fullPage: true });
 | `session` | Current session |
 | `sessionId` | Session ID |
 | `id` | Internal session ID |
-| `storageStrategy` | Storage strategy |
+| `storageStrategy` | Session Storage |
 | `persistedKey` | Persistence key |
 | `url` | Helper for current URL |
 | `title` | Helper for current title |

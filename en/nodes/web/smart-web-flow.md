@@ -50,10 +50,10 @@ Consider another node when:
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | **Session Mode** | `new` / `reuse` | `new` | Opens a new browser session or reuses an existing one |
-| **Session ID** | `string` | — | Name or expression used to reuse a session |
+| **Session Id** | `string` | — | Name or expression used to reuse a session |
 | **Headless** | `boolean` | `true` | Runs the browser without visible UI |
-| **Storage Strategy** | `inMemory` / `persisted` | `inMemory` | Controls whether cookies/localStorage are discarded or persisted |
-| **Persisted Session ID** | `string` | — | Optional name used to save/reuse cookies and localStorage |
+| **Session Storage** | `inMemory` / `persisted` | `inMemory` | Controls whether cookies/localStorage are discarded or persisted |
+| **Session Name** | `string` | — | Optional name used to save/reuse cookies and localStorage when storage is `persisted` |
 | **Browser** | `chromium` / `firefox` / `webkit` | `chromium` | Browser used during execution |
 | **Device** | `desktop` / `mobile` | `desktop` | Desktop viewport or mobile emulation |
 | **Viewport** | preset or `custom` | `1920x1080` | Window size in desktop mode |
@@ -63,22 +63,24 @@ Consider another node when:
 | **Capture Browser Console** | `boolean` | `false` | Records console messages, warnings, and page errors during execution |
 | **Fail on Console Errors** | `boolean` | `false` | Fails the node when a relevant console error is found |
 
-### Storage and Session
+### Session Storage
 
 For flows that require login, MFA, or SSO, use persisted storage. This lets QANode reuse cookies and localStorage in future executions without repeating the manual login.
 
 Use `inMemory` for isolated tests and `persisted` for applications that need to keep authentication between executions.
 
-When **Session Mode** is **new** and storage is **persisted**, the persisted session ID is optional:
+When you change **Session Mode** to `reuse`, the editor uses `persisted` by default to keep the session available to the next nodes. If the source node is using in-memory storage, QANode may warn that the session will be closed when that node finishes and suggest persisted storage.
+
+When **Session Mode** is **new** and **Session Storage** is `persisted`, the **Session Name** field is optional:
 
 - if filled, the session is saved with that name;
-- if empty, QANode generates an internal key automatically.
+- if empty, QANode generates an internal identifier automatically.
 
 Persisted sessions created by the node are available for reuse by other users of the same installation. This keeps shared flows executable even when another person runs the scenario.
 
 Sessions imported by the Chrome extension remain tied to the user who recorded/imported them, because they usually represent personal login, cookies, and permissions.
 
-In **reuse** mode, the **Session ID** field searches named sessions from both scopes. Suggestions show up to 10 sessions and hide automatically generated UUID keys. Sessions unused for 30 days are cleaned automatically.
+In **reuse** mode, the **Session Id** field searches named sessions from both scopes. Suggestions show up to 10 sessions and hide automatically generated UUID identifiers. Sessions unused for 30 days are cleaned automatically.
 
 ---
 
@@ -223,11 +225,23 @@ If the recovered selector is already present in the step, QANode suppresses unne
 
 ---
 
+## Failure Hints In Run Details
+
+When a Smart Web step fails with a known error, the run detail can show a **Possible cause** section with a suggested fix.
+
+QANode shows only one hint per failed step. Common examples include ambiguous targets, hidden elements, disabled or read-only fields, blocked clicks, timeouts, assertion mismatches, expired sessions, and expected effects that did not appear after the action.
+
+These hints do not change the execution result. Use them together with logs, screenshots, console output, and evidence to decide whether the flow needs adjustment, the site changed, or an expected effect should be disabled for that step.
+
+---
+
 ## Learned Preferred Strategy
 
 After successful runs, Smart Web Flow can learn which strategy resolved the step reliably. It stores success information only when the run passed. Failed runs do not promote or overwrite the preferred strategy.
 
 This helps with resilience: a strategy that is good but sometimes slower is not replaced just because another attempt happened to run after timing changed. When the preferred strategy is tried in a future run, QANode can poll it quickly for its learned average window, then continue with the normal strategy list if it does not resolve.
+
+Successful runs can also suggest removing optional hover or scroll steps when QANode proves the flow passed without them. These suggestions appear only when the whole flow succeeds, so a scroll or hover is not removed while another failure may still be hiding the real need for it.
 
 ---
 
@@ -348,6 +362,10 @@ Uploads a file to an `<input type="file">`.
 
 The step is recorded automatically by the extension when the user chooses a file in an upload input. When importing the flow into QANode, if the original file is not attached to the flow yet, the step is highlighted until the user chooses the `fileRef` that will be used during execution.
 
+### assert
+
+Smart Web Flow respects the selected assert mode. Text validations use rendered page text and normalize whitespace to reduce failures caused only by line breaks or visual spacing.
+
 Use `uploadFile` for scenarios such as submitting documents, attaching receipts, uploading images, PDFs, CSVs, spreadsheets, or testing web forms with upload.
 
 ---
@@ -441,6 +459,8 @@ Access example:
 11. Use variables for dynamic data.
 12. Execute once and inspect evidence.
 13. Apply only the suggestions that match the real user intent.
+
+In forms with repeated sections, such as billing and shipping addresses with fields sharing the same `name`, the recording preserves signals such as context, index, and control position. This prevents losing a fill step just because two different fields share the same generic selector.
 
 ---
 

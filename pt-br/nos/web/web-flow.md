@@ -23,10 +23,10 @@ O nó **Web Flow** permite automatizar interações com páginas web usando **se
 | Campo | Tipo | Padrão | Descrição |
 |-------|------|--------|-----------|
 | **Modo de Sessão** | `new` / `reuse` | `new` | Nova sessão ou reutilizar existente |
-| **Session ID** | `string` | — | ID da sessão para reutilizar (quando `reuse`) |
+| **ID da sessão** | `string` | — | ID da sessão para reutilizar (quando `reuse`) |
 | **Headless** | `boolean` | `true` | Executar sem interface gráfica visível |
-| **Estratégia de Storage** | `inMemory` / `persisted` | `inMemory` | Persistir cookies/localStorage entre execuções |
-| **Chave de Storage** | `string` | — | Identificador do storage persistido |
+| **Armazenamento da sessão** | `inMemory` / `persisted` | `inMemory` | Persistir cookies/localStorage entre execuções |
+| **Nome da sessão** | `string` | — | Nome usado para salvar/reutilizar a sessão quando o armazenamento é `persisted` |
 | **Browser** | `chromium` / `firefox` / `webkit` | `chromium` | Navegador a usar na execução |
 | **Dispositivo** | `desktop` / `mobile` | `desktop` | Modo de emulação |
 | **Viewport** | preset ou `custom` | `1920x1080` | Tamanho da janela (modo Desktop) |
@@ -79,7 +79,9 @@ Usa perfis reais do Playwright (viewport, user agent, escala de pixels, touch). 
 - **Nova Sessão (`new`)**: Abre um novo navegador para cada execução. Ideal para testes isolados.
 - **Reutilizar Sessão (`reuse`)**: Usa uma sessão de navegador já aberta por outro nó web compatível. Útil para dividir testes longos em múltiplos nós mantendo o mesmo navegador e cookies.
 
-### Estratégia de Storage
+Ao selecionar `reuse`, o editor usa **Armazenamento da sessão** como `persisted` por padrão. Se o nó que cria a sessão ainda estiver usando `inMemory`, o QANode pode avisar que a sessão será fechada antes de outro nó reutilizá-la.
+
+### Armazenamento da sessão
 
 - **Em Memória (`inMemory`)**: Cookies e localStorage são descartados ao final da execução
 - **Persistido (`persisted`)**: Cookies e localStorage são salvos com uma chave e podem ser reutilizados em execuções futuras. Ideal para manter sessões de login entre execuções.

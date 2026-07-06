@@ -55,13 +55,16 @@ appium driver install --source=npm appium-xcuitest-driver@10.25.0
 |-------|------|---------|-------------|
 | **Credential** | `select` | — | Mobile credential with connection settings |
 | **Session Mode** | `new` / `reuse` | `new` | Start a new session or reuse an existing one |
-| **Session ID** | `string` | — | ID to identify/reuse the session |
+| **Session Id** | `string` | — | ID to identify/reuse the session |
+| **Session Storage** | `inMemory` / `persisted` | `inMemory` | Controls whether the mobile session is closed at the end of the node or kept for reuse |
 | **Self Healing** | `boolean` | `false` | Tries to recover elements when mobile selectors no longer locate the original target |
 
 ### Session Mode
 
 - **New Session (`new`)**: Opens a new Appium session on every execution. Ideal for isolated tests.
 - **Reuse Session (`reuse`)**: Reuses a session already created by another Mobile Flow node in the same flow. Useful for splitting long automations across multiple nodes while keeping the same device connected.
+
+When selecting `reuse`, the editor sets **Session Storage** to `persisted` by default. Use `inMemory` when the session should be closed at the end of the node; use `persisted` when another node needs to continue in the same app/device during the execution.
 
 ### Self Healing
 
@@ -563,12 +566,12 @@ Steps configured in the node:
 ### Reusing a Session Across Nodes
 
 **Node 1 — Mobile Flow (Login)**
-- Session ID: `android-session`
+- Session Id: `android-session`
 - Steps: login to the app
 
 **Node 2 — Mobile Flow (Check Order)**
 - Session Mode: `reuse`
-- Session ID: `android-session`
+- Session Id: `android-session`
 - Steps: navigate to orders, check status
 
 Both nodes share the same device and session state.
@@ -583,4 +586,4 @@ Both nodes share the same device and session state.
 - Configure **screenshots** on critical steps to make failure identification easier
 - Use **Continue on Fail** in monitoring assertions to collect multiple results without interrupting the flow
 - For apps that take a long time to start, add a `wait` step with `elementVisible` before interacting
-- A custom `Session ID` makes it easy to reuse sessions across multiple Mobile Flow nodes in the same flow
+- A custom `Session Id` makes it easy to reuse sessions across multiple Mobile Flow nodes in the same flow

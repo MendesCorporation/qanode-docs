@@ -25,7 +25,7 @@ Para ejecutar todo el flujo:
 | **Éxito** | 🟢 Verde | El nodo se ejecutó con éxito |
 | **Fallo** | 🔴 Rojo | El nodo encontró un error |
 | **Cancelado** | ⚪ Gris | La ejecución fue interrumpida manualmente |
-| **Omitido** | ⚪ Gris | El nodo no fue ejecutado (rama inactiva) |
+| **Omitido** | ⚪ Gris | El nodo no fue ejecutado (rama inactiva o nodo marcado como omitido) |
 
 ---
 
@@ -59,6 +59,7 @@ Después de la ejecución, haz clic en cualquier nodo para ver sus resultados en
 | **Logs** | Mensajes registrados durante la ejecución del nodo |
 | **Outputs** | Datos producidos por el nodo (JSON navegable) |
 | **Error** | Mensaje de error detallado (cuando corresponda) |
+| **Causa posible** | Sugerencia amigable mostrada en algunos pasos con fallo, con una corrección sugerida |
 | **Archivos y Screenshots** | Artefactos generados, downloads, uploads capturados y evidencias |
 
 [Pestaña de Resultados](../../assets/images/analise-resultados-editor-fluxos.mp4)
@@ -112,6 +113,14 @@ Los archivos de prueba aislada creados en el editor son temporales y pueden limp
 1. Busca nodos con borde **rojo** (🔴) en el canvas
 2. Haz clic en el nodo con fallo
 3. Verifica el **mensaje de error** y los **logs**
+
+### Sugerencias Amigables de Fallo
+
+Cuando un paso falla por un error conocido, el detalle de la ejecución puede mostrar una sección **Causa posible** con una sugerencia objetiva. Aparece solo en pasos con fallo y QANode muestra una sugerencia por vez para evitar mensajes contradictorios.
+
+Las sugerencias cubren problemas comunes como sesión expirada, credenciales, expresiones rotas, archivos ausentes, objetivo ambiguo, campo oculto, deshabilitado o de solo lectura, clic bloqueado, timeout, assert que no coincide y efecto esperado que no apareció después de la acción.
+
+Use la sugerencia como punto de partida y confirme en las evidencias, logs y capturas de pantalla antes de cambiar el flujo.
 
 ### Mensajes de Error Comunes
 
@@ -219,14 +228,14 @@ El detalle de la ejecución también muestra la sección **Defectos Relacionados
 
 ## Reporte de Ejecución
 
-Después de cada ejecución, QANode genera automáticamente un **reporte PDF** con:
+Después de cada ejecución, QANode pone a disposición un **reporte PDF** con:
 
 - Resumen de la ejecución (estado, duración, fecha)
 - Detalles de cada paso (estado, logs, outputs, duración)
 - Capturas de pantalla tomadas
 - Errores encontrados
 
-El reporte está disponible en la lista de ejecuciones del proyecto y puede descargarse o enviarse por correo electrónico.
+El reporte está disponible en la lista de ejecuciones del proyecto y puede descargarse o enviarse por correo electrónico. Según la plantilla activa, el PDF puede generarse automáticamente al finalizar la ejecución o solo cuando alguien solicita la descarga.
 
 [Reporte de Ejecución](../../assets/images/relatorio-editor-fluxos.mp4)
 

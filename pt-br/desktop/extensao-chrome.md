@@ -94,6 +94,8 @@ Grava automaticamente suas interações:
 
 No modo **Smart Web Flow**, as ações gravadas também podem carregar metadados adicionais, como identidade do alvo, texto de escopo, estratégias alternativas, contexto de iframe, efeitos esperados e evidências.
 
+Em telas com campos repetidos, como endereço de cobrança e endereço de entrega com campos visualmente parecidos, a extensão grava contexto suficiente para o QANode diferenciar os controles. Isso evita depender apenas de seletores genéricos repetidos, como `textarea[name="street"]`.
+
 Quando um click abre uma nova aba ou janela, a extensão pode inserir um passo **Trocar página / aba** (`switchPage`) depois do click. Assim os próximos passos continuam na aba correta em vez de tentar agir na página anterior.
 
 Quando um click dispara download no navegador, o Smart Web Flow captura o arquivo na execução. Não é necessário gravar uma ação separada de download.
@@ -321,7 +323,7 @@ A gravação sobrevive a **recarregamentos de página**:
 
 ### Sessão do Navegador
 
-Quando possível, a extensão também captura cookies e localStorage da página gravada junto com o JSON. Ao colar no QANode, essa sessão pode ser importada como storage persistido do nó, evitando que você precise refazer login antes da primeira execução.
+Quando possível, a extensão também captura cookies e localStorage da página gravada junto com o JSON. Ao colar no QANode, essa sessão pode ser importada como armazenamento persistido da sessão do nó, evitando que você precise refazer login antes da primeira execução.
 
 Esse recurso é útil em ambientes autenticados como CRMs, ERPs e portais internos. Ainda assim, revise a sessão importada quando:
 
