@@ -17,6 +17,28 @@ Para ejecutar todo el flujo:
 [Flujo en ejecución](../../assets/images/execucao-completa-fluxos.mp4)
 *Imagen: Canvas mostrando nodos con indicadores de estado durante la ejecución*
 
+### Ejecución Visual de Flujos Web — Enterprise
+
+Al iniciar una ejecución completa con el botón **Ejecutar** del canvas, desactivar **Headless** en al menos un nodo **Smart Web Flow**, **Web Flow** o **Smart Locators** activa el modo visual para esa ejecución.
+
+El comportamiento depende de dónde se ejecuta QANode:
+
+| Entorno | Comportamiento |
+|---------|----------------|
+| **Servidor con Live View** | Un único panel acompaña los nodos web de la ejecución. El nodo con **Headless** desactivado funciona como disparador; después, los demás nodos web de la misma ejecución también se muestran en el panel, aunque mantengan **Headless** activado. |
+| **Desktop o entorno con ventana gráfica disponible** | La configuración continúa aplicándose por nodo. Los nodos con **Headless** desactivado pueden abrir una ventana visible; los nodos con **Headless** activado se ejecutan sin ventana. |
+
+Live View pertenece a la ejecución iniciada desde el canvas, no a un único nodo. Por eso:
+
+- el panel permanece abierto hasta que la ejecución finaliza con éxito, falla, se cancela o el usuario lo cierra;
+- mientras el flujo ejecuta nodos que no usan navegador, como **HTTP Request**, **IF**, base de datos o **Wait**, no se produce una nueva imagen web y la última pantalla puede permanecer visible;
+- si otro nodo web se ejecuta después, el mismo panel vuelve a acompañar el navegador sin cerrar y abrir una nueva ventana;
+- mantener el panel abierto no significa necesariamente que el navegador anterior siga ejecutándose: el ciclo de vida del navegador todavía depende de la estrategia de sesión configurada en el nodo.
+
+Este modo visual se activa únicamente para una ejecución interactiva iniciada por un usuario desde el canvas. Las **suites**, **programaciones**, **CI/CD**, **tokens de integración**, **API** y otros procesos externos no abren automáticamente una ventana ni Live View.
+
+Al usar **Ejecutar** en el panel de propiedades, la visualización permanece limitada al nodo seleccionado.
+
 ### Estado de Ejecución
 
 | Estado | Indicador | Descripción |
@@ -183,7 +205,9 @@ ERROR: Click failed after 3 attempts: [getByRole("button", { name: "Login" })] �
 
 Para pruebas web, desactiva el **modo headless** en el nodo para ver el navegador en acción:
 - En el nodo Smart Web Flow, Web Flow o Smart Locators, desmarca **Headless**
-- Ejecuta el flujo y observa el navegador
+- Al usar **Ejecutar** en el panel de propiedades, la visualización muestra solo el nodo seleccionado
+- Al ejecutar el flujo completo desde el canvas en un servidor, **Live View** acompaña toda la ejecución web en el mismo panel
+- Las suites, programaciones, CI/CD y llamadas externas continúan ejecutándose sin abrir la visualización interactiva
 
 ### 2. Agrega Pasos de Wait
 

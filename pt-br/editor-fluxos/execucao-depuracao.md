@@ -17,6 +17,28 @@ Para executar todo o fluxo:
 [Fluxo em execução](../../assets/images/execucao-completa-fluxos.mp4)
 *Imagem: Canvas mostrando nós com indicadores de status durante a execução*
 
+### Execução Visual de Fluxos Web — Enterprise
+
+Ao iniciar uma execução completa pelo botão **Executar** do canvas, desligar **Headless** em pelo menos um nó **Smart Web Flow**, **Web Flow** ou **Smart Locators** ativa o modo visual daquela execução.
+
+O comportamento depende de onde o QANode está sendo executado:
+
+| Ambiente | Comportamento |
+|----------|---------------|
+| **Servidor com Live View** | Um único painel acompanha os nós web da execução. O nó com **Headless** desligado funciona como gatilho; depois disso, os demais nós web da mesma execução também são exibidos no painel, mesmo que mantenham **Headless** ligado. |
+| **Desktop ou ambiente com janela gráfica disponível** | A configuração continua sendo aplicada por nó. Nós com **Headless** desligado podem abrir uma janela visível; nós com **Headless** ligado executam sem janela. |
+
+O Live View pertence à execução iniciada no canvas, e não a um único nó. Por isso:
+
+- o painel permanece aberto até a execução terminar, falhar, ser cancelada ou o usuário fechá-lo;
+- quando o fluxo passa por nós que não usam navegador, como **HTTP Request**, **IF**, banco de dados ou **Wait**, nenhuma nova imagem web é produzida e a última tela pode permanecer visível;
+- se outro nó web for executado depois, o mesmo painel volta a acompanhar o navegador, sem fechar e abrir uma nova janela;
+- manter o painel aberto não significa necessariamente que o navegador anterior continua em execução: o ciclo de vida do navegador ainda depende da estratégia de sessão configurada no nó.
+
+Esse modo visual é aceito somente para uma execução interativa iniciada por um usuário no canvas. Execuções de **suítes**, **agendamentos**, **CI/CD**, **tokens de integração**, **API** ou outros processos externos não abrem janela nem Live View automaticamente.
+
+Ao usar **Executar nó** no painel de propriedades, a visualização continua limitada ao nó selecionado.
+
 ### Status de Execução
 
 | Status | Indicador | Descrição |
@@ -183,7 +205,9 @@ ERROR: Click failed after 3 attempts: [getByRole("button", { name: "Login" })] �
 
 Para testes web, desative o **modo headless** no nó para ver o navegador em ação:
 - No nó Smart Web Flow, Web Flow ou Smart Locators, desmarque **Headless**
-- Execute o fluxo e observe o navegador
+- Ao usar **Executar nó**, a visualização mostra somente o nó selecionado
+- Ao executar o fluxo completo pelo canvas em um servidor, o **Live View** acompanha a execução web completa no mesmo painel
+- Suítes, agendamentos, CI/CD e chamadas externas continuam executando sem abrir a visualização interativa
 
 ### 2. Adicione Passos de Wait
 

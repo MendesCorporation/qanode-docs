@@ -268,6 +268,14 @@ A aba **Geral** reúne configurações que afetam a instância como um todo. Ela
 
 As seções são organizadas em accordions para facilitar a navegação.
 
+### Login Único (SSO) — Enterprise
+
+A seção **Login único** permite delegar a autenticação ao provedor de identidade da empresa usando OIDC ou SAML. Os usuários podem ser criados no primeiro acesso por JIT ou gerenciados pelo IdP por meio de SCIM.
+
+Quando o SSO está ativo, o QANode continua controlando papéis e permissões, enquanto o IdP controla a identidade e, com SCIM, a ativação e desativação dos usuários.
+
+> Veja o guia completo de [SSO e Provisionamento de Usuários](sso-scim.md) para configurar Microsoft Entra, External ID, Google Workspace, Okta, Zoho, Keycloak e outros provedores.
+
 ### Segurança e MFA
 
 A configuração global de MFA fica em **Configurações → Geral → Segurança e MFA**.

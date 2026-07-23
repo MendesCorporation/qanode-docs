@@ -58,7 +58,7 @@ Bienvenido a la documentación oficial de **QANode Community Edition**, la plata
 ### API
 | Nodo | Descripción |
 |------|-------------|
-| [HTTP Request](nodos/api/http-request.md) | Solicitudes HTTP (GET, POST, PUT, PATCH, DELETE) |
+| [HTTP Request](nodos/api/http-request.md) | Solicitudes HTTP (GET, QUERY, POST, PUT, PATCH, DELETE, HEAD y OPTIONS) |
 
 ### Archivos
 | Nodo | Descripción |
@@ -171,5 +171,6 @@ Bienvenido a la documentación oficial de **QANode Community Edition**, la plata
 |--------|-------------|
 | [Expresiones](expresiones/expresiones.md) | Sistema de expresiones `{{ }}` e interpolación |
 | [Administración - Enterprise](administracion/administracion-enterprise.md) | Usuarios, roles, permisos, SMTP y auditoría |
+| [SSO y Aprovisionamiento SCIM - Enterprise](administracion/sso-scim.md) | OIDC, SAML, JIT, SCIM y configuración de los principales proveedores de identidad |
 | [Versión Escritorio](escritorio/escritorio.md) | Instalación y funciones exclusivas de la versión escritorio |
 | [Extensión Chrome](escritorio/extension-chrome.md) | Grabador de pruebas para el navegador |

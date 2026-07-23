@@ -40,7 +40,7 @@ Cada tipo de teste gera um perfil de carga diferente automaticamente a partir do
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
 | **Credencial** | `string` | Credencial HTTP salva (preenche URL e auth automaticamente) |
-| **Método** | `string` | `GET`, `POST`, `PUT`, `PATCH`, `DELETE` |
+| **Método** | `string` | `GET`, `QUERY`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS` |
 | **URL** | `string` | Endpoint alvo (suporta `{{ }}`) |
 | **Auth** | `string` | Tipo de autenticação manual (se não usar credencial) |
 | **Headers** | `object` | Cabeçalhos adicionais da requisição |
@@ -68,6 +68,195 @@ Arquivo: {{ steps["file-generate"].outputs.fileRef }}
 ```
 
 Também é possível importar um comando `curl`; o QANode tenta converter método, URL, headers, query, body e campos de formulário para o modo visual correspondente.
+
+### Dados Dinâmicos por Requisição
+
+A seção **Dados dinâmicos** gera valores novos imediatamente antes de cada requisição de cada usuário virtual. Ela é indicada para endpoints que exigem e-mail único, identificador externo, número sequencial, data futura ou outra informação que não pode ser repetida durante o teste.
+
+Crie um valor na seção **Dados dinâmicos** e use-o com a sintaxe:
+
+```text
+{{ load.nomeDoValor }}
+```
+
+Os valores podem ser usados em:
+
+- URL e parâmetros de query;
+- nomes e valores de headers;
+- corpo JSON ou texto bruto;
+- chaves e valores de `x-www-form-urlencoded`;
+- nomes e valores de campos textuais `multipart/form-data`.
+
+O conteúdo de um arquivo binário não é modificado. Em multipart, somente o nome do campo e os campos de texto aceitam dados dinâmicos.
+
+#### Valores nativos
+
+Estes valores existem automaticamente e não precisam ser cadastrados:
+
+| Expressão | Valor |
+|----------|-------|
+| `{{ load.runId }}` | ID da execução do QANode |
+| `{{ load.requestId }}` | Sequência global da requisição, começando em 1 e sem repetição entre VUs |
+| `{{ load.vuId }}` | Identificador do usuário virtual |
+| `{{ load.iteration }}` | Número da iteração dentro daquele VU |
+| `{{ load.timestamp }}` | Data e hora ISO geradas no momento da requisição |
+
+O mesmo valor é reutilizado em todos os lugares de uma única requisição. Na requisição seguinte, os valores gerados são renovados.
+
+Exemplo:
+
+```text
+URL: https://api.exemplo.com/orders/{{ load.requestId }}
+Header X-Request-Id: {{ load.requestId }}
+Body: { "requestId": "{{ load.requestId }}" }
+```
+
+URL, header e body receberão o mesmo `requestId` naquela chamada.
+
+#### Tipos disponíveis
+
+| Tipo | Configuração | Resultado |
+|------|-------------|-----------|
+| **UUID** | Apenas nome | UUID v4 novo por requisição |
+| **E-mail** | Prefixo e domínio | E-mail único com token da execução e `requestId` |
+| **Sequência** | Início e incremento | `início + (requestId - 1) × incremento` |
+| **Número aleatório** | Mínimo, máximo e casas decimais | Número aleatório dentro do intervalo |
+| **Lista** | Um valor por linha; seleção aleatória ou sequencial | Um item da lista por requisição |
+| **Timestamp** | Formato, deslocamento e unidade | Data atual, passada ou futura |
+| **Template** | Texto com outras expressões `load` | Valor composto depois que os demais são gerados |
+
+##### UUID
+
+```text
+Nome: externalId
+Tipo: UUID
+Uso: {{ load.externalId }}
+```
+
+##### E-mail
+
+```text
+Nome: customerEmail
+Tipo: E-mail
+Prefixo: performance
+Domínio: example.com
+Uso: {{ load.customerEmail }}
+```
+
+O resultado segue este padrão e não se repete dentro da execução:
+
+```text
+performance_tokenDaExecucao_142@example.com
+```
+
+Use um domínio reservado ou controlado pela empresa. Não use endereços reais em um teste que possa disparar e-mails.
+
+##### Sequência
+
+```text
+Nome: customerNumber
+Início: 1000
+Incremento: 5
+```
+
+As primeiras requisições produzirão `1000`, `1005`, `1010` e assim por diante, independentemente de qual VU as executar.
+
+##### Número aleatório
+
+```text
+Nome: amount
+Mínimo: 10
+Máximo: 100
+Casas decimais: 2
+```
+
+São aceitas de 0 a 10 casas decimais. O valor máximo deve ser maior ou igual ao mínimo.
+
+##### Lista
+
+```text
+Nome: region
+Valores:
+  south
+  north
+  east
+Seleção: Sequencial
+```
+
+No modo **Sequencial**, os itens são distribuídos em ciclos de acordo com o `requestId`, o que ajuda a equilibrar a carga. No modo **Aleatório**, qualquer item pode ser escolhido a cada requisição.
+
+##### Timestamp
+
+Formatos disponíveis:
+
+| Formato | Exemplo |
+|---------|---------|
+| **ISO** | `2026-07-21T18:30:00.000Z` |
+| **Unix** | `1784658600` em segundos |
+| **Unix ms** | `1784658600000` em milissegundos |
+
+O deslocamento aceita segundos, minutos, horas ou dias. Use valor positivo para o futuro e negativo para o passado.
+
+```text
+Nome: expiresAt
+Formato: ISO
+Deslocamento: 2
+Unidade: Horas
+```
+
+##### Template
+
+Templates são processados depois dos outros dados dinâmicos e podem combiná-los:
+
+```text
+Nome: customerKey
+Template: customer-{{ load.customerNumber }}-{{ load.externalId }}
+Uso: {{ load.customerKey }}
+```
+
+#### Exemplo completo — criação de usuário único
+
+Cadastre:
+
+| Nome | Tipo | Configuração |
+|------|------|--------------|
+| `email` | E-mail | prefixo `performance`, domínio `example.com` |
+| `externalId` | UUID | — |
+| `plan` | Lista | `basic`, `pro`, seleção sequencial |
+| `sequence` | Sequência | início 1, incremento 1 |
+
+Use no body:
+
+```json
+{
+  "email": "{{ load.email }}",
+  "externalId": "{{ load.externalId }}",
+  "plan": "{{ load.plan }}",
+  "sequence": "{{ load.sequence }}",
+  "requestId": "{{ load.requestId }}",
+  "createdAt": "{{ load.timestamp }}"
+}
+```
+
+Cada chamada cria um payload diferente, inclusive quando vários VUs executam ao mesmo tempo.
+
+#### Regras dos nomes
+
+- devem começar com uma letra;
+- podem conter letras, números, `_` ou `$`;
+- não podem se repetir;
+- não podem usar os nomes reservados `runId`, `requestId`, `vuId`, `iteration` ou `timestamp`.
+
+O QANode valida referências desconhecidas antes de iniciar a carga. Se o body usar `{{ load.customer }}` sem que `customer` exista, a execução falhará com uma mensagem de configuração em vez de gerar requisições incorretas.
+
+#### Boas práticas
+
+- use uma sequência quando precisar de distribuição previsível;
+- use lista sequencial para equilibrar regiões, planos ou categorias;
+- use UUID ou e-mail quando a API exigir unicidade;
+- planeje a limpeza dos registros criados pelo teste;
+- lembre que dados dinâmicos alteram os inputs, mas não substituem limiares e análise das métricas;
+- faça um Smoke Test antes da carga completa para validar o formato gerado.
 
 ### Configuração de Carga
 

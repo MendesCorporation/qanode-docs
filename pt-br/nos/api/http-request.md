@@ -26,7 +26,7 @@ O modo builder oferece uma interface visual para construir a requisição:
 
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
-| **Método** | `string` | `GET`, `POST`, `PUT`, `PATCH`, `DELETE` |
+| **Método** | `string` | `GET`, `QUERY`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS` |
 | **URL** | `string` | URL do endpoint (suporta `{{ }}`) |
 | **Headers** | `object` | Cabeçalhos HTTP (chave-valor) |
 | **Parâmetros de Query** | `array` | Pares chave-valor adicionados à URL |
@@ -82,10 +82,65 @@ A forma mais segura e recomendada. Selecione uma credencial do tipo **HTTP/API**
 | Método | Uso Típico |
 |--------|-----------|
 | **GET** | Buscar dados (listar, obter detalhes) |
+| **QUERY** | Consultar dados enviando filtros ou critérios estruturados no corpo |
 | **POST** | Criar recursos, enviar dados |
 | **PUT** | Atualizar recurso completo |
 | **PATCH** | Atualizar parcialmente um recurso |
 | **DELETE** | Remover um recurso |
+| **HEAD** | Obter somente status e headers, sem corpo de resposta |
+| **OPTIONS** | Consultar métodos e opções aceitos pelo endpoint |
+
+### Método QUERY
+
+`QUERY`, definido pela [RFC 10008](https://www.rfc-editor.org/rfc/rfc10008.html), é um método HTTP seguro e idempotente para consultas que precisam carregar critérios estruturados no corpo da requisição. Ele não é a mesma coisa que os **Parâmetros de Query** da URL.
+
+Compare:
+
+```text
+GET /orders?status=pending&from=2026-01-01
+```
+
+com:
+
+```text
+QUERY /orders
+Content-Type: application/json
+
+{
+  "status": ["pending", "review"],
+  "period": {
+    "from": "2026-01-01",
+    "to": "2026-01-31"
+  },
+  "sort": ["createdAt:desc"]
+}
+```
+
+Use `QUERY` quando a documentação da API declarar suporte ao método, especialmente para filtros grandes, objetos aninhados ou consultas que não cabem bem na URL. Para uma busca comum, continue usando `GET`.
+
+O QANode permite usar em `QUERY` os mesmos tipos de corpo disponíveis em `POST`, `PUT` e `PATCH`:
+
+- JSON;
+- texto bruto;
+- `x-www-form-urlencoded`;
+- `multipart/form-data`;
+- arquivo binário.
+
+Quando houver conteúdo, envie um `Content-Type` coerente. O QANode define esse header automaticamente nos modos estruturados, salvo quando ele tiver sido informado manualmente.
+
+Exemplo com formulário URL encoded:
+
+```text
+Método: QUERY
+URL: https://api.exemplo.com/search
+Tipo do Corpo: x-www-form-urlencoded
+Campos:
+  term = notebook
+  limit = 50
+  includeArchived = false
+```
+
+> O servidor, proxy, gateway e WAF precisam aceitar `QUERY`. Se algum deles não reconhecer o método, a resposta pode ser `405 Method Not Allowed` ou `501 Not Implemented`. Isso não pode ser corrigido apenas no QANode; habilite o método na infraestrutura ou use o contrato alternativo definido pela API.
 
 ---
 
@@ -106,11 +161,11 @@ Adicione headers customizados como pares chave-valor:
 
 ## Body (Corpo da Requisição)
 
-Para métodos que aceitam body (POST, PUT, PATCH), escolha o **Tipo do Corpo**.
+Para métodos que aceitam body (`QUERY`, `POST`, `PUT`, `PATCH`, `DELETE` e `OPTIONS`), escolha o **Tipo do Corpo**. O QANode não envia body em `GET` ou `HEAD`.
 
 ### Nenhum
 
-Não envia corpo. É o padrão para `GET` e `DELETE`.
+Não envia corpo. É a opção usada em `GET` e `HEAD`.
 
 ### JSON
 
@@ -239,6 +294,28 @@ Tipo do Corpo: JSON
 JSON: {
   "name": "Maria",
   "email": "maria@exemplo.com"
+}
+```
+
+### QUERY — Busca estruturada
+
+```text
+Método: QUERY
+URL: https://api.exemplo.com/orders/search
+Tipo do Corpo: JSON
+JSON: {
+  "customerIds": ["1001", "1002"],
+  "status": ["pending", "review"],
+  "createdAfter": "2026-01-01T00:00:00Z"
+}
+```
+
+Use expressões normalmente dentro dos critérios:
+
+```json
+{
+  "customerId": "{{ variables.CUSTOMER_ID }}",
+  "cursor": "{{ steps[\"previous-page\"].outputs.body.nextCursor }}"
 }
 ```
 

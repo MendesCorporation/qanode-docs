@@ -18,6 +18,28 @@ To execute the entire flow:
 
 *Image: Canvas showing nodes with status indicators during execution*
 
+### Visual Web Flow Execution â€” Enterprise
+
+When starting a full execution with the canvas **Run** button, disabling **Headless** on at least one **Smart Web Flow**, **Web Flow**, or **Smart Locators** node enables visual mode for that execution.
+
+The behavior depends on where QANode is running:
+
+| Environment | Behavior |
+|-------------|----------|
+| **Server with Live View** | A single panel follows the web nodes in the execution. The node with **Headless** disabled acts as the trigger; after that, the other web nodes in the same execution are also displayed in the panel, even if they keep **Headless** enabled. |
+| **Desktop or environment with a graphical window available** | The setting continues to apply per node. Nodes with **Headless** disabled may open a visible window; nodes with **Headless** enabled run without a window. |
+
+Live View belongs to the execution started from the canvas, not to a single node. Therefore:
+
+- the panel remains open until the execution succeeds, fails, is cancelled, or the user closes it;
+- while the flow runs nodes that do not use a browser, such as **HTTP Request**, **IF**, database, or **Wait**, no new web image is produced and the last screen may remain visible;
+- if another web node runs later, the same panel resumes following the browser without closing and opening a new window;
+- keeping the panel open does not necessarily mean the previous browser is still running: the browser lifecycle still depends on the session strategy configured on the node.
+
+This visual mode is enabled only for an interactive execution started by a user from the canvas. **Suites**, **schedules**, **CI/CD**, **integration tokens**, **API**, and other external processes do not automatically open a window or Live View.
+
+When using **Run** in the properties panel, visualization remains limited to the selected node.
+
 ### Execution Status
 
 | Status | Indicator | Description |
@@ -184,7 +206,9 @@ ERROR: Click failed after 3 attempts: [getByRole("button", { name: "Login" })] â
 
 For web tests, disable **headless mode** on the node to see the browser in action:
 - On the Smart Web Flow, Web Flow, or Smart Locators node, uncheck **Headless**
-- Run the flow and observe the browser
+- When using **Run** in the properties panel, visualization shows only the selected node
+- When running the full flow from the canvas on a server, **Live View** follows the complete web execution in the same panel
+- Suites, schedules, CI/CD, and external calls continue running without opening interactive visualization
 
 ### 2. Add Wait Steps
 

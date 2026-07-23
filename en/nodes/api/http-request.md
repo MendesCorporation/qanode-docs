@@ -26,7 +26,7 @@ Builder mode provides a visual interface for constructing the request:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **Method** | `string` | `GET`, `POST`, `PUT`, `PATCH`, `DELETE` |
+| **Method** | `string` | `GET`, `QUERY`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS` |
 | **URL** | `string` | Endpoint URL (supports `{{ }}`) |
 | **Headers** | `object` | HTTP headers as key-value pairs |
 | **Query parameters** | `array` | Key-value pairs added to the URL |
@@ -77,13 +77,80 @@ The safest and recommended approach. Select an **HTTP/API** credential containin
 
 ---
 
+## HTTP Methods
+
+| Method | Typical use |
+|--------|-------------|
+| **GET** | Fetch data or resource details |
+| **QUERY** | Query data with structured filters or criteria in the request body |
+| **POST** | Create resources or submit data |
+| **PUT** | Replace a complete resource |
+| **PATCH** | Partially update a resource |
+| **DELETE** | Remove a resource |
+| **HEAD** | Fetch only status and headers, without a response body |
+| **OPTIONS** | Discover methods and options supported by an endpoint |
+
+### QUERY Method
+
+`QUERY`, defined by [RFC 10008](https://www.rfc-editor.org/rfc/rfc10008.html), is a safe and idempotent HTTP method for queries that need to carry structured criteria in the request body. It is not the same as URL **Query parameters**.
+
+Compare:
+
+```text
+GET /orders?status=pending&from=2026-01-01
+```
+
+with:
+
+```text
+QUERY /orders
+Content-Type: application/json
+
+{
+  "status": ["pending", "review"],
+  "period": {
+    "from": "2026-01-01",
+    "to": "2026-01-31"
+  },
+  "sort": ["createdAt:desc"]
+}
+```
+
+Use `QUERY` when the API documentation explicitly supports it, especially for large filters, nested objects, or queries that do not fit well in a URL. Continue using `GET` for ordinary retrieval.
+
+QANode supports the same body types for `QUERY` as for `POST`, `PUT`, and `PATCH`:
+
+- JSON;
+- raw text;
+- `x-www-form-urlencoded`;
+- `multipart/form-data`;
+- binary file.
+
+When content is present, send a matching `Content-Type`. QANode sets it automatically for structured body modes unless it was supplied manually.
+
+Example with a URL-encoded form:
+
+```text
+Method: QUERY
+URL: https://api.example.com/search
+Body type: x-www-form-urlencoded
+Fields:
+  term = notebook
+  limit = 50
+  includeArchived = false
+```
+
+> The server, proxy, gateway, and WAF must accept `QUERY`. If any layer does not recognize it, the response may be `405 Method Not Allowed` or `501 Not Implemented`. Enable the method in the infrastructure or use the alternate contract defined by the API.
+
+---
+
 ## Body
 
-For methods that accept a body (POST, PUT, PATCH), choose **Body type**.
+For methods that accept a body (`QUERY`, `POST`, `PUT`, `PATCH`, `DELETE`, and `OPTIONS`), choose **Body type**. QANode does not send a body with `GET` or `HEAD`.
 
 ### None
 
-Sends no body. This is the default for `GET` and `DELETE`.
+Sends no body. This is the option used for `GET` and `HEAD`.
 
 ### JSON
 
@@ -215,6 +282,28 @@ JSON: {
 }
 ```
 
+### QUERY — Structured search
+
+```text
+Method: QUERY
+URL: https://api.example.com/orders/search
+Body type: JSON
+JSON: {
+  "customerIds": ["1001", "1002"],
+  "status": ["pending", "review"],
+  "createdAfter": "2026-01-01T00:00:00Z"
+}
+```
+
+Expressions can be used normally inside the criteria:
+
+```json
+{
+  "customerId": "{{ variables.CUSTOMER_ID }}",
+  "cursor": "{{ steps[\"previous-page\"].outputs.body.nextCursor }}"
+}
+```
+
 ### POST — Multipart upload
 
 ```
@@ -263,4 +352,3 @@ Use an **If** node after HTTP Request to handle different status codes:
 - Use variables for base URLs: `{{ variables.API_URL }}/endpoint`.
 - Use `multipart/form-data` when the API expects a form upload.
 - Use **Response type = File** for binary responses.
-

@@ -268,6 +268,14 @@ La pestaña **General** reúne configuraciones que afectan a toda la instancia. 
 
 Las secciones están organizadas en acordeones para facilitar la navegación.
 
+### Inicio de Sesión Único (SSO) — Enterprise
+
+La sección **Inicio de sesión único** permite delegar la autenticación al proveedor de identidad de la empresa mediante OIDC o SAML. Los usuarios pueden crearse en su primer acceso mediante JIT o ser gestionados por el IdP mediante SCIM.
+
+Mientras SSO está activo, QANode continúa controlando roles y permisos, mientras el IdP controla la identidad y, con SCIM, la activación y desactivación de usuarios.
+
+> Consulte la guía completa de [SSO y Aprovisionamiento de Usuarios](sso-scim.md) para configurar Microsoft Entra, External ID, Google Workspace, Okta, Zoho, Keycloak y otros proveedores.
+
 ### Seguridad y MFA
 
 La configuración global de MFA está en **Configuración → General → Seguridad y MFA**.

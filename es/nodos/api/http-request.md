@@ -26,7 +26,7 @@ El modo builder ofrece una interfaz visual para construir la solicitud:
 
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
-| **Método** | `string` | `GET`, `POST`, `PUT`, `PATCH`, `DELETE` |
+| **Método** | `string` | `GET`, `QUERY`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS` |
 | **URL** | `string` | URL del endpoint (admite `{{ }}`) |
 | **Headers** | `object` | Encabezados HTTP como pares clave-valor |
 | **Parámetros de query** | `array` | Pares clave-valor agregados a la URL |
@@ -77,13 +77,80 @@ La forma más segura y recomendada. Selecciona una credencial **HTTP/API** que c
 
 ---
 
+## Métodos HTTP
+
+| Método | Uso habitual |
+|--------|--------------|
+| **GET** | Obtener datos o detalles de un recurso |
+| **QUERY** | Consultar datos enviando filtros o criterios estructurados en el cuerpo |
+| **POST** | Crear recursos o enviar datos |
+| **PUT** | Sustituir un recurso completo |
+| **PATCH** | Actualizar parcialmente un recurso |
+| **DELETE** | Eliminar un recurso |
+| **HEAD** | Obtener únicamente estado y headers, sin cuerpo de respuesta |
+| **OPTIONS** | Consultar métodos y opciones admitidos por el endpoint |
+
+### Método QUERY
+
+`QUERY`, definido por la [RFC 10008](https://www.rfc-editor.org/rfc/rfc10008.html), es un método HTTP seguro e idempotente para consultas que necesitan transportar criterios estructurados en el cuerpo. No es lo mismo que los **Parámetros de query** de la URL.
+
+Compare:
+
+```text
+GET /orders?status=pending&from=2026-01-01
+```
+
+con:
+
+```text
+QUERY /orders
+Content-Type: application/json
+
+{
+  "status": ["pending", "review"],
+  "period": {
+    "from": "2026-01-01",
+    "to": "2026-01-31"
+  },
+  "sort": ["createdAt:desc"]
+}
+```
+
+Use `QUERY` cuando la documentación de la API indique explícitamente que admite el método, especialmente para filtros grandes, objetos anidados o consultas que no encajan bien en una URL. Para una consulta normal, continúe usando `GET`.
+
+QANode admite en `QUERY` los mismos tipos de cuerpo disponibles para `POST`, `PUT` y `PATCH`:
+
+- JSON;
+- texto bruto;
+- `x-www-form-urlencoded`;
+- `multipart/form-data`;
+- archivo binario.
+
+Cuando haya contenido, envíe un `Content-Type` coherente. QANode lo define automáticamente en los modos estructurados, salvo que se haya informado manualmente.
+
+Ejemplo con formulario URL encoded:
+
+```text
+Método: QUERY
+URL: https://api.ejemplo.com/search
+Tipo del cuerpo: x-www-form-urlencoded
+Campos:
+  term = notebook
+  limit = 50
+  includeArchived = false
+```
+
+> El servidor, proxy, gateway y WAF deben aceptar `QUERY`. Si alguna capa no reconoce el método, la respuesta puede ser `405 Method Not Allowed` o `501 Not Implemented`. Habilite el método en la infraestructura o use el contrato alternativo definido por la API.
+
+---
+
 ## Cuerpo
 
-Para métodos que aceptan body (POST, PUT, PATCH), elige **Tipo del cuerpo**.
+Para métodos que aceptan body (`QUERY`, `POST`, `PUT`, `PATCH`, `DELETE` y `OPTIONS`), elija **Tipo del cuerpo**. QANode no envía body con `GET` o `HEAD`.
 
 ### Ninguno
 
-No envía cuerpo. Es el valor por defecto para `GET` y `DELETE`.
+No envía cuerpo. Es la opción utilizada para `GET` y `HEAD`.
 
 ### JSON
 
@@ -215,6 +282,28 @@ JSON: {
 }
 ```
 
+### QUERY — Búsqueda estructurada
+
+```text
+Método: QUERY
+URL: https://api.ejemplo.com/orders/search
+Tipo del cuerpo: JSON
+JSON: {
+  "customerIds": ["1001", "1002"],
+  "status": ["pending", "review"],
+  "createdAfter": "2026-01-01T00:00:00Z"
+}
+```
+
+Las expresiones pueden utilizarse normalmente dentro de los criterios:
+
+```json
+{
+  "customerId": "{{ variables.CUSTOMER_ID }}",
+  "cursor": "{{ steps[\"previous-page\"].outputs.body.nextCursor }}"
+}
+```
+
 ### POST — Upload multipart
 
 ```
@@ -263,4 +352,3 @@ Usa un nodo **If** después de HTTP Request para tratar diferentes códigos de e
 - Usa variables para URLs base: `{{ variables.API_URL }}/endpoint`.
 - Usa `multipart/form-data` cuando la API espera upload de formulario.
 - Usa **Tipo de respuesta = Archivo** para respuestas binarias.
-

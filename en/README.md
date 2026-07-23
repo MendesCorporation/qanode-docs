@@ -58,7 +58,7 @@ Welcome to the official documentation of **QANode Community Edition**, the test 
 ### API
 | Node | Description |
 |------|-------------|
-| [HTTP Request](nodes/api/http-request.md) | HTTP requests (GET, POST, PUT, PATCH, DELETE) |
+| [HTTP Request](nodes/api/http-request.md) | HTTP requests (GET, QUERY, POST, PUT, PATCH, DELETE, HEAD, and OPTIONS) |
 
 ### Files
 | Node | Description |
@@ -171,5 +171,6 @@ Welcome to the official documentation of **QANode Community Edition**, the test 
 |------|-------------|
 | [Expressions](expressions/expressions.md) | Expression system `{{ }}` and interpolation |
 | [Administration - Enterprise](administration/enterprise-administration.md) | Users, roles, permissions, SMTP, and audit |
+| [SSO and SCIM Provisioning - Enterprise](administration/sso-scim.md) | OIDC, SAML, JIT, SCIM, and configuration for common identity providers |
 | [Desktop Version](desktop/desktop.md) | Installation and exclusive desktop features |
 | [Chrome Extension](desktop/chrome-extension.md) | Browser test recorder |

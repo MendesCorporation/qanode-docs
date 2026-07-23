@@ -58,7 +58,7 @@ Bem-vindo à documentação oficial do **QANode**, a plataforma de automação d
 ### API
 | Nó | Descrição |
 |----|-----------|
-| [HTTP Request](nos/api/http-request.md) | Requisições HTTP (GET, POST, PUT, PATCH, DELETE) |
+| [HTTP Request](nos/api/http-request.md) | Requisições HTTP (GET, QUERY, POST, PUT, PATCH, DELETE, HEAD e OPTIONS) |
 
 ### Arquivos
 | Nó | Descrição |
@@ -171,5 +171,6 @@ Bem-vindo à documentação oficial do **QANode**, a plataforma de automação d
 |--------|-----------|
 | [Expressões](expressoes/expressoes.md) | Sistema de expressões `{{ }}` e interpolação |
 | [Administração - Enterprise](administracao/administracao-enterprise.md) | Usuários, papéis, permissões, SMTP e auditoria |
+| [SSO e Provisionamento SCIM - Enterprise](administracao/sso-scim.md) | OIDC, SAML, JIT, SCIM e configuração dos principais provedores de identidade |
 | [Versão Desktop](desktop/desktop.md) | Instalação e recursos exclusivos da versão desktop |
 | [Extensão Chrome](desktop/extensao-chrome.md) | Gravador de testes para o navegador |

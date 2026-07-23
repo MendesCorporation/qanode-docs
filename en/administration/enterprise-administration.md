@@ -268,6 +268,14 @@ The **General** tab groups settings that affect the entire instance. It is avail
 
 Sections are organized in accordions to make navigation easier.
 
+### Single Sign-On (SSO) — Enterprise
+
+The **Single sign-on** section delegates authentication to the company's identity provider through OIDC or SAML. Users can be created on their first sign-in through JIT or managed by the IdP through SCIM.
+
+While SSO is active, QANode continues to control roles and permissions, while the IdP controls identity and, with SCIM, user activation and deactivation.
+
+> See the complete [SSO and User Provisioning](sso-scim.md) guide for Microsoft Entra, External ID, Google Workspace, Okta, Zoho, Keycloak, and other providers.
+
 ### Security and MFA
 
 The global MFA configuration is in **Settings → General → Security and MFA**.
