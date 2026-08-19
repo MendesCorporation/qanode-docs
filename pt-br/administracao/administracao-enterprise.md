@@ -65,6 +65,8 @@ Na lista de usuários você pode:
 | **Alterar Papel** | Muda o papel (e permissões) do usuário |
 | **Excluir** | Remove o usuário permanentemente |
 
+Alterar nome ou papel exige `user.edit`. Ativar ou desativar uma conta exige `user.deactivate`; portanto, essa ação pode ser delegada sem conceder permissão para editar os demais dados do usuário. Usuários provisionados por SCIM têm o status controlado pelo provedor de identidade e não podem ser ativados ou desativados manualmente no QANode.
+
 ### Status de Usuários
 
 | Status | Descrição |
@@ -79,14 +81,20 @@ Na lista de usuários você pode:
 
 ### Papéis do Sistema
 
-O QANode inclui papéis pré-definidos que não podem ser removidos:
+O QANode inclui papéis pré-definidos:
 
 | Papel | Descrição |
 |-------|-----------|
 | **Super Admin** | Acesso total a todas as funcionalidades |
 | **Admin** | Acesso administrativo |
-| **Architect** | Acesso de adminsitração de projetos |
+| **Architect** | Acesso de administração de projetos |
 | **Tester** | Acesso de cenários e execuções |
+
+Os nomes dos papéis do sistema não podem ser alterados, pois são usados por dashboards, convites, filas, atualizações e automações. Descrição, permissões e visão de tabelas continuam configuráveis, respeitando as permissões do administrador.
+
+O papel **Super Admin** não pode ser renomeado nem excluído. Os demais papéis do sistema podem ser excluídos por quem possui `role.delete`, desde que não tenham usuários vinculados. A exclusão permanece após reinicializações e atualizações do QANode; papéis removidos não são recriados automaticamente.
+
+Um administrador não pode conceder a um papel permissões que ele próprio não possui, nem gerenciar usuários com privilégios superiores aos seus.
 
 ### Papéis Customizados
 

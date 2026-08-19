@@ -91,6 +91,7 @@ Bienvenido a la documentación oficial de **QANode Community Edition**, la plata
 ### Utilidades
 | Nodo | Descripción |
 |------|-------------|
+| [Generador de Datos](nodos/utilidades/generador-datos.md) | Genera datos sintéticos coherentes, regionales, reproducibles y configurables |
 | [Set Variable](nodos/utilidades/set-variable.md) | Define variables en tiempo de ejecución |
 | [Log](nodos/utilidades/log.md) | Registra mensajes en el log de ejecución |
 | [Wait](nodos/utilidades/wait.md) | Espera un tiempo determinado o una condición |

@@ -243,6 +243,14 @@ This helps with resilience: a strategy that is good but sometimes slower is not 
 
 Successful runs can also suggest removing optional hover or scroll steps when QANode proves the flow passed without them. These suggestions appear only when the whole flow succeeds, so a scroll or hover is not removed while another failure may still be hiding the real need for it.
 
+### Visual Wait During Loading
+
+When a target takes time to appear, Smart Web can recognize that the page is still loading and grant a short additional wait before continuing normal resolution. This wait is limited so that it does not hide a broken selector, and it does not replace the `wait` steps configured in the flow.
+
+If the target appears only during this additional wait, the run details may recommend adding an explicit `wait` with an appropriate margin. Review and apply the suggestion when loading is part of the application's normal behavior.
+
+The visual analysis remains within the QANode environment; the screenshot used for this check is not sent to an AI provider.
+
 ---
 
 ## Actions

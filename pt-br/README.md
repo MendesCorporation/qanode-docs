@@ -91,6 +91,7 @@ Bem-vindo à documentação oficial do **QANode**, a plataforma de automação d
 ### Utilitários
 | Nó | Descrição |
 |----|-----------|
+| [Gerador de Dados](nos/utilitarios/gerador-dados.md) | Gera massas sintéticas coerentes, regionais, reproduzíveis e configuráveis |
 | [Set Variable](nos/utilitarios/set-variable.md) | Define variáveis em tempo de execução |
 | [Log](nos/utilitarios/log.md) | Registra mensagens no log de execução |
 | [Wait](nos/utilitarios/wait.md) | Aguarda por tempo ou condição |

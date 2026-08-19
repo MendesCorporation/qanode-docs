@@ -22,9 +22,9 @@ See [Installation](../getting-started/installation.md) for full steps.
 
 ### Minimum Requirements
 
-- **Windows** 10/11 (64-bit)
+- **Windows** 10/11 (64-bit), **macOS** 11+ (Intel or Apple Silicon), or **Linux** 64-bit with AppImage
 - **RAM**: 4 GB minimum (8 GB recommended)
-- **Disk**: 500 MB for installation + data space
+- **Disk**: 2 GB for installation + space for data and evidence
 
 ---
 
@@ -47,10 +47,17 @@ On first startup, QANode:
 QANode stores data under user folders:
 
 ```text
-%APPDATA%\QANode\
-├── pg-data/              # Embedded PostgreSQL data
-├── storage/              # Artifacts (screenshots, PDFs)
-└── logs/                 # App logs
+Windows: %APPDATA%\@qanode\desktop\
+macOS:   ~/Library/Application Support/@qanode/desktop/
+Linux:   ~/.config/@qanode/desktop/
+```
+
+Inside the data folder:
+
+```text
+postgres/          # Embedded PostgreSQL data
+storage/           # Artifacts, screenshots, and PDFs
+desktop-main.log   # Startup and local services log
 ```
 
 ```text
@@ -59,7 +66,7 @@ QANode stores data under user folders:
     └── sample-hash-node/ # Sample node
 ```
 
-> Important: do not manually modify files under `pg-data/`.
+> Important: do not manually modify files under `postgres/`. Back up the entire data folder before any recovery procedure.
 
 ---
 
@@ -148,7 +155,7 @@ Local provider monitors the custom nodes folder and reloads automatically:
 
 ## Native Theme
 
-Desktop supports native light/dark theme integration:
+QANode Desktop supports light and dark themes integrated with the operating system's native window:
 
 - **Light**: light UI with light title bar
 - **Dark**: dark UI with dark title bar
@@ -164,7 +171,7 @@ Desktop supports native light/dark theme integration:
 | Local Nodes | Supported | HTTP providers only |
 | Multi-user | Single-user | Team usage |
 | Network | Offline capable | Network required |
-| Updates | Installer update | Git pull + rebuild |
+| Updates | Integrated updater | Deployment environment update |
 
 ---
 
@@ -178,20 +185,22 @@ Desktop supports native light/dark theme integration:
 
 ### Database does not initialize
 
-- `%APPDATA%\QANode\pg-data` may be corrupted
-- Rename/remove folder and restart (data loss expected)
+- Open `desktop-main.log` in the data folder and look for `Fatal startup error`
+- Do not delete the `postgres/` folder: it contains local projects, scenarios, and history
+- Make a copy of the entire data folder before any recovery procedure
+- Send the relevant log excerpt to support to identify whether the failure occurred during startup, schema update, or another local service
 
 ### Local nodes do not appear
 
 - Check extension: `.node.js`, `.node.mjs`, `.node.cjs`
 - Check exports: `manifest` and `execute`
 - For `.node.js`, use CommonJS (`module.exports`) or configure `type: "module"` in `package.json`
-- Open `%APPDATA%\@qanode\desktop\desktop-main.log` and search `Failed loading`
+- Open `desktop-main.log` in your system's data folder and search for `Failed loading`
 
 ### Quick import error verification
 
 1. Open **Settings > Providers** and test `Desktop Local JS Provider`
-2. Check `%APPDATA%\@qanode\desktop\desktop-main.log`
+2. Check `desktop-main.log` in your system's data folder
 3. Look for messages like:
 - `Failed loading ".../your-node.node.mjs": Cannot find package 'x'`
 - `Unexpected token 'export'` (usually `.node.js` with ESM syntax and no `type: "module"`)

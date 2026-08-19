@@ -121,6 +121,8 @@ In the variables panel, files show name, MIME type, and size in their details. I
 
 For web nodes (Smart Web Flow, Web Flow, and Smart Locators), captured screenshots appear as clickable thumbnails. Click to view at full size.
 
+Regular screenshots appear in the sequence in which they were captured, which is also the order used in the PDF report. Accessibility, performance, and summary evidence is grouped at the end. When `before` and `after` captures have the same creation time, QANode preserves the previous state first and the subsequent state second, regardless of the image's custom name.
+
 ### Files
 
 Files generated or captured during execution appear in the **Files** section of the execution detail. When downloading, the browser uses the real file name when available instead of an internal execution identifier.

@@ -57,7 +57,7 @@ appium driver install --source=npm appium-xcuitest-driver@10.25.0
 | **Modo de Sesión** | `new` / `reuse` | `new` | Nueva sesión o reutilizar sesión existente |
 | **ID de sesión** | `string` | — | ID para identificar/reutilizar la sesión |
 | **Almacenamiento de sesión** | `inMemory` / `persisted` | `inMemory` | Controla si la sesión mobile se cierra al final del nodo o se mantiene para reutilización |
-| **Self Healing** | `boolean` | `false` | Intenta recuperar elementos cuando los selectores mobile dejan de localizar el objetivo original |
+| **Self Healing** | `boolean` | `true` | Intenta recuperar elementos cuando los selectores mobile dejan de localizar el objetivo original |
 
 ### Modo de Sesión
 
@@ -68,28 +68,19 @@ Al seleccionar `reuse`, el editor usa **Almacenamiento de sesión** como `persis
 
 ### Self Healing
 
-Cuando **Self Healing** está habilitado, Mobile Flow puede recuperar automáticamente elementos en acciones como toque y escritura cuando los selectores grabados dejan de funcionar.
-
-En mobile, la recuperación considera señales como:
-
-- `accessibility_id`
-- texto visible
-- `label`, `name`, `value` y `hint`
-- `resource-id`
-- clase/tipo nativo del elemento
-- contexto cercano en la jerarquía capturada por Appium
-
-Esto ayuda en cambios comunes como:
+Cuando **Self Healing** está habilitado, Mobile Flow puede recuperar elementos en acciones como toque y escritura cuando los selectores grabados dejan de funcionar. Ayuda con cambios comunes como:
 
 - pequeños ajustes de etiqueta
 - diferencias entre mayúsculas y minúsculas
 - texto con o sin acentos
-- cambios de selector manteniendo el mismo elemento en pantalla
+- cambios de idioma
+- etiquetas dinámicas, como `Perfil 1 de 5` que cambia a `Perfil 2 de 5`
+- cambios en la posición del control o en el tamaño de pantalla del dispositivo
+- cambios de identificador cuando el control conserva la misma función
 
-El self healing en mobile también respeta la plataforma activa:
+Los nuevos nodos Mobile Flow y las grabaciones creadas por el Inspector o MCP comienzan con Self Healing habilitado. Los flujos en los que esta opción fue deshabilitada explícitamente conservan su configuración actual.
 
-- prioriza estrategias compatibles con iOS cuando la ejecución corre en iOS
-- prioriza estrategias compatibles con Android cuando la ejecución corre en Android
+Cuando existen varios controles similares, QANode solo aplica la recuperación si puede distinguir con seguridad el objetivo esperado. De lo contrario, el paso falla con información de diagnóstico para que pueda revisar el selector.
 
 Cuando una recuperación se aplica, aparece en los detalles de la ejecución con:
 
@@ -97,6 +88,12 @@ Cuando una recuperación se aplica, aparece en los detalles de la ejecución con
 - la confianza de la recuperación
 - el selector mobile utilizado
 - una acción **Aplicar al Flujo** para promover el selector recuperado al flujo original
+
+### Elementos Identificados Solo por Posición
+
+Algunas aplicaciones no exponen nombre, texto o identificador para determinados controles, como barras de navegación personalizadas o áreas dibujadas. En estos casos, el Inspector puede grabar solamente la posición del toque.
+
+QANode adapta esa posición al tamaño actual de la pantalla antes de tocar. Como no existe una identidad del elemento para confirmar, use con cuidado los pasos basados solo en posición en acciones destructivas o pantallas muy dinámicas. Siempre que sea posible, solicite al equipo de la aplicación identificadores de accesibilidad y añada una espera explícita antes de la interacción cuando la pantalla aún pueda estar cambiando.
 
 ---
 
@@ -196,7 +193,7 @@ Toca un elemento usando estrategias de selector.
 | **Intentos** | `number` | Número de intentos (predeterminado: 3) |
 | **Delay entre intentos (ms)** | `number` | Espera entre intentos (predeterminado: 500ms) |
 
-Si el selector falla en todos los intentos y existen coordenadas de fallback (generadas por el inspector), el toque se realizará en las coordenadas directas.
+Cuando el elemento tiene identificadores, QANode prioriza esos selectores y Self Healing. Si el paso fue grabado solamente por posición, utiliza el fallback visual descrito anteriormente.
 
 ---
 
@@ -229,6 +226,8 @@ Para campos de texto, QANode intenta localizar el objetivo por capas:
 3. relación contextual entre el label visible y el input cercano;
 4. coordenadas grabadas como fallback visual;
 5. clase genérica de input solo como último recurso.
+
+Cuando **Limpiar Primero** está habilitado, el contenido existente se elimina de una sola vez antes de enviar el nuevo texto. Para probar la tecla Backspace, grabe o configure esa acción explícitamente.
 
 ---
 

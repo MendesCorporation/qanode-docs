@@ -121,6 +121,12 @@ Historial de todas las ejecuciones del proyecto:
 | **Duración** | Tiempo de ejecución |
 | **Fecha** | Fecha y hora de la ejecución |
 
+### Descargar Evidencia de un Escenario
+
+En la lista de escenarios del proyecto, abra el menú de acciones (⋮) y seleccione **Descargar evidencia**. La opción aparece cuando el escenario tiene una ejecución más reciente que finalizó correctamente.
+
+QANode utiliza la misma plantilla y el mismo proceso de generación de PDF disponibles en los detalles de la ejecución. Si el informe está configurado para generarse bajo demanda, la interfaz muestra el progreso, prepara el archivo en segundo plano e inicia la descarga automáticamente cuando está listo.
+
 ### Defectos — Enterprise
 
 Lista los defectos vinculados al proyecto. Para cada escenario de la lista es posible ver si está **bloqueado por un defecto activo**, con enlace directo al defecto responsable del bloqueo.

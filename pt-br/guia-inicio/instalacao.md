@@ -9,9 +9,11 @@ A versão desktop é a forma mais fácil de começar. Ela inclui todos os compon
 
 ### Requisitos
 
-- **Sistema Operacional**: Windows 10/11 (64-bit)
+- **Windows** 10/11, 64 bits
+- **macOS** 11 ou superior, Intel ou Apple Silicon
+- **Linux** 64 bits com suporte a AppImage
 - **Memória RAM**: 8 GB mínimo (16 GB recomendado)
-- **Espaço em Disco**: 2 GB para instalação
+- **Espaço em Disco**: 2 GB para instalação, além do espaço usado pelas evidências e execuções
 
 ### Instalação no Windows
 
@@ -19,8 +21,29 @@ A versão desktop é a forma mais fácil de começar. Ela inclui todos os compon
 2. Execute o instalador e siga as instruções
 3. Ao finalizar, o QANode será aberto automaticamente
 
-[Instalador do QANode no Windows](../../assets/images/instalacao-nsis.png) 
+[Instalador do QANode no Windows](../../assets/images/instalacao-nsis.png)
 *Imagem: Tela do instalador NSIS do QANode no Windows*
+
+### Instalação no macOS
+
+1. Baixe o arquivo `.dmg` correspondente ao seu processador: Apple Silicon (`arm64`) ou Intel (`x64`)
+2. Abra o DMG e mova o QANode para **Aplicativos**
+3. Abra o QANode pela pasta **Aplicativos** ou pela busca do macOS
+
+O aplicativo é assinado e notarizado pela Apple. Após uma atualização, o macOS pode levar alguns instantes para atualizar o ícone e o índice de busca.
+
+### Instalação no Linux
+
+1. Baixe o arquivo `.AppImage`
+2. Marque o arquivo como executável
+3. Abra o AppImage
+
+Exemplo:
+
+```bash
+chmod +x QANode-Setup-x64.AppImage
+./QANode-Setup-x64.AppImage
+```
 
 Na primeira execução, o QANode irá:
 - Inicializar o banco de dados PostgreSQL embutido
@@ -32,16 +55,17 @@ Na primeira execução, o QANode irá:
 
 ### Pasta de Dados
 
-A versão desktop armazena seus dados em:
+A versão desktop armazena banco, evidências, arquivos e logs na pasta de dados do usuário:
 
-```
-%USERPROFILE%\AppData\Roaming\QANode\
-├── pg-data/         # Dados do PostgreSQL embutido
-├── storage/         # Artefatos (screenshots, PDFs, etc.)
-└── custom nodes/    # Nós customizados locais
+```text
+Windows: %APPDATA%\@qanode\desktop\
+macOS:   ~/Library/Application Support/@qanode/desktop/
+Linux:   ~/.config/@qanode/desktop/
 ```
 
-> **Importante:** Nunca modifique manualmente os arquivos em `pg-data/`. Use a interface do QANode para gerenciar seus dados.
+Dentro dela, `postgres/` contém o banco embutido, `storage/` guarda os artefatos e `desktop-main.log` registra a inicialização do aplicativo.
+
+> **Importante:** Nunca modifique ou exclua manualmente a pasta `postgres/`. Antes de qualquer procedimento de recuperação, faça uma cópia da pasta de dados completa.
 
 ---
 
@@ -51,8 +75,9 @@ A versão desktop armazena seus dados em:
 ### A versão desktop não inicia
 
 - Verifique se outra instância do QANode não está em execução
-- Tente executar como administrador
-- Verifique se a porta 5432 não está em uso por outro PostgreSQL
+- Abra `desktop-main.log` na pasta de dados e procure por `Fatal startup error`
+- No Windows, confirme se o Microsoft Visual C++ Redistributable x64 está atualizado
+- Não apague a pasta `postgres/`; preserve o banco e envie o log ao suporte para diagnóstico
 
 ---
 

@@ -57,7 +57,7 @@ appium driver install --source=npm appium-xcuitest-driver@10.25.0
 | **Modo de Sessão** | `new` / `reuse` | `new` | Nova sessão ou reutilizar sessão existente |
 | **ID da sessão** | `string` | — | ID para identificar/reutilizar a sessão |
 | **Armazenamento da sessão** | `inMemory` / `persisted` | `inMemory` | Controla se a sessão mobile será encerrada ao fim do nó ou mantida para reutilização |
-| **Self Healing** | `boolean` | `false` | Tenta recuperar elementos quando os seletores mobile deixam de localizar o alvo original |
+| **Self Healing** | `boolean` | `true` | Tenta recuperar elementos quando os seletores mobile deixam de localizar o alvo original |
 
 ### Modo de Sessão
 
@@ -70,26 +70,19 @@ Ao selecionar `reuse`, o editor usa **Armazenamento da sessão** como `persisted
 
 Quando **Self Healing** está habilitado, o Mobile Flow tenta recuperar automaticamente elementos em ações como toque e digitação quando os seletores gravados deixam de funcionar.
 
-No mobile, a recuperação considera sinais como:
-
-- `accessibility_id`
-- texto visível
-- `label`, `name`, `value` e `hint`
-- `resource-id`
-- tipo/classe nativa do elemento
-- contexto próximo na hierarquia capturada pelo Appium
-
-Isso ajuda em mudanças comuns como:
+Ele ajuda em mudanças comuns como:
 
 - ajustes pequenos de rótulo
 - diferenças de maiúsculas/minúsculas
 - texto com ou sem acento
-- mudança de seletor mantendo o mesmo elemento na tela
+- troca de idioma
+- rótulos dinâmicos, como `Perfil 1 de 5` e `Perfil 2 de 5`
+- mudança de posição do controle ou do tamanho do aparelho
+- alteração do identificador mantendo a mesma função na tela
 
-O self healing em mobile também respeita a plataforma ativa:
+Novos nós Mobile Flow e gravações feitas pelo Inspetor ou por MCP iniciam com Self Healing habilitado. Fluxos em que ele foi desligado explicitamente continuam respeitando essa escolha.
 
-- prioriza estratégias compatíveis com iOS quando a execução está em iOS
-- prioriza estratégias compatíveis com Android quando a execução está em Android
+Quando existem vários controles parecidos, o QANode só aplica a recuperação quando consegue distinguir o alvo com segurança. Caso contrário, o passo falha com um diagnóstico para que o seletor ou a gravação seja revisado.
 
 Quando uma recuperação é aplicada, ela aparece nos detalhes da execução com:
 
@@ -97,6 +90,12 @@ Quando uma recuperação é aplicada, ela aparece nos detalhes da execução com
 - confiança da recuperação
 - seletor mobile utilizado
 - ação **Aplicar ao Fluxo** para promover o seletor recuperado ao fluxo original
+
+### Elementos identificados somente pela posição
+
+Alguns aplicativos não expõem nome, texto ou identificador para determinados controles, como barras de navegação e áreas desenhadas. Nesses casos, o Inspetor pode gravar apenas a posição do toque.
+
+O QANode adapta esse toque ao tamanho atual da tela para tolerar pequenas diferenças entre aparelhos. Como não há identidade para confirmar o controle, use esse fallback com cuidado em ações destrutivas ou telas que mudam muito. Sempre que possível, peça ao time do aplicativo para adicionar identificadores de acessibilidade e use um passo `wait` para confirmar que a tela correta está aberta.
 
 ---
 
@@ -196,7 +195,7 @@ Toca em um elemento usando estratégias de seletor.
 | **Tentativas** | `number` | Número de tentativas (padrão: 3) |
 | **Delay entre tentativas (ms)** | `number` | Espera entre tentativas (padrão: 500ms) |
 
-Caso o seletor falhe em todas as tentativas e houver coordenadas de fallback (geradas pelo inspetor), o toque será realizado nas coordenadas diretas.
+Quando o elemento possui identificadores, o QANode prioriza esses seletores e o Self Healing. Se o passo foi gravado somente pela posição, usa o fallback visual descrito acima.
 
 ---
 
@@ -252,6 +251,8 @@ Para campos de texto, o QANode tenta localizar em camadas:
 3. relação contextual entre o label visível e o input próximo;
 4. coordenadas gravadas como fallback visual;
 5. classe genérica de input apenas como último recurso.
+
+Quando **Limpar Primeiro** está ativo, o conteúdo atual é removido de uma vez antes do envio do novo texto. Se o objetivo do teste for validar a tecla Backspace, grave ou configure essa tecla explicitamente.
 
 ---
 

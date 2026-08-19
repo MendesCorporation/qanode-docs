@@ -91,6 +91,7 @@ Welcome to the official documentation of **QANode Community Edition**, the test 
 ### Utilities
 | Node | Description |
 |------|-------------|
+| [Data Generator](nodes/utilities/data-generator.md) | Generate coherent, regional, reproducible, and configurable synthetic test data |
 | [Set Variable](nodes/utilities/set-variable.md) | Define variables at runtime |
 | [Log](nodes/utilities/log.md) | Record messages in the execution log |
 | [Wait](nodes/utilities/wait.md) | Wait for a time duration or condition |

@@ -69,6 +69,7 @@ The name used in `steps` is the node's **identifier**. By default, every node us
 | SSH Command | `ssh-command` | `steps["ssh-command"]` |
 | Custom JavaScript | `custom-js` | `steps["custom-js"]` |
 | Set Variable | `set-variable` | `steps["set-variable"]` |
+| Data Generator | `data-generator` | `steps["data-generator"]` |
 | Log | `log` | `steps.log` |
 
 **Examples with default identifiers:**

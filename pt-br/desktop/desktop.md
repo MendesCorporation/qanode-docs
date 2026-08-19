@@ -22,9 +22,9 @@ Consulte o guia de [Instalação](../guia-inicio/instalacao.md) para instruçõe
 
 ### Requisitos Mínimos
 
-- **Windows** 10/11 (64-bit)
+- **Windows** 10/11 (64 bits), **macOS** 11+ (Intel ou Apple Silicon) ou **Linux** 64 bits com AppImage
 - **RAM**: 4 GB mínimo (8 GB recomendado)
-- **Disco**: 500 MB para instalação + espaço para dados
+- **Disco**: 2 GB para instalação + espaço para dados e evidências
 
 ---
 
@@ -47,10 +47,17 @@ Na primeira execução, o QANode:
 O QANode armazena dados na pasta do usuário:
 
 ```text
-%APPDATA%\QANode\
-├── pg-data/              # Dados do PostgreSQL embutido
-├── storage/              # Artefatos (screenshots, PDFs)
-└── logs/                 # Logs da aplicação
+Windows: %APPDATA%\@qanode\desktop\
+macOS:   ~/Library/Application Support/@qanode/desktop/
+Linux:   ~/.config/@qanode/desktop/
+```
+
+Dentro da pasta de dados:
+
+```text
+postgres/          # Dados do PostgreSQL embutido
+storage/           # Artefatos, screenshots e PDFs
+desktop-main.log   # Log de inicialização e serviços locais
 ```
 
 ```text
@@ -59,7 +66,7 @@ O QANode armazena dados na pasta do usuário:
     └── sample-hash-node/ # Nó de exemplo
 ```
 
-> Importante: não modifique manualmente os arquivos em `pg-data/`.
+> Importante: não modifique manualmente os arquivos em `postgres/`. Faça backup da pasta de dados completa antes de qualquer recuperação.
 
 ---
 
@@ -150,7 +157,7 @@ Ideal para desenvolvimento rápido de nós customizados.
 
 ## Tema Nativo
 
-O QANode desktop suporta temas claro e escuro que se integram com a barra de título nativa do Windows:
+O QANode desktop suporta temas claro e escuro integrados à janela nativa do sistema operacional:
 
 - **Tema Claro**: interface clara com barra de título branca
 - **Tema Escuro**: interface escura com barra de título escura
@@ -166,7 +173,7 @@ O QANode desktop suporta temas claro e escuro que se integram com a barra de tí
 | **Nós Locais** | Suportados (hot-reload) | Apenas provedores HTTP |
 | **Multi-usuário** | Uso individual | Equipe compartilhada |
 | **Rede** | Funciona offline | Requer rede |
-| **Atualizações** | Instalador manual | Git pull + rebuild |
+| **Atualizações** | Atualizador integrado | Atualização do ambiente de implantação |
 
 ---
 
@@ -180,20 +187,22 @@ O QANode desktop suporta temas claro e escuro que se integram com a barra de tí
 
 ### Banco de dados não inicializa
 
-- A pasta `%APPDATA%\QANode\pg-data` pode estar corrompida
-- Renomeie/remova a pasta e reinicie (os dados serão perdidos)
+- Consulte `desktop-main.log` na pasta de dados e procure por `Fatal startup error`
+- Não exclua a pasta `postgres/`: ela contém os projetos, cenários e históricos locais
+- Faça uma cópia da pasta de dados completa antes de qualquer procedimento de recuperação
+- Envie o trecho do log ao suporte para identificar se a falha está na inicialização, atualização do schema ou em outro serviço local
 
 ### Nós locais não aparecem
 
 - Verifique extensão: `.node.js`, `.node.mjs` ou `.node.cjs`
 - Verifique exportação de `manifest` e `execute`
 - Para `.node.js`, use CommonJS (`module.exports`) ou configure `type: "module"` no `package.json`
-- Abra `%APPDATA%\@qanode\desktop\desktop-main.log` e procure por `Failed loading`
+- Abra `desktop-main.log` na pasta de dados do seu sistema e procure por `Failed loading`
 
 ### Como verificar erro de importação rapidamente
 
 1. Abra **Configurações > Providers** e teste o provider `Desktop Local JS Provider`
-2. Veja o log em `%APPDATA%\@qanode\desktop\desktop-main.log`
+2. Veja `desktop-main.log` na pasta de dados do seu sistema
 3. Procure mensagens como:
 - `Failed loading ".../seu-node.node.mjs": Cannot find package 'x'`
 - `Unexpected token 'export'` (geralmente `.node.js` em ESM sem `type: "module"`)

@@ -22,9 +22,9 @@ Consulta [Instalacion](../guia-inicio/instalacion.md) para instrucciones complet
 
 ### Requisitos Minimos
 
-- **Windows** 10/11 (64-bit)
+- **Windows** 10/11 (64 bits), **macOS** 11+ (Intel o Apple Silicon) o **Linux** 64 bits con AppImage
 - **RAM**: 4 GB minimo (8 GB recomendado)
-- **Disco**: 500 MB para instalacion + espacio para datos
+- **Disco**: 2 GB para instalacion + espacio para datos y evidencias
 
 ---
 
@@ -47,10 +47,17 @@ En el primer inicio, QANode:
 QANode guarda datos en carpetas de usuario:
 
 ```text
-%APPDATA%\QANode\
-├── pg-data/              # Datos de PostgreSQL embebido
-├── storage/              # Artefactos (screenshots, PDFs)
-└── logs/                 # Logs de la app
+Windows: %APPDATA%\@qanode\desktop\
+macOS:   ~/Library/Application Support/@qanode/desktop/
+Linux:   ~/.config/@qanode/desktop/
+```
+
+Dentro de la carpeta de datos:
+
+```text
+postgres/          # Datos de PostgreSQL embebido
+storage/           # Artefactos, screenshots y PDFs
+desktop-main.log   # Log de inicio y servicios locales
 ```
 
 ```text
@@ -59,7 +66,7 @@ QANode guarda datos en carpetas de usuario:
     └── sample-hash-node/ # Nodo de ejemplo
 ```
 
-> Importante: no modifiques manualmente archivos dentro de `pg-data/`.
+> Importante: no modifique manualmente los archivos dentro de `postgres/`. Haga una copia de seguridad de la carpeta de datos completa antes de cualquier procedimiento de recuperación.
 
 ---
 
@@ -148,7 +155,7 @@ El provider local monitorea la carpeta de nodos y recarga automaticamente:
 
 ## Tema Nativo
 
-Desktop soporta integracion con tema claro/oscuro:
+QANode Desktop admite temas claro y oscuro integrados con la ventana nativa del sistema operativo:
 
 - **Claro**: interfaz clara con barra de titulo clara
 - **Oscuro**: interfaz oscura con barra de titulo oscura
@@ -164,7 +171,7 @@ Desktop soporta integracion con tema claro/oscuro:
 | Nodos locales | Soportado | Solo providers HTTP |
 | Multiusuario | Uso individual | Uso en equipo |
 | Red | Funciona offline | Requiere red |
-| Actualizaciones | Instalador | Git pull + rebuild |
+| Actualizaciones | Actualizador integrado | Actualizacion del entorno de despliegue |
 
 ---
 
@@ -178,20 +185,22 @@ Desktop soporta integracion con tema claro/oscuro:
 
 ### La base de datos no inicia
 
-- `%APPDATA%\QANode\pg-data` puede estar corrupta
-- Renombra/elimina la carpeta y reinicia (habra perdida de datos)
+- Abra `desktop-main.log` en la carpeta de datos y busque `Fatal startup error`
+- No elimine la carpeta `postgres/`: contiene proyectos, escenarios e historiales locales
+- Haga una copia de la carpeta de datos completa antes de cualquier procedimiento de recuperación
+- Envíe el fragmento correspondiente del log al soporte para identificar si el fallo ocurrió durante el inicio, la actualización del esquema u otro servicio local
 
 ### Los nodos locales no aparecen
 
 - Verifica extension: `.node.js`, `.node.mjs`, `.node.cjs`
 - Verifica exports: `manifest` y `execute`
 - Para `.node.js`, usa CommonJS (`module.exports`) o configura `type: "module"` en `package.json`
-- Abre `%APPDATA%\@qanode\desktop\desktop-main.log` y busca `Failed loading`
+- Abra `desktop-main.log` en la carpeta de datos de su sistema y busque `Failed loading`
 
 ### Verificacion rapida de errores de importacion
 
 1. Abre **Configuraciones > Providers** y prueba `Desktop Local JS Provider`
-2. Revisa `%APPDATA%\@qanode\desktop\desktop-main.log`
+2. Revise `desktop-main.log` en la carpeta de datos de su sistema
 3. Busca mensajes como:
 - `Failed loading ".../tu-nodo.node.mjs": Cannot find package 'x'`
 - `Unexpected token 'export'` (normalmente `.node.js` con sintaxis ESM sin `type: "module"`)

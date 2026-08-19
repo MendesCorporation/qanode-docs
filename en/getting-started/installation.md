@@ -9,9 +9,11 @@ The desktop version is the easiest way to get started. It includes all the neces
 
 ### Requirements
 
-- **Operating System**: Windows 10/11 (64-bit)
+- **Windows** 10/11, 64-bit
+- **macOS** 11 or later, Intel or Apple Silicon
+- **Linux** 64-bit with AppImage support
 - **RAM**: 8 GB minimum (16 GB recommended)
-- **Disk Space**: 2 GB for installation
+- **Disk Space**: 2 GB for installation, plus the space used by evidence and executions
 
 ### Installation on Windows
 
@@ -21,6 +23,27 @@ The desktop version is the easiest way to get started. It includes all the neces
 
 [QANode installer on Windows](../../assets/images/instalacao-nsis.png)
 *Image: QANode NSIS installer screen on Windows*
+
+### Installation on macOS
+
+1. Download the `.dmg` file for your processor: Apple Silicon (`arm64`) or Intel (`x64`)
+2. Open the DMG and move QANode to **Applications**
+3. Open QANode from the **Applications** folder or macOS search
+
+The application is signed and notarized by Apple. After an update, macOS may take a few moments to refresh the icon and search index.
+
+### Installation on Linux
+
+1. Download the `.AppImage` file
+2. Mark the file as executable
+3. Open the AppImage
+
+Example:
+
+```bash
+chmod +x QANode-Setup-x64.AppImage
+./QANode-Setup-x64.AppImage
+```
 
 On first launch, QANode will:
 - Initialize the embedded PostgreSQL database
@@ -32,16 +55,17 @@ On first launch, QANode will:
 
 ### Data Folder
 
-The desktop version stores its data in:
+The desktop version stores the database, evidence, files, and logs in the user's data folder:
 
-```
-%USERPROFILE%\AppData\Roaming\QANode\
-├── pg-data/         # Embedded PostgreSQL data
-├── storage/         # Artifacts (screenshots, PDFs, etc.)
-└── custom nodes/    # Local custom nodes
+```text
+Windows: %APPDATA%\@qanode\desktop\
+macOS:   ~/Library/Application Support/@qanode/desktop/
+Linux:   ~/.config/@qanode/desktop/
 ```
 
-> **Important:** Never manually modify the files in `pg-data/`. Use the QANode interface to manage your data.
+Inside it, `postgres/` contains the embedded database, `storage/` stores artifacts, and `desktop-main.log` records application startup.
+
+> **Important:** Never manually modify or delete the `postgres/` folder. Before any recovery procedure, make a copy of the entire data folder.
 
 ---
 
@@ -51,8 +75,9 @@ The desktop version stores its data in:
 ### The desktop version does not start
 
 - Check that another instance of QANode is not already running
-- Try running as administrator
-- Check that port 5432 is not in use by another PostgreSQL instance
+- Open `desktop-main.log` in the data folder and look for `Fatal startup error`
+- On Windows, confirm that the Microsoft Visual C++ Redistributable x64 is up to date
+- Do not delete the `postgres/` folder; preserve the database and send the log to support for diagnosis
 
 ---
 

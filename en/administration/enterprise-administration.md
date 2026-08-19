@@ -65,6 +65,8 @@ In the user list you can:
 | **Change Role** | Changes the user's role (and permissions) |
 | **Delete** | Permanently removes the user |
 
+Changing a name or role requires `user.edit`. Activating or deactivating an account requires `user.deactivate`, so this action can be delegated without granting permission to edit the user's other data. The identity provider controls the status of users provisioned through SCIM, and those users cannot be activated or deactivated manually in QANode.
+
 ### User Status
 
 | Status | Description |
@@ -79,7 +81,7 @@ In the user list you can:
 
 ### System Roles
 
-QANode includes predefined roles that cannot be removed:
+QANode includes predefined roles:
 
 | Role | Description |
 |------|-------------|
@@ -87,6 +89,12 @@ QANode includes predefined roles that cannot be removed:
 | **Admin** | Administrative access |
 | **Architect** | Project administration access |
 | **Tester** | Scenario and execution access |
+
+System role names cannot be changed because they are used by dashboards, invitations, queues, updates, and automations. Their descriptions, permissions, and table views remain configurable, subject to the administrator's permissions.
+
+The **Super Admin** role cannot be renamed or deleted. Other system roles can be deleted by users with `role.delete`, provided that no users are assigned to them. The deletion persists after QANode restarts and updates; removed roles are not recreated automatically.
+
+An administrator cannot grant a role permissions they do not have, nor manage users with privileges above their own.
 
 ### Custom Roles
 

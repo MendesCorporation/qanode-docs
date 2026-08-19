@@ -123,6 +123,12 @@ Histórico de todas as execuções do projeto:
 | **Duração** | Tempo de execução |
 | **Data** | Data e hora da execução |
 
+### Baixar evidência de um cenário
+
+Na lista de cenários do projeto, abra o menu de ações (⋮) e escolha **Baixar evidência**. A opção aparece quando o cenário possui uma execução mais recente concluída com sucesso.
+
+O QANode usa o mesmo template e o mesmo processo de geração de PDF disponível nos detalhes da execução. Se o relatório estiver configurado para geração sob demanda, a interface mostra o progresso, prepara o arquivo em segundo plano e inicia o download automaticamente quando ele estiver pronto.
+
 ### Defeitos — Enterprise
 
 Lista os defeitos vinculados ao projeto. Para cada cenário da lista é possível ver se ele está **bloqueado por um defeito ativo**, com link direto para o defeito responsável pelo bloqueio.

@@ -243,6 +243,14 @@ Esto ayuda a la resiliencia: una estrategia buena pero a veces más lenta no se 
 
 Las ejecuciones exitosas también pueden sugerir eliminar pasos opcionales de hover o scroll cuando QANode comprueba que el flujo pasó sin ellos. Estas sugerencias aparecen solo cuando todo el flujo pasa, para no eliminar un scroll o hover mientras otro fallo todavía puede estar ocultando su necesidad real.
 
+### Espera Visual Durante la Carga
+
+Cuando un objetivo tarda en aparecer, Smart Web puede reconocer que la página todavía está cargando y conceder una espera adicional breve antes de continuar con la resolución normal. Esta espera es limitada para no ocultar un selector roto y no sustituye los pasos `wait` configurados en el flujo.
+
+Si el objetivo aparece solamente durante esta espera adicional, los detalles de la ejecución pueden recomendar añadir un `wait` explícito con un margen adecuado. Revise y aplique la sugerencia cuando la carga forme parte del comportamiento normal de la aplicación.
+
+El análisis visual permanece en el entorno de QANode; la screenshot utilizada en esta comprobación no se envía a un proveedor de IA.
+
 ---
 
 ## Acciones

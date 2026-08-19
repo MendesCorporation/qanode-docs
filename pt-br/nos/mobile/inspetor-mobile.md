@@ -228,16 +228,39 @@ Ao clicar em **"Salvar Passos"**:
 
 ## Seletores Gerados
 
-O inspetor gera automaticamente seletores para cada elemento tocado, priorizando nesta ordem:
+O inspetor gera automaticamente mais de uma estratégia quando o aplicativo fornece informações suficientes. Ele prioriza:
 
-1. **`accessibility_id`**, `id`, `resource-id`, `name` ou `content-desc` — sinais mais estáveis
-2. **`hint`**, `label` e `text` quando pertencem ao próprio elemento
-3. **Contexto próximo** — label/texto associado ao campo, útil para inputs sem identificador
-4. **`xpath`** com `@bounds` — seletor baseado nas coordenadas do elemento
-5. **Coordenadas de fallback** — X/Y absolutos usados se todos os seletores falharem
-6. **Classe genérica** — usada apenas como último recurso
+1. identificadores de acessibilidade e IDs do próprio aplicativo;
+2. texto, label, hint ou nome do controle;
+3. contexto próximo, útil para campos sem identificador próprio;
+4. seletores compatíveis com a plataforma;
+5. posição do toque como fallback visual.
 
-> Os seletores com `@bounds` e as coordenadas são fallback visual. Em fluxos automatizados, prefira seletores por `accessibility_id`, `id`, `resource-id`, `label` ou contexto próximo.
+Ao gravar telas com elementos repetidos, confira no modo Inspecionar se o destaque corresponde ao item pretendido. Se o app fornecer apenas a posição, o passo pode ser mais sensível a mudanças grandes no layout.
+
+> Para fluxos mais estáveis, prefira controles com identificadores de acessibilidade. A posição é útil para componentes que o Android ou o iOS não expõem como elementos identificáveis, mas deve ser tratada como último recurso.
+
+---
+
+## Evidências Geradas pelo Inspetor
+
+Ao salvar, o inspetor configura a captura conforme o tipo de ação:
+
+- ações que normalmente mudam a tela, como toque, gesto, permissão, voltar, abrir ou reiniciar o app, usam uma janela maior para aguardar estabilidade;
+- preenchimentos, extrações, asserts e outras ações sem transição usam uma janela curta;
+- passos `wait` e `pull-file` não recebem screenshot automaticamente;
+- toques e gestos podem registrar evidência antes e depois; as demais ações capturam somente depois por padrão.
+
+Esses valores são apenas os padrões criados na gravação. No painel do passo, você pode ligar ou desligar a screenshot e ajustar:
+
+| Campo | Função |
+|-------|--------|
+| **Timeout da espera** | Limite total para procurar estabilidade |
+| **Atraso da captura** | Tempo mínimo antes da primeira imagem |
+| **Intervalo de polling** | Intervalo entre verificações |
+| **Frames estáveis** | Quantidade de capturas iguais exigida para considerar a tela estável |
+
+O QANode respeita exatamente os valores do painel durante a execução. Em telas com animações longas, aumente o timeout ou o atraso; em ações que não alteram a tela, mantenha a janela curta para evitar execuções desnecessariamente lentas.
 
 ---
 

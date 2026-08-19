@@ -65,6 +65,8 @@ En la lista de usuarios puede:
 | **Cambiar Rol** | Cambia el rol (y permisos) del usuario |
 | **Eliminar** | Elimina el usuario permanentemente |
 
+Cambiar un nombre o rol requiere `user.edit`. Activar o desactivar una cuenta requiere `user.deactivate`, por lo que esta acción puede delegarse sin conceder permiso para editar los demás datos del usuario. El proveedor de identidad controla el estado de los usuarios aprovisionados mediante SCIM, y esos usuarios no pueden activarse o desactivarse manualmente en QANode.
+
 ### Estado de Usuarios
 
 | Estado | Descripción |
@@ -79,7 +81,7 @@ En la lista de usuarios puede:
 
 ### Roles del Sistema
 
-QANode incluye roles predefinidos que no pueden eliminarse:
+QANode incluye roles predefinidos:
 
 | Rol | Descripción |
 |-----|-------------|
@@ -87,6 +89,12 @@ QANode incluye roles predefinidos que no pueden eliminarse:
 | **Admin** | Acceso administrativo |
 | **Architect** | Acceso de administración de proyectos |
 | **Tester** | Acceso de escenarios y ejecuciones |
+
+Los nombres de los roles del sistema no pueden modificarse porque se utilizan en dashboards, invitaciones, colas, actualizaciones y automatizaciones. Sus descripciones, permisos y vistas de tablas siguen siendo configurables, de acuerdo con los permisos del administrador.
+
+El rol **Super Admin** no puede renombrarse ni eliminarse. Los demás roles del sistema pueden ser eliminados por usuarios con `role.delete`, siempre que no tengan usuarios asignados. La eliminación se conserva después de reinicios y actualizaciones de QANode; los roles eliminados no se recrean automáticamente.
+
+Un administrador no puede conceder a un rol permisos que él mismo no posee ni administrar usuarios con privilegios superiores a los suyos.
 
 ### Roles Personalizados
 

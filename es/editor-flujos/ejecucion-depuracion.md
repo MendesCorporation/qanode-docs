@@ -120,6 +120,8 @@ En el panel de variables, los archivos muestran nombre, MIME type y tamaño en l
 
 Para nodos web (Smart Web Flow, Web Flow y Smart Locators), las capturas de pantalla aparecen como miniaturas clicables. Haz clic para verlas a tamaño completo.
 
+Las capturas regulares aparecen en la secuencia en que fueron realizadas, que también es el orden utilizado en el informe PDF. Las evidencias de accesibilidad, rendimiento y resumen se agrupan al final. Cuando las capturas `before` y `after` tienen el mismo instante de creación, QANode conserva primero el estado anterior y después el posterior, independientemente del nombre personalizado de la imagen.
+
 ### Archivos
 
 Los archivos generados o capturados durante la ejecución aparecen en la sección **Archivos** del detalle de la ejecución. Al descargarlos, el navegador usa el nombre real del archivo cuando está disponible, en vez de un identificador interno de la ejecución.

@@ -121,6 +121,12 @@ History of all project executions:
 | **Duration** | Execution time |
 | **Date** | Date and time of execution |
 
+### Downloading Scenario Evidence
+
+In the project's scenario list, open the actions menu (⋮) and choose **Download Evidence**. The option appears when the scenario has a most recent execution that completed successfully.
+
+QANode uses the same template and PDF generation process available in the execution details. If the report is configured for on-demand generation, the interface shows the progress, prepares the file in the background, and starts the download automatically when it is ready.
+
 ### Defects — Enterprise
 
 Lists the defects linked to the project. For each scenario in the list you can see if it is **blocked by an active defect**, with a direct link to the defect responsible for the block.

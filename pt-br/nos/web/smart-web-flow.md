@@ -265,6 +265,14 @@ Essas otimizações aparecem nos detalhes da execução apenas quando o fluxo te
 
 O QANode evita mostrar a mesma sugestão repetidamente quando a definição do fluxo não mudou. Se você alterar passos, seletores ou dados relevantes da UI, novas sugestões podem aparecer.
 
+### Espera visual durante carregamento
+
+Quando um alvo demora a aparecer, o Smart Web pode reconhecer que a página ainda está carregando e conceder uma espera adicional curta antes de continuar a resolução normal. Essa espera é limitada para não esconder um seletor quebrado e não substitui os passos `wait` configurados no fluxo.
+
+Se o alvo aparecer somente durante essa espera, os detalhes da execução podem recomendar a inclusão de um `wait` explícito com uma margem adequada. Revise e aplique a sugestão quando o carregamento fizer parte do comportamento normal da aplicação.
+
+A análise visual permanece no ambiente do QANode; a screenshot usada nessa verificação não é enviada a um provedor de IA.
+
 ---
 
 ## Ações Disponíveis
