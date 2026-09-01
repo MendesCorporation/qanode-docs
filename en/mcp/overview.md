@@ -85,7 +85,7 @@ The token does not grant extra access. It only authenticates the connected clien
 |------|--------------|
 | **Projects** | Search projects, consult attached documents, and use that context in scenarios or diagnostics |
 | **Scenarios** | Create flows, import nodes, add steps, connect, validate, and execute |
-| **Smart Web** | Create web automations, validate screens, extract data, and reuse sessions when needed |
+| **Smart Web** | Create web automations, validate screens, extract data, use WebMCP tools, and prepare initial browser state when requested |
 | **Mobile** | Create Android/iOS journeys with Appium and save them as Mobile Flow nodes |
 | **Database** | Inspect schema and create database queries or validations |
 | **Files** | Generate, extract, and reuse files in flows |
@@ -179,6 +179,26 @@ QANode can read:
 
 When the snippet is not enough, the client can request a page, a page range, or the full document.
 
+When search is scoped to a project, it can also consider the names, descriptions, and annotations of scenarios the user is allowed to view. This makes decisions and rules recorded on the canvas discoverable together with attached documents.
+
+---
+
+## AI-Created Scenario Documentation
+
+When a scenario is created through MCP, QANode adds a standard annotation to the canvas containing:
+
+- scenario name;
+- description;
+- preconditions;
+- test cases;
+- expected result.
+
+Each scenario node represents one test case. The node name describes the action, such as **Fill in the form on the website** or **Query status in the database**, while the annotation owns the `CT-01`, `CT-02`, and subsequent numbering.
+
+If the user provides an exact scenario or node name, the client should preserve it. When no name is provided, the scenario receives a concise purpose title, such as **Login validation**, and nodes receive action-oriented labels.
+
+The test case list stays synchronized when nodes are added, renamed, imported, or removed through MCP. Existing regular canvas annotations are not replaced; the standard documentation is kept as its own scenario annotation.
+
 ---
 
 ## Official QANode Documentation
@@ -217,6 +237,36 @@ success rate, recent failures, and daily evolution.
 ```
 
 For simple widgets, QANode uses the visual query builder. For more complex queries, SQL mode can be used when the user has permission.
+
+In clients that support **MCP Apps**, numerical queries can also open an interactive visualization with a table, metric, or charts compatible with the result. QANode offers only formats suitable for the returned columns and keeps the response available as text or structured data when the client does not support this interface.
+
+---
+
+## Visual Run Monitoring
+
+Clients that support **MCP Apps** can display a visual inspector when a scenario or suite run is started or queried through MCP.
+
+The inspector brings together:
+
+- status and duration;
+- scenario and node progress;
+- labels defined on the canvas;
+- main logs in collapsible sections;
+- the failure and message from the affected point;
+- evidence from the current run;
+- the longest durations in the run.
+
+For suites, nodes are grouped by scenario to preserve context in both sequential and parallel runs. While a run is in progress, the client can refresh the view until the final result. If the client does not support MCP Apps, the same data remains available as text or structured data.
+
+---
+
+## WebMCP And Initial Browser State
+
+When recording a Smart Web Flow on a compatible Chromium page, the client can list the WebMCP tools declared by the website, call a tool with its defined parameters, and assert whether that capability is available in the current page state. The call runs during recording, and its structured result is available in the `webmcpResult` output after scenario execution.
+
+MCP can also configure cookies, `localStorage`, `sessionStorage`, session headers, and initialization JavaScript before the first navigation. This setup is optional and should be used only when the user explicitly requests an initial state; it does not replace regular interface interaction steps.
+
+Use protected variables for secrets and environment-specific values. See [Smart Web Flow](../nodes/web/smart-web-flow.md) for field and step details.
 
 ---
 

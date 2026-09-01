@@ -85,7 +85,7 @@ O token não concede acesso extra. Ele apenas autentica o cliente conectado como
 |------|-----------------|
 | **Projetos** | Buscar projetos, consultar documentos anexados e usar esse contexto em cenários ou diagnósticos |
 | **Cenários** | Criar fluxos, importar nós, adicionar etapas, conectar, validar e executar |
-| **Smart Web** | Criar automações web, validar telas, extrair dados e reutilizar sessões quando necessário |
+| **Smart Web** | Criar automações web, validar telas, extrair dados, usar tools WebMCP e preparar o estado inicial do navegador quando solicitado |
 | **Mobile** | Criar jornadas Android/iOS com Appium e salvar como Mobile Flow |
 | **Banco de Dados** | Consultar schema e criar validações ou consultas em nós de banco |
 | **Arquivos** | Gerar, extrair e reaproveitar arquivos em fluxos |
@@ -179,6 +179,26 @@ O QANode consegue ler:
 
 Quando o trecho encontrado não for suficiente, o cliente pode solicitar uma página, um intervalo de páginas ou o documento completo.
 
+Quando a busca está limitada a um projeto, ela também pode considerar nomes, descrições e anotações dos cenários permitidos ao usuário. Assim, decisões e regras registradas no próprio canvas podem ser encontradas junto com os documentos anexados.
+
+---
+
+## Documentação de Cenários Criados por IA
+
+Ao criar um cenário pelo MCP, o QANode adiciona uma anotação padronizada ao canvas com:
+
+- nome do cenário;
+- descrição;
+- pré-condições;
+- casos de teste;
+- resultado esperado.
+
+Cada nó do cenário representa um caso de teste. O nome do nó descreve a ação, como **Preencher formulário no site** ou **Consultar status no banco**, enquanto a anotação mantém a numeração `CT-01`, `CT-02` e assim por diante.
+
+Se o usuário informar um nome exato para o cenário ou para um nó, o cliente deve preservá-lo. Quando nenhum nome é fornecido, o cenário recebe um título curto que descreve seu propósito, como **Validação de login**, e os nós recebem rótulos orientados à ação.
+
+A lista de casos de teste permanece sincronizada quando os nós são adicionados, renomeados, importados ou removidos pelo MCP. Anotações comuns já existentes no canvas não são substituídas; a documentação padrão é mantida como uma anotação própria do cenário.
+
 ---
 
 ## Documentação Oficial do QANode
@@ -217,6 +237,36 @@ taxa de sucesso, falhas recentes e evolução diária.
 ```
 
 Para widgets simples, o QANode usa o construtor visual. Para consultas mais complexas, o modo SQL pode ser usado quando o usuário tem permissão.
+
+Em clientes compatíveis com **MCP Apps**, consultas numéricas também podem abrir uma visualização interativa com tabela, métrica ou gráficos compatíveis com o resultado. O QANode oferece apenas formatos adequados às colunas retornadas e mantém a resposta em texto ou dados estruturados quando o cliente não suporta essa interface.
+
+---
+
+## Acompanhamento Visual de Execuções
+
+Clientes compatíveis com **MCP Apps** podem mostrar um inspetor visual quando uma execução de cenário ou suíte é iniciada ou consultada pelo MCP.
+
+O inspetor reúne:
+
+- status e duração;
+- progresso dos cenários e nós;
+- rótulos definidos no canvas;
+- logs principais em seções recolhíveis;
+- falha e mensagem do ponto afetado;
+- evidências da execução atual;
+- indicação dos maiores tempos da execução.
+
+Em suítes, os nós são agrupados por cenário para preservar o contexto, inclusive em execuções sequenciais ou paralelas. Enquanto a execução estiver em andamento, o cliente pode atualizar a visualização até o resultado final. Se o cliente não oferecer suporte a MCP Apps, os mesmos dados continuam disponíveis em formato textual ou estruturado.
+
+---
+
+## WebMCP e Estado Inicial do Navegador
+
+Ao gravar um Smart Web Flow em uma página Chromium compatível, o cliente pode listar as tools WebMCP declaradas pelo site, chamar uma tool com os parâmetros definidos por ela e validar se a capacidade está disponível naquele estado da página. A chamada é executada durante a gravação, e seu resultado estruturado fica disponível no output `webmcpResult` após a execução do cenário.
+
+O MCP também consegue configurar cookies, `localStorage`, `sessionStorage`, headers da sessão e JavaScript de inicialização antes da primeira navegação. Essa configuração é opcional e só deve ser usada quando o usuário pedir explicitamente um estado inicial; ela não substitui passos normais de interação com a interface.
+
+Use variáveis protegidas para segredos ou valores específicos do ambiente. Para detalhes dos campos e dos passos, consulte [Smart Web Flow](../nos/web/smart-web-flow.md).
 
 ---
 

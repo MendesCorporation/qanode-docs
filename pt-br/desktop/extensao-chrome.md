@@ -76,6 +76,7 @@ Para ações guiadas:
 - **Fill**: selecione o campo e informe o valor a preencher.
 - **Select option**: em selects nativos, a extensão mostra as opções disponíveis em lista clicável.
 - **Upload file**: em inputs de arquivo, a extensão grava o passo de upload e pede o arquivo necessário para continuar a gravação.
+- **Call MCP tool / Assert MCP tool**: em páginas compatíveis, abre a mesma janela de WebMCP usada no Touch mode para chamar uma tool ou validar sua disponibilidade.
 
 ### REC — Gravação Normal
 
@@ -153,6 +154,22 @@ Disponível no modo **Smart Web Flow**, captura uma **tabela ou grid** como dado
 4. No QANode, revise o nome da variável de saída e o limite de linhas, se necessário
 
 Use este modo quando a página já apresenta dados em formato de tabela. Para cards, listas visuais ou tabelas muito customizadas, o modo **Extract List** pode ser melhor, pois permite escolher manualmente quais campos de cada item serão extraídos.
+
+### CTRL+SHIFT+Y — Chamar Tool WebMCP
+
+Disponível no modo **Smart Web Flow**, abre a janela de WebMCP da página atual.
+
+1. Pressione **Ctrl+Shift+Y** no Touch mode.
+2. Escolha uma das tools declaradas pelo site.
+3. Revise os parâmetros criados a partir do schema da tool.
+4. Adicione, remova ou altere parâmetros quando necessário.
+5. Clique em **Aplicar**.
+
+A extensão executa a tool imediatamente para que você veja o efeito durante a gravação e, em seguida, grava o passo **Chamar tool WebMCP**. Se a tool altera a página, os próximos passos são capturados sobre o novo estado.
+
+No **Inspect mode**, selecione um elemento para abrir o painel de ações e use **Call MCP tool** ou **Assert MCP tool**. A validação permite registrar se uma tool deve estar disponível ou indisponível naquele momento.
+
+WebMCP depende de suporte do site e do navegador. Quando nenhuma tool é encontrada, a janela informa que a página não expõe capacidades WebMCP. Os passos gravados funcionam somente em **Chrome / Chromium**.
 
 ### XPath Inspector
 

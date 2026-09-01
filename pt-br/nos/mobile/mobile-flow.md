@@ -80,6 +80,8 @@ Ele ajuda em mudanças comuns como:
 - mudança de posição do controle ou do tamanho do aparelho
 - alteração do identificador mantendo a mesma função na tela
 
+Na troca de idioma, o QANode não compara apenas a palavra exibida. Ele também considera as características semânticas e estruturais registradas para o elemento. Assim, um controle gravado como `SKIP` pode ser recuperado como `Pular` quando continua exercendo a mesma função na tela.
+
 Novos nós Mobile Flow e gravações feitas pelo Inspetor ou por MCP iniciam com Self Healing habilitado. Fluxos em que ele foi desligado explicitamente continuam respeitando essa escolha.
 
 Quando existem vários controles parecidos, o QANode só aplica a recuperação quando consegue distinguir o alvo com segurança. Caso contrário, o passo falha com um diagnóstico para que o seletor ou a gravação seja revisado.

@@ -82,6 +82,23 @@ Las sesiones importadas por la extensión Chrome permanecen vinculadas al usuari
 
 En modo **reutilizar**, el campo **ID de sesión** busca sesiones nombradas de ambos alcances. Las sugerencias muestran hasta 10 sesiones y ocultan identificadores generados automáticamente por UUID. Las sesiones sin uso por 30 días se limpian automáticamente.
 
+### Propiedades avanzadas
+
+La sección **Propiedades avanzadas** prepara el navegador antes del primer paso **Navegar**, cuando QANode crea una nueva sesión. Úsela solamente cuando el escenario necesite comenzar con un estado específico.
+
+| Recurso | Uso común |
+|---------|-----------|
+| **Cookies** | Autenticación, consentimiento, idioma y feature flags |
+| **Almacenamiento del navegador** | Valores de `localStorage` o `sessionStorage` necesarios antes de iniciar la aplicación |
+| **Headers de la sesión** | Headers enviados en todas las solicitudes realizadas por esa sesión del navegador |
+| **Script de inicialización** | JavaScript ejecutado antes de los scripts de la aplicación en cada documento nuevo |
+
+Las cookies y entradas de almacenamiento pueden usar el origen de la primera URL del flujo o un origen informado en el propio elemento. Las cookies también permiten configurar `Secure`, `HttpOnly` y `SameSite`.
+
+Los valores aceptan expresiones `{{ }}`. Prefiera variables protegidas para tokens, cookies y otros datos sensibles. Cuando una configuración avanzada usa variables, el encabezado de la sección muestra el indicador `{{ }}` para facilitar la localización del origen de un error.
+
+> **Atención:** el script de inicialización es un recurso avanzado. Prefiera cookies, almacenamiento y headers estructurados cuando sean suficientes. Estas propiedades preparan una sesión nueva; no reescriben una sesión del navegador que ya esté abierta y siendo reutilizada.
+
 ---
 
 ## Cómo Encuentra Elementos
@@ -284,6 +301,8 @@ El análisis visual permanece en el entorno de QANode; la screenshot utilizada e
 | `setSlider` | Definir valor de slider/range |
 | `evaluate` | Ejecutar JavaScript controlado en la página |
 | `screenshot` | Capturar evidencia |
+| `webmcpCall` | Llamar una herramienta WebMCP expuesta por el sitio |
+| `webmcpAssert` | Verificar si una herramienta WebMCP está disponible en el estado actual de la página |
 
 ---
 
@@ -376,6 +395,33 @@ Smart Web Flow respeta el modo de assert seleccionado. Las validaciones de texto
 
 Use `uploadFile` para escenarios como enviar documentos, adjuntar comprobantes, subir imágenes, PDFs, CSVs, planillas o probar formularios web con upload.
 
+### WebMCP
+
+Smart Web Flow puede utilizar capacidades estructuradas que un sitio compatible expone mediante **WebMCP**. En lugar de localizar y hacer clic en cada control visual, el escenario puede llamar directamente una operación declarada por el sitio, como buscar un catálogo, preparar una simulación u obtener datos estructurados.
+
+Este recurso está disponible solamente con **Chrome / Chromium**. Si un flujo con pasos WebMCP cambia a Firefox o WebKit, esos pasos se marcan como incompatibles y la ejecución se bloquea hasta corregir el navegador.
+
+#### Llamar herramienta WebMCP
+
+Agregue un paso **Llamar herramienta WebMCP** después de un paso **Navegar** y use el botón de actualización para cargar las herramientas declaradas por la página.
+
+| Campo | Descripción |
+|-------|-------------|
+| **Herramienta** | Operación WebMCP que se llamará |
+| **Timeout para localizar herramienta** | Tiempo para esperar el registro asíncrono de la herramienta. El valor predeterminado es `1000 ms` |
+| **Nombre del output** | Nombre que identifica este resultado en `webmcpResult` |
+| **Parámetros** | Entradas declaradas por la herramienta. Los objetos y listas se editan como JSON |
+
+Al seleccionar una herramienta cargada, QANode crea sus parámetros a partir del schema publicado por el sitio, incluidas propiedades anidadas, campos obligatorios, valores permitidos y límites numéricos. Revise los valores antes de ejecutar. También puede agregar parámetros adicionales cuando sea necesario.
+
+#### Validar herramienta WebMCP
+
+El paso **Validar herramienta WebMCP** confirma si una capacidad debe estar **disponible** o **no disponible** en el estado actual de la página. Es útil para probar permisos, etapas de una jornada, modales y operaciones que aparecen solamente después de una acción determinada.
+
+La opción **Continuar en caso de fallo** tiene el mismo comportamiento que las validaciones normales: registra el resultado y permite que el flujo continúe cuando está habilitada.
+
+> **Cuándo usarlo:** elija WebMCP cuando el objetivo sea validar una capacidad de negocio expuesta por el sitio. Use los pasos visuales normales cuando la prueba necesite comprobar la interacción real del usuario con botones, campos y otros elementos de la interfaz.
+
 ---
 
 ## Downloads
@@ -439,6 +485,17 @@ Outputs típicos incluyen:
 | `currentUrl` | URL al final del nodo |
 | `downloads` | Archivos descargados durante clics, como `fileRef` |
 | `fileRef` | Atajo al archivo descargado cuando aplica |
+| `webmcpResult` | Resultados de llamadas WebMCP, identificados por el nombre del output y la herramienta |
+
+Cada llamada WebMCP agrega un elemento a `webmcpResult`. Cuando **Nombre del output** está vacío, QANode usa nombres secuenciales como `webmcp_1` y `webmcp_2`.
+
+Ejemplo de acceso a un resultado estructurado:
+
+```text
+{{ steps["Consultar catálogo"].outputs.webmcpResult[0].result.structuredContent }}
+```
+
+En flujos con varias llamadas, asigne nombres claros a los outputs y confirme en el selector de variables qué elemento contiene el dato deseado.
 
 Ejemplo de acceso:
 

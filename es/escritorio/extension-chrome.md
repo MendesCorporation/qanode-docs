@@ -77,6 +77,7 @@ Para acciones guiadas:
 - **Fill**: seleccione el campo e informe el valor a llenar.
 - **Select option**: en selects nativos, la extensión muestra las opciones disponibles en una lista clicable.
 - **Upload file**: en inputs de archivo, la extensión graba el paso de upload y pide el archivo necesario para continuar la grabación.
+- **Call MCP tool / Assert MCP tool**: en páginas compatibles, abre la misma ventana WebMCP usada en Touch mode para llamar una herramienta o validar su disponibilidad.
 
 ### REC — Grabación Normal
 
@@ -154,6 +155,22 @@ Disponible en modo **Smart Web Flow**. Captura una tabla o grid como datos tabul
 4. En QANode, revise el nombre de salida y el límite de filas si es necesario.
 
 Para cards, listas visuales o tablas muy customizadas, **Extract List** puede ser mejor porque permite elegir los campos manualmente.
+
+### Ctrl+Shift+Y — Llamar Herramienta WebMCP
+
+Disponible en el modo **Smart Web Flow**. Abre la ventana WebMCP de la página actual.
+
+1. Presione **Ctrl+Shift+Y** en Touch mode.
+2. Elija una de las herramientas declaradas por el sitio.
+3. Revise los parámetros creados a partir del schema de la herramienta.
+4. Agregue, elimine o edite parámetros cuando sea necesario.
+5. Haga clic en **Aplicar**.
+
+La extensión ejecuta la herramienta inmediatamente para que pueda ver su efecto durante la grabación y luego graba el paso **Llamar herramienta WebMCP**. Si la herramienta cambia la página, los siguientes pasos se capturan sobre el nuevo estado.
+
+En **Inspect mode**, seleccione un elemento para abrir el panel de acciones y use **Call MCP tool** o **Assert MCP tool**. La validación registra si una herramienta debe estar disponible o no disponible en ese momento.
+
+WebMCP depende del soporte del sitio y del navegador. Cuando no se encuentran herramientas, la ventana informa que la página no expone capacidades WebMCP. Los pasos grabados funcionan solamente en **Chrome / Chromium**.
 
 ### XPath Inspector
 

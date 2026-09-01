@@ -78,6 +78,8 @@ Cuando **Self Healing** está habilitado, Mobile Flow puede recuperar elementos 
 - cambios en la posición del control o en el tamaño de pantalla del dispositivo
 - cambios de identificador cuando el control conserva la misma función
 
+En cambios de idioma, QANode no compara solamente la palabra mostrada. También considera las características semánticas y estructurales registradas para el elemento. Así, un control grabado como `SKIP` puede recuperarse como `Pular` cuando continúa cumpliendo la misma función en la pantalla.
+
 Los nuevos nodos Mobile Flow y las grabaciones creadas por el Inspector o MCP comienzan con Self Healing habilitado. Los flujos en los que esta opción fue deshabilitada explícitamente conservan su configuración actual.
 
 Cuando existen varios controles similares, QANode solo aplica la recuperación si puede distinguir con seguridad el objetivo esperado. De lo contrario, el paso falla con información de diagnóstico para que pueda revisar el selector.

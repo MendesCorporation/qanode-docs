@@ -77,6 +77,7 @@ For guided actions:
 - **Fill**: select the field and enter the value to fill.
 - **Select option**: for native selects, the extension shows the available options in a clickable list.
 - **Upload file**: for file inputs, the extension records the upload step and asks for the file required to continue recording.
+- **Call MCP tool / Assert MCP tool**: on compatible pages, opens the same WebMCP dialog used in Touch mode to call a tool or assert its availability.
 
 ### REC — Normal Recording
 
@@ -154,6 +155,22 @@ Available in **Smart Web Flow** mode. Captures a table or grid as structured tab
 4. In QANode, review the output name and row limit if needed.
 
 For cards, visual lists, or highly custom tables, **Extract List** may be better because you choose the fields manually.
+
+### Ctrl+Shift+Y — Call WebMCP Tool
+
+Available in **Smart Web Flow** mode. Opens the WebMCP dialog for the current page.
+
+1. Press **Ctrl+Shift+Y** in Touch mode.
+2. Choose one of the tools declared by the website.
+3. Review the parameters created from the tool schema.
+4. Add, remove, or edit parameters when needed.
+5. Click **Apply**.
+
+The extension immediately executes the tool so you can see its effect while recording, then records the **Call WebMCP Tool** step. If the tool changes the page, subsequent steps are captured from the new state.
+
+In **Inspect mode**, select an element to open the actions panel and use **Call MCP tool** or **Assert MCP tool**. The assertion records whether a tool should be available or unavailable at that point.
+
+WebMCP depends on website and browser support. When no tools are found, the dialog reports that the page does not expose WebMCP capabilities. Recorded WebMCP steps run only in **Chrome / Chromium**.
 
 ### XPath Inspector
 

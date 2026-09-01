@@ -82,6 +82,23 @@ Sessions imported by the Chrome extension remain tied to the user who recorded/i
 
 In **reuse** mode, the **Session Id** field searches named sessions from both scopes. Suggestions show up to 10 sessions and hide automatically generated UUID identifiers. Sessions unused for 30 days are cleaned automatically.
 
+### Advanced Properties
+
+The **Advanced Properties** section prepares the browser before the first **Navigate** step when QANode creates a new session. Use it only when the scenario must start from a specific state.
+
+| Resource | Common Use |
+|----------|------------|
+| **Cookies** | Authentication, consent, locale, and feature flags |
+| **Browser Storage** | `localStorage` or `sessionStorage` values required before the application starts |
+| **Session Headers** | Headers sent with every request made by that browser session |
+| **Initialization Script** | JavaScript executed before the application scripts in each new document |
+
+Cookies and storage entries can use the origin of the first URL in the flow or an origin set on the entry. Cookies also support `Secure`, `HttpOnly`, and `SameSite`.
+
+Values support `{{ }}` expressions. Prefer protected variables for tokens, cookies, and other sensitive data. When an advanced setting uses variables, the section header displays the `{{ }}` indicator so configuration errors are easier to locate.
+
+> **Caution:** the initialization script is an advanced feature. Prefer structured cookies, storage, and headers when they are sufficient. These properties prepare a new session; they do not rewrite a browser session that is already open and being reused.
+
 ---
 
 ## How Elements Are Found
@@ -284,6 +301,8 @@ The visual analysis remains within the QANode environment; the screenshot used f
 | `setSlider` | Set a slider/range control value |
 | `evaluate` | Run controlled JavaScript in the page |
 | `screenshot` | Capture evidence |
+| `webmcpCall` | Call a WebMCP tool exposed by the website |
+| `webmcpAssert` | Verify whether a WebMCP tool is available in the current page state |
 
 ---
 
@@ -376,6 +395,33 @@ Smart Web Flow respects the selected assert mode. Text validations use rendered 
 
 Use `uploadFile` for scenarios such as submitting documents, attaching receipts, uploading images, PDFs, CSVs, spreadsheets, or testing web forms with upload.
 
+### WebMCP
+
+Smart Web Flow can use structured capabilities exposed by a compatible website through **WebMCP**. Instead of locating and clicking every visual control, the scenario can directly call an operation declared by the website, such as searching a catalog, preparing a simulation, or returning structured data.
+
+This feature is available only with **Chrome / Chromium**. If a flow containing WebMCP steps is switched to Firefox or WebKit, those steps are marked as incompatible and execution is blocked until the browser is corrected.
+
+#### Call WebMCP Tool
+
+Add a **Call WebMCP Tool** step after a **Navigate** step and use the refresh button to load the tools declared by the page.
+
+| Field | Description |
+|-------|-------------|
+| **Tool** | WebMCP operation to call |
+| **Tool Availability Timeout** | Time allowed for asynchronous tool registration. The default is `1000 ms` |
+| **Output Name** | Name that identifies this result in `webmcpResult` |
+| **Parameters** | Inputs declared by the tool. Objects and arrays are edited as JSON |
+
+When a loaded tool is selected, QANode creates its parameters from the schema published by the website, including nested properties, required fields, allowed values, and numeric limits. Review the values before execution. Additional parameters can also be added when needed.
+
+#### Assert WebMCP Tool
+
+The **Assert WebMCP Tool** step verifies whether a capability should be **available** or **unavailable** in the current page state. Use it to test permissions, journey stages, modals, and operations that appear only after a particular action.
+
+**Continue on Fail** behaves like a regular assertion: when enabled, it records the result and allows the flow to continue.
+
+> **When to use it:** choose WebMCP when the goal is to validate a business capability exposed by the website. Use regular visual steps when the test must prove the user's actual interaction with buttons, fields, and other interface elements.
+
 ---
 
 ## Downloads
@@ -439,6 +485,17 @@ Typical outputs include:
 | `currentUrl` | URL at the end of the node |
 | `downloads` | Files downloaded during clicks, as `fileRef` |
 | `fileRef` | Shortcut to a downloaded file when applicable |
+| `webmcpResult` | Results from WebMCP calls, identified by output name and tool |
+
+Each WebMCP call adds an item to `webmcpResult`. If **Output Name** is empty, QANode uses sequential names such as `webmcp_1` and `webmcp_2`.
+
+Example of accessing structured results:
+
+```text
+{{ steps["Search catalog"].outputs.webmcpResult[0].result.structuredContent }}
+```
+
+For flows with multiple calls, give outputs clear names and use the variable picker to confirm which item contains the desired data.
 
 Access example:
 

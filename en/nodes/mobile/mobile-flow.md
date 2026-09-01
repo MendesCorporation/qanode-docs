@@ -78,6 +78,8 @@ When **Self Healing** is enabled, Mobile Flow can recover elements in actions su
 - control position or device screen size changes
 - identifier changes while the control keeps the same purpose
 
+For language changes, QANode does not compare only the displayed word. It also considers the semantic and structural characteristics recorded for the element. This allows a control recorded as `SKIP` to be recovered as `Pular` when it still serves the same function on the screen.
+
 New Mobile Flow nodes and recordings created by the Inspector or MCP start with Self Healing enabled. Flows in which this option was explicitly disabled keep their existing setting.
 
 When several similar controls exist, QANode only applies recovery when it can distinguish the intended target safely. Otherwise, the step fails with diagnostic information so you can review the selector.
