@@ -117,6 +117,16 @@ When an output is a file, the main value is a `fileRef`:
 
 In the variables panel, files show name, MIME type, and size in their details. Internal storage path fields are hidden from the main view.
 
+### Results Shown on Each Node
+
+When you run the full flow from the canvas, each node's properties panel shows the result of that run: success or failure, logs, and available outputs. Before starting another full run, QANode clears the previous results so the two runs are not mixed.
+
+If you use **Run Node** after a full run, the full-run results are cleared. When testing several nodes individually, those test results remain visible; running one node again replaces only that node's result.
+
+### Navigating Long Runs
+
+In the details of a run with many steps, a shortcut button appears as you scroll through the list: scrolling down offers a jump to the end, and scrolling up offers a jump to the beginning. The button stays inside the details window and disappears when you reach either end.
+
 ### Screenshots (Evidence)
 
 For web nodes (Smart Web Flow, Web Flow, and Smart Locators), captured screenshots appear as clickable thumbnails. Click to view at full size.

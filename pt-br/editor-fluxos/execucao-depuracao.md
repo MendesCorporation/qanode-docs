@@ -116,6 +116,16 @@ Quando o output é um arquivo, o valor principal é um `fileRef`:
 
 No painel de variáveis, arquivos mostram nome, MIME type e tamanho em detalhes. Campos internos como caminho no storage ficam ocultos da visualização principal.
 
+### Resultado exibido em cada nó
+
+Ao executar o fluxo completo pelo canvas, o painel de propriedades de cada nó mostra o resultado daquela execução: sucesso ou falha, logs e saídas disponíveis. Antes de iniciar outra execução completa, o QANode limpa os resultados anteriores para não misturar duas runs.
+
+Ao usar **Executar nó** depois de uma execução completa, os resultados da run completa são limpos. Se você estiver testando vários nós isoladamente, os resultados desses testes permanecem visíveis; executar novamente um nó substitui apenas o resultado dele.
+
+### Navegação em execuções longas
+
+Nos detalhes de uma execução com muitos passos, surge um botão de atalho enquanto você rola a lista: ao descer, ele leva ao final; ao subir, leva ao início. O botão fica dentro da janela de detalhes e desaparece quando você chega a uma das extremidades.
+
 ### Screenshots (Evidências)
 
 Para nós web (Smart Web Flow, Web Flow e Smart Locators), screenshots capturados aparecem como miniaturas clicáveis. Clique para ver em tamanho completo.

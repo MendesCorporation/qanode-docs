@@ -112,6 +112,8 @@ npx @qanode/cli run suite \
 
 Las suites pueden ejecutarse automáticamente en horarios definidos.
 
+En el servidor, las expresiones cron usan la zona horaria configurada al instalar la instancia. El instalador solicita un identificador IANA, como `America/Sao_Paulo` o `Europe/Lisbon`, y propone `America/Sao_Paulo` como valor inicial. Confirme esta zona horaria antes de programar una suite: la hora de la expresión cron se interpreta en esa zona, que no tiene por qué coincidir con la del navegador de quien la edita.
+
 ---
 
 ## Cancelando una Suite en Ejecución
@@ -137,6 +139,8 @@ Este recurso es útil cuando una suite se inició por error, está usando datos 
 2. En la sección **Programación**, active el alternador
 3. Ingrese la **expresión cron**
 4. El sistema mostrará los próximos 5 horarios de ejecución
+
+Revise la vista previa de las próximas ejecuciones para validar la expresión y la zona horaria configurada en el servidor.
 
 [Programación de suite](../../assets/images/agendamento-suite.mp4)
 *Imagen: Sección de programación con campo cron, alternador de activación y vista previa de los próximos horarios*

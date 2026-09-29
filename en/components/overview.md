@@ -79,8 +79,9 @@ In the **Input** node, configure the fields the component expects to receive.
 | Field | Description |
 |-------|-------------|
 | **Field Name** | Name used to map the value in the scenario |
-| **Type** | `string`, `number`, `boolean`, `object`, `array`, or `file` |
+| **Type** | `string`, `number`, `boolean`, `object`, `array`, `enum`, or `file` |
 | **Required** | Defines whether the scenario must fill this value |
+| **Options** | For the `enum` type, lists the values that can be selected |
 | **Test Data** | Value used when testing the component directly in the editor |
 
 Example inputs:
@@ -89,10 +90,12 @@ Example inputs:
 |------|------|----------|
 | `email` | `string` | Yes |
 | `password` | `string` | Yes |
-| `role` | `string` | No |
+| `role` | `enum` (`admin`, `user`) | No |
 | `document` | `file` | No |
 
 [Setting component inputs](../../assets/images/entradas-componente.mp4)
+
+To restrict an input to known choices, select the **enum** type and add options in the **Input** node. Test data and the corresponding field in a scenario then offer those options in a list. Options must not be empty or duplicated; a value outside the list is rejected before the component runs. Use this type for inputs such as environment, role, or mode when free text would not make sense.
 
 During component execution, internal nodes can use these inputs through expressions, like any other node output:
 
@@ -210,7 +213,7 @@ In the scenario editor:
 4. Connect it to other nodes.
 5. Fill the input fields in the properties panel.
 
-Inputs accept literals and expressions:
+Text inputs accept literals and expressions; **enum** inputs show a list of the options defined in the component:
 
 ```
 email: {{ variables.TEST_USER }}

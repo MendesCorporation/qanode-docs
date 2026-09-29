@@ -112,6 +112,8 @@ npx @qanode/cli run suite \
 
 Suítes podem ser executadas automaticamente em horários definidos.
 
+No servidor, as expressões cron usam o fuso horário configurado na instalação da instância. O instalador solicita um identificador IANA, como `America/Sao_Paulo` ou `Europe/Lisbon`, com `America/Sao_Paulo` como valor inicial. Confirme esse fuso antes de agendar a suíte: a hora da expressão cron é interpretada nele, não necessariamente no fuso do navegador de quem a editou.
+
 ---
 
 ## Cancelando uma Suíte em Execução
@@ -137,6 +139,8 @@ Esse recurso é útil quando uma suíte foi disparada por engano, está usando d
 2. Na seção **Agendamento**, ative o toggle
 3. Informe a **expressão cron**
 4. O sistema mostrará os próximos 5 horários de execução
+
+Confira a prévia dos próximos horários para validar a expressão e o fuso configurado no servidor.
 
 [Agendamento de suíte](../../assets/images/agendamento-suite.mp4) 
 *Imagem: Seção de agendamento com campo cron, toggle de ativação e preview dos próximos horários*

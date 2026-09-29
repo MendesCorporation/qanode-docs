@@ -112,6 +112,8 @@ npx @qanode/cli run suite \
 
 Suites can be executed automatically at defined times.
 
+On the server, cron expressions use the time zone configured when the instance is installed. The installer requests an IANA identifier such as `America/Sao_Paulo` or `Europe/Lisbon`, with `America/Sao_Paulo` as the initial value. Confirm this time zone before scheduling a suite: the hour in the cron expression is interpreted in that zone, not necessarily in the time zone of the editor's browser.
+
 ---
 
 ## Cancelling a Running Suite
@@ -137,6 +139,8 @@ This is useful when a suite was started by mistake, is using incorrect data, or 
 2. In the **Scheduling** section, enable the toggle
 3. Enter the **cron expression**
 4. The system will show the next 5 execution times
+
+Check the preview of upcoming runs to validate the expression and the server's configured time zone.
 
 [Suite scheduling](../../assets/images/agendamento-suite.mp4)
 *Image: Scheduling section with cron field, activation toggle, and preview of upcoming times*

@@ -79,8 +79,9 @@ En el nodo **Input**, configure los campos que el componente espera recibir.
 | Campo | Descripción |
 |-------|-------------|
 | **Nombre del Campo** | Nombre usado para mapear el valor en el escenario |
-| **Tipo** | `string`, `number`, `boolean`, `object`, `array` o `archivo` |
+| **Tipo** | `string`, `number`, `boolean`, `object`, `array`, `enum` o `archivo` |
 | **Obligatorio** | Define si el escenario debe completar este valor |
+| **Opciones** | Para el tipo `enum`, enumera los valores que se pueden seleccionar |
 | **Datos de Prueba** | Valor usado al probar el componente directamente en el editor |
 
 Ejemplo de entradas:
@@ -89,10 +90,12 @@ Ejemplo de entradas:
 |--------|------|-------------|
 | `email` | `string` | Sí |
 | `password` | `string` | Sí |
-| `perfil` | `string` | No |
+| `perfil` | `enum` (`admin`, `usuario`) | No |
 | `documento` | `archivo` | No |
 
 [Definiendo entradas del Componente](../../assets/images/entradas-componente.mp4)
+
+Para limitar una entrada a valores conocidos, seleccione el tipo **enum** y agregue las opciones en el nodo **Input**. Los datos de prueba y el campo correspondiente en el escenario mostrarán esas opciones en una lista. Las opciones no pueden estar vacías ni repetidas; un valor fuera de la lista se rechaza antes de ejecutar el componente. Use este tipo para entradas como entorno, perfil o modalidad cuando no tenga sentido aceptar texto libre.
 
 Durante la ejecución del componente, los nodos internos pueden usar estas entradas mediante expresiones, como cualquier otro output de nodo:
 
@@ -210,7 +213,7 @@ En el editor de escenarios:
 4. Conéctelo como un nodo común.
 5. Complete los campos de entrada en el panel de propiedades.
 
-Las entradas aceptan valores literales y expresiones:
+Las entradas de texto aceptan valores literales y expresiones; las entradas de tipo **enum** muestran una lista con las opciones definidas en el componente:
 
 ```
 email: {{ variables.USUARIO_TESTE }}

@@ -1,6 +1,6 @@
 # MCP — AI Integration
 
-> **Available in:** QANode Enterprise
+> **Available in:** QANode Desktop Community and Enterprise. Accessible tools depend on the edition and the user's permissions.
 
 **MCP** connects AI tools to QANode so users can work with projects, scenarios, runs, dashboards, and bugs directly from an IDE, corporate chat, or any compatible client.
 
@@ -24,6 +24,10 @@ MCP does not replace the visual editor. Everything created through MCP still app
 ---
 
 ## How To Connect
+
+In **Desktop Community**, open **Connect AI** in the app. This page guides you through connecting a compatible client and keeps the local MCP available while QANode is open.
+
+In an **Enterprise** installation, use an access token and the API URL:
 
 1. Generate a token in **Settings → Access Tokens**
 2. Configure the compatible MCP client

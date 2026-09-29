@@ -1,6 +1,6 @@
 # MCP — Integración con IA
 
-> **Disponible en:** QANode Enterprise
+> **Disponible en:** QANode Desktop Community y Enterprise. Las herramientas accesibles dependen de la edición y de los permisos del usuario.
 
 El **MCP** conecta herramientas de IA con QANode para que el usuario trabaje con proyectos, escenarios, ejecuciones, dashboards y defectos directamente desde la IDE, un chat corporativo u otro cliente compatible.
 
@@ -24,6 +24,10 @@ MCP no reemplaza el editor visual. Todo lo creado sigue apareciendo en QANode co
 ---
 
 ## Cómo Conectar
+
+En **Desktop Community**, abra **Conectar IA** en la aplicación. Esta pantalla le guía para conectar un cliente compatible y mantiene el MCP local disponible mientras QANode esté abierto.
+
+En una instalación **Enterprise**, use un token de acceso y la URL de la API:
 
 1. Genere un token en **Configuración → Tokens de Acceso**
 2. Configure el cliente MCP compatible

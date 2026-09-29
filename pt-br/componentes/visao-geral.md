@@ -81,8 +81,9 @@ No nó **Input**, configure os campos que o componente espera receber.
 | Campo | Descrição |
 |-------|-----------|
 | **Nome do Campo** | Nome usado para mapear o valor no cenário |
-| **Tipo** | `string`, `number`, `boolean`, `object`, `array` ou `arquivo` |
+| **Tipo** | `string`, `number`, `boolean`, `object`, `array`, `enum` ou `arquivo` |
 | **Obrigatório** | Define se o cenário precisa preencher esse valor |
+| **Opções** | Para o tipo `enum`, lista os valores que podem ser escolhidos |
 | **Dados de Teste** | Valor usado ao testar o componente diretamente no editor |
 
 Exemplo de entradas:
@@ -91,10 +92,12 @@ Exemplo de entradas:
 |------|------|-------------|
 | `email` | `string` | Sim |
 | `senha` | `string` | Sim |
-| `perfil` | `string` | Não |
+| `perfil` | `enum` (`admin`, `usuario`) | Não |
 | `documento` | `arquivo` | Não |
 
 [Definindo entradas de um componente](../../assets/images/entradas-componente.mp4)
+
+Para limitar uma entrada a escolhas conhecidas, selecione o tipo **enum** e adicione as opções no nó **Input**. O dado de teste e o campo correspondente no cenário passam a oferecer essas opções em uma lista. As opções precisam ser preenchidas e não podem se repetir; um valor fora da lista é recusado antes da execução do componente. Use esse tipo para entradas como ambiente, perfil ou modalidade, quando não fizer sentido aceitar texto livre.
 
 Durante a execução do componente, os nós internos podem usar essas entradas por expressão, como qualquer outro output de nó.
 
@@ -214,7 +217,7 @@ No editor de cenários:
 4. Conecte-o aos outros nós.
 5. Preencha os campos de entrada no painel de propriedades.
 
-As entradas aceitam valores literais e expressões:
+As entradas de texto aceitam valores literais e expressões; entradas do tipo **enum** mostram uma lista com as opções definidas no componente:
 
 ```
 email: {{ variables.USUARIO_TESTE }}
