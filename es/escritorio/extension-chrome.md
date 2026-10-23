@@ -202,6 +202,8 @@ El elemento seleccionado parpadea en la página, ayudando a confirmar que el XPa
 11. Use **Ctrl+Alt+T** para agregar extracción de tabla en modo Smart Web Flow.
 12. Haga clic nuevamente en el ícono y haga clic en **Stop**, o finalice desde el panel del Inspect mode.
 
+El modo elegido en el popup permanece activo durante la grabación: seleccionar **Web Flow** o **Smart Locators** no convierte los pasos a **Smart Web Flow**. Compruebe el tipo de nodo creado después de pegar el JSON en el canvas.
+
 ---
 
 ## Uso en QANode

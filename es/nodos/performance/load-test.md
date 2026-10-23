@@ -265,11 +265,13 @@ QANode valida las referencias desconocidas antes de iniciar la carga. Si el body
 | **VUs** | `number` | `10` | Número de usuarios virtuales simultáneos |
 | **Duración (s)** | `number` | `30` | Duración total de la prueba en segundos |
 | **Think Time (ms)** | `number` | `0` | Pausa entre solicitudes de cada VU |
-| **Timeout (ms)** | `number` | `30000` | Tiempo máximo de espera por respuesta |
+| **Timeout (ms)** | `number` o expresión | `30000` | Tiempo máximo de espera por respuesta de cada solicitud |
 
 > Para **Smoke**, el campo VUs está fijo en 1 y no se muestra.  
 > Para **Soak**, la duración por defecto es 1800s (30 min).  
 > Para **Breakpoint**, VUs representa el **máximo** de VUs que se alcanzarán.
+
+El **Timeout (ms)** admite de **1 a 86.400.000 ms (24 horas)** por solicitud. No modifica la duración total configurada para la prueba. Los campos numéricos de carga también pueden usar expresiones como `{{ variables.LOAD_VUS }}` o `{{ variables.REQUEST_TIMEOUT_MS }}`; el resultado debe ser numérico y respetar los límites de cada campo.
 
 #### Cómo funciona el Breakpoint
 

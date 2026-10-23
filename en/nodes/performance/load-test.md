@@ -265,11 +265,13 @@ QANode validates unknown references before starting the load. If the body uses `
 | **VUs** | `number` | `10` | Number of concurrent virtual users |
 | **Duration (s)** | `number` | `30` | Total test duration in seconds |
 | **Think Time (ms)** | `number` | `0` | Pause between requests per VU |
-| **Timeout (ms)** | `number` | `30000` | Maximum wait time per response |
+| **Timeout (ms)** | `number` or expression | `30000` | Maximum wait time for each request's response |
 
 > For **Smoke**, the VUs field is fixed at 1 and not displayed.  
 > For **Soak**, the default duration is 1800s (30 min).  
 > For **Breakpoint**, VUs represents the **maximum** VUs to be reached.
+
+**Timeout (ms)** accepts **1 to 86,400,000 ms (24 hours)** per request. It does not change the configured total test duration. Numeric load settings can also use expressions such as `{{ variables.LOAD_VUS }}` or `{{ variables.REQUEST_TIMEOUT_MS }}`; the result must be numeric and stay within each field's limits.
 
 #### How Breakpoint works
 

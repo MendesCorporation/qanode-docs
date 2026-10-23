@@ -631,6 +631,8 @@ Para mayor seguridad, active la autenticación de dos factores:
 3. Ingrese el código generado para confirmar
 4. El MFA estará activo — se solicitarán códigos en cada inicio de sesión
 
+Durante el inicio de sesión con MFA, el acceso a las demás áreas solo se habilita después de confirmar el código. Los intentos repetidos con un código incorrecto están limitados; si esto ocurre, espere antes de intentarlo de nuevo o compruebe la hora del dispositivo autenticador.
+
 ---
 
 ## Licencia

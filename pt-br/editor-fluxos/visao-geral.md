@@ -60,6 +60,14 @@ O canvas é a área de trabalho onde você posiciona e conecta os nós. Funciona
 | **Adicionar anotação** | Clique com botão direito no canvas ou pressione Shift+A |
 | **Copiar/colar nó ou anotação** | Selecione o item e use Ctrl+C / Ctrl+V |
 
+### Organizar o fluxo
+
+Use o botão **Organizar fluxo** nos controles do canto inferior esquerdo do canvas para redistribuir os nós e enquadrar o resultado na tela. A ação reorganiza as posições, inclusive em fluxos grandes e com ramificações; não altera as conexões nem a configuração dos nós. Confira o resultado e salve o cenário para manter o novo posicionamento.
+
+### Selecionar caminhos entre nós
+
+Clique no nó inicial e depois segure **Shift** ao clicar no nó final. O editor seleciona todos os nós e conexões dos caminhos dirigidos entre os dois, mesmo quando o fluxo se divide em vários ramos e volta a se encontrar. Se não houver caminho conectado entre eles, o editor avisa e não faz essa seleção por caminhos.
+
 ### 4. Painel de Propriedades (Lado Direito)
 
 Ao selecionar um nó, o painel de propriedades aparece à direita com:

@@ -162,6 +162,14 @@ QANode Desktop supports light and dark themes integrated with the operating syst
 
 ---
 
+## Updates
+
+On **Windows**, QANode checks the published version and shows a notice only when it is newer than the installed version. Click **Download** to open the download page and install the new version manually. The app does not download or install Windows updates in the background.
+
+On **macOS**, the built-in updater remains available: it tracks the download and offers the option to restart and install once the new version is ready.
+
+---
+
 ## Desktop vs Web
 
 | Aspect | Desktop | Web (Enterprise) |
@@ -171,7 +179,7 @@ QANode Desktop supports light and dark themes integrated with the operating syst
 | Local Nodes | Supported | HTTP providers only |
 | Multi-user | Single-user | Team usage |
 | Network | Offline capable | Network required |
-| Updates | Integrated updater | Deployment environment update |
+| Updates | Built-in updater on macOS; notice with manual download on Windows | Deployment environment update |
 
 ---
 

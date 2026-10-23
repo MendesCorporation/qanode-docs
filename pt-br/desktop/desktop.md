@@ -164,6 +164,14 @@ O QANode desktop suporta temas claro e escuro integrados à janela nativa do sis
 
 ---
 
+## Atualizações
+
+No **Windows**, o QANode consulta a versão publicada e mostra um aviso apenas quando ela é mais recente que a instalada. Clique em **Baixar** para abrir a página de download e instalar a nova versão manualmente. O aplicativo não baixa nem instala atualizações do Windows em segundo plano.
+
+No **macOS**, permanece o atualizador integrado, que acompanha o download e oferece a opção de reiniciar para instalar quando a nova versão estiver pronta.
+
+---
+
 ## Diferenças em Relação à Versão Web
 
 | Aspecto | Desktop | Web (Enterprise) |
@@ -173,7 +181,7 @@ O QANode desktop suporta temas claro e escuro integrados à janela nativa do sis
 | **Nós Locais** | Suportados (hot-reload) | Apenas provedores HTTP |
 | **Multi-usuário** | Uso individual | Equipe compartilhada |
 | **Rede** | Funciona offline | Requer rede |
-| **Atualizações** | Atualizador integrado | Atualização do ambiente de implantação |
+| **Atualizações** | Atualizador integrado no macOS; aviso com download manual no Windows | Atualização do ambiente de implantação |
 
 ---
 

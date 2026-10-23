@@ -631,6 +631,8 @@ Para maior segurança, ative a autenticação em dois fatores:
 3. Informe o código gerado para confirmar
 4. O MFA estará ativo — códigos serão solicitados em cada login
 
+Durante um login com MFA, o acesso às demais áreas só é liberado depois da confirmação do código. Tentativas repetidas de código incorreto são limitadas; se isso acontecer, aguarde antes de tentar novamente ou confirme a hora do dispositivo autenticador.
+
 ---
 
 ## Licença

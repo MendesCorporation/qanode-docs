@@ -60,6 +60,14 @@ The canvas is the workspace where you position and connect nodes. Features:
 | **Add annotation** | Right-click the canvas or press Shift+A |
 | **Copy/paste node or annotation** | Select the item and use Ctrl+C / Ctrl+V |
 
+### Organize the flow
+
+Use the **Organize flow** button in the controls at the bottom left of the canvas to redistribute the nodes and fit the result on screen. This reorganizes positions, including in large flows with branches; it does not change connections or node settings. Review the result and save the scenario to keep the new layout.
+
+### Select paths between nodes
+
+Click the starting node, then hold **Shift** while clicking the ending node. The editor selects every node and connection on the directed paths between them, even when the flow splits into multiple branches and merges again. If there is no connected path between the nodes, the editor displays a notice and does not select a path.
+
 ### 4. Properties Panel (Right Side)
 
 When you select a node, the properties panel appears on the right with:

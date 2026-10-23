@@ -14,6 +14,18 @@ Everything inside `{{ }}` is evaluated as JavaScript in the flow's execution con
 
 ---
 
+## Dynamic Numeric Values
+
+Numeric fields in **Loop**, **Wait**, **HTTP Request**, **Load Test**, **Data Generator**, **Extract File** (Excel), **Email Inbox**, **MongoDB**, and **SSH Command** can also use `{{ }}` expressions instead of a fixed number. For example, for a request timeout:
+
+```text
+Timeout (ms): {{ variables.API_TIMEOUT_MS }}
+```
+
+The result must be a number or a numeric string. If the expression produces another value, the node fails with an error identifying the field. Each setting's limits still apply when the number comes from a variable.
+
+---
+
 ## Available Context
 
 ### `steps` — Outputs from Previous Nodes
@@ -1010,10 +1022,12 @@ To prevent errors, use the optional chaining operator or fallbacks:
 
 The expression system runs in a **sandboxed environment** with restrictions:
 
-- **No access** to `require`, `import`, `process`
+- **No access** to `require`, `import`, `process`, or dynamic code generation with `eval` or `Function`
 - **No access** to the file system
 - **No access** to the network (use the HTTP Request node for that)
 - Only `steps` and `variables` are available in the context
+
+Older expressions that depend on these blocked features are not supported; replace them with values from `steps` and `variables` or with suitable nodes.
 
 ---
 

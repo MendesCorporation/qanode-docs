@@ -631,6 +631,8 @@ For greater security, enable two-factor authentication:
 3. Enter the generated code to confirm
 4. MFA will be active — codes will be requested at each login
 
+During an MFA login, access to other areas is granted only after the code is confirmed. Repeated incorrect code attempts are limited; if this happens, wait before trying again or check the time on your authenticator device.
+
 ---
 
 ## License

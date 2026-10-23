@@ -203,6 +203,8 @@ Ao clicar em um elemento, o QANode Recorder também pisca o alvo selecionado na 
 11. Use **Ctrl+Alt+T** para adicionar extração de tabela no modo Smart Web Flow
 12. Clique no ícone novamente e clique em **Stop** para parar, ou finalize pelo painel do Inspect mode
 
+O modo escolhido no popup permanece ativo durante a gravação: selecionar **Web Flow** ou **Smart Locators** não converte os passos para **Smart Web Flow**. Confira o tipo do nó criado após colar o JSON no canvas.
+
 [Popup da extensão](../../assets/images/web-recorder.mp4)
 *Imagem: Popup da extensão mostrando botões REC/STOP, lista de passos gravados e botão Copiar JSON*
 

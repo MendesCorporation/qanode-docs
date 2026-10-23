@@ -612,11 +612,14 @@ return {
   - Sistema de arquivos (`fs`)
   - Módulos Node.js via `require` / `import`
   - `process.env` diretamente
+  - Acesso a internos do runtime, como `process`, ou geração dinâmica de código com `eval` e `Function`
 - Para variáveis de ambiente, use `variables`
 - Para interações Web e Mobile, é necessário já existir uma sessão ativa
 - `client` continua suportado, mas o nome recomendado para Mobile é `app`
 
 > `fetch` está disponível. Ainda assim, para fluxos HTTP estruturados e mais fáceis de manter, prefira o nó **HTTP Request**.
+
+Se um fluxo antigo referenciar esses recursos bloqueados, revise o código para usar as APIs disponibilizadas no contexto do nó (`steps`, `variables`, `files`, `web` e `mobile`).
 
 ---
 

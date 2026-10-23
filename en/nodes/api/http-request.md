@@ -33,10 +33,17 @@ Builder mode provides a visual interface for constructing the request:
 | **Body type** | `string` | `None`, `JSON`, `Raw text`, `x-www-form-urlencoded`, `multipart/form-data`, or `Binary file` |
 | **Response type** | `string` | `Auto`, `Text`, `JSON`, or `File` |
 | **Credential** | `string` | Saved credential for authentication |
+| **Timeout (ms)** | `number` or expression | Maximum time for this request; defaults to 30,000 ms |
 
 ### Raw Mode
 
 Raw mode allows you to edit the request as JSON, providing full control.
+
+### Request timeout
+
+The timeout applies to **each HTTP call**. The default is **30,000 ms (30 seconds)**, and the configurable range is **1 ms to 86,400,000 ms (24 hours)**. You can enter a fixed number or an expression such as `{{ variables.API_TIMEOUT_MS }}`. The expression must resolve to a number within that range.
+
+When a call exceeds the limit, the execution explicitly reports an HTTP Request timeout with the configured duration. In the execution details, the possible cause and suggestion refer to the request, not to page loading. If the API usually responds more slowly, increase this field appropriately and check the server's availability.
 
 ### Import cURL
 

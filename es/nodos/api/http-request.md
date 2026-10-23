@@ -33,10 +33,17 @@ El modo builder ofrece una interfaz visual para construir la solicitud:
 | **Tipo del cuerpo** | `string` | `Ninguno`, `JSON`, `Texto bruto`, `x-www-form-urlencoded`, `multipart/form-data` o `Archivo binario` |
 | **Tipo de respuesta** | `string` | `Auto`, `Texto`, `JSON` o `Archivo` |
 | **Credencial** | `string` | Credencial guardada para autenticación |
+| **Timeout (ms)** | `number` o expresión | Tiempo máximo de esta solicitud; valor predeterminado de 30.000 ms |
 
 ### Modo Raw
 
 El modo raw permite editar la solicitud como JSON, ofreciendo control total.
+
+### Tiempo límite de la solicitud
+
+El timeout se aplica a **cada llamada HTTP**. El valor predeterminado es **30.000 ms (30 segundos)** y el intervalo configurable va de **1 ms a 86.400.000 ms (24 horas)**. Puede introducir un número fijo o una expresión, por ejemplo `{{ variables.API_TIMEOUT_MS }}`. La expresión debe dar como resultado un número dentro de ese intervalo.
+
+Cuando la llamada supera el límite, la ejecución informa explícitamente del timeout de HTTP Request e indica la duración configurada. En los detalles de la ejecución, la posible causa y la sugerencia se refieren a la solicitud, no a la carga de la página. Si la API suele responder más lentamente, aumente este campo según corresponda y compruebe también la disponibilidad del servidor.
 
 ### Importar cURL
 

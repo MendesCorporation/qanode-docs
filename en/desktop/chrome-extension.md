@@ -202,6 +202,8 @@ The selected element flashes on the page, helping confirm that the XPath points 
 11. Use **Ctrl+Alt+T** to add table extraction in Smart Web Flow mode.
 12. Click the icon again and click **Stop**, or finish from the Inspect mode panel.
 
+The mode selected in the popup remains active throughout recording: choosing **Web Flow** or **Smart Locators** does not convert the steps to **Smart Web Flow**. Check the type of node created after pasting the JSON on the canvas.
+
 ---
 
 ## Using in QANode

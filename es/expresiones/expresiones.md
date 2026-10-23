@@ -14,6 +14,18 @@ Todo lo que está dentro de `{{ }}` se evalúa como JavaScript en el contexto de
 
 ---
 
+## Valores Numéricos Dinámicos
+
+Los campos numéricos de **Loop**, **Wait**, **HTTP Request**, **Load Test**, **Generador de Datos**, **Extraer Archivo** (Excel), **Email Inbox**, **MongoDB** y **SSH Command** también admiten expresiones `{{ }}` en lugar de un número fijo. Por ejemplo, para el timeout de una solicitud:
+
+```text
+Timeout (ms): {{ variables.API_TIMEOUT_MS }}
+```
+
+El resultado debe ser un número o una cadena numérica. Si la expresión produce otro valor, el nodo falla con un mensaje que identifica el campo. Los límites de cada configuración siguen aplicándose aunque el número provenga de una variable.
+
+---
+
 ## Contexto Disponible
 
 ### `steps` — Outputs de Nodos Anteriores
@@ -1010,10 +1022,12 @@ Para prevenir errores, usa el operador de optional chaining o fallbacks:
 
 El sistema de expresiones se ejecuta en un **entorno sandbox** con restricciones:
 
-- **Sin acceso** a `require`, `import`, `process`
+- **Sin acceso** a `require`, `import`, `process` ni a la generación dinámica de código con `eval` o `Function`
 - **Sin acceso** al sistema de archivos
 - **Sin acceso** a la red (usa el nodo HTTP Request para eso)
 - Solo `steps` y `variables` están disponibles en el contexto
+
+Las expresiones antiguas que dependan de estas funciones bloqueadas no son compatibles; sustitúyalas por valores de `steps` y `variables` o por nodos adecuados.
 
 ---
 

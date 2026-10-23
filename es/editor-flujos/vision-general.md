@@ -60,6 +60,14 @@ El canvas es el área de trabajo donde posicionas y conectas los nodos. Funciona
 | **Agregar anotación** | Haz clic derecho en el canvas o presiona Shift+A |
 | **Copiar/pegar nodo o anotación** | Selecciona el elemento y usa Ctrl+C / Ctrl+V |
 
+### Organizar el flujo
+
+Use el botón **Organizar flujo** en los controles de la esquina inferior izquierda del canvas para redistribuir los nodos y encuadrar el resultado en pantalla. La acción reorganiza las posiciones, incluso en flujos grandes y con ramificaciones; no cambia las conexiones ni la configuración de los nodos. Revise el resultado y guarde el escenario para conservar la nueva disposición.
+
+### Seleccionar caminos entre nodos
+
+Haga clic en el nodo inicial y luego mantenga presionada la tecla **Shift** al hacer clic en el nodo final. El editor selecciona todos los nodos y conexiones de los caminos dirigidos entre ambos, incluso cuando el flujo se divide en varias ramas y vuelve a unirse. Si no hay un camino conectado entre ellos, el editor muestra un aviso y no realiza la selección por caminos.
+
 ### 4. Panel de Propiedades (Lado Derecho)
 
 Al seleccionar un nodo, el panel de propiedades aparece a la derecha con:

@@ -612,11 +612,14 @@ return {
   - File system (`fs`)
   - Node.js modules via `require` / `import`
   - `process.env` directly
+  - Runtime internals such as `process`, or dynamic code generation with `eval` and `Function`
 - For environment variables, use `variables`
 - For Web and Mobile interactions, there must already be an active session
 - `client` is still supported, but `app` is the recommended Mobile name
 
 > `fetch` is available. Even so, for structured HTTP flows that are easier to maintain, prefer the **HTTP Request** node.
+
+If an older flow references these blocked features, revise the code to use the APIs available in the node context (`steps`, `variables`, `files`, `web`, and `mobile`).
 
 ---
 

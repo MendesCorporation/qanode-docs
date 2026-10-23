@@ -162,6 +162,14 @@ QANode Desktop admite temas claro y oscuro integrados con la ventana nativa del 
 
 ---
 
+## Actualizaciones
+
+En **Windows**, QANode consulta la versión publicada y muestra un aviso solo cuando es más reciente que la instalada. Haga clic en **Descargar** para abrir la página de descarga e instalar la nueva versión manualmente. La aplicación no descarga ni instala actualizaciones de Windows en segundo plano.
+
+En **macOS**, se mantiene el actualizador integrado, que sigue la descarga y ofrece la opción de reiniciar para instalar cuando la nueva versión esté lista.
+
+---
+
 ## Escritorio vs Web
 
 | Aspecto | Escritorio | Web (Enterprise) |
@@ -171,7 +179,7 @@ QANode Desktop admite temas claro y oscuro integrados con la ventana nativa del 
 | Nodos locales | Soportado | Solo providers HTTP |
 | Multiusuario | Uso individual | Uso en equipo |
 | Red | Funciona offline | Requiere red |
-| Actualizaciones | Actualizador integrado | Actualizacion del entorno de despliegue |
+| Actualizaciones | Actualizador integrado en macOS; aviso con descarga manual en Windows | Actualizacion del entorno de despliegue |
 
 ---
 
